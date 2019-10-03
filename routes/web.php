@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome',['name' => '大帥哥']);
 });
 
 Auth::routes();
