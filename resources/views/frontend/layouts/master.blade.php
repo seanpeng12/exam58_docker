@@ -17,9 +17,10 @@
   
     <!-- Custom styles for this template -->
     <link href="{{ asset('css/business-casual.min.css') }}" rel="stylesheet">
-  
+    {!! $map['js'] !!} 
   </head>
   <body>
+      
       @include('frontend.layouts.header')
       @include('frontend.layouts.navbar')
       @yield('content')
