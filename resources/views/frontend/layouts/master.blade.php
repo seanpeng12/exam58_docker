@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-TW"">
 <head>
@@ -17,14 +18,24 @@
   
     <!-- Custom styles for this template -->
     <link href="{{ asset('css/business-casual.min.css') }}" rel="stylesheet">
-    {!! $map['js'] !!} 
+    {{-- {!! $map['js'] !!}  --}}
+    <style>
+      #map {
+        width: 100%;
+        height: 400px;
+        background-color: grey;
+      }
+    </style>
   </head>
-  <body>
+  <body onload="initialize()">
       
       @include('frontend.layouts.header')
       @include('frontend.layouts.navbar')
+      @include('frontend.layouts.googlemap')
       @yield('content')
       @include('frontend.layouts.footer')
+      
+
 
 
       <!-- Bootstrap core JavaScript -->

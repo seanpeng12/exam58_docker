@@ -26,21 +26,20 @@ Route::get('store', function () {
     return view('frontend.store');
 })->name('store');
 
-Route::get('/', function () {
-    $config = array();
-    $config['center'] = 'Taipei, Taiwan';
-    $config['zoom']='14';
-    $config['map_height']='500px';
-    $config['scrollwheel']=false;
+ Route::get('/', function () {
+//     $config = array();
+//     $config['center'] = 'New York, USA';
+//     $config['zoom']='14';
+//     // $config['map_height']='400px';
+//     // $config['scrollwheel']=false;
 
-    GMaps::initialize($config);
+//     GMaps::initialize($config);
+//     $map = GMaps::create_map();
 
-    $map=GMaps::create_map();
-
-    echo $map['js'];
-    echo $map['html'];
-    return view('frontend.index')->with('map',$map);
-})->name('home');
+//     echo $map['js'];
+//     echo $map['html'];
+    return view('frontend.index');
+ })->name('home');
 // Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
