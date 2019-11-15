@@ -1,46 +1,72 @@
 
 <!DOCTYPE html>
-<html lang="zh-TW"">
-<head>
-
+<html lang="zh-TW">
+  <head>
+    <title>Aside - Free HTML5 Bootstrap 4 Template by uicookies.com</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-  
-    <title>@yield('title')</title>
-  
-    <!-- Bootstrap core CSS -->
-    <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">  
-    <!-- Custom fonts for this template -->
-    <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
-  
-    <!-- Custom styles for this template -->
-    <link href="{{ asset('css/business-casual.min.css') }}" rel="stylesheet">
-    {{-- {!! $map['js'] !!}  --}}
-    <style>
+    <meta name="description" content="Free HTML5 Website Template by uicookies.com" />
+    <meta name="keywords" content="free bootstrap 4, free bootstrap 4 template, free website templates, free html5, free template, free website template, html5, css3, mobile first, responsive" />
+    <meta name="author" content="uicookies.com" />
+
+    @yield('title')
+
+
+    
+    
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/style.css">
+<style>
       #map {
         width: 100%;
         height: 400px;
         background-color: grey;
       }
     </style>
+  
+    
+   
+    
   </head>
   <body onload="initialize()">
+     <aside class="probootstrap-aside js-probootstrap-aside">
       
-      @include('frontend.layouts.header')
-      @include('frontend.layouts.navbar')
+      <div class="probootstrap-overflow">
+        @include('frontend.layouts.header')
+        @include('frontend.layouts.navbar')
+         
+        @include('frontend.layouts.footer')
+
+      </div>
+    </aside>
+
+      
       @include('frontend.layouts.googlemap')
       @yield('content')
-      @include('frontend.layouts.footer')
+      
       
 
 
 
-      <!-- Bootstrap core JavaScript -->
-      <script src="{{ asset('jquery/jquery.min.js') }}"></script>
-      <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+   <script src="js/jquery-3.2.1.slim.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/imagesloaded.pkgd.min.js"></script>
 
-</body>
+    <script src="js/main.js"></script>
+
+    
+    
+  </body>
 </html>
