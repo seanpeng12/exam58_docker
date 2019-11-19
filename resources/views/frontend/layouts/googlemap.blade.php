@@ -1,9 +1,7 @@
 
-
-
 <h3>__________________My Google Maps Demo</h3>
     <!--The div element for the map -->
-    {{-- <div id="map"></div>
+    {{-- <div id="map"></div> --}}
    
    
     <script>
@@ -21,7 +19,7 @@
     
 
     </script>
-     --}}
+     
 <script>
      var geocoder;
   var map;
@@ -50,7 +48,7 @@
     });
   }
   </script>
-
-   <script async defer
+ <script async defer
           src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A&callback=initMap">
   </script>
+   

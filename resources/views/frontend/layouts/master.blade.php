@@ -29,7 +29,7 @@
       #map {
         width: 100%;
         height: 400px;
-        background-color: grey;
+        background-color: yellow;
       }
     </style>
   
@@ -42,20 +42,17 @@
       
       <div class="probootstrap-overflow">
         @include('frontend.layouts.header')
-        @include('frontend.layouts.navbar')
-         
+        @include('frontend.layouts.navbar')        
         @include('frontend.layouts.footer')
 
       </div>
     </aside>
 
       
-      @include('frontend.layouts.googlemap')
+      
       @yield('content')
       
-      
-
-
+  
 
    <script src="js/jquery-3.2.1.slim.min.js"></script>
     <script src="js/popper.min.js"></script>
@@ -65,7 +62,6 @@
     <script src="js/imagesloaded.pkgd.min.js"></script>
 
     <script src="js/main.js"></script>
-
     
     
   </body>
