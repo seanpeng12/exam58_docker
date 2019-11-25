@@ -30,6 +30,14 @@ Route::get('about', function () {
     return view('frontend.about');
 })->name('about');
 
+Route::get('Waypoints', function () {
+    return view('frontend.waypoints');
+})->name('waypoints');
+
+Route::get('/southern', function () {
+    return view('frontend.betweeness');
+})->name('southern');
+
 Route::get('/', function () {
 //     $config = array();
     //     $config['center'] = 'New York, USA';
