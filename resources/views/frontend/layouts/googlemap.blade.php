@@ -1,5 +1,4 @@
 
-<h3>__________________My Google Maps Demo</h3>
     <!--The div element for the map -->
     {{-- <div id="map"></div> --}}
    

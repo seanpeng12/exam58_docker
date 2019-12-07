@@ -25,13 +25,7 @@
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/animate.css">
     <link rel="stylesheet" href="css/style.css">
-<style>
-      #map {
-        width: 100%;
-        height: 400px;
-        background-color: yellow;
-      }
-    </style>
+
   
     
    

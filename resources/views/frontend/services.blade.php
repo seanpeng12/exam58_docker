@@ -3,6 +3,7 @@
 @section('title', 'services')
 @section('content')
 
+        @include('frontend.layouts.distance_matrix_API')
 
 <main role="main" class="probootstrap-main js-probootstrap-main">
     <div class="probootstrap-bar">
@@ -11,16 +12,27 @@
     </div>
 
     
-    {{-- test --}}
-    {{-- googlemap(search) --}}
-       <div id="map" style="width: 800px; height: 500px;"></div>
-          <div>
-            <input id="address" type="textbox" value="台北, 台灣">
-            <input type="button" value="sure"" onclick="codeAddress()">
-      </div>
 
+
+    
+    <div id="right-panel">
+      <div id="inputs">
+        <pre>
+{{-- var origin1 = {lat: 55.930, lng: -3.118};
+var origin2 = 'Greenwich, England';
+var destinationA = 'Stockholm, Sweden';
+var destinationB = {lat: 50.087, lng: 14.421}; --}}
+
+        </pre>
+      </div>
+      <div>
+      {{-- <p>{{ $website->title }}</p> --}}
+        <strong>Results</strong>
+      </div>
+      <div id="output"></div>
+    </div>
+    <div id="map"></div>
    
-        @include('frontend.layouts.googlemap')
 
 
     
