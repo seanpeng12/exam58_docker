@@ -37,6 +37,11 @@
     </style>
 
     <script>
+
+      // 標記設定lable(可以用這個方式做標記)
+      var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      var labelIndex = 0;
+      
       function initMap() {
         var bounds = new google.maps.LatLngBounds;
         var markersArray = [];
@@ -90,6 +95,7 @@
               };
             };
 
+            //1-->A, 1-->B, 2-->A, 2-->B 
             for (var i = 0; i < originList.length; i++) {
               var results = response.rows[i].elements;
               geocoder.geocode({'address': originList[i]},
@@ -113,8 +119,10 @@
         markersArray = [];
       }
     </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A&callback=initMap">
-    </script>
+   
 
-    
+    <script async defer
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A&callback=initMap">
+  </script>
+
+ 

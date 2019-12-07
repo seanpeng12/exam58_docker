@@ -12,6 +12,13 @@
     </div>
 
     
+    {{-- test --}}
+    {{-- googlemap(search) --}}
+       {{-- <div id="map" style="width: 800px; height: 500px;"></div>
+          <div>
+            <input id="address" type="textbox" value="台北, 台灣">
+            <input type="button" value="sure"" onclick="codeAddress()">
+      </div> --}}
 
 
     
@@ -33,6 +40,7 @@ var destinationB = {lat: 50.087, lng: 14.421}; --}}
     </div>
     <div id="map"></div>
    
+        @include('frontend.layouts.distance_matrix_API')
 
 
     
@@ -42,9 +50,23 @@ var destinationB = {lat: 50.087, lng: 14.421}; --}}
             <div class="col-xl-8 col-lg-12">
                {{-- 放distance matrix api --}}
                
- 
-   
-
+ <div id="right-panel">
+      <div id="inputs">
+        <pre>
+        var origin1 = '中原大學, 台灣';
+        var origin2 = '輔仁大學, 台灣';
+        var destinationA = '台灣大學, 台灣';
+        var destinationB ='文化大學, 台灣'
+        </pre>
+      </div>
+      <div>
+        <strong>Results</strong>
+      </div>
+      <div id="output"></div>
+    </div>
+    <div id="map"></div>
+    
+{{-- distance end-- --}}
             </div>
         </div>
         <!-- END row -->

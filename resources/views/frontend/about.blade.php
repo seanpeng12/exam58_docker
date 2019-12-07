@@ -11,8 +11,10 @@
       </div>
       <div class="container-fluid">
         <div class="row justify-content-center">
-          <div class="col-xl-8 col-lg-12">
-            <p class="mb-5"><img src="images/img_bg_2.jpg" alt="Free Bootstrap 4 Template by uicookies.com" class="img-fluid"></p>
+          {{-- googlemap --}}
+          <div style="display: none">
+        <input id="origin-input" class="controls" type="text"
+            placeholder="Enter an origin location">
 
             <div class="row">
               <div class="col-xl-8 col-lg-12 mx-auto">
@@ -21,17 +23,19 @@
                       <p>{{ $data->type }}</p>
                 @endforeach
 
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+        <div id="mode-selector" class="controls">
+          <input type="radio" name="type" id="changemode-walking" checked="checked">
+          <label for="changemode-walking">Walking</label>
 
-                <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
+          <input type="radio" name="type" id="changemode-transit">
+          <label for="changemode-transit">Transit</label>
 
-                <p>The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli, but the Little Blind Text didn’t listen. She packed her seven versalia, put her initial into the belt and made herself on the way.</p>
+          <input type="radio" name="type" id="changemode-driving">
+          <label for="changemode-driving">Driving</label>
+        </div>
+    </div>
 
-                <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>  
-              </div>
-            </div>
-            
-          </div>
+    <div id="map"></div>
         </div>
         <!-- END row -->
 
@@ -123,6 +127,6 @@
 
     <script src="js/main.js"></script>
     
-    
+    @include('frontend.layouts.Place_Autocomplete_and_Directions')
   </body>
 </html>
