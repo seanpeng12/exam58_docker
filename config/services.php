@@ -12,7 +12,7 @@ return [
     | location for this type of information, allowing packages to have
     | a conventional file to locate the various service credentials.
     |
-    */
+     */
 
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
@@ -32,6 +32,12 @@ return [
 
     'sparkpost' => [
         'secret' => env('SPARKPOST_SECRET'),
+    ],
+
+    'google' => [
+        'client_id' => env('202134100050-1to8gf83curaglsrrpbmekokr10ili2c.apps.googleusercontent.com'),
+        'client_secret' => env('omOObHf28GtYVJypxAaU9_uH'),
+        'redirect' => env('http://sightseeing.hopto.org/callback'),
     ],
 
 ];

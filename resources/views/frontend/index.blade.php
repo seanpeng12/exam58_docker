@@ -1,20 +1,23 @@
 @extends('frontend.layouts.master')
-@section('title', 'Home')
+@section('title', 'home')
 
 
 
 @section('content')
 
     <main role="main" class="probootstrap-main js-probootstrap-main">
+              
       <div class="probootstrap-bar">
         <a href="#" class="probootstrap-toggle js-probootstrap-toggle"><span class="oi oi-menu"></span></a>
         <div class="probootstrap-main-site-logo"><a href="index.html">Aside</a></a></div>
+        
       </div>
 {{-- googlemap(search) --}}
        <div id="map" style="width: 800px; height: 500px;"></div>
           <div>
             <input id="address" type="textbox" value="台北, 台灣">
             <input type="button" value="sure"" onclick="codeAddress()">
+            
       </div>
 
       {{-- test --}}

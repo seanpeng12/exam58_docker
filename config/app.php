@@ -229,6 +229,9 @@ return [
         'GMaps' => FarhanWazir\GoogleMaps\Facades\GMapsFacade::class,
         'providers' =>
         Geocoder\Laravel\Providers\GeocoderService::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+
     ],
 
 ];

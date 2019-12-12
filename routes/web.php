@@ -26,14 +26,25 @@ Route::get('contact', function () {
     return view('frontend.contact');
 })->name('contact');
 
-// Route::get('about', function () {
-//     return view('frontend.about');
-// })->name('about');
+Route::get('about', function () {
+    return view('frontend.about');
+})->name('about');
 
 //登凱的範例
-// Route::get('/testaction', 'TestController@testSite_attr');
+Route::get('/testaction', 'TestController@testSite_attr');
 Route::get('about', 'TestController@testSite_attr')->name('about');
+// OAuth驗證
+Route::get('/redirect', 'SocialAuthGoogleController@redirect');
+Route::get('/callback', 'SocialAuthGoogleController@callback');
 
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

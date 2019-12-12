@@ -49,11 +49,6 @@
                                 </li>
                             @endif
                         @else
-                        @section('my_menu')
-                            @role('管理員')
-                            <li><a class="nav-link" href="/admin">{{ __('Admin') }}</a></li>
-                            @endrole
-                        @show
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>

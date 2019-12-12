@@ -13,7 +13,7 @@ class TestController extends Controller
     {
         $datas = Site_data::all();
         foreach ($datas as $data) {
-            echo $data->name . "<br/>";
+            echo $data->name . "<br/>" . "huhuhuu";
         }
     }
 // 自己測試
@@ -22,10 +22,10 @@ class TestController extends Controller
         // #Site_attr::all();
 
         $datas = Site_attr::all();
-        return view('frontend.about')->with('datas',$datas);
+        return view('frontend.about')->with('datas', $datas);
 
-// foreach ($datas as $data) {
-        //             echo $data->tag . "</br>";
-        //         }
+        // foreach ($datas as $data) {
+        //     echo $data->tag . "</br>";
+        // }
     }
 }
