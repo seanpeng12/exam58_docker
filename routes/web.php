@@ -30,20 +30,21 @@ Route::get('about', function () {
     return view('frontend.about');
 })->name('about');
 
-Route::get('/', function () {
-//     $config = array();
-    //     $config['center'] = 'New York, USA';
-    //     $config['zoom']='14';
-    //     // $config['map_height']='400px';
-    //     // $config['scrollwheel']=false;
+//登凱的範例
+Route::get('/testaction', 'TestController@testSite_attr');
+Route::get('about', 'TestController@testSite_attr')->name('about');
+// OAuth驗證
+Route::get('/redirect', 'SocialAuthGoogleController@redirect');
+Route::get('/callback', 'SocialAuthGoogleController@callback')->name('callback');
 
-//     GMaps::initialize($config);
-    //     $map = GMaps::create_map();
-
-//     echo $map['js'];
-    //     echo $map['html'];
-    return view('frontend.index');
-})->name('home');
-// Auth::routes();
+Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

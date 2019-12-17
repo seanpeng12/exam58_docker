@@ -15,14 +15,6 @@
                     @endif
 
                     You are logged in!
-
-                    {{--@if(App\Models\BackpackUser::find(1)->hasRole('admin'))
-                        <h1>Wood!</h1>
-                    @endif--}}
-
-                    @role('admin')
-                        <h1>Wood!</h1>
-                    @endrole
                 </div>
             </div>
         </div>

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGMapsGeoCacheTable extends Migration
+class CreateSiteHrefTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateGMapsGeoCacheTable extends Migration
      */
     public function up()
     {
-        Schema::create('gmaps_geocache', function (Blueprint $table) {
-            $table->increments('id');
-            $table->text('address');
-            $table->string('latitude');
-            $table->string('longitude');
-            $table->timestamps();
+        Schema::create('site_href', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('city_name');
+            $table->string('href');
         });
     }
 
@@ -29,6 +27,6 @@ class CreateGMapsGeoCacheTable extends Migration
      */
     public function down()
     {
-        Schema::drop('gmaps_geocache');
+        Schema::dropIfExists('site_href');
     }
 }
