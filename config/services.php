@@ -35,9 +35,9 @@ return [
     ],
 
     'google' => [
-        'client_id' => env('202134100050-1to8gf83curaglsrrpbmekokr10ili2c.apps.googleusercontent.com'),
-        'client_secret' => env('omOObHf28GtYVJypxAaU9_uH'),
-        'redirect' => env('http://sightseeing.hopto.org/callback'),
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT'),
     ],
 
 ];

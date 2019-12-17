@@ -161,6 +161,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        
 
         /*
          * Package Service Providers...
@@ -175,6 +176,10 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        // Socialite Service Provider...
+        Laravel\Socialite\SocialiteServiceProvider::class,
+
 
     ],
 
@@ -227,11 +232,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'GMaps' => FarhanWazir\GoogleMaps\Facades\GMapsFacade::class,
-        'providers' =>
-        Geocoder\Laravel\Providers\GeocoderService::class,
-        Laravel\Socialite\SocialiteServiceProvider::class,
+        'providers' => Geocoder\Laravel\Providers\GeocoderService::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
-
+        
     ],
 
 ];

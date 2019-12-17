@@ -35,7 +35,7 @@ Route::get('/testaction', 'TestController@testSite_attr');
 Route::get('about', 'TestController@testSite_attr')->name('about');
 // OAuth驗證
 Route::get('/redirect', 'SocialAuthGoogleController@redirect');
-Route::get('/callback', 'SocialAuthGoogleController@callback');
+Route::get('/callback', 'SocialAuthGoogleController@callback')->name('callback');
 
 Auth::routes();
 
