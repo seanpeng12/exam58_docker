@@ -53,14 +53,10 @@ Route::get('/callback', 'SocialAuthGoogleController@callback')->name('callback')
 Route::get('/ajax2', 'AjaxController@index');
 Route::post('/ajax2/fetch', 'AjaxController@fetch')->name('myform.fetch');
 
-Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

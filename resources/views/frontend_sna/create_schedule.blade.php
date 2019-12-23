@@ -6,26 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>uiCookies:Stack &mdash; Free Bootstrap Theme, Free Website Template</title>
-    <meta name="description" content="Free Bootstrap Theme by uicookies.com">
-    <meta name="keywords"
-        content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+<title>uiCookies:Stack &mdash; Free Bootstrap Theme, Free Website Template</title>
+<meta name="description" content="Free Bootstrap Theme by uicookies.com">
+<meta name="keywords"
+    content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,700">
-    <link rel="stylesheet" href="css/ano/styles-merged.css">
-    <link rel="stylesheet" href="css/ano/style.min.css">
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,700">
+<link rel="stylesheet" href="css/ano/styles-merged.css">
+<link rel="stylesheet" href="css/ano/style.min.css">
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
-    
 
-    <!--[if lt IE 9]>
+
+<!--[if lt IE 9]>
       <script src="js/vendor/html5shiv.min.js"></script>
       <script src="js/vendor/respond.min.js"></script>
     <![endif]-->
 </head>
 
 <body>
-{!! csrf_field() !!}
+    {!! csrf_field() !!}
     <!-- Fixed navbar -->
 
 
@@ -84,37 +84,39 @@
         </div>
     </nav>
 
-     --}}
-@extends('frontend_sna.layouts.master')
+    --}}
+    @extends('frontend_sna.layouts.master')
 
-{{-- @section('title', 'services') --}}
-@section('content')
+    {{-- @section('title', 'services') --}}
+    @section('content')
 
     <section class="probootstrap-section probootstrap-bg-gray">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 probootstrap-animate" data-animate-effect="fadeIn">
-                    
+
                     <form action="#" method="post" class="probootstrap-form">
                         <div class="form-group">
-                            <select name="country" id="country"  class="form-control input-lg dynamic" data-dependent="name" style="height: 60px">
+                            <select name="country" id="country" class="form-control input-lg dynamic"
+                                data-dependent="name" style="height: 60px">
                                 <option value="none">請選擇縣市</option>
-                                    @foreach ($country_list as $country)
-                                        <option value="{{$country->city_name}}">{{$country->city_name}}</option>
-                                    @endforeach
+                                @foreach ($country_list as $country)
+                                <option value="{{$country->city_name}}">{{$country->city_name}}</option>
+                                @endforeach
                             </select>
 
                         </div>
                         {{-- 還沒完成 --}}
                         <div class="form-group">
 
-                          <select name="name" id="name" multiple="multiple class="form-control input-lg dynamic" data-dependent="tag2" style="height: 200px">
-                            <option value="none">請選擇景點</option>
-                          </select>                         
+                            <select name="name" id="name" multiple="multiple class=" form-control input-lg dynamic"
+                                data-dependent="tag2" style="height: 200px">
+                                <option value="none">請選擇景點</option>
+                            </select>
                         </div>
-                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-                            <script type="text/javascript">                        
-                                $(document).ready(function(){
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+                        <script type="text/javascript">
+                            $(document).ready(function(){
 
                                 $('.dynamic').change(function(){
                                     if($(this).val() != '')
@@ -153,12 +155,12 @@
                                     }
                                 })
                             })
-                            </script>
+                        </script>
 
 
                         <div class="form-group">
-                         
-                            
+
+
                         </div>
                         <div class="form-group">
                             <label for="subject">Subject</label>
@@ -197,7 +199,7 @@
         </div>
     </section>
 
-{{-- 
+    {{-- 
     <footer class="probootstrap-footer">
         <div class="container">
             <div class="row">
@@ -272,7 +274,7 @@
 
 
     <!-- Modal login -->
-    <div class="modal fadeInUp probootstrap-animated" id="loginModal" tabindex="-1" role="dialog"
+    {{-- <div class="modal fadeInUp probootstrap-animated" id="loginModal" tabindex="-1" role="dialog"
         aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="vertical-alignment-helper">
             <div class="modal-dialog modal-md vertical-align-center">
@@ -386,7 +388,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- END modal signup -->
 
     {{-- <script src="js/ano/scripts.min.js"></script>
