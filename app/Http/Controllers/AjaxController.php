@@ -3,35 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Site_data;
-use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB as FacadesDB;
 
-//登凱的範例，登凱萬歲><
-class TestController extends Controller
+class AjaxController extends Controller
 {
-    public function testAction(Request $request)
-    {
-        $datas = Site_data::all();
-        foreach ($datas as $data) {
-            echo $data->name . "<br/>" . "huhuhuu";
-        }
-    }
-// 自己測試
-    public function testSite_attr(Request $request)
-    {
-        // #Site_attr::all();
-        $datas = DB::select('select distinct city_name from site_data');
-
-        // $datas = Site_data::all()->distinct();
-        return view('frontend_sna.create_schedule')->with('datas', $datas);
-
-        // foreach ($datas as $data) {
-        //     echo $data->tag . "</br>";
-        // }
-    }
-// form1 取site_data.city_name
     public function index()
     {
         // $country_list = FacadesDB::table('site_data')->groupBy('city_name')->get();
@@ -40,9 +16,9 @@ class TestController extends Controller
             ->select(FacadesDB::raw('city_name'))
             ->groupBy('city_name')
             ->get();
-        return view('frontend_sna.create_schedule')->with('country_list', $country_list);
+        return view('frontend.myform')->with('country_list', $country_list);
     }
-// form2 取site_data.name
+
     public function fetch(Request $request)
     {
         // 取得ajax的selectbox
