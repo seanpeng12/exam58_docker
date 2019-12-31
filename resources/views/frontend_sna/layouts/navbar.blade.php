@@ -31,8 +31,8 @@
                 <li class="dropdown">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle">功能</a>
                     <ul class="dropdown-menu">
-                        <li class="active"><a href="about.html">景點需求分析</a></li>
-                        <li><a href="portfolio.html">鄰近景點路徑規劃</a></li>
+                        <li class="active"><a href="{{route('myform')}}">景點需求分析</a></li>
+                        <li><a href=" portfolio.html">鄰近景點路徑規劃</a></li>
                         <li><a href="portfolio-single.html">景點優缺點分析</a></li>
                         <li class="dropdown-submenu dropdown">
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span>Sub Menu</span></a>

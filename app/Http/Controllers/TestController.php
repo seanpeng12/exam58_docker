@@ -18,7 +18,31 @@ class TestController extends Controller
             echo $data->name . "<br/>" . "huhuhuu";
         }
     }
-// 自己測試
+
+    // 測試表單傳值
+    // public function loginForm()
+    // {
+    //     return view("frontend.create_schedule");
+    // }
+    
+    public function formpass(Request $request) //這行你會覺得它很奇怪
+    {
+        
+        //$input = $request->all();
+        echo $request->input("country")."<br/>";
+        echo "<pre>";
+        var_dump($request->input("name.*"));
+        print_r($request->input("name.*"));
+        echo "</pre>";
+        
+        $arr = $request->input("name.*");
+
+        foreach($arr as $e){
+            echo "$e <br/>";
+        }
+    }
+    
+    // 自己測試
     public function testSite_attr(Request $request)
     {
         // #Site_attr::all();
@@ -32,7 +56,7 @@ class TestController extends Controller
         // }
     }
 // form1 取site_data.city_name
-    public function index()
+    public function index(Request $request)
     {
         // $country_list = FacadesDB::table('site_data')->groupBy('city_name')->get();
 
@@ -40,7 +64,10 @@ class TestController extends Controller
             ->select(FacadesDB::raw('city_name'))
             ->groupBy('city_name')
             ->get();
+
+        
         return view('frontend_sna.create_schedule')->with('country_list', $country_list);
+        
     }
 // form2 取site_data.name
     public function fetch(Request $request)
@@ -73,7 +100,7 @@ class TestController extends Controller
         // "SELECT R.from_id, D.city_name, R.to_id, A.tag FROM site_relationship R, site_data D, site_attr A WHERE R.from_id = D.id AND R.to_id = A.id AND D.city_name ='基隆'";
 
         // 自我嘗試(可行)
-        $output = '<option value="">Select ' . ucfirst($dependent) . '</option>';
+        $output = '<option data-tokens="">Select ' . ucfirst($dependent) . '</option>';
         foreach ($data as $row) {
             //debug
             //$output =  "答案為='.$data_c->tag.'";
@@ -83,7 +110,7 @@ class TestController extends Controller
 
             // 原始正確碼
 
-            $output .= '<option value="' . $row->name . '">' . $row->name . '</option>';
+            $output .= '<option data-tokens="' . $row->name . '">' . $row->name . '</option>';
 
             //可用來debug
             // $output = "dependent ='$dependent' and  value ='$value' and  select='$select'";
