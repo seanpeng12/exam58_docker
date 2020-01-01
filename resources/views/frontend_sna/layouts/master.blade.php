@@ -51,8 +51,8 @@
   <link href="//raw.githack.com/hnzzmsf/layui-formSelects/master/dist/formSelects-v4.css" rel="stylesheet" />
 
 
-  <script src="//unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script>
-  <script src="//raw.githack.com/hnzzmsf/layui-formSelects/master/dist/formSelects-v4.min.js"></script>
+  {{-- <script src="//unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script>
+  <script src="//raw.githack.com/hnzzmsf/layui-formSelects/master/dist/formSelects-v4.min.js"></script> --}}
 
 
 

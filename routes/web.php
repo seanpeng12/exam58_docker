@@ -33,13 +33,14 @@ Route::get('about', function () {
     return view('frontend.about');
 })->name('about');
 
-Route::get('/test',function(){
+Route::get('/test', function () {
     return view('frontend_sna.test');
 })->name('test');
 //登凱的範例
 Route::get('/testaction', 'TestController@testSite_attr');
 
 Route::get('/create_schedule', 'TestController@index')->name('create_schedule');
+Route::post('/schedule/fetch', 'TestController@fetch')->name('schedule.fetch');
 
 Route::get('/', function () {
     return view('frontend_sna.index');
@@ -60,15 +61,12 @@ Route::post("/testform", "testController@formpass")->name("formpass");
 Route::get('/ajax2', 'AjaxController@index')->name('myform');
 Route::post('/ajax2/fetch', 'AjaxController@fetch')->name('myform.fetch');
 
-
 Route::get('/deal/1', 'AjaxController@loginForm')->name('dealGET');
 
 Route::post('/deal/1', 'AjaxController@loginProcess')->name('dealPOST');
-
 
 // Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
-

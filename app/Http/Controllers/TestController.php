@@ -24,24 +24,25 @@ class TestController extends Controller
     // {
     //     return view("frontend.create_schedule");
     // }
-    
+
     public function formpass(Request $request) //這行你會覺得它很奇怪
+
     {
-        
+
         //$input = $request->all();
-        echo $request->input("country")."<br/>";
+        echo $request->input("country") . "<br/>";
         echo "<pre>";
         var_dump($request->input("name.*"));
         print_r($request->input("name.*"));
         echo "</pre>";
-        
+
         $arr = $request->input("name.*");
 
-        foreach($arr as $e){
+        foreach ($arr as $e) {
             echo "$e <br/>";
         }
     }
-    
+
     // 自己測試
     public function testSite_attr(Request $request)
     {
@@ -65,9 +66,8 @@ class TestController extends Controller
             ->groupBy('city_name')
             ->get();
 
-        
         return view('frontend_sna.create_schedule')->with('country_list', $country_list);
-        
+
     }
 // form2 取site_data.name
     public function fetch(Request $request)
