@@ -1,6 +1,6 @@
-#問題: 1.中文仍無法顯示在圖上
+#??��??: 1.中�?��?�無法顯示在??��??
 args <- commandArgs(TRUE)
-# args = "花蓮"
+# args = "?��?��"
 
 library('RMySQL')
 library('visNetwork')
@@ -9,15 +9,15 @@ library('igraph')
 connect <- dbConnect(MySQL(), 
                     db = "homestead",
                     username = "root", 
-                    password = "sightseeing",
+                    password = "12345",
                     host = "localhost")
 
-# #homestead(共11個表)
+# #homestead(?��11?��表)
 # dbListTables(connect)
-# #site_data的表頭
+# #site_data??�表?��
 # dbListFields(connect, "site_data")
 
-#傳值到cityname
+#?��?��到cityname
 cname <- args
 # cname <- paste("'",args,"'",sep="")
 
@@ -26,7 +26,7 @@ sr_sql <- paste("select r.from_id,r.to_id FROM site_relationship r, site_data d 
 
 dbSendQuery(connect,"SET NAMES big5")
 sn <- dbGetQuery(connect , sn_sql)
-# sn <- dbGetQuery(connect ,"select * from site_data where city_name = '基隆'")
+# sn <- dbGetQuery(connect ,"select * from site_data where city_name = '?��???'")
 sa <- dbGetQuery(connect ,"select * from site_attr")
 sr <- dbGetQuery(connect ,sr_sql)
 
@@ -44,7 +44,7 @@ nodes <- data.frame(id = c(n$id), group = c(n$type),
 edges <- data.frame(from = c(sr$from), to = c(sr$to))
 
 ccout = visNetwork(nodes,edges, width = "100%",height = "100%") %>%
-  visIgraphLayout() %>% #靜態
+  visIgraphLayout() %>% #??��??
   visOptions(highlightNearest = TRUE)
 
 visSave(ccout, file = "C://xampp/htdocs/exam58/public/R/between.html"  , background = "white")

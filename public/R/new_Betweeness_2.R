@@ -1,10 +1,10 @@
-# 可去除無用景點的分析
+# ?��?��?��?��?��?��點�?��?��??
 library(RMySQL)
 library('visNetwork')
 library('igraph')
 
 args <- commandArgs(TRUE)
-# args <- "台北 博物館 古蹟"
+# args <- "�x�_ �ժ��] �j��"
 city <- strsplit(args,"[[:space:]]")[[1]][1]
 opt1 <- strsplit(args,"[[:space:]]")[[1]][2]
 opt2 <- strsplit(args,"[[:space:]]")[[1]][3]
@@ -13,15 +13,15 @@ opt2 <- strsplit(args,"[[:space:]]")[[1]][3]
 connect <- dbConnect(MySQL(), 
                      db = "homestead",
                      username = "root", 
-                     password = "sightseeing",
+                     password = "12345",
                      host = "localhost")
 
-# #homestead(共11個表)
+# #homestead(?��11?��表)
 # dbListTables(connect)
-# #site_data的表頭
+# #site_data??�表?��
 # dbListFields(connect, "site_data")
 
-#傳值到cityname
+#?��?��到cityname
 cname <- city
 tag1 <- opt1
 tag2 <- opt2
@@ -57,7 +57,7 @@ nodes <- data.frame(id = c(n$id), group = c(n$type),
 edges <- data.frame(from = c(sr$from), to = c(sr$to))
 
 ccout = visNetwork(nodes,edges, width = "100%",height = "100%") %>%
-  visIgraphLayout() %>% #靜態
+  visIgraphLayout() %>% #??��??
   visOptions(highlightNearest = TRUE)
 
 # g <- graph.data.frame(edges, directed=FALSE, vertices=nodes)
@@ -70,5 +70,5 @@ visSave(ccout, file = "C://xampp/htdocs/exam58/public/R/between2.html")
 # dbDisconnect(connect)
 on.exit(dbDisconnect(connect))
 
-# 測試db連接
+# 測試db?�??��
 # lapply(dbListConnections(MySQL()), dbDisconnect)
