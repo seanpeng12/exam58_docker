@@ -38,9 +38,12 @@ class TestController extends Controller
 
         $arr = $request->input("name.*");
 
-        foreach ($arr as $e) {
-            echo "$e <br/>";
-        }
+        // foreach ($arr as $e) {
+        //     echo "$e <br/>";
+        // }
+
+        // 傳入getvalue.blade.php(return)
+        return view('frontend_sna.getvalue')->with('arr', $arr);
     }
 
     // 自己測試

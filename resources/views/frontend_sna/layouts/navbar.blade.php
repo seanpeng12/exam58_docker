@@ -50,7 +50,7 @@
                 <li class="dropdown">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle">個人頁面</a>
                     <ul class="dropdown-menu">
-                        <li class="active"><a href="about.html">我的旅程表</a></li>
+                        <li class="active"><a href='#'>我的旅程表</a></li>
                         <li><a href="portfolio.html">我的收藏景點</a></li>
                         <li><a href="{{ route('create_schedule') }}">自我旅程規劃</a></li>
 

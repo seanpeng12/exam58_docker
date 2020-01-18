@@ -40,10 +40,6 @@ class AjaxController extends Controller
         //湘涵sql
         // $data = FacadesDB::select("SELECT site_data.name FROM site_data WHERE site_data.city_name = '$value'");
 
-
-
-
-
         //方法四之二(閉包含數讀取$value(失敗))
         // $data = FacadesDB::table('site_data')
         //     ->join('site_relationship', function ($join1) {
@@ -123,6 +119,6 @@ class AjaxController extends Controller
         //     echo "$e <br/>";
         // }
 
-        return view("frontend_sna.deal")->with('A', $request->input("country"))->with('B', $request->input("tag"))->with('C', $request->input("tag2"))->with('D', $arr);
+        return view('frontend_sna.deal')->with('A', $request->input("country"))->with('B', $request->input("tag"))->with('C', $request->input("tag2"))->with('D', $arr);
     }
 }
