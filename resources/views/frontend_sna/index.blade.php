@@ -11,7 +11,7 @@
             <div class="row">
               <div class="col-md-8 col-md-offset-2">
                 <div class="probootstrap-slider-text text-center">
-                  <h1 class="probootstrap-heading">About Us</h1>
+                  <h1 class="probootstrap-heading">旅遊分析系統</h1>
                   <p class="probootstrap-subheading">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                 </div>
               </div>

@@ -16,7 +16,7 @@ class AjaxController extends Controller
             ->select(FacadesDB::raw('city_name'))
             ->groupBy('city_name')
             ->get();
-        return view('frontend.myform')->with('country_list', $country_list);
+        return view('frontend_sna.myform')->with('country_list', $country_list);
     }
 
     public function fetch(Request $request)
@@ -35,8 +35,11 @@ class AjaxController extends Controller
         //     ->get();
 
         // 方法一(直接raw sql可用)
-        // $data = FacadesDB::select("SELECT DISTINCT site_attr.tag FROM ((site_data INNER JOIN site_relationship on site_data.id=site_relationship.from_id) INNER JOIN site_attr on site_relationship.to_id=site_attr.id ) WHERE site_data.city_name = '$value'");
-        $data = FacadesDB::select("SELECT site_data.name FROM site_data WHERE site_data.city_name = '$value'");
+        $data = FacadesDB::select("SELECT DISTINCT site_attr.tag FROM ((site_data INNER JOIN site_relationship on site_data.id=site_relationship.from_id) INNER JOIN site_attr on site_relationship.to_id=site_attr.id ) WHERE site_data.city_name = '$value'");
+
+        //湘涵sql
+        // $data = FacadesDB::select("SELECT site_data.name FROM site_data WHERE site_data.city_name = '$value'");
+
         //方法四之二(閉包含數讀取$value(失敗))
         // $data = FacadesDB::table('site_data')
         //     ->join('site_relationship', function ($join1) {
@@ -49,7 +52,8 @@ class AjaxController extends Controller
         // "SELECT R.from_id, D.city_name, R.to_id, A.tag FROM site_relationship R, site_data D, site_attr A WHERE R.from_id = D.id AND R.to_id = A.id AND D.city_name ='基隆'";
 
         // 自我嘗試(可行)
-        $output = '<option value="">Select ' . ucfirst($dependent) . '</option>';
+        $output = '<option value="">選擇' . $value . '的景點(' . ucfirst($dependent) . ')</option>';
+
         foreach ($data as $row) {
             //debug
             //$output =  "答案為='.$data_c->tag.'";
@@ -59,7 +63,7 @@ class AjaxController extends Controller
 
             // 原始正確碼
 
-            $output .= '<option value="' . $row->name . '">' . $row->name . '</option>';
+            $output .= '<option value="' . $row->$dependent . '">' . $row->$dependent . '</option>';
 
             //可用來debug
             // $output = "dependent ='$dependent' and  value ='$value' and  select='$select'";
@@ -83,7 +87,7 @@ class AjaxController extends Controller
 
     public function deal()
     {
-        return view("deal");
+        return view("frontend_sna.deal");
     }
 
     public function out(Request $request)
@@ -91,5 +95,30 @@ class AjaxController extends Controller
         $city = $request->cityname;
 
         return "OK已經收到" . $city;
+    }
+
+    public function loginForm()
+    {
+        return view("frontend_sna.deal");
+    }
+
+    public function loginProcess(Request $request)
+    {
+
+        //$input = $request->all();
+        //echo $request->input("country") . "<br/>";
+        // echo "<pre>";///無格式化的輸出
+        //echo $request->input("tag2") . "<br/>";
+        // echo "<pre>";
+        // var_dump($request->input("tag3.*"));
+        // print_r($request->input("tag3.*"));
+        // echo "</pre>";
+
+        $arr = $request->input("tag3.*", ["無資料!"]);
+        // foreach ($arr as $e) {
+        //     echo "$e <br/>";
+        // }
+
+        return view('frontend_sna.deal')->with('A', $request->input("country"))->with('B', $request->input("tag"))->with('C', $request->input("tag2"))->with('D', $arr);
     }
 }
