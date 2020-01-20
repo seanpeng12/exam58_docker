@@ -30,12 +30,12 @@ class TestController extends Controller
     {
 
         //$input = $request->all();
-        echo $request->input("country") . "<br/>";
-        echo "<pre>";
-        var_dump($request->input("name.*"));
-        print_r($request->input("name.*"));
-        echo "</pre>";
-
+        // echo $request->input("country") . "<br/>";
+        // echo "<pre>";
+        // var_dump($request->input("name.*"));
+        // print_r($request->input("name.*"));
+        // echo "</pre>";
+        $country = $request->input("country");
         $arr = $request->input("name.*");
 
         // foreach ($arr as $e) {
@@ -43,7 +43,7 @@ class TestController extends Controller
         // }
 
         // 傳入getvalue.blade.php(return)
-        return view('frontend_sna.getvalue')->with('arr', $arr);
+        return view('frontend_sna.getvalue')->with('arr', $arr)->with('country', $country);
     }
 
     // 自己測試

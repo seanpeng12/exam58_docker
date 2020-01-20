@@ -95,7 +95,7 @@
 
   @include('frontend_sna.layouts.navbar')
   @yield('content')
-  @include('frontend_sna.layouts.footer')
+  {{-- @include('frontend_sna.layouts.footer') --}}
 
 
 

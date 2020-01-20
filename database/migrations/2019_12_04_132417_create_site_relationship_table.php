@@ -14,12 +14,11 @@ class CreateSiteRelationshipTable extends Migration
     public function up()
     {
         Schema::create('site_relationship', function (Blueprint $table) {
-            $table->String('from_id', 45);
-
-            $table->Integer('to_id');
+            $table->String('from_id', 10);
             $table->foreign('from_id')->references('id')->on('site_data');
-
+            $table->Integer('to_id');
             $table->foreign('to_id')->references('id')->on('site_attr');
+            // $table->primary(['from_id', 'to_id']);
 
             // $table->timestamps();
         });

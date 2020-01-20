@@ -18,9 +18,11 @@
                 <div class="col-md-4 probootstrap-animate" data-animate-effect="fadeIn">
 
                         <div class="form-group">
+                            <h1>{{$country}}</h1>
 @foreach ($arr as $arrs)
 {{$arrs}}
 @endforeach
+
 
                         </div>
                      

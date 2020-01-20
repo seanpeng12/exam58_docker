@@ -14,14 +14,16 @@ class CreateSiteDataTable extends Migration
     public function up()
     {
         Schema::create('site_data', function (Blueprint $table) {
-            $table->String('id', 45)->primary();
-            $table->String('name', 120);
-            $table->String('city_name', 15);
-            $table->String('address', 150);
-            $table->String('type', 45);
+            $table->String('id', 10)->primary();
+            $table->String('name', 45);
+            $table->String('city_name', 20);
+            $table->String('address', 50);
+            $table->String('type', 10);
             $table->integer('comment');
             $table->float('rate');
-            $table->String('href', 180);
+            $table->String('href', 100);
+            $table->String('color', 10);
+            $table->String('shape', 10);
         });
     }
 

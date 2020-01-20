@@ -33,9 +33,9 @@ Route::get('about', function () {
     return view('frontend.about');
 })->name('about');
 
-Route::get('/test', function () {
-    return view('frontend_sna.test');
-})->name('test');
+// Route::get('/test', function () {
+//     return view('frontend_sna.test');
+// })->name('test');
 //登凱的範例
 Route::get('/testaction', 'TestController@testSite_attr');
 
