@@ -67,6 +67,15 @@ Route::post("/deal", "AjaxController@loginProcess")->name('dealPOST');
 
 // Route::get('/home', 'HomeController@index')->name('home');
 
+// Firebase 連結資料庫
+Route::get('firebase', 'FirebaseController@index');
+// 讀取Firebase
+Route::get('firebase-get-data', 'FirebaseController@getData');
+
+Route::get('firebaseRoll', function () {
+    return view('frontend_sna.testFirebaseRoll');
+})->name('testFirebaseRoll');
+
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
