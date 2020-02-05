@@ -8,8 +8,8 @@ library('igraph')
 
 connect <- dbConnect(MySQL(), 
                     db = "homestead",
-                    username = "root", 
-                    password = "12345",
+                    username = "homestead", 
+                    password = "secret",
                     host = "localhost")
 
 # #homestead(?��11?��表)

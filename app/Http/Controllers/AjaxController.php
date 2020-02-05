@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB as FacadesDB;
 
 class AjaxController extends Controller
 {
+    //get myform
     public function index()
     {
         // $country_list = FacadesDB::table('site_data')->groupBy('city_name')->get();
@@ -18,7 +19,7 @@ class AjaxController extends Controller
             ->get();
         return view('frontend_sna.myform')->with('country_list', $country_list);
     }
-
+    //post myform(Ajax)
     public function fetch(Request $request)
     {
         // 取得ajax的selectbox
@@ -97,11 +98,15 @@ class AjaxController extends Controller
         return "OK已經收到" . $city;
     }
 
+
+
+
+    //僅使用get到deal網站
     public function loginForm()
     {
         return view("frontend_sna.deal");
     }
-
+    //前一網站post到deal網站
     public function loginProcess(Request $request)
     {
 

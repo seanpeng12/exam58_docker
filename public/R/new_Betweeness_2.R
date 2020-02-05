@@ -12,8 +12,8 @@ opt2 <- strsplit(args,"[[:space:]]")[[1]][3]
 
 connect <- dbConnect(MySQL(), 
                      db = "homestead",
-                     username = "root", 
-                     password = "12345",
+                     username = "homestead", 
+                     password = "secret",
                      host = "localhost")
 
 # #homestead(?��11?��表)
