@@ -49,7 +49,8 @@
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
   <link href="//raw.githack.com/hnzzmsf/layui-formSelects/master/dist/formSelects-v4.css" rel="stylesheet" />
-
+<script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
 
   {{-- <script src="//unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script>
   <script src="//raw.githack.com/hnzzmsf/layui-formSelects/master/dist/formSelects-v4.min.js"></script> --}}
@@ -121,6 +122,10 @@
 
   <script src="js/ano/scripts.min.js"></script>
   <script src="js/ano/custom.min.js"></script>
+
+  
+   
+
 </body>
 
 </html>

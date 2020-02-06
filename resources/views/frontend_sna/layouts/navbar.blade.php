@@ -12,6 +12,8 @@
 </ul>
 
 </nav> --}}
+
+
 <nav class="navbar navbar-default navbar-fixed-top probootstrap-navbar">
     <div class="container">
         <div class="navbar-header">
@@ -58,10 +60,13 @@
                 </li>
 
                 <li><a href="contact.html">Contact</a></li>
-                <li class="probootstra-cta-button"><a href="#" class="btn" data-toggle="modal"
-                        data-target="#loginModal">Log in</a></li>
+
+                
+                <li class="probootstra-cta-button" id="test" ><a href="#" class="btn" data-toggle="modal"
+                            data-target="#loginModal">Log in</a></li>
                 <li class="probootstra-cta-button last"><a href="#" class="btn btn-ghost" data-toggle="modal"
                         data-target="#signupModal">Sign up</a></li>
+                <li class="probootstra-cta-button last"><button id="btnLogOut">LogOut</button></li>
             </ul>
         </div>
     </div>
@@ -105,11 +110,11 @@
                                     <div class="col-md-12">
                                         <button class="btn btn-primary btn-ghost btn-block btn-connect-facebook"><span>connect
                                                 with</span> Facebook</button>
-                                        {{-- <button class="btn btn-primary btn-ghost btn-block btn-connect-google"><span>connect
-                                                with</span> Google</button>
-                                        <button class="btn btn-primary btn-ghost btn-block btn-connect-twitter"><span>connect
-                                                with</span> Twitter</button> --}}
-                                        <a href="{{url('/redirect')}}" class="btn btn-primary">Login with Google</a>
+                                        {{-- 下面是google存mysql的登入方式 --}}
+                                        {{-- <a href="{{url('/redirect')}}" class="btn btn-primary">Login with Google</a> --}}
+                                        {{-- <button class="btn btn-primary btn-ghost btn-block btn-connect-facebook" id="btnlogIn"> Google(firebase)</button> --}}
+    
+                                        <button id="btnLogIn">LogIn</button>
                                     </div>
                                 </div>
                             </div>
@@ -121,3 +126,84 @@
     </div>
 </div>
 <!-- END modal login -->
+
+{{-- firebase帳號登入登出 --}}
+<script>
+
+   
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyBC62oZBm9ftF_O0-eO7BPWx52vprEz38Y",
+    authDomain: "sna-master.firebaseapp.com",
+    databaseURL: "https://sna-master.firebaseio.com",
+    projectId: "sna-master",
+    storageBucket: "sna-master.appspot.com",
+    messagingSenderId: "640892044634",
+    appId: "1:640892044634:web:3c3c94c360528786d31f63",
+    measurementId: "G-D1PL8FR9EF"
+  };
+  // Initialize Firebase
+
+  
+  var a = firebase.initializeApp(firebaseConfig);
+  console.log(a)
+
+  // ========登入帳號===========
+
+   window.onload = function() {
+      var btnLogIn = document.getElementById('btnLogIn');
+      btnLogIn.onclick = function() {
+        var provider = new firebase.auth.GoogleAuthProvider()
+        // firebase.auth().signInWithRedirect(provider);
+        //  firebase.auth().signInWithPopup(provider).
+        firebase.auth().signInWithRedirect(provider).then(function(result) {
+        if (result.credential) {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            var token = result.credential.accessToken;
+            // ...
+            var user = result.user;
+
+
+        }
+  // The signed-in user info.
+ 
+
+        }).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // The email of the user's account used.
+            var email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            var credential = error.credential;
+            // ...
+        });
+
+        }    
+
+    }
+  
+// ======== 登出帳號===========
+    var btnLogOut = document.getElementById('btnLogOut');
+btnLogOut.onclick = function() {
+  firebase.auth().signOut().then(function() {
+    alert('您已登出帳號');
+    var user = firebase.auth().currentUser;
+    console.log(user)
+  })
+}
+
+
+    
+</script>
+
+<script>
+    firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+        var el=document.getElementById('test');
+        el.textContent=user.displayName+'您好';
+    } else {
+        // No user is signed in.
+    }
+    });
+</script>
