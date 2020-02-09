@@ -51,13 +51,23 @@
   <link href="//raw.githack.com/hnzzmsf/layui-formSelects/master/dist/formSelects-v4.css" rel="stylesheet" />
 <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
-
+<script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-firestore.js"></script>
   {{-- <script src="//unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script>
   <script src="//raw.githack.com/hnzzmsf/layui-formSelects/master/dist/formSelects-v4.min.js"></script> --}}
 
-
-
-
+<script>
+// Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyBC62oZBm9ftF_O0-eO7BPWx52vprEz38Y",
+    authDomain: "sna-master.firebaseapp.com",
+    databaseURL: "https://sna-master.firebaseio.com",
+    projectId: "sna-master",
+    storageBucket: "sna-master.appspot.com",
+    messagingSenderId: "640892044634",
+    appId: "1:640892044634:web:3c3c94c360528786d31f63",
+    measurementId: "G-D1PL8FR9EF"
+  };
+</script>
 
 
 

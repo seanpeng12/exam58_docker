@@ -128,20 +128,11 @@
 <!-- END modal login -->
 
 {{-- firebase帳號登入登出 --}}
+
 <script>
 
    
-  // Your web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyBC62oZBm9ftF_O0-eO7BPWx52vprEz38Y",
-    authDomain: "sna-master.firebaseapp.com",
-    databaseURL: "https://sna-master.firebaseio.com",
-    projectId: "sna-master",
-    storageBucket: "sna-master.appspot.com",
-    messagingSenderId: "640892044634",
-    appId: "1:640892044634:web:3c3c94c360528786d31f63",
-    measurementId: "G-D1PL8FR9EF"
-  };
+  
   // Initialize Firebase
 
   
@@ -156,12 +147,24 @@
         var provider = new firebase.auth.GoogleAuthProvider()
         // firebase.auth().signInWithRedirect(provider);
         //  firebase.auth().signInWithPopup(provider).
-        firebase.auth().signInWithRedirect(provider).then(function(result) {
+        firebase.auth().signInWithPopup(provider).then(function(result) {
         if (result.credential) {
             // This gives you a Google Access Token. You can use it to access the Google API.
+             
             var token = result.credential.accessToken;
             // ...
             var user = result.user;
+
+            if(result.additionalUserInfo.isNewUser){
+                    window.location = '/fill_member_data';
+  
+            }
+            
+            else{
+                console.log("not first");
+                    history.go(0);
+            }
+           
 
 
         }
@@ -187,23 +190,46 @@
     var btnLogOut = document.getElementById('btnLogOut');
 btnLogOut.onclick = function() {
   firebase.auth().signOut().then(function() {
-    alert('您已登出帳號');
     var user = firebase.auth().currentUser;
-    console.log(user)
+    console.log(user);
+    history.go(0);
+    alert('您已登出帳號');
   })
 }
 
-
-    
 </script>
-
 <script>
-    firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-        var el=document.getElementById('test');
-        el.textContent=user.displayName+'您好';
-    } else {
-        // No user is signed in.
-    }
-    });
+
+      firebase.auth().onAuthStateChanged(function(user) {
+                    var el=document.getElementById('test');
+                 
+                    if (user) {
+                        
+                        el.textContent=user.displayName+'歡迎您的回來';
+
+                        // var displayName = user.displayName;
+                        // console.log(displayName);
+                        // var email = user.email;
+                        // console.log(email);
+                        // var emailVerified = user.emailVerified;
+                        // console.log(emailVerified);
+
+                        // var photoURL = user.photoURL;
+                        // var isAnonymous = user.isAnonymous;
+                        // var uid = user.uid;
+                        // console.log(uid);
+                        // var providerData = user.providerData;
+                        // console.log(providerData);
+
+                        
+
+                    } else if(null) {
+                        
+                        // el.textContent=user.displayName+'歡迎您加入';
+                    }
+                    });   
+
+        
+
+  
 </script>
