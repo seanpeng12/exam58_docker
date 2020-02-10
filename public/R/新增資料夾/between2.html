@@ -1,6 +1,6 @@
 ---
 title: visNetwork
-header-include: |-
+header - include: | -
 <script src="between2_files/htmlwidgets-1.3/htmlwidgets.js"></script>
 <link href="between2_files/vis-4.20.1/vis.css" rel="stylesheet" />
 <script src="between2_files/vis-4.20.1/vis.min.js"></script>
@@ -9,6 +9,10 @@ head: ''
 background-color: white
 
 ---
+
+
+
+
 
 <div id="htmlwidget_container">
     <div id="htmlwidget-b414b4c4d83797c3e0b3" style="width:100%;height:100%;" class="visNetwork html-widget"></div>
@@ -282,9 +286,89 @@ background-color: white
         "evals": [],
         "jsHooks": []
     }
-
 </script>
 <script type="application/htmlwidget-sizing" data-for="htmlwidget-b414b4c4d83797c3e0b3">
     {"viewer":{"width":"100%","height":"100%","padding":15,"fill":false},"browser":{"width":"100%","height":"100%","padding":40,"fill":false}}
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+<script type="text/javascript">
+    // function addObserverIfDesiredNodeAvailable() {
+    //     var target = document.querySelectorAll(".no")[2];
+    //     if (!target) {
+    //         //node還沒出現(target).
+    //         //等待500ms在試一次.
+    //         window.setTimeout(addObserverIfDesiredNodeAvailable, 500);
+    //         return;
+    //     }
+    //     var target = document.getElementsByClassName("vis-tooltip");
+    //     var config = { attributes: true, attributeFilter: ['style'] };
+    //     composeObserver.observe(target, config);
+    // }
+    // //執行
+    // addObserverIfDesiredNodeAvailable();
+
+
+    // var observer = new MutationObserver(function (mutations) {
+    //     mutations.forEach(function (mutationRecord) {
+    //         console.log('style changed!');
+    //     });
+    // });
+    // var target = document.getElementsByClassName("vis-tooltip");
+    // observer.observe(target, { attributes: true, attributeFilter: ['style'] });
+
+
+    $(document).ready(function () {
+        var existCondition = setInterval(function () {
+            if ($('div.vis-tooltip').length) {
+                
+                console.log("已經出現tooltip!");
+                clearInterval(existCondition);
+                // 在 div class=tooltip加入id = gg(須等待出現tooltip(點擊))
+                $('div').eq(7).attr('id', 'gg');
+
+                //找到vis-tooltip的style數值(僅有第一次)
+                // var $temp = $('div').eq(7).attr('style');
+                // console.log($temp);
+
+                $('#graphhtmlwidget-b414b4c4d83797c3e0b3').on('click', function () {
+
+                    var $test = $('#graphhtmlwidget-b414b4c4d83797c3e0b3').find('p').html();
+                    //加到頁面上(first div in html format)
+                    // $('div:first').prepend($test);
+                    //加到console上
+                    console.log($test);
+                });
+            } else {
+                console.log("尚未出現tooltip!");
+            }
+        }, 100); // check every 100ms
+
+
+        // 判斷是否存在
+        // $(function () {
+        //     if ($("div")[0]) {
+        //         // Do something if class exists
+        //         var $test = '哈囉!';
+        //         $('div').prepend($test);
+        //     } else {
+        //         // Do something if class does not exist
+        //         var $test = '還沒出現!';
+        //         $('div').prepend($test);
+        //     }
+        // });
+
+        // var $listHTML =
+        //     $('.vis-tooltip').change(function () {
+        //         var text1 = $('.vis-tooltip').text();
+        //         console.log(text1);
+        //     });
+        // 在該位置加入程式碼
+
+    });
+
 
 </script>

@@ -6,18 +6,18 @@ library('RMySQL')
 library('visNetwork')
 library('igraph')
 
-connect <- dbConnect(MySQL(), 
+connect <- dbConnect(MySQL(),
                     db = "homestead",
-                    username = "root", 
-                    password = "12345",
-                    host = "localhost")
+                    username = "homestead",
+                    password = "secret",
+                    host = "127.0.0.1")
 
-# #homestead(?��11?��表)
+# #homestead(?��11?���?)
 # dbListTables(connect)
 # #site_data??�表?��
 # dbListFields(connect, "site_data")
 
-#?��?��到cityname
+#?��?��?��cityname
 cname <- args
 # cname <- paste("'",args,"'",sep="")
 
@@ -39,7 +39,7 @@ y$color <- "red"
 n <- merge(x, y, by.x = c("id","type"), by.y = c("id","type"), all = TRUE)
 # print(n)
 nodes <- data.frame(id = c(n$id), group = c(n$type),
-                    label = c(n$id), color = c(n$color), 
+                    label = c(n$id), color = c(n$color),
                     shape = c(n$shape), font.size = 30)
 edges <- data.frame(from = c(sr$from), to = c(sr$to))
 
