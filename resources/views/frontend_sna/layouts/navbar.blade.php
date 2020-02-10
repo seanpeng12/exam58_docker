@@ -162,7 +162,7 @@
             
             else{
                 console.log("not first");
-                    history.go(0);
+                    window.location = '/';
             }
            
 
@@ -205,7 +205,7 @@ btnLogOut.onclick = function() {
                  
                     if (user) {
                         
-                        el.textContent=user.displayName+'歡迎您的回來';
+                        el.textContent=user.displayName+'您好';
 
                         // var displayName = user.displayName;
                         // console.log(displayName);

@@ -129,8 +129,10 @@
       function calculateAndDisplayRoute(directionsService, directionsRenderer) {
         var waypts = [];
         var checkboxArray = document.getElementById('name2');
-        for (var i = 0; i < checkboxArray.length; i++) {
+        var i;
+        for (i = 0; i < checkboxArray.length; i++) {
           if (checkboxArray.options[i].selected) {
+            
             waypts.push({
               location: checkboxArray[i].value,
               stopover: true
@@ -158,19 +160,58 @@
               summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
               summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
               summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+              console.log("route.legs[i].start_address "+ i +route.legs[i].start_address);
+              console.log("route.legs[i].end_address "+ i +route.legs[i].end_address);
+
             }
           } else {
             window.alert('Directions request failed due to ' + status);
           }
         });
+
+
+
+        // print
+      printout = function(){
+          console.log("縣市: "+document.getElementById('country').value);
+          console.log("起點: "+document.getElementById('name').value);
+          console.log("終點: "+document.getElementById('name3').value);
+          var date = new Date();
+          console.log(date);
+          // for(var j=0 ; j<waypts.length ; j++){
+            console.log(waypts);
+          
+            // 寫入資料庫firebase
+            
+          // }
+          var db = firebase.firestore();
+            var user = firebase.auth().currentUser;
+            var country, origin, destination, waypoints
+            country = document.getElementById('country').value;
+            origin = document.getElementById('name').value;
+            destination = document.getElementById('name3').value;
+            db.collection("sightseeingMember").doc(user.email).collection("google路線規劃").doc().set({
+                        city: country,
+                        origin: origin,
+                        destination: destination,
+                        waypoints: waypts,
+                        
+                        timestamp: date
+                        
+                      });
+
+
+
       }
 
       
 
+      }
+
   
     </script>
 
-
+<button onclick="printout()">印出來</button>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A&callback=initMap">
     </script>

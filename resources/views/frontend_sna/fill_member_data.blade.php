@@ -81,7 +81,8 @@
                   var sex, i;
                   for(i=0; i<form.sex.length;i++){
                       if(form.sex[i].checked){
-                          sex = form.sex[i].value;                        
+                          sex = form.sex[i].value;   
+
                       }
                   }
                       // 寫入資料庫
@@ -96,19 +97,22 @@
                       });
 
                       check=1;
-                      console.log(check);
-                  }    
-
-                    if(check==1){
-                      firebase.auth().signOut().then(function() {
-                              alert("註冊完成，請在重新登入");
-                              window.location='/';    
-                        });
-                      
-                    }  
-                }
+                      console.log(check)
+                      console.log(name)
+                      console.log(uid);
+ 
+                    }
        
+                    alert("註冊完成，請在重新登入");
+                    window.location='/';
+                    firebase.auth().signOut().then(function() {
+                      });
+                  }
 
+                     
+                // }
+       
+              
         
     </script>
 
