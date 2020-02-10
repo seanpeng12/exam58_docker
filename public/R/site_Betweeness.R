@@ -8,16 +8,16 @@ library('igraph')
 
 connect <- dbConnect(MySQL(), 
                     db = "homestead",
-                    username = "root", 
-                    password = "12345",
-                    host = "localhost")
+                    username = "homestead", 
+                    password = "secret",
+                    host = "127.0.0.1")
 
-# #homestead(?ï¿½ï¿½11?ï¿½ï¿½è¡¨)
+# #homestead(?ï¿½ï¿½11?ï¿½ï¿½è¡?)
 # dbListTables(connect)
 # #site_data??ï¿½è¡¨?ï¿½ï¿½
 # dbListFields(connect, "site_data")
 
-#?ï¿½ï¿½?ï¿½ï¿½åˆ°cityname
+#?ï¿½ï¿½?ï¿½ï¿½?ˆ°cityname
 cname <- args
 # cname <- paste("'",args,"'",sep="")
 

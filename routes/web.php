@@ -10,6 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
+
+
+
 Route::get('/old', function () {
     return view('frontend.index');
 })->name('home_o');
@@ -60,10 +63,12 @@ Route::post("/testform", "testController@formpass")->name("formpass");
 
 Route::get('/ajax2', 'AjaxController@index')->name('myform');
 Route::post('/ajax2/fetch', 'AjaxController@fetch')->name('myform.fetch');
+Route::post('/ajax2/new', 'AjaxController@fetch_firebase')->name('myform.fetch_data');
 
 Route::get('/deal', 'AjaxController@loginForm')->name('dealGET');
+Route::post('/deal', "AjaxController@loginProcess")->name('dealPOST');
 
-Route::post("/deal", "AjaxController@loginProcess")->name('dealPOST');
+
 
 // Route::get('/home', 'HomeController@index')->name('home');
 

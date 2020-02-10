@@ -12,16 +12,16 @@ opt2 <- strsplit(args,"[[:space:]]")[[1]][3]
 
 connect <- dbConnect(MySQL(), 
                      db = "homestead",
-                     username = "root", 
-                     password = "12345",
-                     host = "localhost")
+                     username = "homestead", 
+                     password = "secret",
+                     host = "127.0.0.1")
 
-# #homestead(?ï¿½ï¿½11?ï¿½ï¿½è¡¨)
+# #homestead(?ï¿½ï¿½11?ï¿½ï¿½è¡?)
 # dbListTables(connect)
 # #site_data??ï¿½è¡¨?ï¿½ï¿½
 # dbListFields(connect, "site_data")
 
-#?ï¿½ï¿½?ï¿½ï¿½åˆ°cityname
+#?ï¿½ï¿½?ï¿½ï¿½?ˆ°cityname
 cname <- city
 tag1 <- opt1
 tag2 <- opt2
@@ -70,5 +70,5 @@ visSave(ccout, file = "C://xampp/htdocs/exam58/public/R/between2.html")
 # dbDisconnect(connect)
 on.exit(dbDisconnect(connect))
 
-# æ¸¬è©¦db?ï¿½??ï¿½ï¿½
+# æ¸¬è©¦db?ï¿???ï¿½ï¿½
 # lapply(dbListConnections(MySQL()), dbDisconnect)
