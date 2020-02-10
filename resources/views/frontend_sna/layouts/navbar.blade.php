@@ -64,9 +64,9 @@
                 
                 <li class="probootstra-cta-button" id="test" ><a href="#" class="btn" data-toggle="modal"
                             data-target="#loginModal">Log in</a></li>
-                <li class="probootstra-cta-button last"><a href="#" class="btn btn-ghost" data-toggle="modal"
-                        data-target="#signupModal">Sign up</a></li>
-                <li class="probootstra-cta-button last"><button id="btnLogOut">LogOut</button></li>
+                <li id="btnLogOut" class="probootstra-cta-button last"><a href="#" class="btn btn-ghost" data-toggle="modal"
+                        data-target="#signupModal">LogOut</a></li>
+                {{-- <li class="probootstra-cta-button last"><button id="btnLogOut">LogOut</button></li> --}}
             </ul>
         </div>
     </div>
@@ -205,7 +205,7 @@ btnLogOut.onclick = function() {
                  
                     if (user) {
                         
-                        el.textContent=user.displayName+'您好';
+                        el.textContent="<br>"+user.displayName+'您好';
 
                         // var displayName = user.displayName;
                         // console.log(displayName);
