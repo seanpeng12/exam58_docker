@@ -65,6 +65,7 @@ Route::get('/ajax2', 'AjaxController@index')->name('myform');
 Route::post('/ajax2/fetch', 'AjaxController@fetch')->name('myform.fetch');
 Route::post('/ajax2/new', 'AjaxController@fetch_firebase')->name('myform.fetch_data');
 
+
 Route::get('/deal', 'AjaxController@loginForm')->name('dealGET');
 Route::post('/deal', "AjaxController@loginProcess")->name('dealPOST');
 

@@ -10,31 +10,31 @@ opt1 <- strsplit(args,"[[:space:]]")[[1]][2]
 opt2 <- strsplit(args,"[[:space:]]")[[1]][3]
 
 
-connect <- dbConnect(MySQL(), 
+connect <- dbConnect(MySQL(),
                      db = "homestead",
-                     username = "homestead", 
+                     username = "homestead",
                      password = "secret",
                      host = "127.0.0.1")
 
-# #homestead(?ï¿½ï¿½11?ï¿½ï¿½è¡?)
+# #homestead(?ï¿½ï¿½11?ï¿½ï¿½ï¿½?)
 # dbListTables(connect)
 # #site_data??ï¿½è¡¨?ï¿½ï¿½
 # dbListFields(connect, "site_data")
 
-#?ï¿½ï¿½?ï¿½ï¿½?ˆ°cityname
+#?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½cityname
 cname <- city
 tag1 <- opt1
 tag2 <- opt2
 sn_sql <- paste("select DISTINCT d.id, d.name, d.city_name, d.type
-                FROM site_relationship r, site_data d, site_attr a 
-                WHERE (r.from_id = d.id AND r.to_id = a.id) 
-                AND d.city_name ='", cname,"' 
+                FROM site_relationship r, site_data d, site_attr a
+                WHERE (r.from_id = d.id AND r.to_id = a.id)
+                AND d.city_name ='", cname,"'
                 AND (a.tag ='", tag1,"' OR a.tag ='", tag2,"')",sep="")
 sa_sql <- paste("select * from site_attr WHERE tag ='", tag1,"' OR tag ='", tag2,"'",sep="")
-sr_sql <- paste("select r.from_id,d.name,r.to_id,a.tag 
-                FROM site_relationship r, site_data d, site_attr a 
-                WHERE (r.from_id = d.id AND r.to_id = a.id) 
-                AND d.city_name ='", cname,"' 
+sr_sql <- paste("select r.from_id,d.name,r.to_id,a.tag
+                FROM site_relationship r, site_data d, site_attr a
+                WHERE (r.from_id = d.id AND r.to_id = a.id)
+                AND d.city_name ='", cname,"'
                 AND (a.tag ='", tag1,"' OR a.tag ='", tag2,"')",sep="")
 
 dbSendQuery(connect,"SET NAMES big5")
@@ -70,5 +70,5 @@ visSave(ccout, file = "C://xampp/htdocs/exam58/public/R/between2.html")
 # dbDisconnect(connect)
 on.exit(dbDisconnect(connect))
 
-# æ¸¬è©¦db?ï¿???ï¿½ï¿½
+# æ¸¬è©¦db?ï¿½???ï¿½ï¿½
 # lapply(dbListConnections(MySQL()), dbDisconnect)

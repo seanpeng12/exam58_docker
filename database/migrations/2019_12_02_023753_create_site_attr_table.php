@@ -11,14 +11,17 @@ class CreateSiteAttrTable extends Migration
      *
      * @return void
      */
+    // public $incrementing = false;
     public function up()
     {
         Schema::create('site_attr', function (Blueprint $table) {
             $table->Integer('id')->primary();
-
             $table->String('type', 45);
             $table->String('tag', 45);
+            $table->String('color', 10);
+            $table->String('shape', 10);
             // $table->timestamps();
+
         });
     }
 
