@@ -17,6 +17,13 @@
 @endsection
 
 
+@section('dataTables')
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+@endsection
+
+
 @section('content')
 
 
@@ -25,7 +32,7 @@
 <section class="probootstrap-section probootstrap-bg-gray">
     <div class="container">
         <div class="row">
-            <div class="col-md-4 probootstrap-animate" data-animate-effect="fadeIn">
+            <div class="col-md-6 probootstrap-animate" data-animate-effect="fadeIn">
 
                 <form action="{{ url("/deal") }}" method="post">
                     @csrf
@@ -80,7 +87,7 @@
                     </div>
                 </form>
                 {{-- ajax部分 --}}
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+                {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> --}}
 
                 <script type="text/javascript">
                     $(document).ready(function(){
@@ -192,16 +199,37 @@
                             }
 
                             function getdata() {
-                                var docRef = db.collection("movies").doc("新世紀福爾摩斯");
-                                docRef.get().then(function(doc) {
+                                var docRef = db.collection("喜歡的地點");
+                                // 網路
+                                // var ref = db.collection('fruit');
+                                // ref.get().then(querySnapshot => {
+                                //     querySnapshot.forEach(doc => {
+                                //         console.log(doc.id, doc.data());
+                                //     });
+                                // });
+
+
+                                docRef.get().then(querySnapshot => {
+                                    querySnapshot.forEach(function(doc) {
                                         if (doc.exists) {
-                                            console.log(doc.data());
+                                            console.log(doc.id, doc.data());
                                         } else {
                                             console.log("找不到文件");
                                         }
-                                    }).catch(function(error) {
+                                    });.catch(function(error) {
                                     console.log("提取文件時出錯:", error);
+                                    });
                                 });
+                                // 原本
+                                // docRef.get().then(function(doc) {
+                                //         if (doc.exists) {
+                                //             console.log(doc.data());
+                                //         } else {
+                                //             console.log("找不到文件");
+                                //         }
+                                //     }).catch(function(error) {
+                                //     console.log("提取文件時出錯:", error);
+                                // });
                             }
 
                             function updatedata() {
@@ -221,5 +249,76 @@
                 </ul>
             </div>
         </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <table id="myDataTable" class="display">
+                    <thead>
+                        <!--必填-->
+
+                        <tr>
+                            <th>#</th>
+                            <th>MyTitle</th>
+                            <th>MyMoney</th>
+                            <th>ActionButton</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Apple</td>
+                            <td>2000</td>
+                            <td>
+                                <button type="button">Edit</button>
+                                <button type="button">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Banana</td>
+                            <td>3000</td>
+                            <td>
+                                <button type="button">Edit</button>
+                                <button type="button">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Cherry</td>
+                            <td>4000</td>
+                            <td>
+                                <button type="button">Edit</button>
+                                <button type="button">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                {{-- jquery datatables --}}
+                <link rel="stylesheet" type="text/css"
+                    href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+
+                <!--引用dataTables.js-->
+                <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js">
+                    >
+
+                    $(document).ready( function () {
+                        $('#myDataTable').DataTable();
+                    } );
+                    // $(document).ready( function () {
+                    //     $('#myDataTable').DataTable({
+                    //     searching: false, //關閉filter功能
+                    //         columnDefs: [{
+                    //             targets: [3],
+                    //             orderable: false,
+                    //         }]
+                    //     });
+                    // });
+
+                </script>
+            </div>
+        </div>
     </div>
 </section>
+@endsection

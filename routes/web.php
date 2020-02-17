@@ -87,6 +87,10 @@ Route::get('fill_member_data', function () {
     return view('frontend_sna.fill_member_data');
 })->name('index');
 
+Route::get('/ccc', function () {
+    return view('frontend_sna.test');
+})->name('ccc');
+
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');

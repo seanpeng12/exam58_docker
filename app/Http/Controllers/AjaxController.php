@@ -30,8 +30,6 @@ class AjaxController extends Controller
         $output = 'title=' . $title . 'url=' . $url . '。';
         $msg = "這是一條簡單的消息.";
         return response()->json(array('msg' => $msg, 'title' => $title, 'url' => $url), 200);
-        // echo $output;
-        // return response()->json(['success' => 'Got Simple Ajax Request.']);
     }
 
     //post myform(Ajax)
