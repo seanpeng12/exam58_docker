@@ -59,10 +59,10 @@
                     </ul>
                 </li>
 
-                <li><a href="contact.html">Contact</a></li>
+                <li><a id="hola"></a></li>
 
                 
-                <li class="probootstra-cta-button" id="test" ><a href="#" class="btn" data-toggle="modal"
+                <li class="probootstra-cta-button" id="test" ><a href="" class="btn" data-toggle="modal"
                             data-target="#loginModal">Log in</a></li>
                 <li id="btnLogOut" class="probootstra-cta-button last"><a href="#" class="btn btn-ghost" data-toggle="modal"
                         data-target="#signupModal">LogOut</a></li>
@@ -108,13 +108,13 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <button class="btn btn-primary btn-ghost btn-block btn-connect-facebook"><span>connect
-                                                with</span> Facebook</button>
+                                        {{-- <button class="btn btn-primary btn-ghost btn-block btn-connect-facebook"><span>connect
+                                                with</span> Facebook</button> --}}
                                         {{-- 下面是google存mysql的登入方式 --}}
                                         {{-- <a href="{{url('/redirect')}}" class="btn btn-primary">Login with Google</a> --}}
                                         {{-- <button class="btn btn-primary btn-ghost btn-block btn-connect-facebook" id="btnlogIn"> Google(firebase)</button> --}}
     
-                                        <button id="btnLogIn">LogIn</button>
+                                        <button id="btnLogIn" class="btn btn-primary btn-ghost btn-block btn-connect-facebook">connect with Google</button>
                                     </div>
                                 </div>
                             </div>
@@ -137,7 +137,6 @@
 
   
   var a = firebase.initializeApp(firebaseConfig);
-  console.log(a)
 
   // ========登入帳號===========
 
@@ -162,7 +161,9 @@
             
             else{
                 console.log("not first");
-                    window.location = '/';
+                    // window.location = '/';
+                        history.go(0);
+
             }
            
 
@@ -202,11 +203,12 @@ btnLogOut.onclick = function() {
 
       firebase.auth().onAuthStateChanged(function(user) {
                     var el=document.getElementById('test');
+                    var el2=document.getElementById('hola');
                  
                     if (user) {
                         
-                        el.textContent="<br>"+user.displayName+'您好';
-
+                        el.innerHTML="";
+                        el2.innerHTML=user.displayName+"您好";
                         // var displayName = user.displayName;
                         // console.log(displayName);
                         // var email = user.email;

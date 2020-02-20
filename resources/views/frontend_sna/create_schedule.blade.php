@@ -107,6 +107,8 @@
     </select>
     <br>
       <input type="submit" id="submit">
+      <button id="save" onclick="printout()">印出來</button>
+
     </div>
     <div id="directions-panel"></div>
     </div>
@@ -170,9 +172,19 @@
         });
 
 
+      var user = firebase.auth().currentUser;
 
+    
+      
+   
+      // No user is signed in.
+    
         // print
       printout = function(){
+    if (!user) {
+      alert('請先登入帳號，才可使用收藏功能');
+    }
+    else{
           console.log("縣市: "+document.getElementById('country').value);
           console.log("起點: "+document.getElementById('name').value);
           console.log("終點: "+document.getElementById('name3').value);
@@ -202,16 +214,15 @@
 
 
 
+        }
       }
-
       
 
-      }
+    }
 
   
     </script>
 
-<button onclick="printout()">印出來</button>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A&callback=initMap">
     </script>
