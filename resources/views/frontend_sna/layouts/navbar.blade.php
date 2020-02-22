@@ -62,8 +62,11 @@
                 <li><a id="hola"></a></li>
 
                 
-                <li class="probootstra-cta-button" id="test" ><a href="" class="btn" data-toggle="modal"
-                            data-target="#loginModal">Log in</a></li>
+                {{-- <li class="probootstra-cta-button" id="test" ><a href="" class="btn" data-toggle="modal"
+                            data-target="#loginModal">Log in</a></li> --}}
+                 <li id="btnLogIn" class="probootstra-cta-button"><a href="#" class="btn" data-toggle="modal"
+                        data-target="#signupModal">以google方式登入</a></li>          
+
                 <li id="btnLogOut" class="probootstra-cta-button last"><a href="#" class="btn btn-ghost" data-toggle="modal"
                         data-target="#signupModal">LogOut</a></li>
                 {{-- <li class="probootstra-cta-button last"><button id="btnLogOut">LogOut</button></li> --}}
@@ -114,7 +117,7 @@
                                         {{-- <a href="{{url('/redirect')}}" class="btn btn-primary">Login with Google</a> --}}
                                         {{-- <button class="btn btn-primary btn-ghost btn-block btn-connect-facebook" id="btnlogIn"> Google(firebase)</button> --}}
     
-                                        <button id="btnLogIn" class="btn btn-primary btn-ghost btn-block btn-connect-facebook">connect with Google</button>
+                                        {{-- <button id="btnLogIn" class="btn btn-primary btn-ghost btn-block btn-connect-google">connect with Google</button> --}}
                                     </div>
                                 </div>
                             </div>
@@ -137,7 +140,7 @@
 
   
   var a = firebase.initializeApp(firebaseConfig);
-
+a.firestore().settings( { timestampsInSnapshots: true })
   // ========登入帳號===========
 
    window.onload = function() {
@@ -202,7 +205,7 @@ btnLogOut.onclick = function() {
 <script>
 
       firebase.auth().onAuthStateChanged(function(user) {
-                    var el=document.getElementById('test');
+                    var el=document.getElementById('btnLogIn');
                     var el2=document.getElementById('hola');
                  
                     if (user) {
@@ -210,9 +213,9 @@ btnLogOut.onclick = function() {
                         el.innerHTML="";
                         el2.innerHTML=user.displayName+"您好";
                         // var displayName = user.displayName;
-                        // console.log(displayName);
+                        console.log(user.displayName);
                         // var email = user.email;
-                        // console.log(email);
+                        console.log(user.email);
                         // var emailVerified = user.emailVerified;
                         // console.log(emailVerified);
 

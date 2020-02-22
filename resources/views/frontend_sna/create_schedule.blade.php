@@ -172,7 +172,7 @@
         });
 
 
-      var user = firebase.auth().currentUser;
+      
 
     
       
@@ -181,10 +181,13 @@
     
         // print
       printout = function(){
+        var user = firebase.auth().currentUser;
     if (!user) {
+
       alert('請先登入帳號，才可使用收藏功能');
     }
     else{
+      console.log("收藏");
           console.log("縣市: "+document.getElementById('country').value);
           console.log("起點: "+document.getElementById('name').value);
           console.log("終點: "+document.getElementById('name3').value);

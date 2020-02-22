@@ -85,7 +85,7 @@ Route::get('firebaseRoll', function () {
 // 第一次登入使用者進入填寫會員資料頁面
 Route::get('fill_member_data', function () {
     return view('frontend_sna.fill_member_data');
-})->name('index');
+})->name('fill_member_data');
 
 Auth::routes();
 

@@ -27,9 +27,9 @@
 
                 {{-- <input type="submit" class="btn btn-primary btn-lg" id="submit" name="submit" value="Submit Form"> --}}
               </div>
-
             </form>
-                                          <button onclick="storeData()"> 送出表單</button>
+              <button onclick="storeData()"> 送出表單</button>
+                    {{-- <button type="submit" id="storeData">送出表單</button> --}}
 
           </div>
           <div class="col-md-6 col-md-push-1 probootstrap-animate" data-animate-effect="fadeIn">
@@ -60,57 +60,82 @@
     <script>
       
                 // Step1新增第三方登入資料在firestore
-            // window.onload = function(){
-                  storeData = function (){
-
-                    var check=0;
-                    if(check==0){
-                  var db = firebase.firestore();
-                  var user = firebase.auth().currentUser;
-                    var name, email, uid;
-                    name = user.displayName;
-                    email = user.email;
-                    uid = user.uid;
             
-                  // 取得memberData表單資料
-                  //  讀取radio的值
-                  // revealData = function (){
-                  var form = document.getElementById("memberData");
-                  var birthday = form.birthday.value;
-                  // alert(birthday);
-                  var sex, i;
-                  for(i=0; i<form.sex.length;i++){
-                      if(form.sex[i].checked){
-                          sex = form.sex[i].value;   
+              
+                  // storeData = function (){
+                    // async function main() {
+                      
+
+                  function saveData(value){
+                    // return new Promise((resolve, reject) => {
+                      if(value===1){
+                       
+                        var db = firebase.firestore();
+                            var user = firebase.auth().currentUser;
+                            var name, email, uid;
+                            name = user.displayName;
+                            email = user.email;
+                            uid = user.uid;                  
+                            // 取得memberData表單資料
+                            //  讀取radio的值
+                            var form = document.getElementById("memberData");
+                            var birthday = form.birthday.value;
+                            var sex, i;
+                            for(i=0; i<form.sex.length;i++){
+                                if(form.sex[i].checked){
+                                    sex = form.sex[i].value;  
+                                }
+                            }
+                                // 寫入資料庫                            
+                            return  db.collection("sightseeingMember").doc(uid).set({
+                                    name: name,
+                                    uid: uid,
+                                    email: email,
+                                    birthday: birthday,
+                                    sex: sex
+                                });
+                          
 
                       }
+                      else{
+                        console.log("failed");
+                      }
+                      
+                    // })
                   }
-                      // 寫入資料庫
-                      
-                      
-                      db.collection("sightseeingMember").doc(email).set({
-                          name: name,
-                          uid: uid,
-                          email: email,
-                          birthday: birthday,
-                          sex: sex
-                      });
 
-                      check=1;
-                      console.log(check)
-                      console.log(name)
-                      console.log(uid);
- 
+                  // function logOut(){
+                  //             alert("註冊完成，請在重新登入");
+                  //             return firebase.auth().signOut().then(function() {
+                  //                   window.location='/';
+
+                  //               });
+                  // }
+                 
+                     function main(){
+                       saveData(1).then((result) => {
+                         alert("註冊完成，請在重新登入");
+                              return firebase.auth().signOut().then(function() {
+                                    window.location='/';
+
+                                });
+                          
+
+                          
+                      }).catch((error) => {
+                          // 不會被執行, 因為狀態是成功
+                      })
+                       
+                            
+                        // return logOut();      
+                                            
                     }
-       
-                    alert("註冊完成，請在重新登入");
-                    window.location='/';
-                    firebase.auth().signOut().then(function() {
-                      });
-                  }
-
-                     
-                // }
+                    
+                    storeData = function(){
+                      main();
+                    }
+                    
+                                  
        
               
         
