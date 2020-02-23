@@ -96,7 +96,7 @@
                                 data-dependent="name3" style="height: 200px" data-live-search="true" multiple="multiple">
     </select>
     <br>
-    <b>End:</b>
+    <b>請選擇終點:</b>
     {{-- <select id="end"> --}}
     <select name="name3[]" id="name3" class=" form-control input-lg dropdown-primary md-form "
                                      style="height: 50px" data-live-search="true">
@@ -107,7 +107,7 @@
     </select>
     <br>
       <input type="submit" id="submit">
-      <button id="save" onclick="printout()">印出來</button>
+      <button id="save" onclick="printout()">收藏在我的最愛</button>
 
     </div>
     <div id="directions-panel"></div>
@@ -129,22 +129,53 @@
       }
 
       function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+        // 為了取得多選id=name2多選選單，有選到就push進去waypts[]
         var waypts = [];
         var checkboxArray = document.getElementById('name2');
         var i;
         for (i = 0; i < checkboxArray.length; i++) {
           if (checkboxArray.options[i].selected) {
             
+            // checkboxArray[i].id=address
+            // checkboxArray[i].id=name
+
             waypts.push({
-              location: checkboxArray[i].value,
+              location: checkboxArray[i].id,
               stopover: true
             });
           }
         }
+// 為了取id=name的單選下拉式選單(origin)
+        var orig =document.getElementById('name');
+        var j;
+        console.log(orig.length);
+        for(var j=0; j<orig.length;j++){
+                if(orig.options[j].selected){
+                    orig = orig[j].id;
+                    // 取到就結束
+                    break;
+                    // alert(orig);
+                                // console.log(orig);
 
+                }
+            }
+            console.log(orig);
+// 為了取id=name3的單選下拉式選單(destination)
+        var destin = document.getElementById('name3');
+        for(var j=0; j<destin.length;j++){
+                if(destin.options[j].selected){
+                    destin = destin[j].id;
+                    break;
+                    // alert(orig);
+                                // console.log(orig);
+
+                }
+            }
+            console.log(destin);
+        // console.log(document.getElementById('name')[3].id);
         directionsService.route({
-          origin: document.getElementById('name').value,
-          destination: document.getElementById('name3').value,
+          origin: orig,
+          destination: destin,
           waypoints: waypts,
           optimizeWaypoints: true,
           travelMode: 'DRIVING'
@@ -157,13 +188,14 @@
             // For each route, display summary information.
             for (var i = 0; i < route.legs.length; i++) {
               var routeSegment = i + 1;
-              summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+              summaryPanel.innerHTML += '<b>路徑: ' + routeSegment +
                   '</b><br>';
-              summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-              summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+              summaryPanel.innerHTML += route.legs[i].start_address + ' → ';
+              summaryPanel.innerHTML += route.legs[i].end_address + '<br>總共';
               summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-              console.log("route.legs[i].start_address "+ i +route.legs[i].start_address);
-              console.log("route.legs[i].end_address "+ i +route.legs[i].end_address);
+              console.log(route.legs[i]);
+              // console.log("route.legs[i].start_address "+ i +route.legs[i].start_address);
+              // console.log("route.legs[i].end_address "+ i +route.legs[i].end_address);
 
             }
           } else {
@@ -205,7 +237,7 @@
             country = document.getElementById('country').value;
             origin = document.getElementById('name').value;
             destination = document.getElementById('name3').value;
-            db.collection("sightseeingMember").doc(user.email).collection("google路線規劃").doc().set({
+            db.collection("sightseeingMember").doc(user.uid).collection("google路線規劃").doc().set({
                         city: country,
                         origin: origin,
                         destination: destination,

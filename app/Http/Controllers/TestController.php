@@ -59,7 +59,7 @@ class TestController extends Controller
         //     echo $data->tag . "</br>";
         // }
     }
-// form1 取site_data.city_name
+    // form1 取site_data.city_name
     public function index(Request $request)
     {
         // $country_list = FacadesDB::table('site_data')->groupBy('city_name')->get();
@@ -70,9 +70,8 @@ class TestController extends Controller
             ->get();
 
         return view('frontend_sna.create_schedule')->with('country_list', $country_list);
-
     }
-// form2 取site_data.name
+    // form2 取site_data.name
     public function fetch(Request $request)
     {
         // 取得ajax的selectbox
@@ -90,7 +89,7 @@ class TestController extends Controller
 
         // 方法一(直接raw sql可用)
         // $data = FacadesDB::select("SELECT DISTINCT site_attr.tag FROM ((site_data INNER JOIN site_relationship on site_data.id=site_relationship.from_id) INNER JOIN site_attr on site_relationship.to_id=site_attr.id ) WHERE site_data.city_name = '$value'");
-        $data = FacadesDB::select("SELECT site_data.name FROM site_data WHERE site_data.city_name = '$value'");
+        $data = FacadesDB::select("SELECT * FROM site_data WHERE site_data.city_name = '$value'");
         //方法四之二(閉包含數讀取$value(失敗))
         // $data = FacadesDB::table('site_data')
         //     ->join('site_relationship', function ($join1) {
@@ -113,7 +112,7 @@ class TestController extends Controller
 
             // 原始正確碼
 
-            $output .= '<option data-tokens="' . $row->name . '">' . $row->name . '</option>';
+            $output .= '<option id="' . $row->address . '">' . $row->name . '</option>';
 
             //可用來debug
             // $output = "dependent ='$dependent' and  value ='$value' and  select='$select'";
