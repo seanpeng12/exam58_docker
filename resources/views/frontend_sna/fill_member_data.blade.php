@@ -113,7 +113,16 @@
                   // }
                  
                      function main(){
-                       saveData(1).then((result) => {
+                       
+                       
+                            
+                        // return logOut();      
+                                            
+                    }
+                    
+                    storeData = function(){
+                      // main();
+                      saveData(1).then((result) => {
                          alert("註冊完成，請在重新登入");
                               return firebase.auth().signOut().then(function() {
                                     window.location='/';
@@ -125,14 +134,6 @@
                       }).catch((error) => {
                           // 不會被執行, 因為狀態是成功
                       })
-                       
-                            
-                        // return logOut();      
-                                            
-                    }
-                    
-                    storeData = function(){
-                      main();
                     }
                     
                                   

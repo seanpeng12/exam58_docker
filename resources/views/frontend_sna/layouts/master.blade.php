@@ -46,6 +46,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,700">
     <link rel="stylesheet" href="css/ano/styles-merged.css">
     <link rel="stylesheet" href="css/ano/style.min.css">
+
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
   <link href="//raw.githack.com/hnzzmsf/layui-formSelects/master/dist/formSelects-v4.css" rel="stylesheet" />
@@ -71,25 +72,7 @@
 
 
 
-    {{-- multiselect --}}
-
-    {{-- <script data-require="jquery@2.2.4" data-semver="2.2.4"
-    src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> --}}
-    {{-- <link data-require="bootstrap@3.3.7" data-semver="3.3.7" rel="stylesheet"
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-  <script data-require="bootstrap@3.3.7" data-semver="3.3.7"
-    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="style.css" />
-  <script src="script.js"></script> --}}
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.min.js"></script>
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.min.css" /> --}}
-
-
-    <!--[if lt IE 9]>
-      <script src="js/vendor/html5shiv.min.js"></script>
-      <script src="js/vendor/respond.min.js"></script>
-    <![endif]-->
+    
 
 
 

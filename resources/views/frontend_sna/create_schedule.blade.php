@@ -49,7 +49,17 @@
         overflow: scroll;
         height: 174px;
       }
-	</style>
+  </style>
+  {{-- 下拉多選，模糊搜尋 --}}
+
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+  {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.min.css" rel="stylesheet" /> --}}
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.jquery.min.js"></script> --}}
+
 	
 	<section class="probootstrap-section probootstrap-bg-gray">
         <div class="container">
@@ -67,12 +77,25 @@
     <div id="map"></div>
     <div id="right-panel">
     <div>
+      <select class="example" multiple style="width: 300px">
+  	<option>Tom</option>
+  	  	<option>a</option>
+  	<option>b</option>
+
+  </select>
     <b>請選擇縣市:</b>
-    <select name="country" id="country" class="form-control input-lg dynamic"
+    <select name="country" id="country" class=" form-control input-lg dynamic"
                                 data-dependent="name" style="height: 50px">
                                 @foreach ($country_list as $country)
                                 <option value="{{$country->city_name}}">{{$country->city_name}}</option>
                                 @endforeach
+    </select>
+    <b>請選擇您的交通方式:</b>
+    <select name="travelMode" id="travelMode" class=" form-control input-lg" style="height: 50px">
+          <option value="DRIVING">汽車</option>
+          <option value="TRANSIT">大眾</option>         
+        
+          <option value="WALKING">走路</option>                      
     </select>
     {{-- <select id="start">
       <option value="和安宮, 台北">和安宮, 台北</option>
@@ -81,8 +104,8 @@
       <option value="Miami, FL">Miami, FL</option>
     </select> --}}
     <b>請選擇起點:</b>
-    <select name="name[]" id="name" class=" form-control input-lg dropdown-primary md-form "
-                                data-dependent="name2"" style="height: 50px" data-live-search="true">
+    <select name="name[]" id="name" class="form-control input-lg dropdown-primary md-form"
+                                data-dependent="name2" style="height: 50px" data-live-search="true">
     </select>
     <br>
     <b>請選擇中繼點:</b> <br>
@@ -105,6 +128,14 @@
       <option value="San Francisco, CA">San Francisco, CA</option>
       <option value="Los Angeles, CA">Los Angeles, CA</option> --}}
     </select>
+
+    <script type="text/javascript">
+// var $jQ = jQuery.noConflict();
+
+    
+      $( ".example" ).select2();
+  
+  </script>
     <br>
       <input type="submit" id="submit">
       <button id="save" onclick="printout()">收藏在我的最愛</button>
@@ -148,7 +179,7 @@
 // 為了取id=name的單選下拉式選單(origin)
         var orig =document.getElementById('name');
         var j;
-        console.log(orig.length);
+        
         for(var j=0; j<orig.length;j++){
                 if(orig.options[j].selected){
                     orig = orig[j].id;
@@ -159,7 +190,7 @@
 
                 }
             }
-            console.log(orig);
+            
 // 為了取id=name3的單選下拉式選單(destination)
         var destin = document.getElementById('name3');
         for(var j=0; j<destin.length;j++){
@@ -171,14 +202,16 @@
 
                 }
             }
-            console.log(destin);
+            
         // console.log(document.getElementById('name')[3].id);
+        // var travelMode = document.getElementById('travelMode').value;
         directionsService.route({
           origin: orig,
           destination: destin,
           waypoints: waypts,
           optimizeWaypoints: true,
-          travelMode: 'DRIVING'
+          travelMode: 'TRANSIT',
+                   
         }, function(response, status) {
           if (status === 'OK') {
             directionsRenderer.setDirections(response);
@@ -193,7 +226,7 @@
               summaryPanel.innerHTML += route.legs[i].start_address + ' → ';
               summaryPanel.innerHTML += route.legs[i].end_address + '<br>總共';
               summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-              console.log(route.legs[i]);
+              // console.log(route.legs[i]);
               // console.log("route.legs[i].start_address "+ i +route.legs[i].start_address);
               // console.log("route.legs[i].end_address "+ i +route.legs[i].end_address);
 
@@ -224,9 +257,9 @@
           console.log("起點: "+document.getElementById('name').value);
           console.log("終點: "+document.getElementById('name3').value);
           var date = new Date();
-          console.log(date);
+          
           // for(var j=0 ; j<waypts.length ; j++){
-            console.log(waypts);
+            
           
             // 寫入資料庫firebase
             
