@@ -1,3 +1,4 @@
+/* 載入lodash，掛到全域 */
 window._ = require('lodash');
 
 /**
@@ -5,6 +6,8 @@ window._ = require('lodash');
  * for JavaScript based Bootstrap features such as modals and tabs. This
  * code may be modified to fit the specific needs of your application.
  */
+/* 載入jquery，掛到全域 */
+/* 載入bootstrap 的 jQuery plugin */
 
 try {
     window.Popper = require('popper.js').default;
@@ -18,6 +21,18 @@ try {
  * to our Laravel back-end. This library automatically handles sending the
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
+/* 載入Vue跟vue-resource */
+window.Vue = require('vue');
+require('vue-resource');
+/**
+ * Laravel透過CSRF TOKEN驗證，記得設定
+ * 讓每個透過vue-resources送出的請求順利送達
+ */
+Vue.http.interceptors.push((request, next) => {
+    request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken);
+
+    next();
+});
 
 window.axios = require('axios');
 

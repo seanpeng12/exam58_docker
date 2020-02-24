@@ -65,7 +65,7 @@ $N = $A;
 $n = '"'.$N.'"';
 
 // 以外部指令的方式呼叫 R 進行繪圖->between_city.html
-// exec("Rscript R/site_Betweeness_2020.R $n", $results);
+exec("Rscript R/site_Betweeness_2020.R $n", $results);
 // print_r($results);
 // // 產生亂數
 $nocache = rand();
@@ -83,7 +83,7 @@ $temp_d = "$city $N2 $N3";
 $cc = '"'.$temp_d.'"';
 
 // 以外部指令的方式呼叫 R 進行繪圖->between_relationship.html
-// exec("Rscript R/betweenss_attr_2020.R $cc");
+exec("Rscript R/betweenss_attr_2020.R $cc");
 
 $nocache_2 = rand();
 
@@ -482,6 +482,9 @@ $name2 = "R/between_relationship.html?$nocache_2";
                             // 產生現在時間
                             var Today = new Date();
                             var time = Today.toLocaleString();
+                            var strA = '<?php echo $A ?>';
+                            var strB = '<?php echo $B ?>';
+                            var strC = '<?php echo $C ?>';
                             // 找到文字
 
                             var name_place = $('#frame2').contents().find('[id^="graphhtmlwidget"]').find('p').html();
@@ -491,12 +494,19 @@ $name2 = "R/between_relationship.html?$nocache_2";
                                 name: name_place,
                                 date: time,
                                 desctiption: name_place,
+                                city: strA,
+                                catagory_1: strB,
+                                catagory_2: strC,
                             });
                             // console.log("傳資料");
                         }
 
                         //ajax input data(success)
                         function insert() {
+                            var strA = '<?php echo $A ?>';
+                            var strB = '<?php echo $B ?>';
+                            var strC = '<?php echo $C ?>';
+
                             var title = $("#title_1").val();
                             var url = $("#url_1").val();
                             $('#success').html('傳送中..');
@@ -508,12 +518,15 @@ $name2 = "R/between_relationship.html?$nocache_2";
                                 type: "POST",//方法
                                 url: "/ajax2/new" ,//表單接收url
                                 data: {
-                                    title:title, url:url, '_token': $('meta[name="csrf-token"]').attr('content'),
+                                    city:strA, cat1:strB, cat2:strC, title:title, url:url, '_token': $('meta[name="csrf-token"]').attr('content'),
 
                                 },
                                 success: function (result) {
                                     //提交成功的提示詞或者其他反饋程式碼
                                     console.log(result);
+                                    $('#success').html(result.city);
+                                    $('#success').html(result.cat1);
+                                    $('#success').html(result.cat2);
                                     $('#success').html(result.msg);
                                     $('#success').html(result.title);
                                     $('#success').html(result.url);

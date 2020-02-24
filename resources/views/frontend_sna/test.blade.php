@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-
+    {{-- datatable會用到 --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    {{-- firebase --}}
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-firestore.js"></script>
@@ -35,10 +37,64 @@
     </div>
 
     <button onclick="test123()">建立喜好項目</button>
-    <button onclick="getdata()">取得喜好項目內資料</button>
+    <button onclick="getdata()">取得資料顯示在log</button>
     <button onclick="updatedata()">更新日期</button>
+    <button onclick="new_getdata()">取得喜好項目內資料</button>
     <p></p><br>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+    <table id="myDataTalbe" class="display">
+        <thead>
+            <!--必填-->
+
+            <tr>
+                <th>加入最愛時間</th>
+                <th>景點名稱</th>
+                <th>城市</th>
+                <th>類別1</th>
+                <th>類別2</th>
+                <th>動作</th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+            <tr>
+                <td>1</td>
+                <td>Apple</td>
+                <td>2000</td>
+                <td>Apple</td>
+                <td>2000</td>
+                <td>
+                    <button type=" button">修改</button>
+                    <button type="button">刪除</button>
+                </td>
+            </tr>
+
+
+        </tbody>
+    </table>
+    <!--引用jQuery-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <!--引用dataTables.js-->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+
+            $("#myDataTalbe").DataTable({
+                searching: false, //關閉filter功能
+                columnDefs: [{
+                    targets: [3],
+                    orderable: false,
+                }]
+            });
+        });
+    </script>
+
+
+
+    {{-- 測試firebase --}}
+    {{-- 原本的ajax script位置 --}}
     <script>
         // Your web app's Firebase configuration
             var firebaseConfig = {
@@ -54,7 +110,14 @@
             // Initialize Firebase
             firebase.initializeApp(firebaseConfig);
             // firebase.analytics();
-            var db = firebase.firestore();
+
+
+            const db = firebase.firestore();
+            const settings = {/* your settings... */ timestampsInSnapshots: true};
+            db.settings(settings);
+
+            // var db = firebase.firestore();
+
 
             function test123() {
                 db.collection("喜好項目").doc("喜歡的地點").set({
@@ -64,6 +127,47 @@
                     actors: ["班尼迪克·康柏拜區", "馬丁·費曼"]
                 });
                 console.log("傳資料");
+            }
+            function new_getdata() {
+                var index = 0;
+                var lastIndex = 0;
+                var htmls = [];
+
+                var docRef = db.collection("喜歡的地點");
+                // 根據date排序
+                docRef = docRef.orderBy("date");
+                docRef.get().then(querySnapshot => {
+                    querySnapshot.forEach(function(doc, index) {
+                        if (doc.exists) {
+                            console.log(doc.id, doc.data());
+
+                            htmls.push('<tr>\
+                                <td>'+ doc.data().date +'</td>\
+                                <td>'+ doc.data().desctiption +'</td>\
+                                <td>'+ doc.data().city +'</td>\
+                                <td>'+ doc.data().catagory_1 +'</td>\
+                                <td>'+ doc.data().catagory_2 +'</td>\
+                                <td><button>修改最愛</button>\
+                                    <button id='+ doc.id +' onclick="delete_button()">刪除最愛</button>\
+                            </tr>');
+                            lastIndex = index;
+                            $('#tbody').html(htmls);
+                        } else {
+                            console.log("找不到文件");
+                        }
+                    });
+                });
+            }
+            var id_delete = "";
+            function delete_button() {
+
+                document.body.onclick = function(event){    //抓到id
+                    id_delete = event.target.id;
+                    console.log(id_delete+"正在刪除...");
+
+                    deletedata(id_delete);
+                }
+
             }
 
             function getdata() {
@@ -75,7 +179,6 @@
                 //         console.log(doc.id, doc.data());
                 //     });
                 // });
-
 
                 docRef.get().then(querySnapshot => {
                     querySnapshot.forEach(function(doc) {
@@ -103,68 +206,28 @@
                     date: "1000",
                 });
             }
+
+            function deletedata(id_delete) {
+                var id = id_delete;
+                db.collection("喜歡的地點").doc(id).set({
+                });
+            }
     </script>
 
 
-    <table id="myDataTalbe" class="display">
-        <thead>
-            <!--必填-->
 
-            <tr>
-                <th>#</th>
-                <th>MyTitle</th>
-                <th>MyMoney</th>
-                <th>ActionButton</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Apple</td>
-                <td>2000</td>
-                <td>
-                    <button type="button">修改</button>
-                    <button type="button">刪除</button>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Banana</td>
-                <td>3000</td>
-                <td>
-                    <button type="button">修改</button>
-                    <button type="button">刪除</button>
-                </td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Cherry</td>
-                <td>4000</td>
-                <td>
-                    <button type="button">修改</button>
-                    <button type="button">刪除</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <!--引用jQuery-->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
-    <!--引用dataTables.js-->
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <div>
+        答案是
+        <example-Component>
+            <div id="app">
+                @{{ message }}
+            </div>
 
-    <script type="text/javascript">
-        $(function () {
-
-            $("#myDataTalbe").DataTable({
-                searching: false, //關閉filter功能
-                columnDefs: [{
-                    targets: [3],
-                    orderable: false,
-                }]
-            });
-        });
-    </script>
+            <div id="app">
+                @{{ state }}
+            </div>
+        </example-component>
+    </div>
 </body>
 
 </html>
