@@ -91,6 +91,14 @@ Route::get('create_itinerary', function () {
     return view('frontend_sna.create_itinerary');
 })->name('create_itinerary');
 
+Route::get('/ccc', function () {
+    return view('frontend_sna.test');
+})->name('ccc');
+
+Route::get('/ccc2', function () {
+    return view('crudlaravel');
+})->name('ccc2');
+
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');

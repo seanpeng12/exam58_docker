@@ -38,26 +38,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-    <title>uiCookies:Stack &mdash; Free Bootstrap Theme, Free Website Template</title>
+    <title>SIGHTSEEING &mdash; 旅遊小幫手</title>
     <meta name="description" content="Free Bootstrap Theme by uicookies.com">
-    <meta name="keywords"
-        content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
-
+    <meta name="keywords" content="SIGHTSEEING 旅遊小幫手">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,700">
     <link rel="stylesheet" href="css/ano/styles-merged.css">
     <link rel="stylesheet" href="css/ano/style.min.css">
 
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 
-  <link href="//raw.githack.com/hnzzmsf/layui-formSelects/master/dist/formSelects-v4.css" rel="stylesheet" />
-<script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-firestore.js"></script>
-  {{-- <script src="//unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script>
+
+    <link href="//raw.githack.com/hnzzmsf/layui-formSelects/master/dist/formSelects-v4.css" rel="stylesheet" />
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-firestore.js"></script>
+    {{-- <script src="//unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script>
   <script src="//raw.githack.com/hnzzmsf/layui-formSelects/master/dist/formSelects-v4.min.js"></script> --}}
 
-<script>
-// Your web app's Firebase configuration
+    <script>
+        // Your web app's Firebase configuration
   var firebaseConfig = {
     apiKey: "AIzaSyBC62oZBm9ftF_O0-eO7BPWx52vprEz38Y",
     authDomain: "sna-master.firebaseapp.com",
@@ -68,12 +68,11 @@
     appId: "1:640892044634:web:3c3c94c360528786d31f63",
     measurementId: "G-D1PL8FR9EF"
   };
-</script>
+    </script>
 
 
 
     
-
 
 
 
@@ -88,9 +87,9 @@
 
 
 
-  @include('frontend_sna.layouts.navbar')
-  @yield('content')
-  {{-- @include('frontend_sna.layouts.footer') --}}
+    @include('frontend_sna.layouts.navbar')
+    @yield('content')
+    {{-- @include('frontend_sna.layouts.footer') --}}
 
 
 
@@ -114,11 +113,11 @@
   </body>
 </html> --}}
 
-  <script src="js/ano/scripts.min.js"></script>
-  <script src="js/ano/custom.min.js"></script>
+    <script src="js/ano/scripts.min.js"></script>
+    <script src="js/ano/custom.min.js"></script>
 
-  
-   
+
+
 
 </body>
 

@@ -17,6 +17,13 @@
 @endsection
 
 
+@section('dataTables')
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+@endsection
+
+
 @section('content')
 
 
@@ -25,7 +32,7 @@
 <section class="probootstrap-section probootstrap-bg-gray">
     <div class="container">
         <div class="row">
-            <div class="col-md-4 probootstrap-animate" data-animate-effect="fadeIn">
+            <div class="col-md-6 probootstrap-animate" data-animate-effect="fadeIn">
 
                 <form action="{{ url("/deal") }}" method="post">
                     @csrf
@@ -80,7 +87,7 @@
                     </div>
                 </form>
                 {{-- ajax部分 --}}
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+                {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> --}}
 
                 <script type="text/javascript">
                     $(document).ready(function(){
@@ -192,16 +199,37 @@
                             }
 
                             function getdata() {
-                                var docRef = db.collection("movies").doc("新世紀福爾摩斯");
-                                docRef.get().then(function(doc) {
+                                var docRef = db.collection("喜歡的地點");
+                                // 網路
+                                // var ref = db.collection('fruit');
+                                // ref.get().then(querySnapshot => {
+                                //     querySnapshot.forEach(doc => {
+                                //         console.log(doc.id, doc.data());
+                                //     });
+                                // });
+
+
+                                docRef.get().then(querySnapshot => {
+                                    querySnapshot.forEach(function(doc) {
                                         if (doc.exists) {
-                                            console.log(doc.data());
+                                            console.log(doc.id, doc.data());
                                         } else {
                                             console.log("找不到文件");
                                         }
-                                    }).catch(function(error) {
+                                    });.catch(function(error) {
                                     console.log("提取文件時出錯:", error);
+                                    });
                                 });
+                                // 原本
+                                // docRef.get().then(function(doc) {
+                                //         if (doc.exists) {
+                                //             console.log(doc.data());
+                                //         } else {
+                                //             console.log("找不到文件");
+                                //         }
+                                //     }).catch(function(error) {
+                                //     console.log("提取文件時出錯:", error);
+                                // });
                             }
 
                             function updatedata() {
@@ -221,5 +249,8 @@
                 </ul>
             </div>
         </div>
+
+
     </div>
 </section>
+@endsection

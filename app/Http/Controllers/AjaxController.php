@@ -25,13 +25,14 @@ class AjaxController extends Controller
     {
         // 取得ajax的selectbox
         // $input = request()->all();
+        $city = $request->input('city');
+        $cat1 = $request->input('cat1');
+        $cat2 = $request->input('cat2');
         $title = $request->input('title');
         $url = $request->input('url');
-        $output = 'title=' . $title . 'url=' . $url . '。';
-        $msg = "這是一條簡單的消息.";
-        return response()->json(array('msg' => $msg, 'title' => $title, 'url' => $url), 200);
-        // echo $output;
-        // return response()->json(['success' => 'Got Simple Ajax Request.']);
+        // $output = 'title=' . $title . 'url=' . $url . '。';
+        $msg = "這是一條簡單的測試消息.";
+        return response()->json(array('city' => $city, 'cat1' => $cat1, 'cat2' => $cat2, 'msg' => $msg, 'title' => $title, 'url' => $url), 200);
     }
 
     //post myform(Ajax)

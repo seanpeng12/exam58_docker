@@ -54,6 +54,8 @@
 @endif
 @endsection
 
+
+
 @section('toR')
 @php
 //台北
@@ -62,8 +64,8 @@ $N = $A;
 //"台北"
 $n = '"'.$N.'"';
 
-// 以外部指令的方式呼叫 R 進行繪圖->between.html
-exec("Rscript R/site_Betweeness.R $n", $results);
+// 以外部指令的方式呼叫 R 進行繪圖->between_city.html
+exec("Rscript R/site_Betweeness_2020.R $n", $results);
 // print_r($results);
 // // 產生亂數
 $nocache = rand();
@@ -77,11 +79,11 @@ $city = $A;
 $N2 = $B;
 $N3 = $C;
 //"台北"
-$temp = "$city $N2 $N3";
-$cc = '"'.$temp.'"';
+$temp_d = "$city $N2 $N3";
+$cc = '"'.$temp_d.'"';
 
-// 以外部指令的方式呼叫 R 進行繪圖->between2.html
-exec("Rscript R/new_Betweeness_2.R $cc");
+// 以外部指令的方式呼叫 R 進行繪圖->between_relationship.html
+exec("Rscript R/betweenss_attr_2020.R $cc");
 
 $nocache_2 = rand();
 
@@ -90,18 +92,20 @@ $nocache_2 = rand();
 
 @section('rand')
 @php
-//$name = public_path("between.html");
+//$name = public_path("between_city.html");
 if(isset($nocache)){
 // 功能一
-$name = "R/between.html?$nocache";
+$name = "R/between_city.html?$nocache";
 }
 if(isset($nocache_2)){
 // 功能二
-$name2 = "R/between2.html?$nocache_2";
+$name2 = "R/between_relationship.html?$nocache_2";
 }
 
 @endphp
 @endsection
+
+
 
 @section('content')
 {{-- 模板 --}}
@@ -126,6 +130,7 @@ $name2 = "R/between2.html?$nocache_2";
 
 <section class="probootstrap-section probootstrap-bg-gray">
     <div class="container">
+        {{-- row1 --}}
         <div class="row">
             <div class="col-md-6 probootstrap-animate" data-animate-effect="fadeIn">
                 <div class="container box"></div>
@@ -136,6 +141,7 @@ $name2 = "R/between2.html?$nocache_2";
                     {{-- @yield('ajax_back') --}}
 
                     @yield('toR')
+
                     {{-- 執行R語言讀取資料庫 (功能一\二)--}}
                     {{-- @yield('Rtest')
                                 @yield('R_between') --}}
@@ -151,30 +157,12 @@ $name2 = "R/between2.html?$nocache_2";
                                     <h4 class="panel-title">
                                         <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
                                             <p>
-                                                <h1 style="font-family: Microsoft JhengHei;">{{$A}}的景點關聯圖</h1>
-                                            </p>
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseOne" class="panel-collapse collapse in">
-                                    <div class="panel-body">
-                                        <iframe width="100%" height="600px" frameBorder="0" scrolling="no"
-                                            style="align:center" src="{{url($name)}}"></iframe>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                                            <p>
                                                 <h1 style="font-family: Microsoft JhengHei;">{{$B}}/{{$C}}</h1>
                                             </p>
                                         </a>
                                     </h4>
                                 </div>
-                                <div id="collapseTwo" class="panel-collapse collapse">
+                                <div id="collapseOne" class="panel-collapse collapse in">
                                     <div class="panel-body">
                                         <iframe id="frame2" width="100%" height="600px" frameBorder="0" scrolling="no"
                                             src="{{url($name2)}}"></iframe>
@@ -185,49 +173,110 @@ $name2 = "R/between2.html?$nocache_2";
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                            <p>
+                                                <h1 style="font-family: Microsoft JhengHei;">{{$A}} 景點</h1>
+                                            </p>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <iframe width="100%" height="600px" frameBorder="0" scrolling="no"
+                                            style="align:center" src="{{url($name)}}"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
                                         <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
                                             <p>
-                                                <?php
-                                                    $curl = curl_init();
-
-                                                    curl_setopt_array($curl, array(
-                                                    CURLOPT_URL => "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=%E5%8F%B0%E5%A4%A7%E9%AB%94%E8%82%B2%E9%A4%A8&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A",
-                                                    CURLOPT_RETURNTRANSFER => true,
-                                                    CURLOPT_ENCODING => "",
-                                                    CURLOPT_MAXREDIRS => 10,
-                                                    CURLOPT_TIMEOUT => 0,
-                                                    CURLOPT_FOLLOWLOCATION => true,
-                                                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                                                    CURLOPT_CUSTOMREQUEST => "GET",
-                                                    ));
-
-                                                    $response = curl_exec($curl);
-
-                                                    curl_close($curl);
-                                                    echo '<pre>';
-
-                                                    print_r($response);
-                                                    echo '</pre>';
-
-
-                                                    function debug_to_console($response) {
-                                                    $output = $response;
-                                                    if (is_array($output))
-                                                    $output = implode(',', $output);
-
-                                                    echo "<script>
-                                                        console.log('Debug Objects: " . $output . "' );
-                                                    </script>";
-                                                    }
-                                                    ?>
+                                                <h1>串API</h1>
                                             </p>
                                         </a>
                                     </h4>
                                 </div>
                                 <div id="collapseOne" class="panel-collapse collapse in">
                                     <div class="panel-body">
-                                        <iframe width="100%" height="600px" frameBorder="0" scrolling="no"
-                                            style="align:center" src="{{url($name)}}"></iframe>
+                                        <p>
+                                            <?php
+                                            //初始化
+                                            $curl = curl_init();
+                                            //設定屬性值
+                                            curl_setopt_array($curl, array(
+                                            CURLOPT_URL => "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=%E5%8F%B0%E5%A4%A7%E9%AB%94%E8%82%B2%E9%A4%A8&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A",
+                                            CURLOPT_RETURNTRANSFER => true,
+                                            CURLOPT_ENCODING => "",
+                                            CURLOPT_MAXREDIRS => 10,
+                                            CURLOPT_TIMEOUT => 0,
+                                            CURLOPT_FOLLOWLOCATION => true,
+                                            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                            CURLOPT_CUSTOMREQUEST => "GET",
+                                            ));
+                                            // 執行
+                                            $response = curl_exec($curl);
+                                            $data_json = json_decode(file_get_contents('php://input'), true);
+                                            echo "<script>console.log('Debug Objects: " . $data_json . "' );</script>";
+                                            // 退出關閉
+                                            curl_close($curl);
+
+
+                                            echo '<pre>';
+                                            print_r($response);
+                                            echo '</pre>';
+
+                                            ?>
+
+                                            <script>
+                                                var settings = {
+                                                    "url": "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=輔仁大學&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A",
+                                                    "method": "GET",
+                                                    "timeout": 0,
+                                                };
+
+                                                $.ajax(settings).done(function (response) {
+                                                    console.log("回答是："+response);
+                                                });
+
+
+
+                                                // function insert() {
+                                                //     var title = $("#title_1").val();
+                                                //     var url = $("#url_1").val();
+                                                //     $('#success').html('傳送中..');
+
+                                                //     $.ajax({
+                                                //         headers: {
+                                                //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                //         },
+                                                //         type: "POST",//方法
+                                                //         url: "/ajax2/new" ,//表單接收url
+                                                //         data: {
+                                                //             title:title, url:url, '_token': $('meta[name="csrf-token"]').attr('content'),
+                                                //         },
+                                                //         success: function (result) {
+                                                //             //提交成功的提示詞或者其他反饋程式碼
+                                                //             console.log(result);
+                                                //             $('#success').html(result.msg);
+                                                //             $('#success').html(result.title);
+                                                //             $('#success').html(result.url);
+                                                //             var result=document.getElementById("success");
+                                                //             result.innerHTML="<h2>新增資料成功!</h2>";
+                                                //             // to firebase
+                                                //             create();
+                                                //         },
+                                                //         error : function() {
+                                                //             //提交失敗的提示詞或者其他反饋程式碼
+                                                //             var result=document.getElementById("success");
+                                                //             result.innerHTML="傳輸失敗!";
+                                                //         }
+                                                //     });
+                                                // }
+                                            </script>
+                                        </p>
+
                                     </div>
                                 </div>
                             </div>
@@ -250,18 +299,6 @@ $name2 = "R/between2.html?$nocache_2";
                     <script type="text/javascript">
                         $(document).ready(function () {
 
-
-                            var settings = {
-                            "url":
-                            "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=輔大露易莎&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A",
-                            "method": "GET",
-                            "timeout": 0,
-                            };
-
-                            $.ajax(settings).done(function (response) {
-                            console.log(response);
-                            });
-
                             // if($('#collapseOne').find('.aria-expanded').length){
                             //     $('#collapseOne').on('click' function() {
                             //         var $ee = $('#collapseOne').find('.aria-expanded').html();
@@ -280,7 +317,7 @@ $name2 = "R/between2.html?$nocache_2";
                             // }
 
                             //無法自動觸發click!
-                            $('#frame2').contents().find('#graphhtmlwidget-b414b4c4d83797c3e0b3').trigger("click");
+                            $('#frame2').contents().find('[id^="graphhtmlwidget"]').trigger("click");
                             // window.οnlοad=xieyi;
 
                             //iframe非同步偵測click
@@ -297,11 +334,12 @@ $name2 = "R/between2.html?$nocache_2";
 
 
 
-                                    $('#frame2').contents().find('#graphhtmlwidget-b414b4c4d83797c3e0b3').on('click', function () {
+                                    $('#frame2').contents().find('[id^="graphhtmlwidget"]').on('click', function () {
                                         // html純文字解析
-                                        var $test = $('#frame2').contents().find('#graphhtmlwidget-b414b4c4d83797c3e0b3').find('p').html();
+                                        var $test = $('#frame2').contents().find('[id^="graphhtmlwidget"]').find('p').html();
 
                                         //加到console上
+                                        console.log("點按tooltip區域");
                                         console.log($test);
 
 
@@ -440,28 +478,39 @@ $name2 = "R/between2.html?$nocache_2";
                         // firebase.analytics();
                         var db = firebase.firestore();
 
-                            function create() {
-                                // 產生現在時間
-                                var Today = new Date();
-                                var time = Today.toLocaleString();
-                                // 找到文字
+                        function create() {
+                            // 產生現在時間
+                            var Today = new Date();
+                            var time = Today.toLocaleString();
+                            var strA = '<?php echo $A ?>';
+                            var strB = '<?php echo $B ?>';
+                            var strC = '<?php echo $C ?>';
+                            // 找到文字
 
-                                var name_place = $('#frame2').contents().find('#graphhtmlwidget-b414b4c4d83797c3e0b3').find('p').html();
-                                console.log(name_place);
-                                //新增資料庫
-                                db.collection("喜歡的地點").add({
-                                    name: name_place,
-                                    date: time,
-                                    desctiption: name_place,
-                                });
-                                // console.log("傳資料");
-                            }
+                            var name_place = $('#frame2').contents().find('[id^="graphhtmlwidget"]').find('p').html();
+                            console.log(name_place);
+                            //新增資料庫
+                            db.collection("喜歡的地點").add({
+                                name: name_place,
+                                date: time,
+                                desctiption: name_place,
+                                city: strA,
+                                catagory_1: strB,
+                                catagory_2: strC,
+                            });
+                            // console.log("傳資料");
+                        }
 
-
+                        //ajax input data(success)
                         function insert() {
+                            var strA = '<?php echo $A ?>';
+                            var strB = '<?php echo $B ?>';
+                            var strC = '<?php echo $C ?>';
+
                             var title = $("#title_1").val();
                             var url = $("#url_1").val();
                             $('#success').html('傳送中..');
+
                             $.ajax({
                                 headers: {
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -469,11 +518,15 @@ $name2 = "R/between2.html?$nocache_2";
                                 type: "POST",//方法
                                 url: "/ajax2/new" ,//表單接收url
                                 data: {
-                                    title:title, url:url, '_token': $('meta[name="csrf-token"]').attr('content'),
+                                    city:strA, cat1:strB, cat2:strC, title:title, url:url, '_token': $('meta[name="csrf-token"]').attr('content'),
+
                                 },
                                 success: function (result) {
                                     //提交成功的提示詞或者其他反饋程式碼
                                     console.log(result);
+                                    $('#success').html(result.city);
+                                    $('#success').html(result.cat1);
+                                    $('#success').html(result.cat2);
                                     $('#success').html(result.msg);
                                     $('#success').html(result.title);
                                     $('#success').html(result.url);
@@ -491,11 +544,54 @@ $name2 = "R/between2.html?$nocache_2";
                         }
 
 
+
                     </script>
                 </div>
 
             </div>
 
+        </div>
+        {{-- row2 --}}
+        <div class="row">
+            <div class="col-sm-4 panel-item">
+                <div class="box">
+                    <div class="box-heading">
+                        <img src="images/food_bread.jpg">
+                    </div>
+                    <div class="box-body">
+                        <h3>Bread</h3>
+                        <p>Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por
+                            scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in
+                            li grammatica, li pro</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 panel-item">
+                <div class="box">
+                    <div class="box-heading">
+                        <img src="images/food_coffee_beans.jpg">
+                    </div>
+                    <div class="box-body">
+                        <h3>Coffee Beans</h3>
+                        <p>The European languages are members of the same family. Their separate existence is a myth.
+                            For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
+                            in their grammar.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 panel-item">
+                <div class="box">
+                    <div class="box-heading">
+                        <img src="images/food_strawberry.jpg">
+                    </div>
+                    <div class="box-body">
+                        <h3>Strawberry</h3>
+                        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of
+                            spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in
+                            this spot, which was.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
