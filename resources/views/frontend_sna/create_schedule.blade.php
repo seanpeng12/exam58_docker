@@ -204,13 +204,13 @@
             }
             
         // console.log(document.getElementById('name')[3].id);
-        // var travelMode = document.getElementById('travelMode').value;
+         var travelMode = document.getElementById('travelMode').value;
         directionsService.route({
           origin: orig,
           destination: destin,
           waypoints: waypts,
           optimizeWaypoints: true,
-          travelMode: 'TRANSIT',
+          travelMode: travelMode,
                    
         }, function(response, status) {
           if (status === 'OK') {

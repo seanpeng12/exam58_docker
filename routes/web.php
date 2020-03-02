@@ -87,6 +87,10 @@ Route::get('fill_member_data', function () {
     return view('frontend_sna.fill_member_data');
 })->name('fill_member_data');
 
+Route::get('create_itinerary', function () {
+    return view('frontend_sna.create_itinerary');
+})->name('create_itinerary');
+
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
