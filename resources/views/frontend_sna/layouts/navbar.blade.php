@@ -61,14 +61,14 @@
 
                 <li><a id="hola"></a></li>
 
-                
+
                 {{-- <li class="probootstra-cta-button" id="test" ><a href="" class="btn" data-toggle="modal"
                             data-target="#loginModal">Log in</a></li> --}}
-                 <li id="btnLogIn" class="probootstra-cta-button"><a href="#" class="btn" data-toggle="modal"
-                        data-target="#signupModal">以google方式登入</a></li>          
+                <li id="btnLogIn" class="probootstra-cta-button"><a href="#" class="btn" data-toggle="modal"
+                        data-target="#signupModal">以google方式登入</a></li>
 
-                <li id="btnLogOut" class="probootstra-cta-button last"><a href="#" class="btn btn-ghost" data-toggle="modal"
-                        data-target="#signupModal">LogOut</a></li>
+                <li id="btnLogOut" class="probootstra-cta-button last"><a href="#" class="btn btn-ghost"
+                        data-toggle="modal" data-target="#signupModal">LogOut</a></li>
                 {{-- <li class="probootstra-cta-button last"><button id="btnLogOut">LogOut</button></li> --}}
             </ul>
         </div>
@@ -111,13 +111,14 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        {{-- <button class="btn btn-primary btn-ghost btn-block btn-connect-facebook"><span>connect
-                                                with</span> Facebook</button> --}}
-                                        {{-- 下面是google存mysql的登入方式 --}}
-                                        {{-- <a href="{{url('/redirect')}}" class="btn btn-primary">Login with Google</a> --}}
-                                        {{-- <button class="btn btn-primary btn-ghost btn-block btn-connect-facebook" id="btnlogIn"> Google(firebase)</button> --}}
-    
-                                        {{-- <button id="btnLogIn" class="btn btn-primary btn-ghost btn-block btn-connect-google">connect with Google</button> --}}
+                                        /*<button class="btn btn-primary btn-ghost btn-block btn-connect-facebook"><span>connect
+                                                with</span> Facebook</button>
+                                        //下面是google存mysql的登入方式
+                                         <a href="{{url('/redirect')}}" class="btn btn-primary">Login with
+                                        Google</a> 
+                                        <button class="btn btn-primary btn-ghost btn-block btn-connect-facebook" id="btnlogIn"> Google(firebase)</button>
+
+                                         <button id="btnLogIn" class="btn btn-primary btn-ghost btn-block btn-connect-google">connect with Google</button>*/
                                     </div>
                                 </div>
                             </div>
@@ -133,108 +134,101 @@
 {{-- firebase帳號登入登出 --}}
 
 <script>
+    // Initialize Firebase
 
-   
-  
-  // Initialize Firebase
 
-  
-  var a = firebase.initializeApp(firebaseConfig);
-a.firestore().settings( { timestampsInSnapshots: true })
-  // ========登入帳號===========
+    var a = firebase.initializeApp(firebaseConfig);
+    a.firestore().settings({
+        timestampsInSnapshots: true
+    })
+    // ========登入帳號===========
 
-   window.onload = function() {
-      var btnLogIn = document.getElementById('btnLogIn');
-      btnLogIn.onclick = function() {
-        var provider = new firebase.auth.GoogleAuthProvider()
-        // firebase.auth().signInWithRedirect(provider);
-        //  firebase.auth().signInWithPopup(provider).
-        firebase.auth().signInWithPopup(provider).then(function(result) {
-        if (result.credential) {
-            // This gives you a Google Access Token. You can use it to access the Google API.
-             
-            var token = result.credential.accessToken;
-            // ...
-            var user = result.user;
+    window.onload = function () {
+        var btnLogIn = document.getElementById('btnLogIn');
+        btnLogIn.onclick = function () {
+            var provider = new firebase.auth.GoogleAuthProvider()
+            // firebase.auth().signInWithRedirect(provider);
+            //  firebase.auth().signInWithPopup(provider).
+            firebase.auth().signInWithPopup(provider).then(function (result) {
+                if (result.credential) {
+                    // This gives you a Google Access Token. You can use it to access the Google API.
 
-            if(result.additionalUserInfo.isNewUser){
-                    window.location = '/fill_member_data';
-  
-            }
-            
-            else{
-                console.log("not first");
-                    // window.location = '/';
+                    var token = result.credential.accessToken;
+                    // ...
+                    var user = result.user;
+
+                    if (result.additionalUserInfo.isNewUser) {
+                        window.location = '/fill_member_data';
+
+                    } else {
+                        console.log("not first");
+                        // window.location = '/';
                         history.go(0);
 
-            }
-           
+                    }
 
+
+
+                }
+                // The signed-in user info.
+
+
+            }).catch(function (error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                // The email of the user's account used.
+                var email = error.email;
+                // The firebase.auth.AuthCredential type that was used.
+                var credential = error.credential;
+                // ...
+            });
 
         }
-  // The signed-in user info.
- 
-
-        }).catch(function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // The email of the user's account used.
-            var email = error.email;
-            // The firebase.auth.AuthCredential type that was used.
-            var credential = error.credential;
-            // ...
-        });
-
-        }    
 
     }
-  
-// ======== 登出帳號===========
+
+    // ======== 登出帳號===========
     var btnLogOut = document.getElementById('btnLogOut');
-btnLogOut.onclick = function() {
-  firebase.auth().signOut().then(function() {
-    var user = firebase.auth().currentUser;
-    console.log(user);
-    history.go(0);
-    alert('您已登出帳號');
-  })
-}
+    btnLogOut.onclick = function () {
+        firebase.auth().signOut().then(function () {
+            var user = firebase.auth().currentUser;
+            console.log(user);
+            history.go(0);
+            alert('您已登出帳號');
+        })
+    }
 
 </script>
 <script>
+    firebase.auth().onAuthStateChanged(function (user) {
+        var el = document.getElementById('btnLogIn');
+        var el2 = document.getElementById('hola');
 
-      firebase.auth().onAuthStateChanged(function(user) {
-                    var el=document.getElementById('btnLogIn');
-                    var el2=document.getElementById('hola');
-                 
-                    if (user) {
-                        
-                        el.innerHTML="";
-                        el2.innerHTML=user.displayName+"您好";
-                        // var displayName = user.displayName;
-                        console.log(user.displayName);
-                        // var email = user.email;
-                        console.log(user.email);
-                        // var emailVerified = user.emailVerified;
-                        // console.log(emailVerified);
+        if (user) {
 
-                        // var photoURL = user.photoURL;
-                        // var isAnonymous = user.isAnonymous;
-                        // var uid = user.uid;
-                        // console.log(uid);
-                        // var providerData = user.providerData;
-                        // console.log(providerData);
+            el.innerHTML = "";
+            el2.innerHTML = user.displayName + "您好";
+            // var displayName = user.displayName;
+            console.log(user.displayName);
+            // var email = user.email;
+            console.log(user.email);
+            // var emailVerified = user.emailVerified;
+            // console.log(emailVerified);
 
-                        
+            // var photoURL = user.photoURL;
+            // var isAnonymous = user.isAnonymous;
+            // var uid = user.uid;
+            // console.log(uid);
+            // var providerData = user.providerData;
+            // console.log(providerData);
 
-                    } else if(null) {
-                        
-                        // el.textContent=user.displayName+'歡迎您加入';
-                    }
-                    });   
 
-        
 
-  
+        } else if (null) {
+
+            // el.textContent=user.displayName+'歡迎您加入';
+        }
+    });
+
 </script>

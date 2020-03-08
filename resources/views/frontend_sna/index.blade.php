@@ -26,26 +26,20 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6 col-md-offset-3 text-center section-heading probootstrap-animate">
-        <h2>Team</h2>
+        <h2>Choose For purpose</h2>
       </div>
     </div>
     <!-- END row -->
     <div class="row">
       <div class="col-md-3 col-sm-6 col-xs-6 probootstrap-animate">
-        <a href="#" class="probootstrap-team">
-          <img src="images/person_1.jpg" alt="Free Bootstrap Template by uicookies.com"
-            class="img-responsive img-rounded">
-          <div class="probootstrap-team-info">
-            <h3>Jeremy Slater <span class="position">Co-Founder / Tech</span></h3>
-          </div>
-        </a>
+        {{-- delete --}}
       </div>
       <div class="col-md-3 col-sm-6 col-xs-6 probootstrap-animate">
         <a href="#" class="probootstrap-team">
           <img src="images/person_2.jpg" alt="Free Bootstrap Template by uicookies.com"
             class="img-responsive img-rounded">
           <div class="probootstrap-team-info">
-            <h3>James Butterly <span class="position">Co-Founder / Creative</span></h3>
+            <h3>分項功能 <span class="position">Co-Founder / Creative</span></h3>
           </div>
         </a>
       </div>
@@ -53,66 +47,34 @@
       <div class="clearfix visible-sm-block visible-xs-block"></div>
 
       <div class="col-md-3 col-sm-6 col-xs-6 probootstrap-animate">
-        <a href="#" class="probootstrap-team">
-          <img src="images/person_3.jpg" alt="Free Bootstrap Template by uicookies.com"
-            class="img-responsive img-rounded">
-          <div class="probootstrap-team-info">
-            <h3>Matthew Smith <span class="position">Developer</span></h3>
-          </div>
-        </a>
+        {{-- delete --}}
       </div>
       <div class="col-md-3 col-sm-6 col-xs-6 probootstrap-animate">
-        <a href="#" class="probootstrap-team">
-          <img src="images/person_4.jpg" alt="Free Bootstrap Template by uicookies.com"
-            class="img-responsive img-rounded">
-          <div class="probootstrap-team-info">
-            <h3>Ivan Dubovtsev <span class="position">Designer</span></h3>
-
-          </div>
-        </a>
+        {{-- delete --}}
       </div>
 
       <div class="clearfix visible-sm-block visible-xs-block"></div>
 
       <div class="col-md-3 col-sm-6 col-xs-6 probootstrap-animate">
-        <a href="#" class="probootstrap-team">
+        <a href={{ route('my_itinerary') }} class="probootstrap-team">
           <img src="images/person_2.jpg" alt="Free Bootstrap Template by uicookies.com"
             class="img-responsive img-rounded">
           <div class="probootstrap-team-info">
-            <h3>James Butterly <span class="position">Co-Founder / Creative</span></h3>
+            <h3>規劃旅程 <span class="position">Co-Founder / Creative</span></h3>
           </div>
         </a>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-6 probootstrap-animate">
-        <a href="#" class="probootstrap-team">
-          <img src="images/person_1.jpg" alt="Free Bootstrap Template by uicookies.com"
-            class="img-responsive img-rounded">
-          <div class="probootstrap-team-info">
-            <h3>Jeremy Slater <span class="position">Co-Founder / Tech</span></h3>
-          </div>
-        </a>
+        {{-- delete --}}
       </div>
 
       <div class="clearfix visible-sm-block visible-xs-block"></div>
 
       <div class="col-md-3 col-sm-6 col-xs-6 probootstrap-animate">
-        <a href="#" class="probootstrap-team">
-          <img src="images/person_4.jpg" alt="Free Bootstrap Template by uicookies.com"
-            class="img-responsive img-rounded">
-          <div class="probootstrap-team-info">
-            <h3>Ivan Dubovtsev <span class="position">Designer</span></h3>
-
-          </div>
-        </a>
+        {{-- delete --}}
       </div>
       <div class="col-md-3 col-sm-6 col-xs-6 probootstrap-animate">
-        <a href="#" class="probootstrap-team">
-          <img src="images/person_3.jpg" alt="Free Bootstrap Template by uicookies.com"
-            class="img-responsive img-rounded">
-          <div class="probootstrap-team-info">
-            <h3>Matthew Smith <span class="position">Developer</span></h3>
-          </div>
-        </a>
+        {{-- delete --}}
       </div>
 
 

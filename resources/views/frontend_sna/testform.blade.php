@@ -1,148 +1,234 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Distance Matrix Service</title>
-    <style>
-        #right-panel {
-            font-family: 'Roboto', 'sans-serif';
-            line-height: 30px;
-            padding-left: 10px;
-        }
-
-        #right-panel select,
-        #right-panel input {
-            font-size: 15px;
-        }
-
-        #right-panel select {
-            width: 100%;
-        }
-
-        #right-panel i {
-            font-size: 12px;
-        }
-
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-
-        #map {
-            height: 100%;
-            width: 50%;
-        }
-
-        #right-panel {
-            float: right;
-            width: 48%;
-            padding-left: 2%;
-        }
-
-        #output {
-            font-size: 11px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
 </head>
+<!-- CSS -->
+<style type="text/css">
+.bar {
+    width: 100px;
+    height: 20px;
+    margin: 2px;
+    border: 1px solid black;
+    background-color: lightgreen;
+    text-align: center;
+    float: left;
+    margin: 2px;
+    padding: 2px;
+    cursor: pointer;
+    border-radius: 3px;
+}
 
+.list {
+    background-color: lightblue;
+    border: 1px solid gray;
+}
+
+.items .ui-selected {
+    background: red;
+    color: white;
+    font-weight: bold;
+}
+
+.items {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100px;
+}
+
+.items li {
+    margin: 2px;
+    padding: 2px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.weekday {
+    float: left;
+}
+
+.availablelist {
+    background-color: orange;
+    display: inline;
+}
+
+//摺疊
+.collapsible {
+  background-color: #777;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active,
+.collapsible:hover {
+  background-color: #555;
+}
+
+.collapsible:after {
+  content: '\002B';
+  color: white;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";
+}
+
+.content {
+  padding: 0 18px;
+
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  background-color: #ffe1e1;
+}
+
+.a {
+  margin: 5px 0;
+  padding: 0 20px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 3px;
+  background: #408080;
+  //background: -webkit-linear-gradient(to right, #267871, #136a8a);
+  //background: linear-gradient(to right, #267871, #136a8a);
+  color: #fff;
+  text-align: left;
+  font-family: NSimSun;
+  list-style: none;
+}
+</style>
 <body>
-    <div id="right-panel">
-        <div id="inputs">
-            <pre>
-var origin1 = {lat: 55.930, lng: -3.118};
-var origin2 = 'Greenwich, England';
-var destinationA = 'Stockholm, Sweden';
-var destinationB = {lat: 50.087, lng: 14.421};
-        </pre>
-        </div>
-        <div>
-            <strong>Results</strong>
-        </div>
-        <div id="output"></div>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+
+
+{{--    --}}
+
+<div style="float:left;width:500px;">
+    <div>可排班員工名稱</div>
+    <ul id="available1" class="items">
+        <li class="list availablelist">Jhonny</li>
+    </ul>
+    <ul id="available2" class="items">    
+        <li class="list availablelist">Tim</li>
+    </ul>
+    <ul id="available3" class="items">    
+        <li class="list availablelist">George</li>
+    </ul>
+    <ul id="available4" class="items">    
+        <li class="list availablelist">Melissa</li>
+    </ul>
+    <ul id="available5" class="items">    
+        <li class="list availablelist">Alice</li>
+    </ul>
+</div>
+<div style="clear:both"></div>
+<div id="timetable" style="float:left;width:700px;">
+    <div style="text-align:center">排班表</div>
+    
+    <div class="weekday">星期二 
+        <ul class="items">
+            <li class="list">Jhonny</li>
+            <li class="list">Tim</li>
+            <li class="list">George</li>
+            <li class="list">Melissa</li>
+            <li class="list">Alice</li>
+        </ul>
     </div>
-    <div id="map"></div>
-    <script>
-        function initMap() {
-        var bounds = new google.maps.LatLngBounds;
-        var markersArray = [];
+    <div class="weekday">星期三 
+        <ul class="items">
+            <li class="list">Jhonny</li>
+            <li class="list">Tim</li>
+            <li class="list">George</li>
+            <li class="list">Melissa</li>
+            <li class="list">Alice</li>
+        </ul>
+    </div>
+    <div class="weekday">星期四 
+        <ul class="items">
+            <li class="list">Jhonny</li>
+            <li class="list">Tim</li>
+            <li class="list">George</li>
+            <li class="list">Melissa</li>
+            <li class="list">Alice</li>
+        </ul>
+    </div>
+    <div class="weekday">星期五
+        <ul class="items">
+            <li class="list">Jhonny</li>
+            <li class="list">Tim</li>
+            <li class="list">George</li>
+            <li class="list">Melissa</li>
+            <li class="list">Alice</li>
+        </ul>
+    </div>
+    <div class="weekday">星期六
+        <ul class="items">
+            <li class="list">Jhonny</li>
+            <li class="list">Tim</li>
+            <li class="list">George</li>
+            <li class="list">Melissa</li>
+            <li class="list">Alice</li>
+        </ul>
+    </div>
+    
+</div>
+  {{--  drag  --}}
+  <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 
-        var origin1 = {lat: 55.93, lng: -3.118};
-        var origin2 = 'Greenwich, England';
-        var destinationA = 'Stockholm, Sweden';
-        var destinationB = {lat: 50.087, lng: 14.421};
+<script type="text/javascript" src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 
-        var destinationIcon = 'https://chart.googleapis.com/chart?' +
-            'chst=d_map_pin_letter&chld=D|FF0000|000000';
-        var originIcon = 'https://chart.googleapis.com/chart?' +
-            'chst=d_map_pin_letter&chld=O|FFFF00|000000';
-        var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 55.53, lng: 9.4},
-          zoom: 10
-        });
-        var geocoder = new google.maps.Geocoder;
+<script type="text/javascript" src="http://www.pureexample.com/js/lib/jquery.ui.touch-punch.min.js">
+  
 
-        var service = new google.maps.DistanceMatrixService;
-        service.getDistanceMatrix({
-          origins: [origin1, origin2],
-          destinations: [destinationA, destinationB],
-          travelMode: 'DRIVING',
-          unitSystem: google.maps.UnitSystem.METRIC,
-          avoidHighways: false,
-          avoidTolls: false
-        }, function(response, status) {
-          if (status !== 'OK') {
-            alert('Error was: ' + status);
+    $(function () {
+      $("#timetable .items").sortable({
+        connectWith: "ul"   
+      });
+      
+      $("ul[id^='available']").draggable({
+          helper: "clone",
+          connectToSortable: ".items"
+      });
+  });
+</script>
+  //摺疊
+  <script>
+
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+
+  for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function () {
+          this.classList.toggle("active");
+          var content = this.nextElementSibling;
+          
+          if (content.style.maxHeight) {
+            console.log("if1:"+content.style.maxHeight);
+              content.style.maxHeight = null;
+              console.log("if2:"+content.style.maxHeight);
+
           } else {
-            var originList = response.originAddresses;
-            var destinationList = response.destinationAddresses;
-            var outputDiv = document.getElementById('output');
-            outputDiv.innerHTML = '';
-            deleteMarkers(markersArray);
+              content.style.maxHeight = content.scrollHeight + "px";
+              console.log("else:"+content.style.maxHeight+"---end");
 
-            var showGeocodedAddressOnMap = function(asDestination) {
-              var icon = asDestination ? destinationIcon : originIcon;
-              return function(results, status) {
-                if (status === 'OK') {
-                  map.fitBounds(bounds.extend(results[0].geometry.location));
-                  markersArray.push(new google.maps.Marker({
-                    map: map,
-                    position: results[0].geometry.location,
-                    icon: icon
-                  }));
-                } else {
-                  alert('Geocode was not successful due to: ' + status);
-                }
-              };
-            };
-
-            for (var i = 0; i < originList.length; i++) {
-              var results = response.rows[i].elements;
-              geocoder.geocode({'address': originList[i]},
-                  showGeocodedAddressOnMap(false));
-              for (var j = 0; j < results.length; j++) {
-                geocoder.geocode({'address': destinationList[j]},
-                    showGeocodedAddressOnMap(true));
-                outputDiv.innerHTML += originList[i] + ' to ' + destinationList[j] +
-                    ': ' + results[j].distance.text + ' in ' +
-                    results[j].duration.text + '<br>';
-              }
-            }
           }
-        });
-      }
+      });
+  }
+</script>
 
-      function deleteMarkers(markersArray) {
-        for (var i = 0; i < markersArray.length; i++) {
-          markersArray[i].setMap(null);
-        }
-        markersArray = [];
-      }
-    </script>
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A&callback=initMap">
-    </script>
+
 </body>
-
 </html>

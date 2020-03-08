@@ -91,6 +91,15 @@ Route::get('create_itinerary', function () {
     return view('frontend_sna.create_itinerary');
 })->name('create_itinerary');
 
+Route::get('my_itinerary', function () {
+    return view('frontend_sna.my_itinerary');
+})->name('my_itinerary');
+
+
+Route::get('testform', function () {
+    return view('frontend_sna.testform');
+})->name('testform');
+
 Route::get('/ccc', function () {
     return view('frontend_sna.test');
 })->name('ccc');

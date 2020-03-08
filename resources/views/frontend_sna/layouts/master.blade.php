@@ -1,35 +1,4 @@
-{{-- <!DOCTYPE html>
-<html lang="zh-TW">
-  <head>
-    <title>Aside - Free HTML5 Bootstrap 4 Template by uicookies.com</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Free HTML5 Website Template by uicookies.com" />
-    <meta name="keywords" content="free bootstrap 4, free bootstrap 4 template, free website templates, free html5, free template, free website template, html5, css3, mobile first, responsive" />
-    <meta name="author" content="uicookies.com" />
 
-    @yield('title')
-
-
-
-
-    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
-
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-
-    <link rel="stylesheet" href="css/icomoon.css">
-    <link rel="stylesheet" href="css/animate.css">
-    <link rel="stylesheet" href="css/style.css">
-
-
-
-
-
-  </head> --}}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,7 +14,9 @@
     <link rel="stylesheet" href="css/ano/styles-merged.css">
     <link rel="stylesheet" href="css/ano/style.min.css">
 
+
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 
 
@@ -53,8 +24,9 @@
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-firestore.js"></script>
-    {{-- <script src="//unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script>
-  <script src="//raw.githack.com/hnzzmsf/layui-formSelects/master/dist/formSelects-v4.min.js"></script> --}}
+
+    
+
 
     <script>
         // Your web app's Firebase configuration

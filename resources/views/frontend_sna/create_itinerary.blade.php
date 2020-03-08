@@ -2,6 +2,7 @@
 
 @section('content');
 <style>
+    {{--  tab  --}}
     * {
         box-sizing: border-box;
     }
@@ -76,97 +77,117 @@
         background-color: #ffe0c1;
     }
 
-        {
-            {
-            -- drag and sort --
-        }
+
+    //-- drag and sort --
+
+
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    p {
+        font-family: NSimSun;
     }
 
     ul {
         margin: 0;
         padding: 0;
+
     }
 
-    .a {
-        margin: 5px 0;
-        padding: 0 20px;
-        height: 40px;
-        line-height: 40px;
-        border-radius: 3px;
-        background: #136a8a;
-        background: -webkit-linear-gradient(to right, #267871, #136a8a);
-        background: linear-gradient(to right, #267871, #136a8a);
-        color: #fff;
-        list-style: none;
-    }
 
-    li.drag-sort-active {
-        background: transparent;
-        color: transparent;
-        border: 1px solid #4ca1af;
-    }
-
-    span.drag-sort-active {
-        background: transparent;
-        color: transparent;
-    }
-
-    //摺疊
-    .collapsible {
-        background-color: #777;
-        color: white;
-        cursor: pointer;
-        padding: 18px;
-        width: 100%;
-        border: none;
-        text-align: left;
-        outline: none;
-        font-size: 15px;
-    }
-
-    .active,
-    .collapsible:hover {
-        background-color: #555;
-    }
-
-    .collapsible:after {
-        content: '\002B';
+    .items .ui-selected {
+        background: red;
         color: white;
         font-weight: bold;
-        float: right;
-        margin-left: 5px;
     }
 
-    .active:after {
-        content: "\2212";
+    .items {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 100px;
     }
 
-    .content {
-        padding: 0 18px;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.2s ease-out;
-        background-color: #f1f1f1;
+    .items li {
+        margin: 2px;
+        padding: 2px;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+
+    .weekday {
+        float: top;
+        text-align: left;
+    }
+
+    
+    .button{
+        width:300px;
+        height:35px;
+        cursor: pointer;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 20px;
+        //border:2px #54a9a9 dashed;
+        border-width: 2px 7px 5px 7px;
+        border-bottom-color: #400080;
+        border-style: solid dotted;
+       
+    }
+    .list {
+        margin: 50px;
+        -webkit-text-fill-color: #220044;
+        background-color: #ffe3e3;
+        //border: 2px solid;
     }
 
 </style>
+
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<script type="text/javascript" src="http://www.pureexample.com/js/lib/jquery.ui.touch-punch.min.js"></script>
+
 <section class="probootstrap-section probootstrap-bg-gray">
 
     <div class="row">
         <div class="column" style="background-color:#ffffff;">
             <center>
-                <h3>我的旅程</h3>
+                <h4>我的旅程</h4>
                 <hr>
-                <ul class="drag-sort-enable ">
-                    <li class="a collapsible">Application</li>
-                        <div class="content">你好</div>
-                    <li class="a collapsible">Blank</li>
-                        <div class="content">hola</div>
-                    <li class="a collapsible">Class</li>
-                    <li class="a collapsible">Data</li>
-                    <li class="a collapsible">Element</li>
-                </ul>
+                <div id="timetable">
+                    <div class="weekday">
+                        <h4 class="button" data-toggle="collapse"
+                            data-target="#multiCollapseExample1">Day1</h4>
+                        <ul class="items" id="multiCollapseExample1">
+                            <li class="list">a</li>
+                            <li class="list">s</li>
+                            <li class="list">c</li>
+                            <li class="list">d</li>
+
+                        </ul>
+                    </div>
+                    <div class="weekday">
+                        <h4 class="button"data-toggle="collapse"
+                            data-target="#multiCollapseExample2">Day2</h4>
+
+                        <ul class="items" id="multiCollapseExample2">
+                            <li class="list">a</li>
+                            <li class="list">s</li>
+                            <li class="list">c</li>
+                            <li class="list">d</li>
+
+                        </ul>
+                    </div>
+
+                </div>
+
             </center>
+            
         </div>
         <div class="column1" style="background-color:#bbb;">
             <button class="tablink" onclick="openPage('Home', this, 'red')">Home</button>
@@ -193,7 +214,6 @@
                 <h3>About</h3>
                 <p>Who we are and what we do.</p>
             </div>
-
             <script>
                 function openPage(pageName, elmnt, color) {
                     var i, tabcontent, tablinks;
@@ -212,77 +232,73 @@
                 // Get the element with id="defaultOpen" and click on it
                 document.getElementById("defaultOpen").click();
 
-                //drag and sort
+                //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx drag and sort xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 
-                function enableDragSort(listClass) {
-                    const sortableLists = document.getElementsByClassName(listClass);
-                    Array.prototype.map.call(sortableLists, (list) => {
-                        enableDragList(list)
-                    });
+                /*let items = document.querySelectorAll('#items-list > li~div')
+
+                items.forEach(item => {
+                    $(item).prop('draggable', true)
+                    item.addEventListener('dragstart', dragStart)
+                    item.addEventListener('drop', dropped)
+                    item.addEventListener('dragenter', cancelDefault)
+                    item.addEventListener('dragover', cancelDefault)
+                })
+
+                function dragStart(e) {
+                    var index = $(e.target).index()
+                    e.dataTransfer.setData('text/plain', index)
                 }
 
-                function enableDragList(list) {
-                    Array.prototype.map.call(list.children, (item) => {
-                        enableDragItem(item)
-                    });
-                }
+                function dropped(e) {
+                    cancelDefault(e)
 
-                function enableDragItem(item) {
-                    item.setAttribute('draggable', true)
-                    item.ondrag = handleDrag;
-                    item.ondragend = handleDrop;
-                }
+                    // get new and old index
+                    let oldIndex = e.dataTransfer.getData('text/plain')
+                    let target = $(e.target)
+                    let newIndex = target.index()
 
-                function handleDrag(item) {
-                    const selectedItem = item.target,
-                        list = selectedItem.parentNode,
-                        x = event.clientX,
-                        y = event.clientY;
+                    // remove dropped items at old place
+                    let dropped = $(this).parent().children().eq(oldIndex).remove()
 
-                    selectedItem.classList.add('drag-sort-active');
-                    let swapItem = document.elementFromPoint(x, y) === null ? selectedItem : document.elementFromPoint(
-                        x, y);
-
-                    if (list === swapItem.parentNode) {
-                        swapItem = swapItem !== selectedItem.nextSibling ? swapItem : swapItem.nextSibling;
-                        list.insertBefore(selectedItem, swapItem);
+                    // insert the dropped items at new place
+                    if (newIndex < oldIndex) {
+                        target.before(dropped)
+                    } else {
+                        target.after(dropped)
                     }
                 }
 
-                function handleDrop(item) {
-                    item.target.classList.remove('drag-sort-active');
-                }
+                function cancelDefault(e) {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    return false
+                }*/
+                
 
-                (() => {
-                    enableDragSort('drag-sort-enable')
-                })();
 
+            var $j = jQuery.noConflict();
 
-                //摺疊
+            $j(document).ready(function() {
+            $j("#timetable .items").sortable({
+            connectWith: "ul"
+            });
 
-                var coll = document.getElementsByClassName("collapsible");
-                var i;
-
-                for (i = 0; i < coll.length; i++) {
-                    coll[i].addEventListener("click", function () {
-                        this.classList.toggle("active");
-                        var content = this.nextElementSibling;
-                        if (content.style.maxHeight) {
-                            content.style.maxHeight = null;
-                        } else {
-                            content.style.maxHeight = content.scrollHeight + "px";
-                        }
-                    });
-                }
-
-            </script>
-        </div>
-
-    </div>
-
-</section>
+            $j("ul[id^='available']").draggable({
+            helper: "clone",
+            connectToSortable: ".items"
+            });
+            });
 
 
 
-@endsection
+
+            //摺疊
+
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+
+            for (i = 0; i < coll.length; i++) { coll[i].addEventListener("click", function () {
+                this.classList.toggle("active"); var content=this.nextElementSibling; if (content.style.maxHeight) {
+                content.style.maxHeight=null; } else { content.style.maxHeight=content.scrollHeight + "px" ; } }); }
+                </script> </div> </div> </section> {{--  @endsection  --}}
