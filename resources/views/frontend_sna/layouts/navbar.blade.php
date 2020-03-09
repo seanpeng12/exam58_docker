@@ -1,7 +1,7 @@
 {{-- <nav class="probootstrap-nav">
- 
+
           <ul>
-          
+
             <li class="probootstrap-animate active" data-animate-effect="fadeInLeft"><a href="{{ route('my_travel') }}">我的旅程表</a>
 </li>
 <li class="probootstrap-animate" data-animate-effect="fadeInLeft"><a href="{{ route('about') }}">About</a></li>
@@ -61,14 +61,14 @@
 
                 <li><a id="hola"></a></li>
 
-                
+
                 {{-- <li class="probootstra-cta-button" id="test" ><a href="" class="btn" data-toggle="modal"
                             data-target="#loginModal">Log in</a></li> --}}
-                 <li id="btnLogIn" class="probootstra-cta-button"><a href="#" class="btn" data-toggle="modal"
-                        data-target="#signupModal">以google方式登入</a></li>          
+                <li id="btnLogIn" class="probootstra-cta-button"><a href="#" class="btn" data-toggle="modal"
+                        data-target="#signupModal">以google方式登入</a></li>
 
-                <li id="btnLogOut" class="probootstra-cta-button last"><a href="#" class="btn btn-ghost" data-toggle="modal"
-                        data-target="#signupModal">LogOut</a></li>
+                <li id="btnLogOut" class="probootstra-cta-button last"><a href="#" class="btn btn-ghost"
+                        data-toggle="modal" data-target="#signupModal">LogOut</a></li>
                 {{-- <li class="probootstra-cta-button last"><button id="btnLogOut">LogOut</button></li> --}}
             </ul>
         </div>
@@ -114,9 +114,10 @@
                                         {{-- <button class="btn btn-primary btn-ghost btn-block btn-connect-facebook"><span>connect
                                                 with</span> Facebook</button> --}}
                                         {{-- 下面是google存mysql的登入方式 --}}
-                                        {{-- <a href="{{url('/redirect')}}" class="btn btn-primary">Login with Google</a> --}}
+                                        {{-- <a href="{{url('/redirect')}}" class="btn btn-primary">Login with
+                                        Google</a> --}}
                                         {{-- <button class="btn btn-primary btn-ghost btn-block btn-connect-facebook" id="btnlogIn"> Google(firebase)</button> --}}
-    
+
                                         {{-- <button id="btnLogIn" class="btn btn-primary btn-ghost btn-block btn-connect-google">connect with Google</button> --}}
                                     </div>
                                 </div>
@@ -133,12 +134,20 @@
 {{-- firebase帳號登入登出 --}}
 
 <script>
+    // Initialize Firebase(possess0610)
+    var firebaseConfig = {
+            apiKey: "AIzaSyBC62oZBm9ftF_O0-eO7BPWx52vprEz38Y",
+            authDomain: "sna-master.firebaseapp.com",
+            databaseURL: "https://sna-master.firebaseio.com",
+            projectId: "sna-master",
+            storageBucket: "sna-master.appspot.com",
+            messagingSenderId: "640892044634",
+            appId: "1:640892044634:web:3c3c94c360528786d31f63",
+            measurementId: "G-D1PL8FR9EF"
+        };
 
-   
-  
-  // Initialize Firebase
 
-  
+
   var a = firebase.initializeApp(firebaseConfig);
 a.firestore().settings( { timestampsInSnapshots: true })
   // ========登入帳號===========
@@ -152,28 +161,28 @@ a.firestore().settings( { timestampsInSnapshots: true })
         firebase.auth().signInWithPopup(provider).then(function(result) {
         if (result.credential) {
             // This gives you a Google Access Token. You can use it to access the Google API.
-             
+
             var token = result.credential.accessToken;
             // ...
             var user = result.user;
 
             if(result.additionalUserInfo.isNewUser){
                     window.location = '/fill_member_data';
-  
+
             }
-            
+
             else{
                 console.log("not first");
                     // window.location = '/';
                         history.go(0);
 
             }
-           
+
 
 
         }
   // The signed-in user info.
- 
+
 
         }).catch(function(error) {
             // Handle Errors here.
@@ -186,10 +195,10 @@ a.firestore().settings( { timestampsInSnapshots: true })
             // ...
         });
 
-        }    
+        }
 
     }
-  
+
 // ======== 登出帳號===========
     var btnLogOut = document.getElementById('btnLogOut');
 btnLogOut.onclick = function() {
@@ -203,13 +212,12 @@ btnLogOut.onclick = function() {
 
 </script>
 <script>
-
-      firebase.auth().onAuthStateChanged(function(user) {
+    firebase.auth().onAuthStateChanged(function(user) {
                     var el=document.getElementById('btnLogIn');
                     var el2=document.getElementById('hola');
-                 
+
                     if (user) {
-                        
+
                         el.innerHTML="";
                         el2.innerHTML=user.displayName+"您好";
                         // var displayName = user.displayName;
@@ -226,15 +234,15 @@ btnLogOut.onclick = function() {
                         // var providerData = user.providerData;
                         // console.log(providerData);
 
-                        
+
 
                     } else if(null) {
-                        
+
                         // el.textContent=user.displayName+'歡迎您加入';
                     }
-                    });   
+                    });
 
-        
 
-  
+
+
 </script>
