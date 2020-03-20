@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     {{-- datatable會用到 --}}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    {{-- firebase --}}
+    <script src=" https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"> </script> {{-- firebase --}}
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-firestore.js"></script>
@@ -139,6 +141,8 @@
 
         <div id="card_append" class="card-columns">
             {{-- 此區填充 --}}
+
+
         </div>
     </div>
 
@@ -146,9 +150,9 @@
     <!-- Button trigger modal on each card 詳細資訊 -->
 
     <!-- Modal -->
-    <div class="modal fade" id="model_card" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal fade  bd-example-modal-lg" id="model_card" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 id="model_title" class="modal-title" id="exampleModalCenterTitle">放置景點名稱</h5>
@@ -157,7 +161,33 @@
                     </button>
                 </div>
                 <div id="model_info" class="modal-body">
-                    ...
+                    ....相關城市明子
+                </div>
+                <div>
+                    {{-- <script type="text/javascript" src="{{ URL::asset('js-call-r/index.js') }}"></script> --}}
+
+                    @php
+                    //台北
+                    $N = "台北";
+
+                    //"台北"
+                    $n = '"'.$N.'"';
+
+                    // 以外部指令的方式呼叫 R 進行繪圖->between_city.html
+                    // exec("Rscript R/site_Betweeness_2020.R $n", $results);
+                    // print_r($results);
+                    // // 產生亂數
+                    $nocache = rand();
+
+                    if(isset($nocache)){
+                    // 功能一
+                    $name = "R/between_city.html?$nocache";
+                    }
+
+
+                    @endphp
+                    <iframe id="#" width="100%" height="600px" frameBorder="0" scrolling="no"
+                        src="{{url($name)}}"></iframe>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
@@ -166,17 +196,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -286,13 +305,14 @@
         // var db = firebase.firestore();
 
         function test123() {
-            db.collection("喜好項目").doc("喜歡的地點").set({
-                name: "行天宮",
-                date: "202002",
-                desctiption: "本劇改編自阿瑟·柯南·道爾爵士家喻戶曉的推理小說，一位脾氣古怪的大偵探在現代倫敦的街頭悄悄巡行，四處搜尋線索。",
-                actors: ["班尼迪克·康柏拜區", "馬丁·費曼"]
-            });
-            console.log("傳資料");
+            // db.collection("喜好項目").doc("喜歡的地點").set({
+            //     name: "行天宮",
+            //     date: "202002",
+            //     desctiption: "本劇改編自阿瑟·柯南·道爾爵士家喻戶曉的推理小說，一位脾氣古怪的大偵探在現代倫敦的街頭悄悄巡行，四處搜尋線索。",
+            //     actors: ["班尼迪克·康柏拜區", "馬丁·費曼"]
+            // });
+            // console.log("傳資料");
+
         }
 
 
@@ -326,14 +346,30 @@
                     // $('#tbody').html(htmls_noData);
 
                     // 無資料時提示
-                    htmls_noData.push('<div class="row">\
-                                    <div class="col" style="margin-top:10px">\
-                                        <p class="h3" style="text-align:center;font-family: Microsoft JhengHei;">無資料</p>\
+                    // htmls_noData.push('<div class="row">\
+                    //                 <div class="col" style="margin-top:10px">\
+                    //                     <p class="h3" style="text-align:center;font-family: Microsoft JhengHei;">無資料</p>\
+                    //                 </div>\
+                    //             </div>');
+
+                    htmls_noData.push('\
+                                    <div class="card">\
+                                    <img src="images/person_1.jpg" class="card-img-top" alt="...">\
+                                    <div class="card-body">\
+                                        <h5 class="card-title">這邊是地名(測試，之後請改無資料頁面)</h5>\
+                                        <p class="card-text"></p>\
+                                        <a href="#" id="thisIsidforlike" onclick="delete_button()" class="delete_like btn btn-primary">取消收藏</a>\
+                                        <a href="#" id="thisIsidformodel" data-toggle="modal" data-target="#model_card"\
+                                            class="btn btn-outline-success">詳細資訊</a>\
+                                    </div>\
+                                    <div class="card-footer">\
+                                        <small class="text-muted">加入時間xxxxxx</small>\
                                     </div>\
                                 </div>');
+
                     $("#loading").html(htmls_noData);
 
-                    // 無資料清空loading按鈕
+                    // 無資料清空loading按鈕(上一筆資料清除更新)
                     $("#card_append").html('');
 
                 } else {
@@ -358,7 +394,7 @@
 
                             // $('#tbody').html(htmls);
 
-                            //測試可入card(成功)
+                            //測試可入資料card(成功)
 
                             htmls_card.push('<div class="card">\
                                 <img src="images/person_1.jpg" class="card-img-top" alt="...">\
@@ -367,7 +403,7 @@
                                     <p class="card-text">' + doc.data().city + ' ' + doc.data().catagory_1 + ' ' + doc
                                 .data().catagory_2 + '</p>\
                                     <a href="#" id=' + doc.id + ' onclick="delete_button()" class="delete_like btn btn-primary">取消收藏</a>\
-                                    <a href="#" id=' + doc.id + ' data-toggle="modal" data-target="#model_card" class="btn btn-outline-success">詳細資訊</a>\
+                                    <a href="#" id=' + doc.id + ' onclick="model_button()" data-toggle="modal" data-target="#model_card" class="card_info btn btn-outline-success">詳細資訊</a>\
                                 </div>\
                                 <div class="card-footer">\
                                     <small class="text-muted">加入時間 ' + doc.data().date + '</small>\
@@ -378,12 +414,8 @@
 
                             $('#loading').html("");
 
-                            $('#model_title').html(doc.data().desctiption);
-                            $('#model_info').html('<p>地點：' + doc.data().city + '</p> ' + '<p>類別：' + doc
-                                .data().catagory_1 + ' ' + doc
-                                .data().catagory_2 + '</p>');
 
-                            htmls_model.push('model data');
+
                         };
                     }); //
                 };
@@ -436,59 +468,87 @@
             // }
         };
 
+        // 詳細資訊按鈕事件
+        find_id = "";
 
+        function model_button() {
+            $(document).on('click', '.card_info', function () {
+                find_id = $(this).attr('id');
+                console.log("正在搜尋: " + find_id + " 的資料");
+                // 找到此id的data
+                var docRef = db.collection("喜歡的地點").doc(find_id);
 
-
-
-
-
-        function deletedata(id_delete) {
-            var id = id_delete;
-            //doc文件內資料清空
-            // db.collection("喜歡的地點").doc(id).set({});
-            //doc整個刪除
-            db.collection("喜歡的地點").doc(id).delete();
-        }
-
-
-        function getdata_onlog() {
-            var docRef = db.collection("喜歡的地點");
-
-
-            docRef.get().then(querySnapshot => {
-                querySnapshot.forEach(function (doc) {
+                docRef.get().then(function (doc) {
                     if (doc.exists) {
-                        console.log(doc.id, doc.data());
+                        console.log("Document data:", doc.data());
+                        $('#model_title').html(doc.data().desctiption);
+                        $('#model_info').html('<p>地點：' + doc.data().city + '</p> ' + '<p>類別：' + doc
+                            .data().catagory_1 + ' ' + doc
+                            .data().catagory_2 + '</p>');
+
                     } else {
-                        console.log("找不到文件");
+                        // doc.data() will be undefined in this case
+                        console.log("無此資料!");
                     }
+                }).catch(function (error) {
+                    console.log("Error getting document:", error);
                 });
-            });
-            // 網路
-            // var ref = db.collection('fruit');
-            // ref.get().then(querySnapshot => {
-            //     querySnapshot.forEach(doc => {
-            //         console.log(doc.id, doc.data());
-            //     });
-            // });
 
-            // 原始myself
-            // docRef.get().then(function(doc) {
-            //         if (doc.exists) {
-            //             console.log(doc.data());
-            //         } else {
-            //             console.log("找不到文件");
-            //         }
-            //     }).catch(function(error) {
-            //     console.log("提取文件時出錯:", error);
-            // });
-        }
-
-        function updatedata() {
-            db.collection("喜好項目").doc("新世紀福爾摩斯").set({
-                date: "1000",
             });
-        }
+
+
+
+    }
+
+
+
+    function deletedata(id_delete) {
+    var id = id_delete;
+    //doc文件內資料清空
+    // db.collection("喜歡的地點").doc(id).set({});
+    //doc整個刪除
+    db.collection("喜歡的地點").doc(id).delete();
+    }
+
+
+    function getdata_onlog() {
+    var docRef = db.collection("喜歡的地點");
+
+
+    docRef.get().then(querySnapshot => {
+    querySnapshot.forEach(function (doc) {
+    if (doc.exists) {
+    console.log(doc.id, doc.data());
+    } else {
+    console.log("找不到文件");
+    }
+    });
+    });
+    // 網路
+    // var ref = db.collection('fruit');
+    // ref.get().then(querySnapshot => {
+    // querySnapshot.forEach(doc => {
+    // console.log(doc.id, doc.data());
+    // });
+    // });
+
+    // 原始myself
+    // docRef.get().then(function(doc) {
+    // if (doc.exists) {
+    // console.log(doc.data());
+    // } else {
+    // console.log("找不到文件");
+    // }
+    // }).catch(function(error) {
+    // console.log("提取文件時出錯:", error);
+    // });
+    }
+
+    function updatedata() {
+    db.collection("喜好項目").doc("新世紀福爾摩斯").set({
+    date: "1000",
+    });
+    }
 
     </script>
 
@@ -648,7 +708,19 @@
                 integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
                 crossorigin="anonymous">
             </script>
+
+
     </div>
+
+    <p>vue此地測試newapp</p>
+
+    <div id="newapp">
+        <example-component></example-component>
+    </div>
+
 </body>
+{{-- 引入vue.js --}}
+{{-- <script type="text/javascript" src="{{ asset('js/app.js') }}"></script> --}}
+<script type="text/javascript" src="{{ asset('js/new.js') }}"></script>
 
 </html>

@@ -102,3 +102,10 @@ Route::get('/ccc2', function () {
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
+
+// 全部都通吃
+// Route::get('{path?}', function () {
+//     return view('frontend_sna.test');
+// })->where('path', '(.*)');
+
+Route::get('{path?}', 'AjaxController@onepageVue')->where('path', '(.*)')->name('nepageVue');
