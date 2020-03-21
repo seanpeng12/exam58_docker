@@ -145,4 +145,14 @@ class TestController extends Controller
 
         return "OK已經收到" . $city;
     }
+
+    //my_itinerary傳UID給create_itinerary
+    public function itinerary_eve(Request $request){
+        $eve_id = $request->get('eve_id');
+        
+        
+       
+        return view('frontend_sna.create_itinerary')->with('eve_id', $eve_id);
+
+    }
 }

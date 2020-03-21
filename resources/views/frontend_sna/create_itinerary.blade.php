@@ -2,7 +2,7 @@
 
 @section('content');
 <style>
-    {{--  tab  --}}
+     {{--  tab   --}}
     * {
         box-sizing: border-box;
     }
@@ -123,10 +123,10 @@
         text-align: left;
     }
 
-    
-    .button{
-        width:300px;
-        height:35px;
+
+    .button {
+        width: 300px;
+        height: 35px;
         cursor: pointer;
         font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         font-size: 20px;
@@ -134,8 +134,9 @@
         border-width: 2px 7px 5px 7px;
         border-bottom-color: #400080;
         border-style: solid dotted;
-       
+
     }
+
     .list {
         margin: 50px;
         -webkit-text-fill-color: #220044;
@@ -160,9 +161,8 @@
                 <h4>我的旅程</h4>
                 <hr>
                 <div id="timetable">
-                    <div class="weekday">
-                        <h4 class="button" data-toggle="collapse"
-                            data-target="#multiCollapseExample1">Day1</h4>
+                    {{--  <div class="weekday">
+                        <h4 id="day"class="button" data-toggle="collapse" data-target="#multiCollapseExample1"></h4>
                         <ul class="items" id="multiCollapseExample1">
                             <li class="list">a</li>
                             <li class="list">s</li>
@@ -170,10 +170,9 @@
                             <li class="list">d</li>
 
                         </ul>
-                    </div>
-                    <div class="weekday">
-                        <h4 class="button"data-toggle="collapse"
-                            data-target="#multiCollapseExample2">Day2</h4>
+                    </div>  --}}
+                    {{--  <div class="weekday">
+                        <h4 class="button" data-toggle="collapse" data-target="#multiCollapseExample2">Day2</h4>
 
                         <ul class="items" id="multiCollapseExample2">
                             <li class="list">a</li>
@@ -182,12 +181,28 @@
                             <li class="list">d</li>
 
                         </ul>
-                    </div>
+                    </div>  --}}
+                    <script>
+                        var j;
+                        for (j = 1; j < 2; j++) {
+                            $('#timetable').append('<div class="weekday">\
+                                <h4 class="button" data-toggle="collapse" data-target="#multiCollapseExample' + j +
+                                '">day' + j + '</h4>\
+                                <ul class="items" id="multiCollapseExample' + j + '">\
+                                    <li class="list">a</li>\
+                                    <li class="list">s</li>\
+                                    <li class="list">c</li>\
+                                    <li class="list">d</li>\
+                                </ul>\
+                            </div>');
+                        }
+
+                    </script>
 
                 </div>
 
             </center>
-            
+
         </div>
         <div class="column1" style="background-color:#bbb;">
             <button class="tablink" onclick="openPage('Home', this, 'red')">Home</button>
@@ -197,7 +212,7 @@
 
             <div id="Home" class="tabcontent">
                 <h3>Home</h3>
-                <p>Home is where the heart is..</p>
+                <p id = "home_p"></p>
             </div>
 
             <div id="News" class="tabcontent">
@@ -231,74 +246,61 @@
 
                 // Get the element with id="defaultOpen" and click on it
                 document.getElementById("defaultOpen").click();
+                //apend()
 
-                //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx drag and sort xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
+                //移動
+                var $j = jQuery.noConflict();
 
-                /*let items = document.querySelectorAll('#items-list > li~div')
+                $j(document).ready(function () {
+                    $j("#timetable .items").sortable({
+                        connectWith: "ul"
+                    });
 
-                items.forEach(item => {
-                    $(item).prop('draggable', true)
-                    item.addEventListener('dragstart', dragStart)
-                    item.addEventListener('drop', dropped)
-                    item.addEventListener('dragenter', cancelDefault)
-                    item.addEventListener('dragover', cancelDefault)
-                })
+                    $j("ul[id^='available']").draggable({
+                        helper: "clone",
+                        connectToSortable: ".items"
+                    });
+                });
 
-                function dragStart(e) {
-                    var index = $(e.target).index()
-                    e.dataTransfer.setData('text/plain', index)
+            </script>
+            <script>
+                var eve_id;
+                eve_id = "<?php echo $eve_id; ?>";
+
+            </script>
+
+            <script>
+                function passEve_id(id) {
+                    firebase.auth().onAuthStateChanged(function (user) {
+                        if (user) {
+                            var db = firebase.firestore();
+                            var user = firebase.auth().currentUser;
+                            var uid = user.uid;
+                            var itinerary_eve = db.collection("sightseeingMember").doc(uid).collection("我的旅程表")
+                                .doc(id).collection("每一天");
+
+                            itinerary_eve.get().then(function (querySnapshot) {
+                                if (querySnapshot.size == "0") {
+                                    console.log("null");
+                                } else {
+                                    //var count = 0;
+                                    querySnapshot.forEach(function (doc) {
+
+                                        var eve = doc.data().site;
+                                        $('#home_p').append(eve);
+                                        console.log(eve);
+                                    });
+                                }
+                            });
+                        }
+                    });
                 }
+                passEve_id(eve_id);
 
-                function dropped(e) {
-                    cancelDefault(e)
+            </script>
 
-                    // get new and old index
-                    let oldIndex = e.dataTransfer.getData('text/plain')
-                    let target = $(e.target)
-                    let newIndex = target.index()
-
-                    // remove dropped items at old place
-                    let dropped = $(this).parent().children().eq(oldIndex).remove()
-
-                    // insert the dropped items at new place
-                    if (newIndex < oldIndex) {
-                        target.before(dropped)
-                    } else {
-                        target.after(dropped)
-                    }
-                }
-
-                function cancelDefault(e) {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    return false
-                }*/
-                
-
-
-            var $j = jQuery.noConflict();
-
-            $j(document).ready(function() {
-            $j("#timetable .items").sortable({
-            connectWith: "ul"
-            });
-
-            $j("ul[id^='available']").draggable({
-            helper: "clone",
-            connectToSortable: ".items"
-            });
-            });
-
-
-
-
-            //摺疊
-
-            var coll = document.getElementsByClassName("collapsible");
-            var i;
-
-            for (i = 0; i < coll.length; i++) { coll[i].addEventListener("click", function () {
-                this.classList.toggle("active"); var content=this.nextElementSibling; if (content.style.maxHeight) {
-                content.style.maxHeight=null; } else { content.style.maxHeight=content.scrollHeight + "px" ; } }); }
-                </script> </div> </div> </section> {{--  @endsection  --}}
+        </div>
+    </div>
+</section>
+@endsection

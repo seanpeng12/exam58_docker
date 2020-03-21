@@ -1,19 +1,3 @@
-{{-- <nav class="probootstrap-nav">
- 
-          <ul>
-          
-            <li class="probootstrap-animate active" data-animate-effect="fadeInLeft"><a href="{{ route('my_travel') }}">我的旅程表</a>
-</li>
-<li class="probootstrap-animate" data-animate-effect="fadeInLeft"><a href="{{ route('about') }}">About</a></li>
-<li class="probootstrap-animate" data-animate-effect="fadeInLeft"><a href="{{ route('services') }}">Services</a></li>
-<li class="probootstrap-animate" data-animate-effect="fadeInLeft"><a href="{{ route('portfolio') }}">Portfolio</a></li>
-<li class="probootstrap-animate" data-animate-effect="fadeInLeft"><a href="{{ route('contact') }}">Contact</a></li>
-
-</ul>
-
-</nav> --}}
-
-
 <nav class="navbar navbar-default navbar-fixed-top probootstrap-navbar">
     <div class="container">
         <div class="navbar-header">
@@ -131,19 +115,21 @@
 </div>
 <!-- END modal login -->
 
-{{-- firebase帳號登入登出 --}}
 
 <script>
     // Initialize Firebase
 
 
-    var a = firebase.initializeApp(firebaseConfig);
+    /*var a = firebase.initializeApp(firebaseConfig);
     a.firestore().settings({
         timestampsInSnapshots: true
-    })
+    })*/
     // ========登入帳號===========
+    
 
     window.onload = function () {
+        
+
         var btnLogIn = document.getElementById('btnLogIn');
         btnLogIn.onclick = function () {
             var provider = new firebase.auth.GoogleAuthProvider()
@@ -189,10 +175,12 @@
     }
 
     // ======== 登出帳號===========
+    //var user = firebase.auth().currentUser;
     var btnLogOut = document.getElementById('btnLogOut');
     btnLogOut.onclick = function () {
         firebase.auth().signOut().then(function () {
-            var user = firebase.auth().currentUser;
+            
+
             console.log(user);
             history.go(0);
             alert('您已登出帳號');
@@ -212,18 +200,7 @@
             // var displayName = user.displayName;
             console.log(user.displayName);
             // var email = user.email;
-            console.log(user.email);
-            // var emailVerified = user.emailVerified;
-            // console.log(emailVerified);
-
-            // var photoURL = user.photoURL;
-            // var isAnonymous = user.isAnonymous;
-            // var uid = user.uid;
-            // console.log(uid);
-            // var providerData = user.providerData;
-            // console.log(providerData);
-
-
+            console.log(user.uid);
 
         } else if (null) {
 
@@ -231,4 +208,5 @@
         }
     });
 
+    
 </script>

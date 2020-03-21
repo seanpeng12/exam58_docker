@@ -87,18 +87,23 @@ Route::get('fill_member_data', function () {
     return view('frontend_sna.fill_member_data');
 })->name('fill_member_data');
 
-Route::get('create_itinerary', function () {
+Route::get('/create_itinerary', function () {
     return view('frontend_sna.create_itinerary');
 })->name('create_itinerary');
+
 
 Route::get('my_itinerary', function () {
     return view('frontend_sna.my_itinerary');
 })->name('my_itinerary');
+Route::post('/my_itinerary', 'TestController@itinerary_eve')->name('my_itinerary');
 
 
 Route::get('testform', function () {
     return view('frontend_sna.testform');
 })->name('testform');
+
+// itinerary
+// Route::get('studentInfo', 'HomeController@studentInfo');
 
 Route::get('/ccc', function () {
     return view('frontend_sna.test');
