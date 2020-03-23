@@ -1,6 +1,16 @@
 @extends('frontend_sna.layouts.master');
 @section('content')
-
+<style>
+    .btn_submit{
+        background-color: #0e0e0e;
+        border-color: rgba(255,255,255,0.2);
+        border: 0px;
+        font-weight:bolder;
+        color: white;
+        font-size:35px;
+        font-family:NSimSun;
+    }
+</style>
 <section class="probootstrap-section">
     <div class="container">
         <div id="s" class="row">
@@ -74,12 +84,10 @@
                         </span>\
                     </div>\
                     <div class="probootstrap-team-info">\
-                        <h3 id="title_inside">'+title+'</h3>\
+                        <button class = "btn_submit" type="submit">'+title+'</button>\
                     </div>\
                 </div>\
-            </div>\
-            <button type="submit">登入</button>\
-        </form>');
+            </div>\</form>');
         //console.log($("div[id="+eve_id+"]").selector);
         //(console.log($(eve_id).selector);)
         //$("#"+eve_id).click(function () {
