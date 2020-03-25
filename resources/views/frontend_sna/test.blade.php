@@ -716,11 +716,29 @@
 
     <div id="newapp">
         <example-component></example-component>
+        <h1>@{{ content }}</h1>
+
+        <p v-if="content_1">print if content is true</p>
+        <p v-else-if="type == 'a'">a</p>
+        <p v-else-if="type == 'b'">b</p>
+        <p v-else>content is false</p>
+        <li v-for="(item, index) in lst">
+            @{{index}} -- @{{item.text}}
+        </li>
+
+        <li v-for="(key, value, index) in lst2">
+            @{{key}} @{{value}} @{{index}}
+        </li>
+
+    </div>
+
+    <div id="test">
+
     </div>
 
 </body>
 {{-- 引入vue.js --}}
-{{-- <script type="text/javascript" src="{{ asset('js/app.js') }}"></script> --}}
-<script type="text/javascript" src="{{ asset('js/new.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+{{-- <script type="text/javascript" src="{{ asset('js/new.js') }}"></script> --}}
 
 </html>

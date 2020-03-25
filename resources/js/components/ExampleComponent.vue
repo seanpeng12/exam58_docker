@@ -3,9 +3,9 @@
     <div class="row justify-content-center">
       <div class="col-md-8">
         <div class="card">
-          <div class="card-header">Example Component</div>
+          <div class="card-header">Example 這是一個元素</div>
 
-          <div class="card-body">I'm an example component.</div>
+          <div class="card-body">終於ok了 請說話</div>
         </div>
       </div>
     </div>

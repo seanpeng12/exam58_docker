@@ -28,5 +28,28 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  */
 
 const app = new Vue({
-    el: '#app',
+    el: '#newapp',
+    // 此處為數據綁定(content)
+    // 條件判斷(content_1)
+    // lst=渲染
+    // lst2=對象渲染
+    data: {
+        content: 'hello vue',
+        content_1: false,
+        type: 'b',
+
+        lst: [{
+            text: '台北'
+        }, 0, {
+            text: '桃園'
+        }, {
+            text: '新竹'
+        }],
+        lst2: {
+            // index ,key , value
+            firstname: 'name',
+            listname: '彭',
+            age: 50
+        }
+    }
 });
