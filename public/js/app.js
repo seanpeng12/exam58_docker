@@ -37316,7 +37316,9 @@ var staticRenderFns = [
               _vm._v("Example 這是一個元素")
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [_vm._v("終於ok了 請說話")])
+            _c("div", { staticClass: "card-body" }, [
+              _vm._v("終於ok了 這邊放入Body")
+            ])
           ])
         ])
       ])

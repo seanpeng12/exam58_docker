@@ -5,7 +5,7 @@
         <div class="card">
           <div class="card-header">Example 這是一個元素</div>
 
-          <div class="card-body">終於ok了 請說話</div>
+          <div class="card-body">終於ok了 這邊放入Body</div>
         </div>
       </div>
     </div>

@@ -101,6 +101,10 @@ Route::get('/ccc2', function () {
 
 Auth::routes();
 
+//Quasar(基於vue.js)
+Route::get('/quasar', function () {
+    return view('app');
+})->name('quasar');
 // Route::get('/home', 'HomeController@index')->name('home');
 
 // 全部都通吃
