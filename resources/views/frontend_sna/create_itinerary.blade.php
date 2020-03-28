@@ -15,7 +15,6 @@
         padding-left: 20px;
         padding-top: 0px;
         height: 100%;
-        overflow: scroll;
         /* Should be removed. Only for demonstration */
     }
 
@@ -25,8 +24,6 @@
         width: 75%;
         padding: ;
         height: 100%;
-        overflow: visible;
-
         /* Should be removed. Only for demonstration */
     }
 
@@ -47,8 +44,8 @@
         border: none;
         outline: none;
         cursor: pointer;
-        padding: 10px 16px;
-        font-size: 14px;
+        padding: 14px 16px;
+        font-size: 17px;
         width: 25%;
     }
 
@@ -156,7 +153,6 @@
 <script type="text/javascript" src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 <script type="text/javascript" src="http://www.pureexample.com/js/lib/jquery.ui.touch-punch.min.js"></script>
 
-
 <section class="probootstrap-section probootstrap-bg-gray">
 
     <div class="row">
@@ -188,7 +184,7 @@
                     </div>  --}}
                     <script>
                         var j;
-                        for (j = 1; j < 6; j++) {
+                        for (j = 1; j < 2; j++) {
                             $('#timetable').append('<div class="weekday">\
                                 <h4 class="button" data-toggle="collapse" data-target="#multiCollapseExample' + j +
                                 '">day' + j + '</h4>\
@@ -209,8 +205,8 @@
 
         </div>
         <div class="column1" style="background-color:#bbb;">
-            <button class="tablink" onclick="openPage('Home', this, 'red')" id="defaultOpen">Home</button>
-            <button class="tablink" onclick="openPage('News', this, 'green')">News</button>
+            <button class="tablink" onclick="openPage('Home', this, 'red')">Home</button>
+            <button class="tablink" onclick="openPage('News', this, 'green')" id="defaultOpen">News</button>
             <button class="tablink" onclick="openPage('Contact', this, 'blue')">Contact</button>
             <button class="tablink" onclick="openPage('About', this, 'orange')">About</button>
 
@@ -292,7 +288,7 @@
                                     querySnapshot.forEach(function (doc) {
 
                                         var eve = doc.data().site;
-                                        $('#home_p').append(doc.id+"->"+eve+"</br>");
+                                        $('#home_p').append(eve);
                                         console.log(eve);
                                     });
                                 }
@@ -303,7 +299,6 @@
                 passEve_id(eve_id);
 
             </script>
-           
 
         </div>
     </div>
