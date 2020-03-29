@@ -715,6 +715,8 @@
     <p>vue此地測試newapp</p>
 
     <div id="newapp">
+        <input type="text" v-model="message">
+        <p>@{{ message }}</p>
         <example-component></example-component>
         <h1>@{{ content }}</h1>
 

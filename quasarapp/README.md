@@ -1,6 +1,6 @@
-# SNAtravel (quasarapp)
+# Sightseeing (sna_signtseeing)
 
-this is an RWD app for SNA travel website
+a traveling website base on social network analysis
 
 ## Install the dependencies
 ```bash

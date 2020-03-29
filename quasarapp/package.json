@@ -1,8 +1,8 @@
 {
-  "name": "quasarapp",
+  "name": "sna_signtseeing",
   "version": "0.0.1",
-  "description": "this is an RWD app for SNA travel website",
-  "productName": "SNAtravel",
+  "description": "a traveling website base on social network analysis",
+  "productName": "Sightseeing",
   "cordovaId": "org.cordova.quasar.app",
   "capacitorId": "",
   "author": "seanpeng12 <seanpeng12@gmail.com>",

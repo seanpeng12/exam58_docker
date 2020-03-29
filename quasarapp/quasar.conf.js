@@ -68,17 +68,18 @@ module.exports = function (ctx) {
       // extractCSS: false,
 
       // https://quasar.dev/quasar-cli/cli-documentation/handling-webpack
-      extendWebpack (cfg) {
-        cfg.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
-          exclude: /node_modules/,
-          options: {
-            formatter: require('eslint').CLIEngine.getFormatter('stylish')
-          }
-        })
-      }
+
+      // extendWebpack (cfg) {
+      //   cfg.module.rules.push({
+      //     enforce: 'pre',
+      //     test: /\.(js|vue)$/,
+      //     loader: 'eslint-loader',
+      //     exclude: /node_modules/,
+      //     options: {
+      //       formatter: require('eslint').CLIEngine.getFormatter('stylish')
+      //     }
+      //   })
+      // }
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
@@ -102,15 +103,14 @@ module.exports = function (ctx) {
       workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
       manifest: {
-        name: 'SNAtravel',
-        short_name: 'SNAtravel',
-        description: 'this is an RWD app for SNA travel website',
+        name: 'Sightseeing',
+        short_name: 'Sightseeing',
+        description: 'a traveling website base on social network analysis',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',
         theme_color: '#027be3',
-        icons: [
-          {
+        icons: [{
             src: 'statics/icons/icon-128x128.png',
             sizes: '128x128',
             type: 'image/png'
@@ -170,13 +170,13 @@ module.exports = function (ctx) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'quasarapp'
+        appId: 'sna_signtseeing'
       },
 
       // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration
       nodeIntegration: true,
 
-      extendWebpack (cfg) {
+      extendWebpack(cfg) {
         // do something with Electron main process Webpack cfg
         // chainWebpack also available besides this extendWebpack
       }

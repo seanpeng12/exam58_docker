@@ -102,8 +102,8 @@ Route::get('/ccc2', function () {
 Auth::routes();
 
 //Quasar(基於vue.js)
-Route::get('/quasar', function () {
-    return view('app');
+Route::get('/c213', function () {
+    return view('quasar');
 })->name('quasar');
 // Route::get('/home', 'HomeController@index')->name('home');
 

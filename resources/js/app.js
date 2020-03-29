@@ -50,5 +50,6 @@ const app = new Vue({
             listname: '彭',
             age: 50
         }
-    }
+    },
+
 });
