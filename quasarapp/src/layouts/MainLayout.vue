@@ -34,6 +34,7 @@
 import EssentialLink from "components/EssentialLink";
 
 export default {
+  prop: ["text"],
   name: "MainLayout",
 
   components: {
@@ -48,7 +49,7 @@ export default {
           title: "Docs",
           caption: "quasar.dev",
           icon: "school",
-          link: "https://quasar.dev"
+          link: "/class"
         },
         {
           title: "Github",

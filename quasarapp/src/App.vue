@@ -6,6 +6,7 @@
 
 <script>
 export default {
-  name: 'App'
-}
+  props: ["text"],
+  name: "App"
+};
 </script>

@@ -10,11 +10,18 @@
         name="close"
         @click="text = ''"
         class="cursor-pointer"
+        :text="text"
       />
       <q-icon name="search" />
     </template> </q-input
 ></template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      text: true
+    };
+  }
+};
 </script>
