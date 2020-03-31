@@ -1,5 +1,6 @@
 <template>
   <q-page padding>
+    <search />
     <q-card>
       <q-tabs
         v-model="tab"
@@ -10,16 +11,21 @@
         align="justify"
         narrow-indicator
       >
-        <q-tab name="mails" label="Mails" />
-        <q-tab name="alarms" label="Alarms" />
-        <q-tab name="movies" label="Movies" />
+        <q-tab name="mails" label="Step1 " icon:label_important />
+        <q-icon name="label_important" style="font-size: 32px;" />
+        <q-tab name="alarms" label="Step2" />
+        <q-icon name="label_important" style="font-size: 32px;" />
+        <q-tab name="movies" label="優缺點分析" />
+        <q-icon name="label_important" style="font-size: 32px;" />
+        <q-tab name="movies" label="Google自動行程安排" />
       </q-tabs>
 
       <q-separator />
       <q-tab-panels v-model="tab" animated>
         <q-tab-panel name="mails">
-          <div class="text-h6">Mails</div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          <div class="text-h6">選擇起點</div>
+          <div>透過需求分析</div>
+          <div>自行搜尋</div>
         </q-tab-panel>
 
         <q-tab-panel name="alarms">
@@ -42,6 +48,9 @@ export default {
     return {
       tab: "mails"
     };
+  },
+  components: {
+    search: () => import("components/search.vue")
   }
 };
 </script>
