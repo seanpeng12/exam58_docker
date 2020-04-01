@@ -39,7 +39,20 @@ module.exports = function(ctx) {
       //            (not treeshaking Quasar; biggest bundle size; convenient)
       all: "auto",
 
-      components: ["QTabPanels", "QTabPanel", "QIcon", "QInput"],
+      components: [
+        "QTabPanels",
+        "QTabPanel",
+        "QIcon",
+        "QInput",
+        "QImg",
+        "QBtn",
+        "QTabs",
+        "QTab",
+        "QRouteTab",
+        "QCarousel",
+        "QCarouselControl",
+        "QCarouselSlide"
+      ],
       directives: [],
 
       // Quasar plugins

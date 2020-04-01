@@ -1,14 +1,60 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+  <q-layout view="hHh lpR fFf">
+    <q-header
+      class="bg-dark
+ text-white"
+      elevated
+    >
       <q-toolbar>
-        <q-toolbar-title>Quasar App</q-toolbar-title>
+        <q-toolbar-title>
+          <!-- <img
+            alt="Quasar logo"
+            src="~assets/Logo.png"
+            style="height: 40px; max-width: 60px"
+          /> -->
 
-        <div>Quasar v{{ $q.version }}</div>
+          SightSeeing</q-toolbar-title
+        >
+        <q-btn
+          v-for="nav in navs"
+          v-model="navs"
+          :label="nav.label"
+          :to="nav.link"
+          :key="nav.label"
+          style="background: dark; color: white"
+        />
+        <!--  -->
+        <!-- <q-tabs
+          v-for="nav in navs"
+          v-model="tab"
+          inline-label
+          class="bg-dark
+ text-white "
+          :key="nav"
+        >
+          <q-tab :label="nav.label" :to="nav.link" /> -->
+        <!-- <q-tab label="test" link="/" /> -->
+
+        <!-- <q-tab name="mails" label="自我旅程規劃" />
+          <q-tab name="alarms" label="登入" />
+          <q-tab name="s" label="登出" /> -->
+
+        <!-- <q-btn-dropdown auto-close stretch flat label="個人頁面">
+            <q-list>
+              <q-item clickable @click="tab = 'movies'">
+                <q-item-section>我的景點收藏</q-item-section>
+              </q-item>
+
+              <q-item clickable @click="tab = 'photos'">
+                <q-item-section>我的旅程收藏</q-item-section>
+              </q-item>
+            </q-list>
+          </q-btn-dropdown> -->
+        <!-- </q-tabs> -->
       </q-toolbar>
     </q-header>
 
-    <q-drawer
+    <!-- <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
       bordered
@@ -22,7 +68,7 @@
           v-bind="link"
         />
       </q-list>
-    </q-drawer>
+    </q-drawer> -->
 
     <q-page-container>
       <router-view />
@@ -31,58 +77,53 @@
 </template>
 
 <script>
-import EssentialLink from "components/EssentialLink";
+// import EssentialLink from "components/EssentialLink";
 
 export default {
   prop: ["text"],
   name: "MainLayout",
 
-  components: {
-    EssentialLink
-  },
+  // components: {
+  //   EssentialLink
+  // },
 
   data() {
     return {
+      tab: "",
       leftDrawerOpen: false,
-      essentialLinks: [
+      navs: [
         {
-          title: "Docs",
-          caption: "quasar.dev",
+          color: false,
+          label: "home",
           icon: "school",
+          link: "/"
+        },
+        {
+          color: false,
+          label: "個人頁面",
+          icon: "list",
           link: "/class"
         },
         {
-          title: "Github",
-          caption: "github.com/quasarframework",
-          icon: "list",
-          link: "https://github.com/quasarframework"
-        },
-        {
-          title: "Discord Chat Channel",
-          caption: "chat.quasar.dev",
+          color: false,
+          label: "自我規劃旅程",
           icon: "chat",
           link: "https://chat.quasar.dev"
         },
         {
-          title: "Forum",
-          caption: "forum.quasar.dev",
+          color: false,
+          label: "登入",
           icon: "record_voice_over",
           link: "https://forum.quasar.dev"
-        },
-        {
-          title: "Twitter",
-          caption: "@quasarframework",
-          icon: "rss_feed",
-          link: "https://twitter.quasar.dev"
-        },
-        {
-          title: "Facebook",
-          caption: "@QuasarFramework",
-          icon: "public",
-          link: "https://facebook.quasar.dev"
         }
       ]
     };
   }
 };
 </script>
+<style lang="scss">
+.color {
+  color: brown;
+  font-size: 45px;
+}
+</style>
