@@ -126,4 +126,8 @@ export default {
   color: brown;
   font-size: 45px;
 }
+.my-card {
+  width: 100%;
+  max-width: 350px;
+}
 </style>

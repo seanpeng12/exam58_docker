@@ -1,10 +1,11 @@
 <template>
-  <div class="q-pa-md">
+  <div class="q-pa-md ">
     <!-- <img
       alt="Quasar logo"
       src="~assets/Logo.png"
       style="height: 40px; max-width: 60px"
     /> -->
+
     <q-carousel
       v-model="slide"
       transition-prev="scale"
@@ -38,6 +39,14 @@
         <div class="q-mt-md text-center color">優缺點分析</div>
       </q-carousel-slide>
     </q-carousel>
+    <q-page-scroller
+      reverse
+      position="top-right"
+      :scroll-offset="20"
+      :offset="[18, 18]"
+    >
+      <q-btn fab icon="keyboard_arrow_down" color="dark" />
+    </q-page-scroller>
 
     <!-- <q-carousel-slide
         :name="page.p"
@@ -59,16 +68,58 @@
         </q-scroll-area>
       </q-carousel-slide> -->
     <!-- </q-carousel> -->
+    <div class="row">
+      <q-card
+        class="my-card"
+        style="margin: 20px; width:250px"
+        flat
+        bordered
+        v-for="func in funcs"
+        :key="func.name"
+      >
+        <q-img src="https://cdn.quasar.dev/img/parallax2.jpg" />
+        <q-card-section>
+          <div class="text-overline text-orange-9">{{ func.tip }}</div>
+          <div class="text-h5 q-mt-sm q-mb-xs">{{ func.name }}</div>
+          <div class="text-caption text-grey"></div>
+        </q-card-section>
+        <q-card-actions>
+          <!-- <q-btn flat color="dark" label="Share" /> -->
+          <q-btn flat color="primary" label="進入分析" />
+          <q-space />
+          <q-btn
+            color="grey"
+            round
+            flat
+            dense
+            :icon="expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
+            @click="expanded = !expanded"
+          />
+        </q-card-actions>
+        <q-slide-transition>
+          <div v-show="expanded">
+            <q-separator />
+            <q-card-section class="text-subitle2">
+              {{ func.illustrate }}
+            </q-card-section>
+          </div>
+        </q-slide-transition>
+      </q-card>
+    </div>
   </div>
 </template>
 
 <script>
+// 824 (it's in pixels always)
 export default {
   name: "PageIndex",
 
   data() {
     return {
+      up: true,
       slide: "style",
+      expanded: false,
+      lorem: "Lorem ipsum dolor ",
       pages: [
         {
           p: 1,
@@ -79,6 +130,20 @@ export default {
           p: 2,
           content: "SightSeeing-您的旅遊小幫手2",
           img: "~assets/time.png"
+        }
+      ],
+      funcs: [
+        {
+          name: "需求功能",
+          tip: "給拿不定主意的你",
+          illustrate:
+            "使用者可透過在系統介面上勾選「需求類別」找到符合需求類別的景點。 此分析方法先藉由景點的屬性 (site_attr) 做分組，再利用SNA中的中介點中心度（betweenness centrality）找出符合使用者選取屬性的資料。 在本系統中，使用者可以選取兩種屬性，經過分析後即 會出現與此兩種屬性相符程度最高的景點。"
+        },
+        {
+          name: "景點優缺點分析功能",
+          tip: "不想踩雷的你",
+          illustrate:
+            "使用者可透過在系統介面上勾選「需求類別」找到符合需求類別的景點。 此分析方法先藉由景點的屬性 (site_attr) 做分組，再利用SNA中的中介點中心度（betweenness centrality）找出符合使用者選取屬性的資料。 在本系統中，使用者可以選取兩種屬性，經過分析後即 會出現與此兩種屬性相符程度最高的景點。"
         }
       ]
     };

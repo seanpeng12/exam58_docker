@@ -51,7 +51,9 @@ module.exports = function(ctx) {
         "QRouteTab",
         "QCarousel",
         "QCarouselControl",
-        "QCarouselSlide"
+        "QCarouselSlide",
+        "QScrollObserver",
+        "QPageScroller"
       ],
       directives: [],
 
