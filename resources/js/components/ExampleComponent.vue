@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
       <div class="col-md-8">
         <div class="card">
-          <div class="card-header">Example 這是一個元素</div>
+          <div class="card-header">Example 這是!!!!!!!!!!!!元素</div>
 
           <div class="card-body">h</div>
           <input type="text" v-model="message" />

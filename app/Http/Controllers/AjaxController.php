@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB as FacadesDB;
 
 class AjaxController extends Controller
 {
-    //get myform
+    //get myform.blade.php with mysql data
     public function index()
     {
         // $country_list = FacadesDB::table('site_data')->groupBy('city_name')->get();

@@ -112,4 +112,8 @@ Route::get('/c213', function () {
 //     return view('frontend_sna.test');
 // })->where('path', '(.*)');
 
-Route::get('{path?}', 'AjaxController@onepageVue')->where('path', '(.*)')->name('nepageVue');
+
+Route::get('/posts', 'PostController@index');
+
+
+Route::get('{path?}', 'AjaxController@onepageVue')->where('path', '(.*)')->name('newpageVue');

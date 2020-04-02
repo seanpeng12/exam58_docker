@@ -26,19 +26,24 @@ Route::post('/aaa', function (Request $request) {
 
 
 
-// 取得post api
-// 所有資料
-Route::get('/posts', 'PostController@apiAll');
+// 允許跨域請求
+Route::group(['middleware' => ['CORS']], function () {
+    // 取得post api
+    // 所有資料
+    Route::get('/posts', 'PostController@apiAll');
+    // 取得單一文章(use id)
+    Route::get('/posts/{id}', 'PostController@apiFindPostById');
+    // 建立一篇文章(成功回傳ok:true)
+    Route::post('/posts', 'PostController@apiCreatePost');
+    // 更新一篇文章(成功回傳ok use json format)
+    Route::put('/posts/{id}', 'PostController@apiUpdatePostById');
+    //刪除一篇文章
+    Route::delete('/posts/{id}', 'PostController@apiDeletePostById');
+});
 
-// 取得單一文章(use id)
-Route::get('/posts/{id}', 'PostController@apiFindPostById');
-
-// 建立一篇文章(成功回傳ok use json format)
-Route::post('/posts', 'PostController@apiCreatePost');
 
 
-// 更新一篇文章(成功回傳ok use json format)
-Route::put('/posts/{id}', 'PostController@apiUpdatePostById');
 
-//刪除一篇文章
-Route::delete('/posts/{id}', 'PostController@apiDeletePostById');
+Route::get('/site_data/{id}', function ($id) {
+    return response()->json(App\Site_data::find($id), 20);
+});

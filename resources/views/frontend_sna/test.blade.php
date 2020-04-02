@@ -712,12 +712,27 @@
 
     </div>
 
-    <p>vue此地測試newapp</p>
+
 
     <div id="newapp">
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col" style="margin-top:10px">
+                    <strong>
+                        <p class="h1" style="text-align:center;">我的測試資料(POST)</p>
+                    </strong>
+                </div>
+            </div>
+        </div>
+
+        <example-component></example-component>
+
+        <hr>
+
         <input type="text" v-model="message">
         <p>@{{ message }}</p>
-        <example-component></example-component>
         <h1>@{{ content }}</h1>
 
         <p v-if="content_1">print if content is true</p>

@@ -7,6 +7,11 @@ use App\Post;
 
 class PostController extends Controller
 {
+    function index()
+    {
+        return view('frontend_sna/test');
+    }
+
     //APi
 
     // 取得全部資料
@@ -27,7 +32,6 @@ class PostController extends Controller
     function apiCreatePost(Request $request)
     {
         $post = new Post;
-        $post->id = $request->input('id', 1);
         $post->title = $request->input('title', '標題');
         $post->body = $request->input('body', '沒有內文。');
         $ok = $post->save();
