@@ -1,6 +1,12 @@
-// import something here
+import { LocalStorage } from "quasar";
 
-// "async" is optional
-export default async ({ /* app, router, Vue, ... */ }) => {
-  // something to do
-}
+export default ({ router }) => {
+  router.beforeEach((to, from, next) => {
+    let loggedIn = LocalStorage.getItem("loggedIn");
+    if (!loggedIn && to.path !== "/PageAuth") {
+      next("/PageAuth");
+    } else {
+      next();
+    }
+  });
+};
