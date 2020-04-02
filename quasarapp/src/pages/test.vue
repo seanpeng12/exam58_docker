@@ -1,44 +1,52 @@
 <template>
   <div class="q-pa-md">
     <div class="row q-gutter-md q-mb-md">
-      <q-btn
-        :label="`Scroll to ${position}px`"
-        color="primary"
-        @click="scroll"
-      />
-      <q-btn
-        :label="`Animate to ${position}px`"
-        color="primary"
-        @click="animateScroll"
-      />
+      <q-btn color="primary" @click="login" />
     </div>
-
-    <q-scroll-area ref="scrollArea" style="height: 150px; max-width: 300px;">
-      <ol>
-        <li v-for="n in 1000" :key="n">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-        </li>
-      </ol>
-    </q-scroll-area>
   </div>
 </template>
 <script>
+import { firebaseAuth } from "boot/firebase";
+import firebase from "firebase/app";
+const fAuth = firebaseAuth.firestore();
+
 export default {
   data() {
     return {
-      position: 300
+      user: {},
+      isAuth: false
     };
   },
-
+  created() {
+    fAuth.onAuthStateChanged(user => {
+      if (user) {
+        this.user = user;
+        this.isAuth = true;
+      } else {
+        this.user = {};
+        this.isAuth = false;
+      }
+    });
+  },
   methods: {
-    scroll() {
-      this.$refs.scrollArea.setScrollPosition(this.position);
-      this.position = Math.floor(Math.random() * 1001) * 20;
+    login() {
+      const authProvider = new firebase.auth.GoogleAuthProvider();
+      fAuth
+        .signInWithPopup(authProvider)
+        .then(result => {
+          this.user = result.user;
+          this.isAuth = true;
+        })
+        .catch(err => console.error(err));
     },
-
-    animateScroll() {
-      this.$refs.scrollArea.setScrollPosition(300, 200);
-      this.position = 100000;
+    logout() {
+      fAuth
+        .signOut()
+        .then(() => {
+          this.user = {};
+          this.isAuth = false;
+        })
+        .catch(err => console.log(err));
     }
   }
 };

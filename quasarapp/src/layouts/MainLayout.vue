@@ -23,6 +23,22 @@
           :key="nav.label"
           style="background: dark; color: white"
         />
+        <q-btn
+          v-if="!loggedIn"
+          to="/PageAuth"
+          flat
+          color="amber"
+          icon-right="account_circle"
+          label="LogIn with Google"
+        />
+        <q-btn
+          v-else
+          @click="logoutUser"
+          flat
+          color="amber"
+          icon-right="account_circle"
+          label="LogOut"
+        />
         <!--  -->
         <!-- <q-tabs
           v-for="nav in navs"
@@ -78,7 +94,7 @@
 
 <script>
 // import EssentialLink from "components/EssentialLink";
-
+import { mapState, mapActions } from "vuex";
 export default {
   prop: ["text"],
   name: "MainLayout",
@@ -109,15 +125,21 @@ export default {
           label: "自我規劃旅程",
           icon: "chat",
           link: "https://chat.quasar.dev"
-        },
-        {
-          color: false,
-          label: "登入",
-          icon: "record_voice_over",
-          link: "https://forum.quasar.dev"
         }
+        // {
+        //   color: false,
+        //   label: "登入",
+        //   icon: "record_voice_over",
+        //   link: "https://forum.quasar.dev"
+        // }
       ]
     };
+  },
+  computed: {
+    ...mapState("auth", ["loggedIn"])
+  },
+  methods: {
+    ...mapActions("auth", ["logoutUser"])
   }
 };
 </script>

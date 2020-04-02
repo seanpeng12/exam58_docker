@@ -6,7 +6,7 @@ module.exports = function(ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/cli-documentation/boot-files
-    boot: ["i18n", "axios", "firebase"],
+    boot: ["i18n", "axios", "firebase", "router-auth"],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
     css: ["app.sass"],
@@ -53,12 +53,13 @@ module.exports = function(ctx) {
         "QCarouselControl",
         "QCarouselSlide",
         "QScrollObserver",
-        "QPageScroller"
+        "QPageScroller",
+        "QBanner"
       ],
       directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: ["LocalStorage"]
     },
 
     // https://quasar.dev/quasar-cli/cli-documentation/supporting-ie

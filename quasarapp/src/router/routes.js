@@ -10,9 +10,9 @@ const routes = [
     children: [{ path: "", component: () => import("pages/class.vue") }]
   },
   {
-    path: "/test",
+    path: "/PageAuth",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/test.vue") }]
+    children: [{ path: "", component: () => import("pages/PageAuth.vue") }]
   }
 ];
 
