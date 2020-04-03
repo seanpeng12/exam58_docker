@@ -6,7 +6,7 @@
       elevated
     >
       <q-toolbar>
-        <q-toolbar-title>
+        <q-toolbar-title class="title">
           <!-- <img
             alt="Quasar logo"
             src="~assets/Logo.png"
@@ -15,30 +15,49 @@
 
           SightSeeing</q-toolbar-title
         >
-        <q-btn
+        <q-item
+          exact
+          clickable
           v-for="nav in navs"
           v-model="navs"
-          :label="nav.label"
           :to="nav.link"
           :key="nav.label"
-          style="background: dark; color: white"
-        />
+        >
+          <q-item-section>
+            <q-item-label class="">{{ nav.label }}</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <!-- <q-item to="/class" exact clickable>
+          <q-item-section>
+            <q-item-label>首頁2</q-item-label>
+          </q-item-section>
+        </q-item> -->
+
         <q-btn
           v-if="!loggedIn"
           to="/PageAuth"
-          flat
           color="amber"
           icon-right="account_circle"
-          label="LogIn with Google"
+          label="Email登入"
+        />
+        <q-btn
+          v-if="!loggedIn"
+          @click="loginWithGoogle"
+          color="negative"
+          icon-right="account_circle"
+          label="Google帳號登入"
+          style="margin-left: 20px"
         />
         <q-btn
           v-else
-          @click="logoutUser"
           flat
+          @click="logoutUser"
           color="amber"
           icon-right="account_circle"
           label="LogOut"
         />
+
         <!--  -->
         <!-- <q-tabs
           v-for="nav in navs"
@@ -110,7 +129,7 @@ export default {
       navs: [
         {
           color: false,
-          label: "home",
+          label: "Home",
           icon: "school",
           link: "/"
         },
@@ -118,13 +137,13 @@ export default {
           color: false,
           label: "個人頁面",
           icon: "list",
-          link: "/class"
+          link: "/"
         },
         {
           color: false,
           label: "自我規劃旅程",
           icon: "chat",
-          link: "https://chat.quasar.dev"
+          link: "/class"
         }
         // {
         //   color: false,
@@ -139,7 +158,8 @@ export default {
     ...mapState("auth", ["loggedIn"])
   },
   methods: {
-    ...mapActions("auth", ["logoutUser"])
+    ...mapActions("auth", ["logoutUser"]),
+    ...mapActions("auth", ["loginWithGoogle"])
   }
 };
 </script>
@@ -151,5 +171,8 @@ export default {
 .my-card {
   width: 100%;
   max-width: 350px;
+}
+.title {
+  font-family: cursive;
 }
 </style>

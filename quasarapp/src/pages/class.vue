@@ -17,7 +17,7 @@
         <q-icon name="label_important" style="font-size: 32px;" />
         <q-tab name="movies" label="優缺點分析" />
         <q-icon name="label_important" style="font-size: 32px;" />
-        <q-tab name="movies" label="Google自動行程安排" />
+        <q-tab name="aa" label="Google自動行程安排" />
       </q-tabs>
 
       <q-separator />
@@ -35,6 +35,10 @@
 
         <q-tab-panel name="movies">
           <div class="text-h6">Movies</div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        </q-tab-panel>
+        <q-tab-panel name="aa">
+          <div class="text-h6">aa</div>
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
         </q-tab-panel>
       </q-tab-panels>

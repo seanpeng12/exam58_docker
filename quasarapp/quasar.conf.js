@@ -54,9 +54,11 @@ module.exports = function(ctx) {
         "QCarouselSlide",
         "QScrollObserver",
         "QPageScroller",
-        "QBanner"
+        "QBanner",
+        "QDrawer",
+        "QBar"
       ],
-      directives: [],
+      directives: ["GoBack"],
 
       // Quasar plugins
       plugins: ["LocalStorage", "Dialog"]
