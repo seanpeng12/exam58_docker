@@ -28,18 +28,12 @@
           </q-item-section>
         </q-item>
 
-        <!-- <q-item to="/class" exact clickable>
-          <q-item-section>
-            <q-item-label>首頁2</q-item-label>
-          </q-item-section>
-        </q-item> -->
-
         <q-btn
           v-if="!loggedIn"
           to="/PageAuth"
           color="amber"
           icon-right="account_circle"
-          label="Email登入"
+          label="Email註冊&登入"
         />
         <q-btn
           v-if="!loggedIn"
@@ -49,61 +43,37 @@
           label="Google帳號登入"
           style="margin-left: 20px"
         />
+
+        <q-btn-dropdown v-if="loggedIn" flat label="會員功能">
+          <q-list>
+            <q-item clickable v-close-popup @click="onItemClick">
+              <q-item-section>
+                <q-item-label>我的收藏景點</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item
+              clickable
+              v-close-popup
+              @click="onItemClick"
+              to="/mySchedule"
+            >
+              <q-item-section>
+                <q-item-label>我的旅程表</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
         <q-btn
-          v-else
+          v-if="loggedIn"
           flat
           @click="logoutUser"
           color="amber"
           icon-right="account_circle"
           label="LogOut"
         />
-
-        <!--  -->
-        <!-- <q-tabs
-          v-for="nav in navs"
-          v-model="tab"
-          inline-label
-          class="bg-dark
- text-white "
-          :key="nav"
-        >
-          <q-tab :label="nav.label" :to="nav.link" /> -->
-        <!-- <q-tab label="test" link="/" /> -->
-
-        <!-- <q-tab name="mails" label="自我旅程規劃" />
-          <q-tab name="alarms" label="登入" />
-          <q-tab name="s" label="登出" /> -->
-
-        <!-- <q-btn-dropdown auto-close stretch flat label="個人頁面">
-            <q-list>
-              <q-item clickable @click="tab = 'movies'">
-                <q-item-section>我的景點收藏</q-item-section>
-              </q-item>
-
-              <q-item clickable @click="tab = 'photos'">
-                <q-item-section>我的旅程收藏</q-item-section>
-              </q-item>
-            </q-list>
-          </q-btn-dropdown> -->
-        <!-- </q-tabs> -->
       </q-toolbar>
     </q-header>
-
-    <!-- <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-      content-class="bg-grey-1"
-    >
-      <q-list>
-        <q-item-label header class="text-grey-8">Essential Links</q-item-label>
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer> -->
 
     <q-page-container>
       <router-view />
@@ -133,15 +103,10 @@ export default {
           icon: "school",
           link: "/"
         },
+
         {
           color: false,
-          label: "我的旅程表",
-          icon: "list",
-          link: "/mySchedule"
-        },
-        {
-          color: false,
-          label: "自我規劃旅程",
+          label: "建立旅程",
           icon: "chat",
           link: "/arrange-schedule"
         }
@@ -159,7 +124,8 @@ export default {
   },
   methods: {
     ...mapActions("auth", ["logoutUser"]),
-    ...mapActions("auth", ["loginWithGoogle"])
+    ...mapActions("auth", ["loginWithGoogle"]),
+    onItemClick() {}
   }
 };
 </script>

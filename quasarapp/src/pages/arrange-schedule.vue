@@ -34,7 +34,7 @@
               flat
               label="前往上一頁"
               color="primary"
-              to="/"
+              to="/mySchedule"
               v-close-popup
             />
             <q-btn flat label="取消" color="primary" v-close-popup />
