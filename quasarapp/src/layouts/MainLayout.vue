@@ -135,15 +135,15 @@ export default {
         },
         {
           color: false,
-          label: "個人頁面",
+          label: "我的旅程表",
           icon: "list",
-          link: "/"
+          link: "/mySchedule"
         },
         {
           color: false,
           label: "自我規劃旅程",
           icon: "chat",
-          link: "/class"
+          link: "/arrange-schedule"
         }
         // {
         //   color: false,

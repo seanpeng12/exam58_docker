@@ -5,14 +5,19 @@ const routes = [
     children: [{ path: "", component: () => import("pages/index.vue") }]
   },
   {
-    path: "/class",
-    component: () => import("layouts/arrange-schedule.vue"),
-    children: [{ path: "", component: () => import("pages/class.vue") }]
+    path: "/arrange-schedule",
+    component: () => import("pages/arrange-schedule.vue")
+    // children: [{ path: "", component: () => import("pages/class.vue") }]
   },
   {
     path: "/PageAuth",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/PageAuth.vue") }]
+  },
+  {
+    path: "/mySchedule",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/mySchedule.vue") }]
   }
 ];
 

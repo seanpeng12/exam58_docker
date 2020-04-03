@@ -85,7 +85,14 @@
         </q-card-section>
         <q-card-actions>
           <!-- <q-btn flat color="dark" label="Share" /> -->
-          <q-btn flat color="primary" label="進入分析" />
+          <q-btn
+            flat
+            color="primary"
+            label="進入分析"
+            style="font-weight:bold;
+
+"
+          />
           <q-space />
           <q-btn
             color="grey"
@@ -139,6 +146,11 @@ export default {
           tip: "不想踩雷的你",
           illustrate:
             "使用者可透過在系統介面上勾選「需求類別」找到符合需求類別的景點。 此分析方法先藉由景點的屬性 (site_attr) 做分組，再利用SNA中的中介點中心度（betweenness centrality）找出符合使用者選取屬性的資料。 在本系統中，使用者可以選取兩種屬性，經過分析後即 會出現與此兩種屬性相符程度最高的景點。"
+        },
+        {
+          name: "安排一趟旅程",
+          tip: "喜歡我們系統分析的你",
+          illustrate: "集合我們所有的分析功能，讓您一步一步的規畫屬於您的旅程"
         }
       ],
       watch: {
