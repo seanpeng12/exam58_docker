@@ -1,105 +1,63 @@
 <template>
   <q-page padding>
     <div class="row">
-      <q-card class="my-card">
-        <q-img src="~assets/IMG_3593.jpg">
-          <div class="absolute-bottom">
-            <div class="text-h7" style="font-weight:bold;">我的花蓮之旅</div>
-          </div>
-        </q-img>
-
-        <q-card-actions>
-          <q-btn
-            to="/arrange-schedule"
-            flat
-            class="text-overline text-pink-9;"
-            style="font-family:NSimSun; font-size:14px"
-          >
-            進入編輯</q-btn
-          >
-          <q-btn
-            flat
-            class="text-overline text-orange-9"
-            style="font-family:NSimSun; font-size:14px"
-            >查看旅程</q-btn
-          >
-        </q-card-actions>
-      </q-card>
-
-      <q-card class="my-card">
-        <q-img src="~assets/IMG_3593.jpg">
-          <div class="absolute-bottom">
-            <div class="text-h6">Our Changing Planet</div>
-            <div class="text-subtitle2">by John Doe</div>
-          </div>
-        </q-img>
-
-        <q-card-actions>
-          <q-btn flat>Action 1</q-btn>
-          <q-btn flat>Action 2</q-btn>
-        </q-card-actions>
-      </q-card>
-      <q-card class="my-card">
-        <q-img src="~assets/IMG_3593.jpg">
-          <div class="absolute-bottom">
-            <div class="text-h6">Our Changing Planet</div>
-            <div class="text-subtitle2">by John Doe</div>
-          </div>
-        </q-img>
-
-        <q-card-actions>
-          <q-btn flat>Action 1</q-btn>
-          <q-btn flat>Action 2</q-btn>
-        </q-card-actions>
-      </q-card>
-
-      <q-card class="my-card">
-        <q-img src="~assets/IMG_3593.jpg">
-          <div class="absolute-bottom">
-            <div class="text-h6">Our Changing Planet</div>
-            <div class="text-subtitle2">by John Doe</div>
-          </div>
-        </q-img>
-
-        <q-card-actions>
-          <q-btn flat>Action 1</q-btn>
-          <q-btn flat>Action 2</q-btn>
-        </q-card-actions>
-      </q-card>
-
-      <q-card class="my-card">
-        <q-img src="~assets/IMG_3593.jpg">
-          <div class="absolute-bottom">
-            <div class="text-h6">Our Changing Planet</div>
-            <div class="text-subtitle2">by John Doe</div>
-          </div>
-        </q-img>
-
-        <q-card-actions>
-          <q-btn flat color="primary">Action 1</q-btn>
-          <q-btn flat>Action 2</q-btn>
-        </q-card-actions>
-      </q-card>
+      <schedule
+        v-for="(schedule, key) in schedules"
+        :key="key"
+        :schedule="schedule"
+        :id="key"
+      ></schedule>
     </div>
+    <div
+      class="absolute-bottom-right q-ma-lg"
+      style="pading: 20px; font-family: NSimSun;"
+    >
+      <q-btn
+        dense
+        color="warning"
+        size="24px"
+        icon="add"
+        label="建立新的旅程 "
+        @click="addSchedule = true"
+      />
+    </div>
+    <q-dialog v-model="addSchedule"> <addSchedule></addSchedule></q-dialog>
   </q-page>
 </template>
 <script>
-// import task from "components/task.vue";
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      tab: "mails"
+      tab: "mails",
+      addSchedule: false,
+      // schedules: [
+      //   {
+      //     title: "我的花蓮之旅"
+      //   },
+      //   {
+      //     title: "台南行"
+      //   },
+      //   {
+      //     title: "五日花東遊"
+      //   }
+      // ]
     };
   },
+  computed: {
+    ...mapGetters("schedules", ["schedules"]),
+  },
   components: {
-    search: () => import("components/search.vue")
-  }
+    search: () => import("components/search.vue"),
+    schedule: () => import("components/schedules/schedule.vue"),
+    addSchedule: () => import("components/schedules/modals/addSchedule.vue"),
+  },
 };
 </script>
 <style lang="scss">
 .my-card {
   width: 100%;
-  max-width: 250px;
+  max-width: 280px;
   margin: 20px;
   margin-left: 30px;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md ">
+  <div class="q-pa-md">
     <!-- <img
       alt="Quasar logo"
       src="~assets/Logo.png"
@@ -18,7 +18,7 @@
       padding
       arrows
       height="580px"
-      class="bg-white text-dark  "
+      class="bg-white text-dark"
     >
       <q-carousel-slide name="style" class="column no-wrap flex-center">
         <q-icon name="style" size="56px" />
@@ -71,15 +71,18 @@
     <div class="row">
       <q-card
         class="my-card"
-        style="margin: 20px; width:250px"
+        style="margin: 20px; width: 250px;"
         flat
         bordered
         v-for="func in funcs"
         :key="func.name"
       >
-        <q-img src="https://cdn.quasar.dev/img/parallax2.jpg" />
+        <q-img v-bind:src="func.img" style="height: 300px;"></q-img>
+        <!-- <q-img src="~assets/comment.jpg" /> -->
         <q-card-section>
-          <div class="text-overline text-orange-9">{{ func.tip }}</div>
+          <div class="text-overline text-orange-9">
+            {{ func.tip }}
+          </div>
           <div class="text-h5 q-mt-sm q-mb-xs">{{ func.name }}</div>
           <div class="text-caption text-grey"></div>
         </q-card-section>
@@ -89,9 +92,7 @@
             flat
             color="primary"
             label="進入分析"
-            style="font-weight:bold;
-
-"
+            style="font-weight: bold;"
           />
           <q-space />
           <q-btn
@@ -134,31 +135,36 @@ export default {
       name: "PageIndex",
       slide: "style",
       expanded: false,
+
       funcs: [
         {
           name: "需求功能",
           tip: "給拿不定主意的你",
           illustrate:
-            "使用者可透過在系統介面上勾選「需求類別」找到符合需求類別的景點。 此分析方法先藉由景點的屬性 (site_attr) 做分組，再利用SNA中的中介點中心度（betweenness centrality）找出符合使用者選取屬性的資料。 在本系統中，使用者可以選取兩種屬性，經過分析後即 會出現與此兩種屬性相符程度最高的景點。"
+            "使用者可透過在系統介面上勾選「需求類別」找到符合需求類別的景點。 此分析方法先藉由景點的屬性 (site_attr) 做分組，再利用SNA中的中介點中心度（betweenness centrality）找出符合使用者選取屬性的資料。 在本系統中，使用者可以選取兩種屬性，經過分析後即 會出現與此兩種屬性相符程度最高的景點。",
+          img: require("assets/need.jpg"),
         },
+
         {
           name: "景點優缺點分析功能",
           tip: "不想踩雷的你",
           illustrate:
-            "使用者可透過在系統介面上勾選「需求類別」找到符合需求類別的景點。 此分析方法先藉由景點的屬性 (site_attr) 做分組，再利用SNA中的中介點中心度（betweenness centrality）找出符合使用者選取屬性的資料。 在本系統中，使用者可以選取兩種屬性，經過分析後即 會出現與此兩種屬性相符程度最高的景點。"
+            "使用者可透過在系統介面上勾選「需求類別」找到符合需求類別的景點。 此分析方法先藉由景點的屬性 (site_attr) 做分組，再利用SNA中的中介點中心度（betweenness centrality）找出符合使用者選取屬性的資料。 在本系統中，使用者可以選取兩種屬性，經過分析後即 會出現與此兩種屬性相符程度最高的景點。",
+          img: require("assets/comment.jpg"),
         },
         {
           name: "安排一趟旅程",
           tip: "喜歡我們系統分析的你",
-          illustrate: "集合我們所有的分析功能，讓您一步一步的規畫屬於您的旅程"
-        }
+          illustrate: "集合我們所有的分析功能，讓您一步一步的規畫屬於您的旅程",
+          img: require("assets/route.jpg"),
+        },
       ],
       watch: {
         vertical(val) {
           this.navPos = val === true ? "right" : "bottom";
-        }
-      }
+        },
+      },
     };
-  }
+  },
 };
 </script>
