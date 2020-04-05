@@ -1,5 +1,6 @@
 import Vue from "vue";
 import { uid } from "quasar";
+import { fstore, firebaseAuth } from "boot/firebase";
 const state = {
   name: "PageIndex",
   slide: "style",
@@ -50,8 +51,27 @@ const actions = {
     let payload = {
       id: scheduleID,
       schedule: schedule,
+      title: title,
     };
     commit("addSchedule", payload);
+  },
+  fbReadData({ commit }) {
+    // console.log("start reading fb");
+    // console.log(firebaseAuth.currentUser);
+    const a = firebaseAuth.currentUser.uid;
+    console.log(a.uid);
+
+    fstore
+      .collection("sightseeingMember")
+      .doc(a)
+      .onSnapshot(function (doc) {
+        // console.log("Current data: ");
+        let payload = {
+          id: a,
+          title: doc.data().birthday,
+        };
+        commit("addSchedule", payload);
+      });
   },
 };
 const getters = {
