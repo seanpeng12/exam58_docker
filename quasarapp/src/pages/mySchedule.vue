@@ -21,7 +21,9 @@
         @click="addSchedule = true"
       />
     </div>
-    <q-dialog v-model="addSchedule"> <addSchedule></addSchedule></q-dialog>
+    <q-dialog v-model="addSchedule">
+      <addSchedule @close="addSchedule = false"></addSchedule
+    ></q-dialog>
   </q-page>
 </template>
 <script>

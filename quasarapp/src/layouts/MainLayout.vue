@@ -1,10 +1,6 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-header
-      class="bg-dark
- text-white"
-      elevated
-    >
+    <q-header class="bg-dark text-white" elevated>
       <q-toolbar>
         <q-toolbar-title class="title">
           <!-- <img
@@ -27,6 +23,11 @@
             <q-item-label class="">{{ nav.label }}</q-item-label>
           </q-item-section>
         </q-item>
+        <q-item exact clickable to="/arrange-schedule">
+          <q-item-section>
+            <q-item-label class="">建立旅程表</q-item-label>
+          </q-item-section>
+        </q-item>
 
         <q-btn
           v-if="!loggedIn"
@@ -41,7 +42,7 @@
           color="negative"
           icon-right="account_circle"
           label="Google帳號登入"
-          style="margin-left: 20px"
+          style="margin-left: 20px;"
         />
 
         <q-btn-dropdown v-if="loggedIn" flat label="會員功能">
@@ -101,32 +102,32 @@ export default {
           color: false,
           label: "Home",
           icon: "school",
-          link: "/"
+          link: "/",
         },
 
-        {
-          color: false,
-          label: "建立旅程",
-          icon: "chat",
-          link: "/arrange-schedule"
-        }
+        // {
+        //   color: false,
+        //   label: "建立旅程",
+        //   icon: "chat",
+        //   link: "/arrange-schedule"
+        // }
         // {
         //   color: false,
         //   label: "登入",
         //   icon: "record_voice_over",
         //   link: "https://forum.quasar.dev"
         // }
-      ]
+      ],
     };
   },
   computed: {
-    ...mapState("auth", ["loggedIn"])
+    ...mapState("auth", ["loggedIn"]),
   },
   methods: {
     ...mapActions("auth", ["logoutUser"]),
     ...mapActions("auth", ["loginWithGoogle"]),
-    onItemClick() {}
-  }
+    onItemClick() {},
+  },
 };
 </script>
 <style lang="scss">

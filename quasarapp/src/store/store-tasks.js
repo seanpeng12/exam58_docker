@@ -1,4 +1,5 @@
 import Vue from "vue";
+import { uid } from "quasar";
 const state = {
   name: "PageIndex",
   slide: "style",
@@ -6,15 +7,15 @@ const state = {
   schedules: {
     ID1: {
       title: "我的花蓮之旅",
-      date: "2020/01/21-2020/01/25",
+      startDate: "2020/01/21-2020/01/25",
     },
     ID2: {
       title: "台南行",
-      date: "2020/01/21-2020/01/25",
+      startDate: "2020/01/21-2020/01/25",
     },
     ID3: {
       title: "五日花東遊",
-      date: "2020/01/21-2020/01/25",
+      startDate: "2020/01/21-2020/01/25",
     },
   },
   watch: {
@@ -33,6 +34,9 @@ const mutations = {
     // delete state.schedules[id];
     Vue.delete(state.schedules, id);
   },
+  addSchedule(state, payload) {
+    Vue.set(state.schedules, payload.id, payload.schedule);
+  },
 };
 const actions = {
   updateSchedule({ commit }, payload) {
@@ -40,6 +44,14 @@ const actions = {
   },
   deleteSchedule({ commit }, id) {
     commit("deleteSchedule", id);
+  },
+  addSchedule({ commit }, schedule) {
+    let scheduleID = uid();
+    let payload = {
+      id: scheduleID,
+      schedule: schedule,
+    };
+    commit("addSchedule", payload);
   },
 };
 const getters = {

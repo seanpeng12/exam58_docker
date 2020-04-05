@@ -1,21 +1,8 @@
 <template>
   <q-card>
-    <!-- <q-card-section class="row">
-      <div class="text-h6">建立旅程表</div>
-      <q-space />
-      <q-btn v-close-popup flat round dense icon="close" />
-    </q-card-section> -->
     <modalHeader>建立旅程表</modalHeader>
     <q-form @submit="submitForm">
-      <q-card-section class="q-pt-none">
-        <!-- <q-input
-          outlined
-          ref="name"
-          v-model="scheduleToSubmit.title"
-          label="Schedule title"
-          :rules="[(val) => !!val || 'Field is required']"
-        /> -->
-      </q-card-section>
+      <q-card-section class="q-pt-none"> </q-card-section>
       <modalScheduleName
         :name.sync="scheduleToSubmit.title"
         ref="modalScheduleName"
@@ -57,6 +44,7 @@
 <script>
 import { mapActions } from "vuex";
 export default {
+  props: ["schedule", "id"],
   data() {
     return {
       scheduleToSubmit: {
@@ -66,7 +54,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("schedules", ["addSchedule"]),
+    ...mapActions("schedules", ["updateSchedule"]),
     submitForm() {
       this.$refs.modalScheduleName.$refs.name.validate();
       //   console.log(this.$refs.name.hasError);
@@ -76,7 +64,11 @@ export default {
       }
     },
     submitSchedule() {
-      this.addSchedule(this.scheduleToSubmit);
+      // this.addSchedule(this.scheduleToSubmit);
+      this.updateSchedule({
+        id: this.id,
+        updates: this.scheduleToSubmit,
+      });
       this.$emit("close");
     },
   },
@@ -89,6 +81,9 @@ export default {
       import("components/schedules/modals/shared/modalStartDate.vue"),
     modalButtons: () =>
       import("components/schedules/modals/shared/modalButtons.vue"),
+  },
+  mounted() {
+    this.scheduleToSubmit = Object.assign({}, this.schedule);
   },
 };
 </script>
