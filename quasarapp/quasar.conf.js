@@ -37,6 +37,7 @@ module.exports = function (ctx) {
       //            (fastest compile time; minimum bundle size; most tedious)
       // * true   - Import everything from Quasar
       //            (not treeshaking Quasar; biggest bundle size; convenient)
+
       all: "auto",
 
       components: [
@@ -65,6 +66,12 @@ module.exports = function (ctx) {
         "QSpace",
         "QDate",
         "QForm",
+        "QToolbar",
+        "QToolbarTitle",
+        "QHeader",
+        "QFooter",
+        "QFab",
+        "QFabAction",
       ],
       directives: ["GoBack", "ClosePopup"],
 

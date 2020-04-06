@@ -27,6 +27,7 @@ class CreateSiteDataTable extends Migration
         });
     }
 
+
     /**
      * Reverse the migrations.
      *

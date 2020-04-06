@@ -6,9 +6,9 @@ import * as mutations from "./mutations";
 import * as actions from "./actions";
 import auth from "./store-auth";
 
-export default function() {
+export default function () {
   const Store = Vue.Store({
-    modules: { auth }
+    modules: { auth },
   });
   // namespaced: true,
   // getters,

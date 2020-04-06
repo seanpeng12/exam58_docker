@@ -115,4 +115,19 @@ Route::get('/ccc2', function () {
 
 Auth::routes();
 
+//Quasar(基於vue.js)
+Route::get('/c213', function () {
+    return view('quasar');
+})->name('quasar');
 // Route::get('/home', 'HomeController@index')->name('home');
+
+// 全部都通吃
+// Route::get('{path?}', function () {
+//     return view('frontend_sna.test');
+// })->where('path', '(.*)');
+
+
+Route::get('/posts', 'PostController@index');
+
+
+// Route::get('{path?}', 'AjaxController@onepageVue')->where('path', '(.*)')->name('newpageVue');
