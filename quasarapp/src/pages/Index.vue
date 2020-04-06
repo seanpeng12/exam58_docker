@@ -1,58 +1,41 @@
 <template>
   <div class="q-pa-md layout-font">
-    <!-- <img
-      alt="Quasar logo"
-      src="~assets/Logo.png"
-      style="height: 40px; max-width: 60px"
-    /> -->
-
     <q-carousel
       v-model="slide"
-      transition-prev="scale"
-      transition-next="scale"
+      transition-prev="slide-right"
+      transition-next="slide-left"
       swipeable
+      autoplay
       animated
-      infinite
-      control-color="dark"
-      navigation
+      control-color="primary"
       padding
-      arrows
-      height="580px"
-      class="bg-white text-dark"
+      height="500px"
+      class="bg-white-1"
     >
-      <q-carousel-slide
-        name="style"
-        class="column no-wrap flex-center"
-        img-src="https://images.pexels.com/photos/917494/pexels-photo-917494.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
-      >
-        <q-icon name="style" size="56px" class="text-white" />
-        <div class="q-mt-md text-center color-carousel">
-          來去旅行
+      <q-carousel-slide :name="1" class="row no-wrap">
+        <div
+          class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap"
+        >
+          <div class="column" style="height: 500px;">
+            <div class="col">
+              <h2 class="q-mt-xl q-ml-xl absolute-top h2">
+                來去旅行
+              </h2>
+            </div>
+
+            <div class="col">
+              <h5 class="q-mt-none q-ml-xl">
+                這是一套幫助您在規劃旅程時，<br />
+                可以節省您許多時間的系統。<br /><br />幫您蒐集網路的資料，<br />
+                分析出您所期望的旅遊景點，<br />以及透過一連串設計好的流程 ，<br />幫您快速排好旅程表。
+              </h5>
+            </div>
+          </div>
+          <q-img
+            class="rounded-borders col-6 full-height absolute-right"
+            src="https://cdn.quasar.dev/img/parallax1.jpg"
+          />
         </div>
-      </q-carousel-slide>
-      <q-carousel-slide
-        name="tv"
-        class="column no-wrap flex-center"
-        img-src="https://images.pexels.com/photos/917494/pexels-photo-917494.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
-      >
-        <q-icon name="live_tv" size="56px" />
-        <div class="q-mt-md text-center color-carousel">需求分析</div>
-      </q-carousel-slide>
-      <q-carousel-slide
-        name="school"
-        class="column no-wrap flex-center"
-        img-src="https://images.pexels.com/photos/917494/pexels-photo-917494.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
-      >
-        <q-icon name="school" size="56px" />
-        <div class="q-mt-md text-center color-carousel">路徑分析</div>
-      </q-carousel-slide>
-      <q-carousel-slide
-        name="time"
-        class="column no-wrap flex-center"
-        img-src="https://images.pexels.com/photos/917494/pexels-photo-917494.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
-      >
-        <q-icon name="snooze" size="56px" />
-        <div class="q-mt-md text-center color-carousel">優缺點分析</div>
       </q-carousel-slide>
     </q-carousel>
     <q-page-scroller
@@ -64,7 +47,7 @@
       <q-btn fab icon="keyboard_arrow_down" color="dark" />
     </q-page-scroller>
 
-    <div class="row">
+    <div class="row" style="margin-left: 40px;">
       <q-card
         class="my-card"
         style="margin: 20px; width: 250px;"
@@ -129,7 +112,7 @@ export default {
   data() {
     return {
       name: "PageIndex",
-      slide: "style",
+      slide: 1,
       expanded: false,
 
       funcs: [
@@ -137,22 +120,29 @@ export default {
           name: "需求功能",
           tip: "給拿不定主意的你",
           illustrate:
-            "使用者可透過在系統介面上勾選「需求類別」找到符合需求類別的景點。 此分析方法先藉由景點的屬性 (site_attr) 做分組，再利用SNA中的中介點中心度（betweenness centrality）找出符合使用者選取屬性的資料。 在本系統中，使用者可以選取兩種屬性，經過分析後即 會出現與此兩種屬性相符程度最高的景點。",
-          img: require("assets/need.jpg"),
+            "只要選擇兩個想去的景點的類型，您即可找出符合A類型及B類型的景點",
+          img: require("assets/idea.png"),
         },
 
         {
           name: "景點優缺點分析功能",
           tip: "不想踩雷的你",
           illustrate:
-            "使用者可透過在系統介面上勾選「需求類別」找到符合需求類別的景點。 此分析方法先藉由景點的屬性 (site_attr) 做分組，再利用SNA中的中介點中心度（betweenness centrality）找出符合使用者選取屬性的資料。 在本系統中，使用者可以選取兩種屬性，經過分析後即 會出現與此兩種屬性相符程度最高的景點。",
-          img: require("assets/comment.jpg"),
+            "只要輸入您想了解的景點名稱，景點優缺點馬上一目瞭然，不必再花大量時間爬文。",
+          img: require("assets/plus.png"),
+        },
+        {
+          name: "路徑規劃",
+          tip: "想要找尋受歡迎路線的你",
+          illustrate:
+            "只要輸入一個想去的景點作為起點，就可以找到受大眾歡迎的路線",
+          img: require("assets/road-1.png"),
         },
         {
           name: "安排一趟旅程",
-          tip: "喜歡我們系統分析的你",
+          tip: "想要來一趟旅程的你",
           illustrate: "集合我們所有的分析功能，讓您一步一步的規畫屬於您的旅程",
-          img: require("assets/route.jpg"),
+          img: require("assets/vacation.png"),
         },
       ],
       watch: {
@@ -168,9 +158,13 @@ export default {
 <style>
 .layout-font {
   font-family: Microsoft JhengHei;
+  /* font-family: NSimSun; */
 }
 .color-carousel {
   color: white;
   font-size: 45px;
+}
+.h2 {
+  color: yellowgreen;
 }
 </style>

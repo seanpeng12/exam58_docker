@@ -3,7 +3,7 @@
     <q-img src="~assets/IMG_3593.jpg">
       <div class="absolute-bottom">
         <div class="text-h7" style="font-weight: bold;">
-          {{ schedule.title }}@{{ name }}
+          {{ schedule.title }}
         </div>
         <p class="absolute-right q-pt-lg">{{ schedule.startDate }}</p>
       </div>
