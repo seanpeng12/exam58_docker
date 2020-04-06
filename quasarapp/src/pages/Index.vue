@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md">
+  <div class="q-pa-md layout-font">
     <!-- <img
       alt="Quasar logo"
       src="~assets/Logo.png"
@@ -20,23 +20,39 @@
       height="580px"
       class="bg-white text-dark"
     >
-      <q-carousel-slide name="style" class="column no-wrap flex-center">
-        <q-icon name="style" size="56px" />
-        <div class="q-mt-md text-center color">
-          SightSeeing您的旅遊小幫手
+      <q-carousel-slide
+        name="style"
+        class="column no-wrap flex-center"
+        img-src="https://images.pexels.com/photos/917494/pexels-photo-917494.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+      >
+        <q-icon name="style" size="56px" class="text-white" />
+        <div class="q-mt-md text-center color-carousel">
+          來去旅行
         </div>
       </q-carousel-slide>
-      <q-carousel-slide name="tv" class="column no-wrap flex-center">
+      <q-carousel-slide
+        name="tv"
+        class="column no-wrap flex-center"
+        img-src="https://images.pexels.com/photos/917494/pexels-photo-917494.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+      >
         <q-icon name="live_tv" size="56px" />
-        <div class="q-mt-md text-center color">需求分析</div>
+        <div class="q-mt-md text-center color-carousel">需求分析</div>
       </q-carousel-slide>
-      <q-carousel-slide name="school" class="column no-wrap flex-center">
+      <q-carousel-slide
+        name="school"
+        class="column no-wrap flex-center"
+        img-src="https://images.pexels.com/photos/917494/pexels-photo-917494.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+      >
         <q-icon name="school" size="56px" />
-        <div class="q-mt-md text-center color">路徑分析</div>
+        <div class="q-mt-md text-center color-carousel">路徑分析</div>
       </q-carousel-slide>
-      <q-carousel-slide name="time" class="column no-wrap flex-center">
+      <q-carousel-slide
+        name="time"
+        class="column no-wrap flex-center"
+        img-src="https://images.pexels.com/photos/917494/pexels-photo-917494.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+      >
         <q-icon name="snooze" size="56px" />
-        <div class="q-mt-md text-center color">優缺點分析</div>
+        <div class="q-mt-md text-center color-carousel">優缺點分析</div>
       </q-carousel-slide>
     </q-carousel>
     <q-page-scroller
@@ -48,26 +64,6 @@
       <q-btn fab icon="keyboard_arrow_down" color="dark" />
     </q-page-scroller>
 
-    <!-- <q-carousel-slide
-        :name="page.p"
-        class="text-center"
-        v-for="page in pages"
-        :key="page.p"
-      >
-        <q-scroll-area class="fit">
-          <div class="q-pb-md color">
-            <br />
-            <br />
-            <img
-              class="row"
-              src="~assets/time.png"
-              style="height: 90px; max-width: 100px"
-            />
-            {{ page.content }}
-          </div>
-        </q-scroll-area>
-      </q-carousel-slide> -->
-    <!-- </q-carousel> -->
     <div class="row">
       <q-card
         class="my-card"
@@ -168,3 +164,13 @@ export default {
   },
 };
 </script>
+
+<style>
+.layout-font {
+  font-family: Microsoft JhengHei;
+}
+.color-carousel {
+  color: white;
+  font-size: 45px;
+}
+</style>

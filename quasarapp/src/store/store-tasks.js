@@ -51,7 +51,7 @@ const actions = {
     let payload = {
       id: scheduleID,
       schedule: schedule,
-      title: title,
+      name: name,
     };
     commit("addSchedule", payload);
   },
@@ -68,7 +68,6 @@ const actions = {
         // console.log("Current data: ");
         let payload = {
           id: a,
-          title: doc.data().birthday,
         };
         commit("addSchedule", payload);
       });
