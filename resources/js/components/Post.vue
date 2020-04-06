@@ -19,14 +19,14 @@
     <form id="form">
       <div class="form-group" :class="{ 'has-warning': titleWarning }">
         <label class="control-label">
-          標題
+          標題?
           <span v-if="titleWarning">不能空白</span>
         </label>
         <input class="form-control" v-model="post.title" />
       </div>
       <div class="form-group" :class="{ 'has-warning': bodyWarning }">
         <label class="control-label">
-          內容
+          內容?
           <span v-if="bodyWarning">不能空白</span>
         </label>
         <textarea class="form-control" v-model="post.body"></textarea>

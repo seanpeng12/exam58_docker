@@ -39,11 +39,18 @@ Route::group(['middleware' => ['CORS']], function () {
     Route::put('/posts/{id}', 'PostController@apiUpdatePostById');
     //刪除一篇文章
     Route::delete('/posts/{id}', 'PostController@apiDeletePostById');
-});
+
+    // R
+    //執行R API
+    Route::post('/runR_city', 'PostController@runR_city');
+    //執行R API(兩類別)
+    Route::post('/runR_twoC', 'PostController@runR_twoC');
 
 
+    // 取得所有景點資料site_data
+    Route::get('/site_data', 'PostController@site_dataAll');
+    // 取單一景點site_data
+    Route::get('/site_data/{id}', 'PostController@site_dataById');
 
-
-Route::get('/site_data/{id}', function ($id) {
-    return response()->json(App\Site_data::find($id), 20);
+    Route::get('/site_dataCity', 'PostController@site_dataCityAll');
 });

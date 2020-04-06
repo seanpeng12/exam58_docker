@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\Site_data;
+use Symfony\Component\Process\Process;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 class PostController extends Controller
 {
@@ -12,7 +15,7 @@ class PostController extends Controller
         return view('frontend_sna/test');
     }
 
-    //APi
+    //APi (post資料庫)
 
     // 取得全部資料
     function apiAll()
@@ -66,5 +69,62 @@ class PostController extends Controller
         $rows = Post::destroy($id);
         $ok = ($rows > 0);
         return response()->json(['ok' => $ok], 200);
+    }
+
+
+
+
+
+    // R
+
+    function runR_city(Request $request)
+    {
+
+
+        $id = "台北";
+        $n = '"' . $id . '"';
+
+        // 以外部指令的方式呼叫 R 進行繪圖->between_city.html
+
+        $your_command = "Rscript R/site_Betweeness_2020.R $n";
+        $process = new Process($your_command);
+        $process->run(); // to run Sync
+        // $process->start(); // to run Async
+        return response()->json(array('output' => $process->getOutput(), 'RhtmlCheck' => '請確認是否產出檔案!'), 200);
+    }
+
+    function runR_twoC(Request $request)
+    {
+
+
+        $temp_d = "台北 博物館 特色博物館";
+
+        $cc = '"' . $temp_d . '"';
+
+        // 以外部指令的方式呼叫 R 進行繪圖->between_relationship.html
+
+        $your_command = "Rscript R/betweenss_attr_2020.R $cc";
+        $process = new Process($your_command);
+        $process->run(); // to run Sync
+        // $process->start(); // to run Async
+
+        return response()->json(array('output' => $process->getOutput(), 'RhtmlCheck' => '請確認是否產出檔案!'), 200);
+    }
+
+    // site_data API
+    // 取所有景點(測試用，有設定量)
+    function site_dataAll()
+    {
+        return response()->json(Site_data::where('id', '<', "S0005")->get(), 200);
+    }
+
+    // 取單一景點
+    function site_dataById($id)
+    {
+        return response()->json(Site_data::find($id), 200);
+    }
+    function site_dataCityAll()
+    {
+        return response()->json(Site_data::select('city_name')->distinct()->get(), 200);
     }
 }

@@ -1,45 +1,41 @@
 <template>
-  <!-- navbar start -->
-  <div class="q-pa-md q-gutter-y-sm">
-    <div class="bg-orange text-white">
-      <q-toolbar>
-        <q-btn flat round dense icon="menu" class="q-mr-sm" />
-        <q-space />
-        <q-btn flat round dense icon="search" class="q-mr-xs" />
-        <q-btn flat round dense icon="group_add" />
-      </q-toolbar>
-      <q-toolbar inset>
-        <q-toolbar-title>
-          <strong>Quasar</strong> Framework
-        </q-toolbar-title>
-      </q-toolbar>
+  <q-page>
+    <div class="col-6">
+      <q-img
+        src="https://images.unsplash.com/photo-1504829857797-ddff29c27927?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
+      >
+        <div class="absolute-top text-center img_background">
+          <div class="text">
+            <b class="title">來去旅遊</b>
+            <p class="subtitle">旅遊分析結合Social-Network Analysis</p>
+          </div>
+        </div>
+      </q-img>
     </div>
-
-    <div class="bg-cyan text-white">
-      <q-toolbar>
-        <q-btn flat round dense icon="assignment_ind" />
-
-        <q-space />
-
-        <q-btn flat round dense icon="sim_card" class="q-mr-xs" />
-        <q-btn flat round dense icon="gamepad" />
-      </q-toolbar>
-
-      <q-toolbar inset>
-        <q-breadcrumbs active-color="white" style="font-size: 16px">
-          <q-breadcrumbs-el label="Home" icon="home" />
-          <q-breadcrumbs-el label="Components" icon="widgets" />
-          <q-breadcrumbs-el label="Toolbar" />
-        </q-breadcrumbs>
-      </q-toolbar>
-    </div>
-  </div>
-  <!-- navbar end -->
+  </q-page>
 </template>
 
 <script>
 export default {};
 </script>
 
+
 <style>
+.img_background {
+  background-color: transparent;
+}
+.text {
+  padding: 15px;
+  text-align: center;
+  color: "white";
+  font-family: Microsoft JhengHei;
+}
+.text .title {
+  margin-top: 10px;
+  font-size: 48px;
+}
+.text .subtitle {
+  padding: 10px;
+  font-size: 23px;
+}
 </style>

@@ -68,7 +68,7 @@ ccout = visNetwork(nodes,edges, width = "100%",height = "500px") %>%
   visOptions(highlightNearest = TRUE,
              nodesIdSelection = TRUE)
 
-visSave(ccout, file = "C://xampp/htdocs/SNA_sean/exam58/public/R/between_relationship.html",selfcontained = TRUE, background = "white")
+visSave(ccout, file = "C://xampp/htdocs/SNA_sean/exam58/quasarapp/src/statics/between_relationship.html",selfcontained = TRUE, background = "white")
 # g <- graph.data.frame(edges, directed=FALSE, vertices=nodes)
 # graph <- betweenness(g, v = V(g), directed = FALSE, weights = NA)
 # visIgraph(g) %>%

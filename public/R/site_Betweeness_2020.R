@@ -45,7 +45,7 @@ nodes <- data.frame(id = c(n$id), group = c(n$type),
                     shape = c(n$shape.y), font.size = 30)
 edges <- data.frame(from = c(sr$from), to = c(sr$to))
 
-ccout = visNetwork(nodes,edges, width = "100%",height = "1000px") %>%
+ccout = visNetwork(nodes,edges, width = "100%",height = "1500px") %>%
   visIgraphLayout() %>% #靜態
   visOptions(highlightNearest = TRUE,
              nodesIdSelection = TRUE)

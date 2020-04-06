@@ -116,4 +116,4 @@ Route::get('/c213', function () {
 Route::get('/posts', 'PostController@index');
 
 
-Route::get('{path?}', 'AjaxController@onepageVue')->where('path', '(.*)')->name('newpageVue');
+// Route::get('{path?}', 'AjaxController@onepageVue')->where('path', '(.*)')->name('newpageVue');

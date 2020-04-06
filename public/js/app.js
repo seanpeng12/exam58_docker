@@ -37478,7 +37478,7 @@ var render = function() {
         },
         [
           _c("label", { staticClass: "control-label" }, [
-            _vm._v("\n        標題\n        "),
+            _vm._v("\n        標題?\n        "),
             _vm.titleWarning ? _c("span", [_vm._v("不能空白")]) : _vm._e()
           ]),
           _vm._v(" "),
@@ -37513,7 +37513,7 @@ var render = function() {
         },
         [
           _c("label", { staticClass: "control-label" }, [
-            _vm._v("\n        內容\n        "),
+            _vm._v("\n        內容?\n        "),
             _vm.bodyWarning ? _c("span", [_vm._v("不能空白")]) : _vm._e()
           ]),
           _vm._v(" "),
