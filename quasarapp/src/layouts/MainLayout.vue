@@ -2,22 +2,16 @@
   <q-layout view="hHh lpR fFf">
     <q-header class="bg-dark text-white" elevated>
       <q-toolbar>
-        <q-toolbar-title class="title"> SIGHTSEEING</q-toolbar-title>
+        <q-toolbar-title class="title">SIGHTSEEING</q-toolbar-title>
         <!-- gt-xs view -->
         <q-item class="gt-xs" exact clickable to="/">
           <q-item-section>
-            <q-item-label class="">首頁</q-item-label>
+            <q-item-label class>首頁</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item
-          class="gt-xs"
-          exact
-          clickable
-          to="/arrange-schedule"
-          v-if="loggedIn"
-        >
+        <q-item class="gt-xs" exact clickable to="/arrange-schedule" v-if="loggedIn">
           <q-item-section>
-            <q-item-label class="">建立旅程表</q-item-label>
+            <q-item-label class>建立旅程表</q-item-label>
           </q-item-section>
         </q-item>
         <div class="gt-xs">
@@ -45,14 +39,44 @@
                 </q-item-section>
               </q-item>
 
-              <q-item
-                clickable
-                v-close-popup
-                @click="onItemClick"
-                to="/mySchedule"
-              >
+              <q-item clickable v-close-popup @click="onItemClick" to="/mySchedule">
                 <q-item-section>
                   <q-item-label>我的旅程表</q-item-label>
+                </q-item-section>
+              </q-item>
+
+              <q-item clickable v-close-popup @click="onItemClick" to="/singlePage">
+                <q-item-section>
+                  <q-item-label>
+                    分析GO-
+                    <b>需求分析</b>
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
+
+              <q-item clickable v-close-popup @click="onItemClick" to="/ProsConsPage">
+                <q-item-section>
+                  <q-item-label>
+                    分析GO-
+                    <b>優缺點分析</b>
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
+
+              <q-item clickable v-close-popup @click="onItemClick" to="/PathPage">
+                <q-item-section>
+                  <q-item-label>
+                    分析GO-
+                    <b>路徑分析</b>
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
+
+              <q-item clickable v-close-popup @click="onItemClick" to="/AjaxTest">
+                <q-item-section>
+                  <q-item-label>
+                    測試ajax+axios傳值
+                  </q-item-label>
                 </q-item-section>
               </q-item>
             </q-list>
@@ -130,39 +154,39 @@ const menuList = [
     icon: "home",
     label: "首頁",
     to: "/",
-    separator: true,
+    separator: true
   },
   {
     icon: "send",
     label: "Outbox",
-    separator: false,
+    separator: false
   },
   {
     icon: "delete",
     label: "Trash",
-    separator: false,
+    separator: false
   },
   {
     icon: "error",
     label: "Spam",
-    separator: true,
+    separator: true
   },
   {
     icon: "settings",
     label: "Settings",
-    separator: false,
+    separator: false
   },
   {
     icon: "feedback",
     label: "Send Feedback",
-    separator: false,
+    separator: false
   },
   {
     icon: "help",
     iconColor: "primary",
     label: "Help",
-    separator: false,
-  },
+    separator: false
+  }
 ];
 export default {
   name: "MainLayout",
@@ -171,17 +195,17 @@ export default {
     return {
       tab: "mails",
       rightDrawerOpen: false,
-      menuList,
+      menuList
     };
   },
   computed: {
-    ...mapState("auth", ["loggedIn"]),
+    ...mapState("auth", ["loggedIn"])
   },
   methods: {
     ...mapActions("auth", ["logoutUser"]),
     ...mapActions("auth", ["loginWithGoogle"]),
-    onItemClick() {},
-  },
+    onItemClick() {}
+  }
 };
 </script>
 <style lang="scss">

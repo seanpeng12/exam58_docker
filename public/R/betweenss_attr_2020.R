@@ -1,8 +1,8 @@
 #問題: 1.中文仍無法顯示在圖上
 
-library(RMySQL)
-library('visNetwork')
-library('igraph')
+library('RMySQL', warn.conflicts = FALSE)
+library('visNetwork', warn.conflicts = FALSE)
+library('igraph', warn.conflicts = FALSE)
 
 args <- commandArgs(TRUE)
 # args <- "台北 特色博物館 博物館"
@@ -68,7 +68,7 @@ ccout = visNetwork(nodes,edges, width = "100%",height = "500px") %>%
   visOptions(highlightNearest = TRUE,
              nodesIdSelection = TRUE)
 
-visSave(ccout, file = "C://xampp/htdocs/SNA_sean/exam58/quasarapp/src/statics/between_relationship.html",selfcontained = TRUE, background = "white")
+visSave(ccout, file = "C://xampp/htdocs/SNA_sean/exam58/quasarapp/src/statics/between_relationship.html", background = "white")
 # g <- graph.data.frame(edges, directed=FALSE, vertices=nodes)
 # graph <- betweenness(g, v = V(g), directed = FALSE, weights = NA)
 # visIgraph(g) %>%

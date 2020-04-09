@@ -1,8 +1,10 @@
-const routes = [
-  {
+const routes = [{
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/index.vue") }],
+    children: [{
+      path: "",
+      component: () => import("pages/index.vue")
+    }],
   },
   {
     path: "/arrange-schedule",
@@ -12,17 +14,58 @@ const routes = [
   {
     path: "/PageAuth",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/PageAuth.vue") }],
+    children: [{
+      path: "",
+      component: () => import("pages/PageAuth.vue")
+    }],
   },
   {
     path: "/mySchedule",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/mySchedule.vue") }],
+    children: [{
+      path: "",
+      component: () => import("pages/mySchedule.vue")
+    }],
   },
   {
     path: "/Like",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/LikeCard.vue") }],
+    children: [{
+      path: "",
+      component: () => import("pages/LikeCard.vue")
+    }],
+  },
+  {
+    path: "/singlePage",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{
+      path: "",
+      component: () => import("pages/singlePage.vue")
+    }],
+  },
+  {
+    path: "/ProsConsPage",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{
+      path: "",
+      component: () => import("pages/ProsConsPage.vue")
+    }],
+  },
+  {
+    path: "/PathPage",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{
+      path: "",
+      component: () => import("pages/PathPage.vue")
+    }],
+  },
+  {
+    path: "/AjaxTest",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{
+      path: "",
+      component: () => import("pages/AjaxTest.vue")
+    }],
   },
 ];
 

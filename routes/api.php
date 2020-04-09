@@ -53,4 +53,8 @@ Route::group(['middleware' => ['CORS']], function () {
     Route::get('/site_data/{id}', 'PostController@site_dataById');
 
     Route::get('/site_dataCity', 'PostController@site_dataCityAll');
+    // 執行php(跑path.php)
+    Route::post('/runPHP', 'PostController@runPHP');
+    // 執行搭配php的R(跑path.php)
+    Route::post('/runRafterPHP', 'PostController@runRafterPHP');
 });

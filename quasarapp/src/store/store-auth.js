@@ -1,6 +1,11 @@
 // import { LocalStorage } from "quasar";
-import { firebaseAuth, google_provider } from "boot/firebase";
-import { showErrorMessage } from "src/functions/function-show-error-message";
+import {
+  firebaseAuth,
+  google_provider
+} from "boot/firebase";
+import {
+  showErrorMessage
+} from "src/functions/function-show-error-message";
 const state = {
   loggedIn: false,
 };
@@ -42,17 +47,20 @@ const actions = {
     firebaseAuth.signOut();
   },
 
-  handleAuthStateChange({ commit, dispatch }) {
+  handleAuthStateChange({
+    commit,
+    dispatch
+  }) {
     firebaseAuth.onAuthStateChanged((user) => {
       if (user) {
         commit("setLoggedIn", true);
         // LocalStorage.set("loggedIn", true);
-        this.$router.push("/").catch((err) => {});
-        dispatch("schedules/fbReadData", null, { root: true });
+        // this.$router.push("/").catch((err) => {});
+        // dispatch("schedules/fbReadData", null, { root: true });
       } else {
         commit("setLoggedIn", false);
         // LocalStorage.set("loggedIn", false);
-        this.$router.replace("/Pageauth").catch((err) => {});
+        // this.$router.replace("/Pageauth").catch((err) => {});
       }
     });
   },

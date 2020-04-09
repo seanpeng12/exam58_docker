@@ -4,7 +4,7 @@
       alt="Quasar logo"
       src="~assets/Logo.png"
       style="height: 40px; max-width: 60px"
-    /> -->
+    />-->
 
     <q-carousel
       v-model="slide"
@@ -26,9 +26,7 @@
         img-src="https://images.pexels.com/photos/917494/pexels-photo-917494.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
       >
         <q-icon name="style" size="56px" class="text-white" />
-        <div class="q-mt-md text-center color-carousel">
-          來去旅行
-        </div>
+        <div class="q-mt-md text-center color-carousel">來去旅行</div>
       </q-carousel-slide>
       <q-carousel-slide
         name="tv"
@@ -55,12 +53,7 @@
         <div class="q-mt-md text-center color-carousel">優缺點分析</div>
       </q-carousel-slide>
     </q-carousel>
-    <q-page-scroller
-      reverse
-      position="top-right"
-      :scroll-offset="20"
-      :offset="[18, 18]"
-    >
+    <q-page-scroller reverse position="top-right" :scroll-offset="20" :offset="[18, 18]">
       <q-btn fab icon="keyboard_arrow_down" color="dark" />
     </q-page-scroller>
 
@@ -76,20 +69,13 @@
         <q-img v-bind:src="func.img" style="height: 300px;"></q-img>
         <!-- <q-img src="~assets/comment.jpg" /> -->
         <q-card-section>
-          <div class="text-overline text-orange-9">
-            {{ func.tip }}
-          </div>
+          <div class="text-overline text-orange-9">{{ func.tip }}</div>
           <div class="text-h5 q-mt-sm q-mb-xs">{{ func.name }}</div>
           <div class="text-caption text-grey"></div>
         </q-card-section>
         <q-card-actions>
           <!-- <q-btn flat color="dark" label="Share" /> -->
-          <q-btn
-            flat
-            color="primary"
-            label="進入分析"
-            style="font-weight: bold;"
-          />
+          <q-btn flat color="primary" label="進入分析" style="font-weight: bold;" />
           <q-space />
           <q-btn
             color="grey"
@@ -103,9 +89,7 @@
         <q-slide-transition>
           <div v-show="expanded">
             <q-separator />
-            <q-card-section class="text-subitle2">
-              {{ func.illustrate }}
-            </q-card-section>
+            <q-card-section class="text-subitle2">{{ func.illustrate }}</q-card-section>
           </div>
         </q-slide-transition>
       </q-card>
@@ -138,7 +122,7 @@ export default {
           tip: "給拿不定主意的你",
           illustrate:
             "使用者可透過在系統介面上勾選「需求類別」找到符合需求類別的景點。 此分析方法先藉由景點的屬性 (site_attr) 做分組，再利用SNA中的中介點中心度（betweenness centrality）找出符合使用者選取屬性的資料。 在本系統中，使用者可以選取兩種屬性，經過分析後即 會出現與此兩種屬性相符程度最高的景點。",
-          img: require("assets/need.jpg"),
+          img: require("assets/need.jpg")
         },
 
         {
@@ -146,22 +130,22 @@ export default {
           tip: "不想踩雷的你",
           illustrate:
             "使用者可透過在系統介面上勾選「需求類別」找到符合需求類別的景點。 此分析方法先藉由景點的屬性 (site_attr) 做分組，再利用SNA中的中介點中心度（betweenness centrality）找出符合使用者選取屬性的資料。 在本系統中，使用者可以選取兩種屬性，經過分析後即 會出現與此兩種屬性相符程度最高的景點。",
-          img: require("assets/comment.jpg"),
+          img: require("assets/comment.jpg")
         },
         {
           name: "安排一趟旅程",
           tip: "喜歡我們系統分析的你",
           illustrate: "集合我們所有的分析功能，讓您一步一步的規畫屬於您的旅程",
-          img: require("assets/route.jpg"),
-        },
+          img: require("assets/route.jpg")
+        }
       ],
       watch: {
         vertical(val) {
           this.navPos = val === true ? "right" : "bottom";
-        },
-      },
+        }
+      }
     };
-  },
+  }
 };
 </script>
 

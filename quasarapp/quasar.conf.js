@@ -76,8 +76,9 @@ module.exports = function (ctx) {
       directives: ["GoBack", "ClosePopup"],
 
       // Quasar plugins
-      plugins: ["LocalStorage", "Dialog"],
+      plugins: ["LocalStorage", "Dialog","Notify"],
     },
+
 
     // https://quasar.dev/quasar-cli/cli-documentation/supporting-ie
     supportIE: true,
