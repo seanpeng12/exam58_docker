@@ -13,15 +13,14 @@
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "axios": "^0.18.1",
-    "firebase": "^7.13.1",
+    "firebase": "^7.13.2",
     "quasar": "^1.0.0",
     "vue-i18n": "^8.0.0",
+    "vue2-google-maps": "^0.10.7",
     "vuefire": "^2.2.2"
   },
   "devDependencies": {
-    "node-sass": "^4.13.1",
-    "sass-loader": "^8.0.2",
-    "@quasar/app": "^1.0.0",
+    "@quasar/app": "^1.6.1",
     "babel-eslint": "^10.0.1",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.0",
@@ -30,7 +29,10 @@
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
-    "eslint-plugin-vue": "^6.1.2"
+    "eslint-plugin-vue": "^6.1.2",
+    "node-sass": "^4.13.1",
+    "sass-loader": "^8.0.2",
+    "vuedraggable": "^2.23.2"
   },
   "engines": {
     "node": ">= 10.18.1",

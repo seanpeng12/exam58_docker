@@ -1,6 +1,7 @@
 import * as firebase from "firebase/app";
 import "firebase/firestore";
 // Add the Firebase products that you want to use
+
 import "firebase/auth";
 
 var firebaseConfig = {
@@ -11,7 +12,7 @@ var firebaseConfig = {
   storageBucket: "sna-master.appspot.com",
   messagingSenderId: "640892044634",
   appId: "1:640892044634:web:3c3c94c360528786d31f63",
-  measurementId: "G-D1PL8FR9EF",
+  measurementId: "G-D1PL8FR9EF"
 };
 // Initialize Firebase
 let firebaseApp = firebase.initializeApp(firebaseConfig);

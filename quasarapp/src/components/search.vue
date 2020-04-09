@@ -1,7 +1,7 @@
 <template>
   <q-input bottom-slots v-model="text" label="search">
     <template v-slot:before>
-      <q-icon name="flight_takeoff" />
+      <!-- <q-icon name="flight_takeoff" /> -->
     </template>
 
     <template v-slot:append>
@@ -20,7 +20,7 @@
 export default {
   data() {
     return {
-      text: true
+      text: ""
     };
   }
 };

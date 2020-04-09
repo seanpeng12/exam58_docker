@@ -18,15 +18,23 @@
         >
           <div class="column" style="height: 500px;">
             <div class="col">
-              <h2 class="q-mt-xl q-ml-xl absolute-top h2">
+              <!-- <h2 class="q-mt-xl q-ml-xl absolute-top h2">
                 來去旅行
-              </h2>
+              </h2> -->
+              <div align="center">
+                <q-img
+                  width="70%"
+                  src="~assets/logo_0.png"
+                  style="max-height: 400px;"
+                ></q-img>
+              </div>
             </div>
 
-            <div class="col">
+            <div class="col" style="margin-left: 80spx;">
               <h5 class="q-mt-none q-ml-xl">
-                這是一套幫助您在規劃旅程時，<br />
-                可以節省您許多時間的系統。<br /><br />幫您蒐集網路的資料，<br />
+                <br />
+                這是一套幫助您在規劃旅程時，
+                <br />可以節省您許多時間的系統。<br />幫您蒐集網路的資料，<br />
                 分析出您所期望的旅遊景點，<br />以及透過一連串設計好的流程 ，<br />幫您快速排好旅程表。
               </h5>
             </div>
