@@ -46,17 +46,18 @@
     </q-form>
 
  <!-- iframe -->
-    <div class="gt-xs holds-the-iframe">
-      <q-page>
+    <div class="gt-xs  center">
+
         <iframe
           style="height: 602px;width:1000px"
-          frameborder="1"
+
+          frameborder="0"
           id="myFrame"
           :src="src"
           class="frameStyle"
         ></iframe>
 
-      </q-page>
+
 
     </div>
      <!--  -->
@@ -67,8 +68,6 @@
 </template>
 <script>
 
-const rscript = require('js-call-r');
-
 export default {
 
   data () {
@@ -77,7 +76,7 @@ export default {
       c1: null,
       c20: null,
       accept : false,
-      txtinfo : "資料顯示區域：",
+      txtinfo : "debug顯示區域：",
       src: "./statics/between_relationship.html",
 
 
@@ -104,7 +103,7 @@ export default {
           color: 'green-4',
           textColor: 'white',
           icon: 'cloud_done',
-          message: '以上傳'
+          message: '載入中...'
         }),
         txtinfo = ""
       }
@@ -129,6 +128,7 @@ export default {
 
     upload (){
       this.txtinfo = "載入中...";
+      document.getElementById("myFrame").src="./statics/images/loader.gif";
       let self = this;
       this.$axios
       .post('http://127.0.0.1:80/api/runR_twoC', {
@@ -151,9 +151,8 @@ export default {
 }
 </script>
 <style>
-
-.holds-the-iframe {
-  background:url(../statics/images/loader.gif) center center no-repeat;
+.center {
+text-align:center;
 }
 </style>
 

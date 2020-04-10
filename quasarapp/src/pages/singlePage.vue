@@ -30,7 +30,7 @@
                     hide-selected
                     fill-input
                     input-debounce="0"
-                    :options="product_lists"
+                    :options="citys"
                     @filter="filterFn"
                     hint="請選擇城市"
                     style="width: 250px; padding-bottom: 32px"
@@ -306,7 +306,18 @@
     <!-- end -->
 
     <!-- web iframe 區域 gt-xs -->
-    <div class="q-pa-md doc-container"></div>
+    <div class="q-pa-md doc-container">
+      <div>====================</div>
+       <div v-for="city in citys" :key="city" class="card">
+            <div class="card-header">{{ city.city_name }}</div>
+
+            <div class="card-body">{{ city.city_name }}</div>
+            <br />
+            <button class="btn btn-xs btn-primary">test</button>
+            <button class="btn btn-xs btn-danger">test</button>
+            <br />
+          </div>
+    </div>
 
     <!-- phone iframe 區域 lt-sm-->
     <div class="q-pa-md doc-container">
@@ -365,11 +376,12 @@ export default {
   },
   methods: {
     init: function() {
-      let self2 = this;
+      let self = this;
       this.$axios
         .get("http://127.0.0.1/api/site_dataCity")
         .then(function(response) {
-          self2.citys = response.data;
+          self.city_json = response.data;
+          var citys= JSON.parse(city_json);
           console.log("成功");
         })
         .catch(function(response) {
@@ -398,6 +410,9 @@ export default {
         this[`loading${number}`] = false;
       }, this.n);
     }
+  },
+  mounted: function() {
+    this.init();
   }
 };
 </script>
