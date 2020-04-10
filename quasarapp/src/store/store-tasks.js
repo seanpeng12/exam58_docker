@@ -56,6 +56,7 @@ const actions = {
       // name: name,
     };
     commit("addSchedule", payload);
+    console.log("schedule", payload.id);
     console.log("schedule", payload);
   },
   fbReadData({ commit }) {

@@ -4,11 +4,12 @@
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="left = !left" />
 
-        <q-toolbar-title>自我規劃旅程 </q-toolbar-title>
+        <q-toolbar-title>自我規劃旅程{{ id }} </q-toolbar-title>
       </q-toolbar>
     </q-header>
 
     <q-drawer show-if-above v-model="left" side="left" bordered :width="260">
+      <!-- 往上一頁 -->
       <q-btn
         icon="keyboard_backspace"
         color="white"
@@ -41,21 +42,40 @@
           </q-card-actions>
         </q-card>
       </q-dialog>
+      <!-- 往上一頁結束 -->
+
       <div class="row">
         <p class="weekday">Day1</p>
-
         <draggable></draggable>
         <p class="weekday">Day2</p>
-        <!-- <draggable></draggable> -->
+        <div
+          class="row"
+          v-for="everydaySite in everydaySites"
+          :key="everydaySite.id"
+        >
+          <p class="weekday">{{ everydaySite.id }}</p>
+
+          <div v-for="site in everydaySite.site" :key="site">
+            <div>{{ site }}</div>
+          </div>
+        </div>
       </div>
-      <q-btn
+      <!-- <q-btn
         dense
         label="儲存"
-        class="absolute-bottom"
+        class="fixed-bottom-right"
         color="secondary"
-        size="20px"
-        style="margin-left:80px; width: 100px"
+        size="15px"
+        style="margin-right:20px; width: 100px"
       />
+      <q-btn
+        dense
+        label="新增日期"
+        class="fixed-bottom-left"
+        color="warning"
+        size="15px"
+        style="margin-left:20px; width: 100px"
+      /> -->
     </q-drawer>
 
     <q-page-container>
@@ -236,6 +256,7 @@
 
 <script>
 import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -248,18 +269,27 @@ export default {
       fourth: true,
       route: ["台北101", "象山", "十分老街"],
       site: ["台北101", "象山", "十分老街"],
-      options: ["台北市", "基隆市", "高雄市", "南投縣", "台南市"]
+      options: ["台北市", "基隆市", "高雄市", "南投縣", "台南市"],
+      id: ""
     };
   },
   components: {
     search: () => import("components/search.vue"),
     draggable: () => import("components/drag/draggable.vue")
+  },
+  created() {
+    var pass_id = this.$route.query.pass_id;
+    this.id = pass_id;
+  },
+  computed: {
+    ...mapGetters("travel", ["everydaySites"])
+    // ...mapGetters("schedules", ["sightseeingMembers"])
   }
 };
 </script>
 <style lang="stylus">
 .weekday {
-        width: 300px;
+        min-width: 350px;
         height: 35px;
         // cursor: pointer;
         font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;

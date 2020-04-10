@@ -1,12 +1,24 @@
 <template>
   <q-page padding>
     <div class="row">
-      <schedule
-        v-for="(schedule, key) in schedules"
+      <!-- <schedule
+        v-for="(sightseeingMember, key) in sightseeingMember"
         :key="key"
         :schedule="schedule"
         :id="key"
+      ></schedule> -->
+      <schedule
+        v-for="(sightseeingMember, key) in sightseeingMembers"
+        :key="key"
+        :sightseeingMember="sightseeingMember"
+        :id="key"
       ></schedule>
+      <!-- <div
+        v-for="sightseeingMember in sightseeingMembers"
+        :key="sightseeingMember.id"
+      >
+        <p>{{ sightseeingMember.title }}</p>
+      </div> -->
     </div>
     <div
       class="absolute-bottom-right q-ma-lg"
@@ -33,7 +45,7 @@ export default {
   data() {
     return {
       tab: "mails",
-      addSchedule: false,
+      addSchedule: false
       // schedules: [
       //   {
       //     title: "我的花蓮之旅"
@@ -48,13 +60,14 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("schedules", ["schedules"]),
+    // ...mapGetters("schedules", ["schedules"]),
+    ...mapGetters("travel", ["sightseeingMembers"])
   },
   components: {
     search: () => import("components/search.vue"),
     schedule: () => import("components/schedules/schedule.vue"),
-    addSchedule: () => import("components/schedules/modals/addSchedule.vue"),
-  },
+    addSchedule: () => import("components/schedules/modals/addSchedule.vue")
+  }
 };
 </script>
 <style lang="scss">

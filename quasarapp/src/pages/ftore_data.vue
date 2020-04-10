@@ -1,15 +1,17 @@
 <template>
   <div>
     <q-btn @click="fbReadData" color="secondary" label="Secondary" />
+    <q-btn @click="fbEverySiteData" color="warning" label="fbEverySiteData" />
 
     <!-- <q-btn @click="updateTask({ id: id })" color="warning" label="Secondary" /> -->
-    <div
+    <!-- <div
       v-for="(sightseeingMember, key) in sightseeingMembers"
       :key="key"
       :id="key"
     >
-      <p>{{ sightseeingMember.title }}</p>
-    </div>
+      <p>{{ sightseeingMember.title }}@@{{ key }}</p>
+      <p>{{ sightseeingMember.date }}</p>
+    </div> -->
   </div>
 </template>
 <script>
@@ -23,11 +25,12 @@ export default {
   },
 
   methods: {
-    ...mapActions("travel", ["updateSchedule"]),
-    ...mapActions("travel", ["fbReadData"])
+    ...mapActions("travel", ["updateSchedule", "fbReadData", "fbEverySiteData"])
+    // ...mapActions("schedules", ["addSchedule"])
   },
   computed: {
     ...mapGetters("travel", ["sightseeingMembers"])
+    // ...mapGetters("schedules", ["sightseeingMembers"])
   }
 };
 </script>

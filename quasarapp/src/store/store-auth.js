@@ -48,6 +48,7 @@ const actions = {
         commit("setLoggedIn", true);
         // LocalStorage.set("loggedIn", true);
         // this.$router.push("/").catch((err) => {});
+        // 每次載入頁面就會判斷登入者狀態，如果為true就會觸發store-firebase(index.js定義為travel)的fbReadData
         dispatch("travel/fbReadData", null, { root: true });
       } else {
         commit("setLoggedIn", false);
