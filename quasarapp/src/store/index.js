@@ -30,3 +30,4 @@ export default function(/* { ssrContext } */) {
 
   return Store;
 }
+// export const strict = false;

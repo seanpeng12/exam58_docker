@@ -38,9 +38,11 @@ const mutations = {
     Vue.delete(state.schedules, id);
   },
   addSchedule(state, payload) {
+    //Vue.set（對象(Object)，關鍵(key)， 值(value)）
     Vue.set(state.schedules, payload.id, payload.schedule);
   }
 };
+
 const actions = {
   updateSchedule({ commit }, payload) {
     commit("updateSchedule", payload);

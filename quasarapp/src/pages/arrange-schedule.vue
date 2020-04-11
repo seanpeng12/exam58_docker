@@ -44,10 +44,40 @@
       </q-dialog>
       <!-- 往上一頁結束 -->
 
-      <div class="row">
-        <p class="weekday">Day1</p>
-        <draggable></draggable>
-        <p class="weekday">Day2</p>
+      <div
+        class="row"
+        v-for="everydaySite in everydaySites"
+        :key="everydaySite.id"
+      >
+        <div class="col-6">
+          <p class="weekday">{{ everydaySite.id }}</p>
+          <draggable
+            :list="everydaySite.site"
+            :disabled="!enabled"
+            class="list-group"
+            ghost-class="ghost"
+            :move="checkMove"
+            @start="dragging = true"
+            @end="dragging = false"
+            group="site"
+          >
+            <q-btn
+              color="black"
+              v-for="(site, key) in everydaySite.site"
+              :key="key"
+              :label="site"
+              style="margin: 4px"
+              unelevated
+              @click="
+                updateDragSite({
+                  id: everydaySite.id,
+                  updates: { site: site }
+                })
+              "
+            />
+          </draggable>
+        </div>
+        <!-- <p class="weekday">Day2</p>
         <div
           class="row"
           v-for="everydaySite in everydaySites"
@@ -58,7 +88,7 @@
           <div v-for="site in everydaySite.site" :key="site">
             <div>{{ site }}</div>
           </div>
-        </div>
+        </div> -->
       </div>
       <!-- <q-btn
         dense
@@ -215,7 +245,7 @@
                 <q-select
                   outlined
                   v-model="model"
-                  :options="site"
+                  :options="ssite"
                   label="輸入您想去的景點"
                   style="width: 250px; margin-left:32px"
                 />
@@ -257,6 +287,8 @@
 <script>
 import { mapActions } from "vuex";
 import { mapGetters } from "vuex";
+import draggable from "vuedraggable";
+
 export default {
   data() {
     return {
@@ -267,23 +299,47 @@ export default {
       model_route: null,
       model_city: null,
       fourth: true,
-      route: ["台北101", "象山", "十分老街"],
-      site: ["台北101", "象山", "十分老街"],
+      route: ["台北101", "象山", "我家"],
+      ssite: ["台北101", "象山", "十分老街"],
       options: ["台北市", "基隆市", "高雄市", "南投縣", "台南市"],
-      id: ""
+      id: "",
+      enabled: true
+      // list: [
+      //   { name: "John", id: 0 },
+      //   { name: "Joao", id: 1 },
+      //   { name: "Jean", id: 2 }
+      // ]
     };
   },
   components: {
     search: () => import("components/search.vue"),
-    draggable: () => import("components/drag/draggable.vue")
+    draggable
+    // draggable: () => import("components/drag/draggable.vue")
   },
   created() {
     var pass_id = this.$route.query.pass_id;
     this.id = pass_id;
   },
   computed: {
-    ...mapGetters("travel", ["everydaySites"])
+    ...mapGetters("travel", ["everydaySites"]),
+    ...mapActions("travel", ["updateDragSite"]),
+
+    draggingInfo() {
+      return this.dragging ? "under drag" : "";
+    }
     // ...mapGetters("schedules", ["sightseeingMembers"])
+  },
+
+  methods: {
+    add: function() {
+      this.list.push({ name: "Juan " + id, id: id++ });
+    },
+    replace: function() {
+      this.list = [{ name: "Edgard", id: id++ }];
+    },
+    checkMove: function(e) {
+      window.console.log("Future index: " + e.draggedContext.futureIndex);
+    }
   }
 };
 </script>

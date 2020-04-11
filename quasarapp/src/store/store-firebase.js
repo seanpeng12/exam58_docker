@@ -6,18 +6,21 @@ const state = {
   name: "PageIndex1",
   slide: "style",
   expend: false,
-  sightseeingMembers: [],
+  sightseeingMembers: {},
   everydaySites: [],
   watch: {}
 };
 const mutations = {
   updateSchedule(state, payload) {
     console.log("payload (from mutation)", payload);
-    // Object.assign(
-    //   state.sightseeingMembers[payload.id],
-    //   payload.sightseeingMembers
-    // );
+
     // Object.assign(state.sightseeingMembers[payload.id], payload.updates);
+  },
+  updateDragSite(state, payload) {
+    console.log("payload (from mutation)", payload.updates);
+    // state.everydaySites.id = payload.id;
+    // state.everydaySites.site = payload.updates.site;
+    // Array.assign(state.everydaySites[payload.id], payload.updates);
   },
   addSchedule(state, payload) {
     // Vue.set(state.sightseeingMembers, payload.id, payload.sightseeingMember);
@@ -35,6 +38,7 @@ const mutations = {
 const actions = {
   updateSchedule({ commit, dispatch }, payload) {
     commit("updateSchedule", payload);
+
     // 傳id給arrange-schedule
     const pass_id = payload.id;
     this.$router.push({
@@ -42,6 +46,10 @@ const actions = {
       query: { pass_id: `${pass_id}` }
     });
     dispatch("fbEverySiteData", pass_id);
+  },
+  updateDragSite({ commit }, payload) {
+    console.log("updateDragSite", payload);
+    commit("updateDragSite", payload);
   },
   deleteSchedule({ commit }, id) {
     console.log(id);
@@ -83,12 +91,10 @@ const actions = {
       .collection("每一天");
     itinerary_eve.get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
-        console.log("every", doc.data());
-        console.log("every", doc.id);
-
+        // console.log("every", doc.data());
+        // console.log("every", doc.id);
         var everydaySite = doc.data();
         var everydayId = doc.id;
-
         everyday.push({
           id: everydayId,
           site: everydaySite.site

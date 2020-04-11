@@ -1,36 +1,29 @@
 <template>
-  <div class="col">
+  <div class="row">
     <!-- 增加按鈕，重置 -->
-    <div class="row" style="margin: 50px">
+    <!-- <div class="row" style="margin: 50px">
       <button class="btn btn-secondary" @click="add">Add</button>
       <button class="btn btn-secondary" @click="replace">Replace</button>
-    </div>
-    <div class="row">
-      <draggable :list="list1" group="people" @change="log" class="list-group">
+    </div> -->
+    <div class="col-2">
+      <draggable
+        :list="list"
+        :disabled="!enabled"
+        class="list-group"
+        ghost-class="ghost"
+        :move="checkMove"
+        @start="dragging = true"
+        @end="dragging = false"
+      >
         <q-btn
-          dense
-          class="row"
-          color="warning"
-          :label="element.name"
-          v-for="element in list1"
+          color="black"
+          v-for="element in list"
           :key="element.name"
-          size="15px"
-          style="margin-bottom:8px"
+          :label="element.name"
+          style="margin: 4px"
+          unelevated
         />
       </draggable>
-      <draggable :list="list2" class="list-group" group="people" @change="log">
-        <q-btn
-          dense
-          class="row"
-          color="primary"
-          :label="element.name"
-          v-for="element in list2"
-          :key="element.name"
-          size="25x"
-          style="margin:8px"
-      /></draggable>
-      {{ list1 }}
-      {{ list2 }}
     </div>
   </div>
 </template>
@@ -39,40 +32,37 @@
 import draggable from "vuedraggable";
 let id = 1;
 export default {
-  name: "two-lists",
-  display: "Two Lists",
-  order: 1,
-
+  name: "simple",
+  display: "Simple",
+  order: 0,
   components: {
     draggable
   },
   data() {
     return {
-      list1: [
-        { name: "John", id: 1 },
-        { name: "Joao", id: 2 },
-        { name: "Jean", id: 3 }
-      ],
-      list2: [
-        { name: "Edgard", id: 6 },
-        { name: "Johnson", id: 7 }
-      ]
+      // enabled: true,
+      // list: [
+      //   { name: "John", id: 0 },
+      //   { name: "Joao", id: 1 },
+      //   { name: "Jean", id: 2 }
+      // ],
+      dragging: false
     };
+  },
+  computed: {
+    draggingInfo() {
+      return this.dragging ? "under drag" : "";
+    }
   },
   methods: {
     add: function() {
-      this.list.push({ name: "dji" });
+      this.list.push({ name: "Juan " + id, id: id++ });
     },
     replace: function() {
-      this.list = [{ name: "" }];
+      this.list = [{ name: "Edgard", id: id++ }];
     },
-    clone: function(el) {
-      return {
-        name: el.name + " cloned"
-      };
-    },
-    log: function(evt) {
-      window.console.log(evt);
+    checkMove: function(e) {
+      window.console.log("Future index: " + e.draggedContext.futureIndex);
     }
   }
 };
@@ -83,6 +73,6 @@ export default {
 }
 .ghost {
   opacity: 0.5;
-  background: #c8fbec;
+  background: #c8ebfb;
 }
 </style>
