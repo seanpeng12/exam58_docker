@@ -9,7 +9,7 @@
               <b
                 class="text"
                 style="font-size: 30px;font-family: Microsoft JhengHei;"
-              >選擇想分析的景點類型 {{model}} {{s1}} {{s2}}</b>
+              >選擇想分析的景點類型</b>
             </div>
           </div>
         </div>
@@ -30,7 +30,7 @@
                     hide-selected
                     fill-input
                     input-debounce="0"
-                    :options="citys"
+                    :options="Object.values(citys).map(city => city.city_name)"
                     @filter="filterFn"
                     hint="請選擇城市"
                     style="width: 250px; padding-bottom: 32px"
@@ -130,7 +130,7 @@
               <b
                 class="text"
                 style="font-size: 30px;font-family: Microsoft JhengHei;"
-              >選擇想分析的景點類型 {{model}} {{s1}} {{s2}}</b>
+              >選擇想分析的景點類型</b>
             </div>
           </div>
         </div>
@@ -251,15 +251,7 @@
                 class="frameStyle"
                 ref="404 not found!"
               ></iframe>
-              <div v-for="city in citys" :key="city" class="card">
-                <div class="card-header">{{ city.city_name }}</div>
 
-                <div class="card-body">{{ city.city_name }}</div>
-                <br />
-                <button class="btn btn-xs btn-primary">修改</button>
-                <button class="btn btn-xs btn-danger">刪除</button>
-                <br />
-              </div>
             </q-page>
             <!--  -->
           </div>
@@ -308,15 +300,8 @@
     <!-- web iframe 區域 gt-xs -->
     <div class="q-pa-md doc-container">
       <div>====================</div>
-       <div v-for="city in citys" :key="city" class="card">
-            <div class="card-header">{{ city.city_name }}</div>
+      <div :citys="citys">{{ Object.values(citys).map(city => city.city_name) }}</div>
 
-            <div class="card-body">{{ city.city_name }}</div>
-            <br />
-            <button class="btn btn-xs btn-primary">test</button>
-            <button class="btn btn-xs btn-danger">test</button>
-            <br />
-          </div>
     </div>
 
     <!-- phone iframe 區域 lt-sm-->
@@ -335,7 +320,7 @@
           <div v-for="city in citys" :key="city" class="card">
             <div class="card-header">{{ city.city_name }}</div>
 
-            <div class="card-body">{{ city.city_name }}</div>
+            <div class="card-body"></div>
             <br />
             <button class="btn btn-xs btn-primary">修改</button>
             <button class="btn btn-xs btn-danger">刪除</button>
@@ -356,7 +341,7 @@ export default {
   components: {},
   data() {
     return {
-      n: 5000,
+      n: 2000,
       loading4: false,
       selected_p: "",
       selected_p_detail_item: "",
@@ -366,22 +351,30 @@ export default {
         高雄: ["觀光風景區", "購物商城", "lativ"]
       },
       citys: [],
-      city: {
-        city_name: ""
-      },
+
+
+      city_object :[],
       tab: "mails",
       src: "./statics/between_relationship.html",
       options: stringOptions
     };
   },
+  // computed:{
+  //   toArrayFormat:function() {
+  //     citys = this.citys;
+  //     return  Object.values(citys).map(city => city.city_name);
+  //   }
+  // },
   methods: {
     init: function() {
       let self = this;
       this.$axios
         .get("http://127.0.0.1/api/site_dataCity")
         .then(function(response) {
-          self.city_json = response.data;
-          var citys= JSON.parse(city_json);
+          self.citys = response.data;
+          console.log("============");
+          console.log(self.citys);
+          console.log("============");
           console.log("成功");
         })
         .catch(function(response) {
@@ -410,6 +403,8 @@ export default {
         this[`loading${number}`] = false;
       }, this.n);
     }
+
+
   },
   mounted: function() {
     this.init();

@@ -2,7 +2,16 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<title>visNetwork</title>
+<title></title>
+</head>
+<body style="background-color: ;">
+&lt;!DOCTYPE html&gt;
+<html>
+<head>
+<meta charset="utf-8" />
+<title>
+visNetwork
+</title>
 <script>(function() {
   // If window.HTMLWidgets is already defined, then use it; otherwise create a
   // new object. This allows preceding code to set options that affect the
@@ -1381,7 +1390,7 @@ function resetOneCluster(node, groups, options, network){
         var final_shape;
         var shape_group = false;
         var is_group = false;
-  	  // have a group information & a shape defined in group ?
+      // have a group information & a shape defined in group ?
         if(node.options.group !== undefined){
           if(groups.groups[node.options.group] !== undefined){
             is_group = true;
@@ -1419,7 +1428,7 @@ function resetOneCluster(node, groups, options, network){
         } else {
           simpleResetNode(node, "cluster");
         }
-    	 // finally, get back label
+         // finally, get back label
         if (node.options.hiddenLabel !== undefined) {
           node.setOptions({label : node.options.hiddenLabel, hiddenLabel : undefined});
         }
@@ -1437,7 +1446,7 @@ function resetOneNode(node, groups, options, network){
         var final_shape;
         var shape_group = false;
         var is_group = false;
-  	  // have a group information & a shape defined in group ?
+      // have a group information & a shape defined in group ?
         if(node.group !== undefined){
           if(groups.groups[node.group] !== undefined){
             is_group = true;
@@ -1477,8 +1486,8 @@ function resetOneNode(node, groups, options, network){
         } else {
           simpleResetNode(node, "node");
         }
-    	 // finally, get back label
-    	  if (node.hiddenLabel !== undefined) {
+         // finally, get back label
+          if (node.hiddenLabel !== undefined) {
           node.label = node.hiddenLabel;
           node.hiddenLabel = undefined;
         }
@@ -1511,7 +1520,7 @@ function resetAllNodes(nodes, update, groups, options, network){
 
   for (var i = 0; i < nodesToReset.length; i++) {
     resetOneNode(nodesToReset[i], groups, options, network, type = "node");
-	// reset coordinates
+    // reset coordinates
     nodesToReset[i].x = undefined;
     nodesToReset[i].y = undefined;
     if(have_cluster_nodes){
@@ -1877,14 +1886,14 @@ function clone(obj) {
 }
 // update a list
 function update(source, target) {
-	Object.keys(target).forEach(function (k) {
-		if (typeof target[k] === 'object' && k !== "container") {
-			source[k] = source[k] || {};
-			update(source[k], target[k]);
-		} else {
-			source[k] = target[k];
-		}
-	});
+    Object.keys(target).forEach(function (k) {
+        if (typeof target[k] === 'object' && k !== "container") {
+            source[k] = source[k] || {};
+            update(source[k], target[k]);
+        } else {
+            source[k] = target[k];
+        }
+    });
 }
 // for find element
 function indexOf(needle, str) {
@@ -2378,7 +2387,7 @@ if (HTMLWidgets.shinyMode){
         var network = el.chart;
         var newnodes = new vis.DataSet();
         var newedges = new vis.DataSet();
-		
+        
         newnodes.add(visNetworkdataframeToD3(data.nodes, "nodes"));
         newedges.add(visNetworkdataframeToD3(data.edges, "edges"));
         var newdata = {
@@ -2452,7 +2461,7 @@ if (HTMLWidgets.shinyMode){
         }else{
           pos = network.getPositions();
         }
-		// return positions in shiny
+        // return positions in shiny
         Shiny.onInputChange(data.input, pos);
       }
   });
@@ -2489,7 +2498,7 @@ if (HTMLWidgets.shinyMode){
       if(el){
         var network = el.chart;
         var pos = network.getSelectedEdges();
-		    // return  in shiny
+            // return  in shiny
         Shiny.onInputChange(data.input, pos);
       }
   });
@@ -2501,7 +2510,7 @@ if (HTMLWidgets.shinyMode){
       if(el){
         var network = el.chart;
         var pos = network.getSelectedNodes();
-		    // return  in shiny
+            // return  in shiny
         Shiny.onInputChange(data.input, pos);
       }
   });
@@ -2552,7 +2561,7 @@ if (HTMLWidgets.shinyMode){
         
         pos = network.getSelection();
 
-		    // return  in shiny
+            // return  in shiny
         Shiny.onInputChange(data.input, pos);
       }
   });
@@ -2567,7 +2576,7 @@ if (HTMLWidgets.shinyMode){
         
         pos = network.getScale();
 
-		    // return  in shiny
+            // return  in shiny
         Shiny.onInputChange(data.input, pos);
       }
   });
@@ -2592,7 +2601,7 @@ if (HTMLWidgets.shinyMode){
         
         pos = network.getViewPosition();
 
-		    // return  in shiny
+            // return  in shiny
         Shiny.onInputChange(data.input, pos);
       }
   });
@@ -2603,7 +2612,7 @@ if (HTMLWidgets.shinyMode){
       var el = document.getElementById("graph"+data.id);
       if(el){
         var network = el.chart;
-		    // return  in shiny
+            // return  in shiny
         Shiny.onInputChange(data.input, network.getOptionsFromConfigurator());
       }
   });
@@ -5186,15 +5195,16 @@ HTMLWidgets.widget({
   
 });
 </script>
-
 </head>
 <body style="background-color: white;">
 <div id="htmlwidget_container">
-<div id="htmlwidget-4ecb6470ec9efde61b49" class="visNetwork html-widget" style="width:100%;height:500px;">
+<div id="htmlwidget-4a644b5a234c6b69e883" class="visNetwork html-widget" style="width:100%;height:500px;">
 
 </div>
 </div>
-<script type="application/json" data-for="htmlwidget-4ecb6470ec9efde61b49">{"x":{"nodes":{"id":["56","90","S4842","S4846","S4850","S4851","S4869","S4875","S4879","S4881","S4891","S4899","S4903","S4913","S4931","S4936","S4941","S4963","S4975","S4981","S4991","S5019","S5022","S5029","S5064","S5074","S5090","S5116","S5128","S5131","S5161","S5170","S5175","S5177","S5180","S5248","S5252"],"group":["博物館","","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site"],"label":["特色博物館","博物館","藍晒圖文創園區","大器內蘊博物館","高雄市立美術館","佛光山佛陀紀念館","國立科學工藝博物館","航空教育展示館","?高雄棧貳庫KW2","打狗鐵道故事館","鳳儀書院","高雄市立歷史博物館","哈瑪星台灣鐵道館","中華民?空軍軍官?校軍史館","台灣糖業博物館","金馬賓館","台灣滷味博物館","美濃客家文物館","高雄市立音樂館","旗後砲台古蹟故事館","打狗港都文化藝術倉庫","高雄市立兒童美術館","序藝術","高雄市勞工博物館","鄧麗君紀念文物館","西子灣蔣介石行館","舊打狗驛故事館","高雄港港史館","高雄鐵路地下化展示館","左營軍區故事館","陽明高雄海洋探索館","客家文物館","Cijin","戰爭與和平紀念公園主題館","願景館","Arcade","鐵道工程館"],"color":["red","red","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue"],"title":["<p> 特色博物館 <\/p>","<p> 博物館 <\/p>","<p> 藍晒圖文創園區 <\/p>","<p> 大器內蘊博物館 <\/p>","<p> 高雄市立美術館 <\/p>","<p> 佛光山佛陀紀念館 <\/p>","<p> 國立科學工藝博物館 <\/p>","<p> 航空教育展示館 <\/p>","<p> ?高雄棧貳庫KW2 <\/p>","<p> 打狗鐵道故事館 <\/p>","<p> 鳳儀書院 <\/p>","<p> 高雄市立歷史博物館 <\/p>","<p> 哈瑪星台灣鐵道館 <\/p>","<p> 中華民?空軍軍官?校軍史館 <\/p>","<p> 台灣糖業博物館 <\/p>","<p> 金馬賓館 <\/p>","<p> 台灣滷味博物館 <\/p>","<p> 美濃客家文物館 <\/p>","<p> 高雄市立音樂館 <\/p>","<p> 旗後砲台古蹟故事館 <\/p>","<p> 打狗港都文化藝術倉庫 <\/p>","<p> 高雄市立兒童美術館 <\/p>","<p> 序藝術 <\/p>","<p> 高雄市勞工博物館 <\/p>","<p> 鄧麗君紀念文物館 <\/p>","<p> 西子灣蔣介石行館 <\/p>","<p> 舊打狗驛故事館 <\/p>","<p> 高雄港港史館 <\/p>","<p> 高雄鐵路地下化展示館 <\/p>","<p> 左營軍區故事館 <\/p>","<p> 陽明高雄海洋探索館 <\/p>","<p> 客家文物館 <\/p>","<p> Cijin <\/p>","<p> 戰爭與和平紀念公園主題館 <\/p>","<p> 願景館 <\/p>","<p> Arcade <\/p>","<p> 鐵道工程館 <\/p>"],"shape":["square","square",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"font.size":[30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30],"x":[-0.436837281685117,-0.046686417965157,0.43583414312175,-0.994029700432197,-0.550583071229148,0.181952379964711,0.776057860484421,0.937620559537245,0.700295586576573,-0.316023383071681,-0.85555863154688,-0.150865167055072,0.151939993414054,0.623070697593447,-0.452850546545572,-0.846788514467897,0.140780078861556,-0.724527404485567,-0.532823339631614,0.619304744613093,0.0869521363279346,-0.569989002462278,0.349168767676899,-0.754695109730344,-0.93059080404647,-0.212383759789132,-0.262295520748319,-0.754157337495831,-0.514210325832447,-1,-0.148145332871641,0.737061241721677,0.671320926110988,1,-0.0591213435938157,0.115524941353395,0.961859947468167],"y":[-0.563947653159762,-0.0284384078805587,0.87550064025156,-0.396340016279057,0.563651838419522,-0.647987240718003,-0.567472664723983,0.330024315659545,0.694337027827151,-0.994897403797855,-0.624347315749996,-0.764322705799373,-0.391967981768908,0.107874724658189,0.0247090210854177,0.615014045914875,-0.867563242716339,-0.805300633833277,-0.232316693030071,-0.804697881608904,1,0.8534034235955,0.518047034212047,0.000994956494779542,-0.154447334964521,0.676862765860615,0.965846790988832,-0.387983483138672,-0.893337323835242,0.34847000156489,-0.447234951159148,-0.194602068896138,0.426841879694208,0.0223306578410096,-1,0.733890607595691,-0.337521240348677]},"edges":{"from":["S4846","S4851","S4881","S4891","S4899","S4903","S4931","S4941","S4963","S4975","S5029","S5064","S5116","S5128","S5161","S5180","S4842","S4846","S4850","S4851","S4869","S4875","S4879","S4881","S4891","S4899","S4903","S4913","S4931","S4936","S4941","S4963","S4975","S4981","S4991","S5019","S5022","S5029","S5064","S5074","S5090","S5116","S5128","S5131","S5161","S5170","S5175","S5177","S5180","S5248","S5252"],"to":[56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,56,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":false},"physics":{"stabilization":false}},"groups":["博物館","","site"],"width":"100%","height":"500px","idselection":{"enabled":true,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","igraphlayout":{"type":"square"},"highlight":{"enabled":true,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":false,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"}},"evals":[],"jsHooks":[]}</script>
-<script type="application/htmlwidget-sizing" data-for="htmlwidget-4ecb6470ec9efde61b49">{"viewer":{"width":"100%","height":"500px","padding":15,"fill":false},"browser":{"width":"100%","height":"500px","padding":40,"fill":false}}</script>
+<script type="application/json" data-for="htmlwidget-4a644b5a234c6b69e883">{"x":{"nodes":{"id":["2","90","S0100","S0105","S0106","S0108","S0111","S0123","S0124","S0131","S0137","S0148","S0151","S0152","S0154","S0162","S0177","S0180","S0185","S0192","S0198","S0204","S0206","S0213","S0220","S0221","S0224","S0230","S0241","S0247","S0248","S0266","S0269","S0271","S0273","S0278","S0279","S0285","S0286","S0297","S0302","S0303","S0306","S0312","S0313","S0314","S0320","S0322","S0323","S0325","S0328","S0340","S0346","S0355","S0356","S0359","S0361","S0370","S0380","S0382","S0386","S0388","S0391","S0392","S0393","S0404","S0407","S0411","S0412","S0413","S0417","S0419","S0420","S0425","S0433","S0442","S0455","S0458","S0462","S0475","S0490","S0499","S0500","S0507","S0519","S0521","S0537","S0538","S0542","S0544","S0551","S0574","S0578","S0579","S0582","S0587","S0601","S0606","S0607","S0613","S0618","S0625","S0630","S0642","S0647","S0650","S0659","S0662","S0663","S0667","S0670","S0672","S0674","S0675","S0677","S0682","S0683","S0687","S0692","S0693","S0696","S0698","S0699","S0700","S0703","S0704","S0705","S0706","S0715","S0718","S0755","S0758","S0761","S0765","S0774","S0776","S0778","S0780","S0783","S0785","S0789","S0793","S0802","S0803","S0808"],"group":["景點與地標","","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site"],"label":["古蹟","博物館","袖珍博物館","大龍峒保安宮","國立故宮博物院","台北孔廟","忠烈祠","台北市立美術館","台北當代藝術館","?森?童博物館","林安泰古厝","松山文創園區","林本源園邸","迪化207博物館","阿嬤家-","華山1914文化創意產業園區","台原亞洲偶戲博物館","法鼓山農禪寺","樹火紀念紙博物館","天后宮","郭元益糕餅博物館","松山火車站","剝皮寮老街","亞典書店","新芳春行特展","二二八和平紀念公園","順益台灣原住民博物館","北門","臺北市立天文科學教育館","國立台灣科學教育館","蝴蝶宮昆蟲博物館","台北探索館","北投溫泉博物館","忠泰美術館","?史文物陳列館","四四南村眷村文物館","國立台灣博物館土銀展示館","北投文物館","李臨秋故居","國立台灣博物館","世界宗教博物館","莊義芳商行","新富町文化市場","臺灣新文化運動紀念館","學藝埕","景美人權文化園區","國立臺灣博物館鐵道部","莊協發商店","清代機器局遺構","楊三郎美術館","大稻埕辜宅","蔡瑞月舞蹈研究社","草山玉溪園","翡翠博物館","孫運璿科技人文紀念館","國立歷史博物館","台北賓館","R22A","殷海光故居","普濟寺","台灣昆蟲館","中央研究院民族?研究所博物館","士林慈誠宮","原民風味館","梁實秋故居","黨史館","防災科學教育館","胡適紀念館","朋","Nylon","長榮海事博物館","圓山大飯店博物館","台北中山堂","KidsAwesome奧森兒童博物館","台北機廠?道博物館園?","芝山公園","二二八紀念館","臺北監獄圍牆遺蹟","二二八國家記念館","林語堂故居","凱達格蘭文化館","國父史蹟館(逸仙公園)","臺北市鄉土教育中心","台北偶戲館","臺北當代工藝設計分館","自來水博物館","異雲書屋","國軍歷史文物館","Bluerider","蒙藏文化館","沙雅瑪生活藝術","郵政博物館","臺北郵局","R22","善導寺","Konnect","逸仙公園","義芳居古厝","Fubon","糖倉開門","僑福芳草地畫廊","國立臺灣博物館南門園區","監察院","耕莘文教院","山佳車站","國史館","陳悅記祖宅","周氏節孝坊","專賣局","鳳甲美術館","皇太子殿下行啟記念碑","總統副總統文物館","小南門","台灣善光寺","南門町三二三","陽明山光復樓","醫學人文博物館","中華民國行政院","鴻禧美術館","國立臺灣藝術教育館","國立臺灣海洋大學校史博物館","蒲添生故居","三井記憶倉庫","孫立人官邸","司法大廈","急公好義坊","Party","揚英風美術館","嚴家淦先生故居","南海學園","Hiro","臺灣大學地質標本館","疊藝術","米洛克-老房子","西園29服飾創作基地(臺北服飾文化館)","文山公民會館","臺北愛樂暨梅哲音樂文化館","太原五百完人紀念建築群","臺北市立社會教育館","Glastory","穎川畫廊","芝山岩","海關博物館","琉園水晶博物館","學海書院"],"color":["red","red","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue"],"title":["<p> 古蹟 <\/p>","<p> 博物館 <\/p>","<p> 袖珍博物館 <\/p>","<p> 大龍峒保安宮 <\/p>","<p> 國立故宮博物院 <\/p>","<p> 台北孔廟 <\/p>","<p> 忠烈祠 <\/p>","<p> 台北市立美術館 <\/p>","<p> 台北當代藝術館 <\/p>","<p> ?森?童博物館 <\/p>","<p> 林安泰古厝 <\/p>","<p> 松山文創園區 <\/p>","<p> 林本源園邸 <\/p>","<p> 迪化207博物館 <\/p>","<p> 阿嬤家- <\/p>","<p> 華山1914文化創意產業園區 <\/p>","<p> 台原亞洲偶戲博物館 <\/p>","<p> 法鼓山農禪寺 <\/p>","<p> 樹火紀念紙博物館 <\/p>","<p> 天后宮 <\/p>","<p> 郭元益糕餅博物館 <\/p>","<p> 松山火車站 <\/p>","<p> 剝皮寮老街 <\/p>","<p> 亞典書店 <\/p>","<p> 新芳春行特展 <\/p>","<p> 二二八和平紀念公園 <\/p>","<p> 順益台灣原住民博物館 <\/p>","<p> 北門 <\/p>","<p> 臺北市立天文科學教育館 <\/p>","<p> 國立台灣科學教育館 <\/p>","<p> 蝴蝶宮昆蟲博物館 <\/p>","<p> 台北探索館 <\/p>","<p> 北投溫泉博物館 <\/p>","<p> 忠泰美術館 <\/p>","<p> ?史文物陳列館 <\/p>","<p> 四四南村眷村文物館 <\/p>","<p> 國立台灣博物館土銀展示館 <\/p>","<p> 北投文物館 <\/p>","<p> 李臨秋故居 <\/p>","<p> 國立台灣博物館 <\/p>","<p> 世界宗教博物館 <\/p>","<p> 莊義芳商行 <\/p>","<p> 新富町文化市場 <\/p>","<p> 臺灣新文化運動紀念館 <\/p>","<p> 學藝埕 <\/p>","<p> 景美人權文化園區 <\/p>","<p> 國立臺灣博物館鐵道部 <\/p>","<p> 莊協發商店 <\/p>","<p> 清代機器局遺構 <\/p>","<p> 楊三郎美術館 <\/p>","<p> 大稻埕辜宅 <\/p>","<p> 蔡瑞月舞蹈研究社 <\/p>","<p> 草山玉溪園 <\/p>","<p> 翡翠博物館 <\/p>","<p> 孫運璿科技人文紀念館 <\/p>","<p> 國立歷史博物館 <\/p>","<p> 台北賓館 <\/p>","<p> R22A <\/p>","<p> 殷海光故居 <\/p>","<p> 普濟寺 <\/p>","<p> 台灣昆蟲館 <\/p>","<p> 中央研究院民族?研究所博物館 <\/p>","<p> 士林慈誠宮 <\/p>","<p> 原民風味館 <\/p>","<p> 梁實秋故居 <\/p>","<p> 黨史館 <\/p>","<p> 防災科學教育館 <\/p>","<p> 胡適紀念館 <\/p>","<p> 朋 <\/p>","<p> Nylon <\/p>","<p> 長榮海事博物館 <\/p>","<p> 圓山大飯店博物館 <\/p>","<p> 台北中山堂 <\/p>","<p> KidsAwesome奧森兒童博物館 <\/p>","<p> 台北機廠?道博物館園? <\/p>","<p> 芝山公園 <\/p>","<p> 二二八紀念館 <\/p>","<p> 臺北監獄圍牆遺蹟 <\/p>","<p> 二二八國家記念館 <\/p>","<p> 林語堂故居 <\/p>","<p> 凱達格蘭文化館 <\/p>","<p> 國父史蹟館(逸仙公園) <\/p>","<p> 臺北市鄉土教育中心 <\/p>","<p> 台北偶戲館 <\/p>","<p> 臺北當代工藝設計分館 <\/p>","<p> 自來水博物館 <\/p>","<p> 異雲書屋 <\/p>","<p> 國軍歷史文物館 <\/p>","<p> Bluerider <\/p>","<p> 蒙藏文化館 <\/p>","<p> 沙雅瑪生活藝術 <\/p>","<p> 郵政博物館 <\/p>","<p> 臺北郵局 <\/p>","<p> R22 <\/p>","<p> 善導寺 <\/p>","<p> Konnect <\/p>","<p> 逸仙公園 <\/p>","<p> 義芳居古厝 <\/p>","<p> Fubon <\/p>","<p> 糖倉開門 <\/p>","<p> 僑福芳草地畫廊 <\/p>","<p> 國立臺灣博物館南門園區 <\/p>","<p> 監察院 <\/p>","<p> 耕莘文教院 <\/p>","<p> 山佳車站 <\/p>","<p> 國史館 <\/p>","<p> 陳悅記祖宅 <\/p>","<p> 周氏節孝坊 <\/p>","<p> 專賣局 <\/p>","<p> 鳳甲美術館 <\/p>","<p> 皇太子殿下行啟記念碑 <\/p>","<p> 總統副總統文物館 <\/p>","<p> 小南門 <\/p>","<p> 台灣善光寺 <\/p>","<p> 南門町三二三 <\/p>","<p> 陽明山光復樓 <\/p>","<p> 醫學人文博物館 <\/p>","<p> 中華民國行政院 <\/p>","<p> 鴻禧美術館 <\/p>","<p> 國立臺灣藝術教育館 <\/p>","<p> 國立臺灣海洋大學校史博物館 <\/p>","<p> 蒲添生故居 <\/p>","<p> 三井記憶倉庫 <\/p>","<p> 孫立人官邸 <\/p>","<p> 司法大廈 <\/p>","<p> 急公好義坊 <\/p>","<p> Party <\/p>","<p> 揚英風美術館 <\/p>","<p> 嚴家淦先生故居 <\/p>","<p> 南海學園 <\/p>","<p> Hiro <\/p>","<p> 臺灣大學地質標本館 <\/p>","<p> 疊藝術 <\/p>","<p> 米洛克-老房子 <\/p>","<p> 西園29服飾創作基地(臺北服飾文化館) <\/p>","<p> 文山公民會館 <\/p>","<p> 臺北愛樂暨梅哲音樂文化館 <\/p>","<p> 太原五百完人紀念建築群 <\/p>","<p> 臺北市立社會教育館 <\/p>","<p> Glastory <\/p>","<p> 穎川畫廊 <\/p>","<p> 芝山岩 <\/p>","<p> 海關博物館 <\/p>","<p> 琉園水晶博物館 <\/p>","<p> 學海書院 <\/p>"],"shape":["square","square",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"font.size":[30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30],"x":[0.248749012117827,-0.140503955687353,0.704209155765881,0.308803744602208,0.360124051311811,1,0.126673952711745,-0.614132016841799,0.443837469265752,0.0385576355095731,-0.0901061119764502,-0.312137399899132,0.0551731689051791,0.0183321239057099,0.296990059148907,0.0195480051186496,-0.73031577409389,0.68487202506113,0.0706653242148065,-0.178346295819468,0.38940660235248,0.134927477210571,0.528552116513012,-0.175339039122646,0.0210476308073673,-0.227384166745028,0.493981702006709,0.0817797820568902,-0.45992166811608,-0.868246393819381,0.413646513611572,0.198495841154978,0.393902099431509,0.173798431259732,0.0914729836963688,0.690347409394065,-0.64555488625229,0.313914694322268,-0.363837599119082,-0.479855564249505,-0.346607249391249,-0.579439072640228,0.454256700844491,0.0842058724513965,-0.90742799994051,-0.280555581695038,0.254882819223715,-0.113987629811573,-0.317528054028092,0.699009023249191,0.980866247277956,-0.372270389345163,0.44520795525494,-0.240902999670386,-0.227287934387672,0.401064270124998,-0.169861255004139,0.676940945203682,-0.126146981132117,-0.465460246824491,-0.715705043851676,-0.0642238960327406,0.243253291919203,-0.554407361376289,0.793788799464212,-0.608138205138075,0.613071958300489,-0.991851317972971,-0.0253137939633994,-1,0.160367089384583,0.198380690353436,-0.151925890326515,-0.318611085715705,0.518457802530492,0.832807229005535,-0.513761349585714,0.758643449565273,-0.848362045947257,0.97363515771895,0.55469886026032,0.86212907913116,0.554662986884297,-0.928581940520895,0.572807329878666,-0.816610797468053,0.56965631363031,-0.604229379092567,-0.64751275470535,0.256558842120602,-0.711409473911719,0.575658700980616,0.41643653253376,0.0992511002579965,0.260088667052184,0.675195800482343,-0.191145222467521,-0.00542722940701612,-0.999820563458772,-0.444921230894147,-0.534160425932347,-0.0275182172343893,0.857011030053773,0.280229725985716,0.800759582185146,0.860214322572434,0.929621091450067,0.320675122780195,0.58687439667772,-0.739716955681412,-0.0894724243570757,-0.760158866225249,0.127230608684452,-0.476539519562482,0.385426501060364,-0.371612873805014,-0.912182292572932,-0.274054074084066,-0.826900309723995,0.0667061661613588,-0.431304880598465,0.669468197862418,-0.893558608945227,-0.329016267458038,-0.457100255087802,0.647950905916175,0.346680937500498,-0.298121328206705,0.525198067350894,0.0136598533371857,0.205425734886095,0.28390752547333,-0.430978661562136,0.526326335809192,-0.647323635413975,0.528552783817499,-0.219467623429403,0.488704073042714,-0.100336380538389,-0.122193565326504,-0.0463914029559547,0.683934967762,-0.418580333300932,-0.775558683348509,-0.324704330791464],"y":[-0.720911307559543,0.690464668051063,0.731906569547071,-0.545639833622694,0.486053254303925,-0.797482261919377,0.551256872272454,0.608256643329919,0.857055483386344,0.860492081163244,-0.577069173303982,0.443052779125805,-0.847823788579071,-0.0202165153959156,0.876815049621632,0.995514413704877,0.507149257739229,-0.588015780538823,0.774635327695448,-0.772974179631551,0.808693634863814,-1,-0.916010104161897,0.470057068490477,-0.903542782837154,-0.946536350736112,0.531669157740606,-0.635045082241613,0.738269755134036,0.743973162139308,0.745358674847722,0.835886281838576,0.917223945467756,0.90820980219104,0.954741098829196,0.788492183909253,0.670338530183902,0.949687807120805,0.903780700053926,0.941674914828805,0.847493775362103,0.516583972319911,-0.958748095128964,-0.018600602734102,0.846895180917148,0.789767081823192,0.76555404661058,0.984457273976288,-0.904442895726597,0.681885601502927,-0.741201409909355,-0.863896094706543,0.626188580602539,1,0.919314565284198,0.569866822593788,-0.842571210077529,-0.783934074371684,-0.642900024711653,-0.823049994016913,0.921080075331765,0.438459030000468,-0.855476326551055,0.461374185828125,-0.929272781396981,0.954893804139878,0.851350251528922,0.666955597246562,0.511951665325356,0.769729626347791,0.663610806966075,0.473869297958498,-0.896965830741205,0.506290727982612,0.897783931170644,-0.610738432409312,0.889280962078814,-0.839532710383065,0.684246781562757,-0.689347416478635,0.809828112830181,-0.888096708685022,-0.728843579710995,0.627233552042826,0.756669677880328,0.884015088607353,0.581161176484879,0.773576194262407,0.559593532435722,0.602772654270255,0.722732111744793,0.653417186301599,-0.879386526482667,-0.558492869886908,-0.988913892448467,0.61845758535827,-0.697551762083836,-0.98746324652224,0.715751976318929,0.487264604004094,0.826661630314566,0.935021901595619,-0.786206444498609,-0.926438778195717,-0.726198659933511,-0.660539734456946,-0.845479577461911,-0.606429247111111,-0.980112246217102,0.840423672829579,-0.954324652120047,0.789225183575149,-0.943064104857933,-0.765231655045016,-0.994842600522085,-0.6586557914826,0.803563814132187,-0.610242069003235,0.545933060364244,0.463465442472835,0.65279874391558,-0.936580933360586,0.584262920543493,-0.736994299003709,-0.705975453704486,-0.875088675944002,0.683315851673431,0.961691659079044,-0.626164379148126,-0.778571574829612,0.973289669283578,0.525692660375613,0.984729535980375,-0.556968198279307,0.880399517179983,0.703155492962703,0.550417446565568,-0.816808586154636,0.898666366928559,0.836858820983249,0.586514013468546,-0.669808674000284,0.575356220932953,0.623103015142016,-0.806489563060204]},"edges":{"from":["S0105","S0108","S0137","S0151","S0152","S0180","S0192","S0204","S0206","S0220","S0221","S0230","S0306","S0312","S0323","S0328","S0340","S0361","S0370","S0380","S0382","S0391","S0393","S0420","S0442","S0458","S0475","S0499","S0500","S0578","S0579","S0582","S0601","S0606","S0630","S0642","S0647","S0650","S0659","S0662","S0663","S0670","S0674","S0675","S0677","S0682","S0687","S0698","S0700","S0703","S0704","S0715","S0718","S0765","S0780","S0793","S0808","S0100","S0106","S0111","S0123","S0124","S0131","S0148","S0152","S0154","S0162","S0177","S0185","S0198","S0213","S0224","S0241","S0247","S0248","S0266","S0269","S0271","S0273","S0278","S0279","S0285","S0286","S0297","S0302","S0303","S0312","S0313","S0314","S0320","S0322","S0325","S0346","S0355","S0356","S0359","S0386","S0388","S0392","S0404","S0407","S0411","S0412","S0413","S0417","S0419","S0425","S0433","S0455","S0462","S0490","S0507","S0519","S0521","S0537","S0538","S0542","S0544","S0551","S0574","S0587","S0607","S0613","S0618","S0625","S0667","S0672","S0683","S0692","S0693","S0696","S0699","S0705","S0706","S0755","S0758","S0761","S0774","S0776","S0778","S0783","S0785","S0789","S0802","S0803"],"to":[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":false},"physics":{"stabilization":false}},"groups":["景點與地標","","site"],"width":"100%","height":"500px","idselection":{"enabled":true,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","igraphlayout":{"type":"square"},"highlight":{"enabled":true,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":false,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"}},"evals":[],"jsHooks":[]}</script>
+<script type="application/htmlwidget-sizing" data-for="htmlwidget-4a644b5a234c6b69e883">{"viewer":{"width":"100%","height":"500px","padding":15,"fill":false},"browser":{"width":"100%","height":"500px","padding":40,"fill":false}}</script>
+</body>
+</html>
 </body>
 </html>

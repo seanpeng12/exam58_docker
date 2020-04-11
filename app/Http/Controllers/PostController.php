@@ -91,7 +91,7 @@ class PostController extends Controller
         }
         return response()->json(array('output' => $process->getOutput(), 'RhtmlCheck' => 'R/site_Betweeness_2020.R "城市"-> between_city.html。'), 200);
     }
-    // 不成功
+    // 成功
     function runR_twoC(Request $request)
     {
 
