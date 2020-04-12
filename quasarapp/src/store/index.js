@@ -1,9 +1,10 @@
 import Vue from "vue";
 import Vuex from "vuex";
-
+// firebase(possess)
 import auth from "./store-auth.js";
 import schedules from "./store-tasks.js";
-
+// mysql(sean)
+import sitedata from "./store-sitedata.js";
 Vue.use(Vuex);
 
 /*
@@ -20,6 +21,7 @@ export default function (/* { ssrContext } */) {
     modules: {
       auth,
       schedules,
+      sitedata,
     },
 
     // enable strict mode (adds overhead!)

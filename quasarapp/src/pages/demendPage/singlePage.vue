@@ -1,8 +1,15 @@
 <template>
   <q-page>
+
+
+
+
     <!-- web page 區域 -->
     <div class="q-pa-md doc-container">
-      <div class="gt-xs column items-center" style="height: 170px;">
+
+
+
+      <div class="gt-xs q-pa-lg column items-center  text-black bg-grey-3" style="height: 170px;">
         <div class="col">
           <div class="text-center img_background">
             <div>
@@ -31,6 +38,7 @@
                     fill-input
                     input-debounce="0"
                     :options="Object.values(citys).map(city => city.city_name)"
+
                     @filter="filterFn"
                     hint="請選擇城市"
                     style="width: 250px; padding-bottom: 32px"
@@ -102,8 +110,11 @@
             </div>
           </div>
         </div>
-        <!-- 按鈕 -->
-        <div class="col" style="margin-top: 80px">
+
+      </div>
+      <div class="gt-xs q-pa-lg column items-center  text-black bg-grey-3">
+        <div class="col">
+          <!-- 按鈕 -->
           <q-btn
             :loading="loading4"
             color="cyan-9"
@@ -115,8 +126,8 @@
               <q-spinner-hourglass class="on-left" />Loading...
             </template>
           </q-btn>
+          <!-- end -->
         </div>
-        <!-- end -->
       </div>
     </div>
     <!-- end web page -->
@@ -297,11 +308,8 @@
     </div>
     <!-- end -->
 
-    <!-- web iframe 區域 gt-xs -->
+    <!-- web iframe 下方區域 gt-xs -->
     <div class="q-pa-md doc-container">
-      <div>====================</div>
-      <div :citys="citys">{{ Object.values(citys).map(city => city.city_name) }}</div>
-
     </div>
 
     <!-- phone iframe 區域 lt-sm-->
@@ -347,11 +355,10 @@ export default {
       selected_p_detail_item: "",
       product_lists: ["台北", "高雄"],
       product_detail: {
-        台北: ["沙灘", "公園", "台北101"],
-        高雄: ["觀光風景區", "購物商城", "lativ"]
+        台北: ["台北1", "台北2", "台北3"],
+        高雄: ["高雄1", "高雄2", "高雄3"]
       },
       citys: [],
-
 
       city_object :[],
       tab: "mails",
@@ -360,10 +367,11 @@ export default {
     };
   },
   // computed:{
-  //   toArrayFormat:function() {
-  //     citys = this.citys;
-  //     return  Object.values(citys).map(city => city.city_name);
-  //   }
+  //   part1: require("components/SectionCarousel.vue".default),
+  //   // toArrayFormat:function() {
+  //   //   citys = this.citys;
+  //   //   return  Object.values(citys).map(city => city.city_name);
+  //   // }
   // },
   methods: {
     init: function() {

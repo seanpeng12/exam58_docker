@@ -32,31 +32,31 @@ const routes = [{
     component: () => import("layouts/MainLayout.vue"),
     children: [{
       path: "",
-      component: () => import("pages/LikeCard.vue")
+      component: () => import("pages/site_collection/likeCard.vue")
     }],
   },
   {
-    path: "/singlePage",
+    path: "/demend",
     component: () => import("layouts/MainLayout.vue"),
     children: [{
       path: "",
-      component: () => import("pages/singlePage.vue")
+      component: () => import("pages/demendPage/singlePage.vue")
     }],
   },
   {
-    path: "/ProsConsPage",
+    path: "/ProsCons",
     component: () => import("layouts/MainLayout.vue"),
     children: [{
       path: "",
-      component: () => import("pages/ProsConsPage.vue")
+      component: () => import("pages/prosconsPage/prosConsPage.vue")
     }],
   },
   {
-    path: "/PathPage",
+    path: "/Path",
     component: () => import("layouts/MainLayout.vue"),
     children: [{
       path: "",
-      component: () => import("pages/PathPage.vue")
+      component: () => import("pages/pathPage/pathPage.vue")
     }],
   },
   {
@@ -65,6 +65,14 @@ const routes = [{
     children: [{
       path: "",
       component: () => import("pages/AjaxTest.vue")
+    }],
+  },
+  {
+    path: "/CardTest",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{
+      path: "",
+      component: () => import("pages/test/cardview.vue")
     }],
   },
 ];

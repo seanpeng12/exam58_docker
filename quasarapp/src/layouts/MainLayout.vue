@@ -45,7 +45,7 @@
                 </q-item-section>
               </q-item>
 
-              <q-item clickable v-close-popup @click="onItemClick" to="/singlePage">
+              <q-item clickable v-close-popup @click="onItemClick" to="/demend">
                 <q-item-section>
                   <q-item-label>
                     分析GO-
@@ -54,7 +54,7 @@
                 </q-item-section>
               </q-item>
 
-              <q-item clickable v-close-popup @click="onItemClick" to="/ProsConsPage">
+              <q-item clickable v-close-popup @click="onItemClick" to="/ProsCons">
                 <q-item-section>
                   <q-item-label>
                     分析GO-
@@ -63,7 +63,7 @@
                 </q-item-section>
               </q-item>
 
-              <q-item clickable v-close-popup @click="onItemClick" to="/PathPage">
+              <q-item clickable v-close-popup @click="onItemClick" to="/Path">
                 <q-item-section>
                   <q-item-label>
                     分析GO-
@@ -76,6 +76,14 @@
                 <q-item-section>
                   <q-item-label>
                     測試ajax+axios傳值
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
+
+              <q-item clickable v-close-popup @click="onItemClick" to="/CardTest">
+                <q-item-section>
+                  <q-item-label>
+                    測試vuex
                   </q-item-label>
                 </q-item-section>
               </q-item>

@@ -165,7 +165,7 @@ class PostController extends Controller
     // 取所有景點(測試用，有設定量)
     function site_dataAll()
     {
-        return response()->json(Site_data::where('id', '<', "S0005")->get(), 200);
+        return response()->json(Site_data::where('id', '<', "S0008")->get(), 200);
     }
 
     // 取單一景點

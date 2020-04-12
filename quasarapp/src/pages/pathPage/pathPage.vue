@@ -2,9 +2,9 @@
   <q-page>
     <!-- web page 區域 -->
     <div class="q-pa-md doc-container">
-      <div class="gt-xs column items-center" style="height: 250px;">
-        <div class="col">
-          <div class="text-center img_background">
+      <div class="gt-xs q-pa-md column items-center text-black bg-grey-3" style="height: 250px;">
+        <div class="col" >
+          <div class="text-center">
             <div>
               <b class="text" style="font-size: 30px;font-family: Microsoft JhengHei;">路徑分析</b>
             </div>
@@ -12,12 +12,12 @@
         </div>
 
         <div class="col">
-          <div class="text-center img_background">
+          <div class="text-center ">
             <div>
               <b
                 class="text"
                 style="font-size: 27px;font-family: Microsoft JhengHei;"
-              >請先選擇區域(城市)已提供起始景點</b>
+              >請先選擇區域(城市) 提供起始景點</b>
             </div>
           </div>
         </div>
@@ -189,9 +189,9 @@
     </div>
     <!-- end mobile page -->
 
-    <!-- 左右區域 web -->
-    <div class="q-pa-md">
-      <div class="row">
+    <!-- 左右區域-1 web -->
+    <div class="q-pa-md doc-container">
+      <div class="row gt-xs q-pa-md bg-blue-grey-2">
         <div class="col">
           <!-- iframe col div -->
           <div class="gt-xs col">
@@ -214,7 +214,6 @@
           <div class="text-center img_background">
             <div>
               <b
-                class="text"
                 style="font-size: 25px;font-family: Microsoft JhengHei;"
               >已為您顯示 台北所有景點 請點選進行分析：</b>
             </div>
@@ -225,6 +224,67 @@
               style="font-size: 25px;font-family: Microsoft JhengHei;padding-top:15px;"
             >國立台灣科學教育館</div>
           </div>
+
+          <!-- 加入最愛button -->
+          <div class="q-pa-md doc-container">
+            <div class="gt-xs column items-center" style="height: 170px;">
+              <div class="col" style="margin-top: 80px">
+                <q-btn
+                  :loading="loading4"
+                  color="cyan-9"
+                  @click="simulateProgress(4)"
+                  style="width: 300px"
+                >
+                  路徑分析
+                  <template v-slot:loading>
+                    <q-spinner-hourglass class="on-left" />Loading...
+                  </template>
+                </q-btn>
+              </div>
+            </div>
+          </div>
+          <!-- button end -->
+        </div>
+      </div>
+    </div>
+    <!-- end -->
+
+    <!-- 左右區域-2 web -->
+    <div class="q-pa-md doc-container">
+      <div class="row gt-xs q-pa-md bg-blue-grey-2">
+        <div class="col">
+          <!-- iframe col div -->
+          <div class="gt-xs col">
+            <q-page>
+              <iframe
+                style="height: 602px"
+                frameborder="0"
+                id="myFrame"
+                :src="src"
+                class="frameStyle"
+                ref="404 not found!"
+              ></iframe>
+            </q-page>
+            <!--  -->
+          </div>
+          <!-- iframe end -->
+        </div>
+        <!-- 懶人包區域 -->
+        <div class="col">
+          <div class="text-center img_background">
+            <div>
+              <b
+                style="font-size: 25px;font-family: Microsoft JhengHei;"
+              >已為您顯示 台北所有景點 請點選進行分析：</b>
+            </div>
+          </div>
+          <div class="text-center img_background">
+            <div
+              class="text"
+              style="font-size: 25px;font-family: Microsoft JhengHei;padding-top:15px;"
+            >國立台灣科學教育館</div>
+          </div>
+
           <!-- 加入最愛button -->
           <div class="q-pa-md doc-container">
             <div class="gt-xs column items-center" style="height: 170px;">
@@ -346,7 +406,7 @@ export default {
       loading4: false,
       selected_p: "",
       selected_p_detail_item: "",
-      product_lists: ["台北", "高雄"],
+      product_lists: ["台北",  "桃園", "新竹", "苗栗", "台東", "高雄"],
       product_detail: {
         台北: ["沙灘", "公園", "台北101"],
         高雄: ["觀光風景區", "購物商城", "lativ"]
@@ -356,7 +416,7 @@ export default {
         city_name: ""
       },
       tab: "mails",
-      src: "./statics/between_relationship.html",
+      src: "./statics/path.html",
       options: stringOptions
     };
   },

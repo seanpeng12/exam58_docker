@@ -12,4 +12,5 @@ const axiosInstance = axios.create({
 export default ({ Vue }) => {
   Vue.prototype.$axios = axios;
 };
+// 外部使用名稱
 export { axiosInstance };
