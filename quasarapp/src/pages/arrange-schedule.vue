@@ -44,68 +44,42 @@
       </q-dialog>
       <!-- 往上一頁結束 -->
 
-      <div
-        class="row"
-        v-for="everydaySite in everydaySites"
-        :key="everydaySite.id"
-      >
+      <div class="row">
         <div class="col-6">
-          <p class="weekday">{{ everydaySite.id }}</p>
-          <draggable
-            :list="everydaySite.site"
-            :disabled="!enabled"
-            class="list-group"
-            ghost-class="ghost"
-            :move="checkMove"
-            @start="dragging = true"
-            @end="dragging = false"
-            group="site"
-          >
-            <q-btn
-              color="black"
-              v-for="(site, key) in everydaySite.site"
-              :key="key"
-              :label="site"
-              style="margin: 4px"
-              unelevated
-              @click="
-                updateDragSite({
-                  id: everydaySite.id,
-                  updates: { site: site }
-                })
-              "
-            />
-          </draggable>
+          <draggableC
+            v-for="(everydaySite, key) in EverydaySite"
+            :key="key"
+            :date="everydaySite.id"
+            :dateKey="key"
+            :everydaySite="everydaySite"
+          ></draggableC>
+          <!-- <draggable
+              v-model="EverydaySite"
+              :disabled="!enabled"
+              class="list-group"
+              ghost-class="ghost"
+              :move="checkMove"
+              @start="dragging = true"
+              @end="dragging = false"
+              group="site"
+            >
+              <q-btn
+                color="black"
+                v-for="(site, key) in everydaySite.site"
+                :key="key"
+                :label="site"
+                style="margin: 4px"
+                unelevated
+                @click="
+                  updateDragSite({
+                    id: everydaySite.id,
+                    updates: { site: site }
+                  })
+                "
+              />
+            </draggable> -->
         </div>
-        <!-- <p class="weekday">Day2</p>
-        <div
-          class="row"
-          v-for="everydaySite in everydaySites"
-          :key="everydaySite.id"
-        >
-          <p class="weekday">{{ everydaySite.id }}</p>
-
-          <div v-for="site in everydaySite.site" :key="site">
-            <div>{{ site }}</div>
-          </div>
-        </div> -->
       </div>
-      <!-- <q-btn
-        dense
-        label="儲存"
-        class="fixed-bottom-right"
-        color="secondary"
-        size="15px"
-        style="margin-right:20px; width: 100px"
-      />
-      <q-btn
-        dense
-        label="新增日期"
-        class="fixed-bottom-left"
-        color="warning"
-        size="15px"
-        style="margin-left:20px; width: 100px"
-      /> -->
     </q-drawer>
 
     <q-page-container>
@@ -312,34 +286,21 @@ export default {
     };
   },
   components: {
-    search: () => import("components/search.vue"),
-    draggable
-    // draggable: () => import("components/drag/draggable.vue")
-  },
-  created() {
-    var pass_id = this.$route.query.pass_id;
-    this.id = pass_id;
+    draggableC: () => import("components/drag/draggable.vue")
   },
   computed: {
     ...mapGetters("travel", ["everydaySites"]),
-    ...mapActions("travel", ["updateDragSite"]),
-
-    draggingInfo() {
-      return this.dragging ? "under drag" : "";
+    EverydaySite: {
+      get() {
+        return this.everydaySites;
+      },
+      set(value) {
+        this.setDragkey(value);
+      }
     }
-    // ...mapGetters("schedules", ["sightseeingMembers"])
   },
-
   methods: {
-    add: function() {
-      this.list.push({ name: "Juan " + id, id: id++ });
-    },
-    replace: function() {
-      this.list = [{ name: "Edgard", id: id++ }];
-    },
-    checkMove: function(e) {
-      window.console.log("Future index: " + e.draggedContext.futureIndex);
-    }
+    ...mapActions("travel", ["updateDragSite", "setDragkey"])
   }
 };
 </script>

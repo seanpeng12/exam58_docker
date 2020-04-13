@@ -7,7 +7,7 @@ const state = {
   slide: "style",
   expend: false,
   sightseeingMembers: {},
-  everydaySites: [],
+  everydaySites: {},
   watch: {}
 };
 const mutations = {
@@ -33,6 +33,14 @@ const mutations = {
   },
   addEverydaySite(state, everyday) {
     state.everydaySites = everyday;
+    console.log("資料格式", everyday);
+  },
+  setDragkey(state, everydaySite) {
+    state.everydaySites = everydaySite;
+    // console.log("setDragkey", state.everydaySites);
+  },
+  setDragGroup(state, { value, key }) {
+    state.everydaySites[key] = value;
   }
 };
 const actions = {
@@ -55,6 +63,11 @@ const actions = {
     console.log(id);
 
     commit("deleteSchedule", id);
+  },
+  setDragkey({ commit }, value) {
+    commit("setDragkey", value);
+    // state.everydaySites = everydaySite;
+    // console.log("setDragkey", state.everydaySites);
   },
   fbReadData({ commit }) {
     const uid = firebaseAuth.currentUser.uid;
@@ -97,10 +110,11 @@ const actions = {
         var everydayId = doc.id;
         everyday.push({
           id: everydayId,
-          site: everydaySite.site
+          site: everydaySite.site,
+          date: everydaySite.date
         });
       });
-      console.log(everyday);
+      // console.log(everyday);
 
       commit("addEverydaySite", everyday);
     });
@@ -119,6 +133,7 @@ const getters = {
 };
 export default {
   namespaced: true,
+
   state,
   mutations,
   actions,

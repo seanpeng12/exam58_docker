@@ -1,25 +1,22 @@
 <template>
-  <div class="row">
-    <!-- 增加按鈕，重置 -->
-    <!-- <div class="row" style="margin: 50px">
-      <button class="btn btn-secondary" @click="add">Add</button>
-      <button class="btn btn-secondary" @click="replace">Replace</button>
-    </div> -->
-    <div class="col-2">
+  <div>
+    <div class="col-6">
+      <p class="weekday">{{ date }}</p>
       <draggable
-        :list="list"
+        v-model="siteGroup"
         :disabled="!enabled"
-        class="list-group"
+        class="list-group "
         ghost-class="ghost"
         :move="checkMove"
         @start="dragging = true"
         @end="dragging = false"
+        group="site"
       >
         <q-btn
           color="black"
-          v-for="element in list"
-          :key="element.name"
-          :label="element.name"
+          v-for="(s, key) in siteGroup"
+          :key="key"
+          :label="s"
           style="margin: 4px"
           unelevated
         />
@@ -27,31 +24,35 @@
     </div>
   </div>
 </template>
-
 <script>
 import draggable from "vuedraggable";
-let id = 1;
+
 export default {
-  name: "simple",
-  display: "Simple",
-  order: 0,
+  props: ["date", "dateKey", "site", "everydaySite"],
+  data() {
+    return {
+      enabled: true,
+      i: this.key
+    };
+  },
   components: {
     draggable
   },
-  data() {
-    return {
-      // enabled: true,
-      // list: [
-      //   { name: "John", id: 0 },
-      //   { name: "Joao", id: 1 },
-      //   { name: "Jean", id: 2 }
-      // ],
-      dragging: false
-    };
-  },
   computed: {
-    draggingInfo() {
-      return this.dragging ? "under drag" : "";
+    siteGroup: {
+      get() {
+        var dateKey = this.dateKey;
+        console.log("get everydaySite", this.everydaySite.site[0]);
+
+        return this.everydaySite.site;
+      },
+      set(value) {
+        console.log("computed setter");
+        this.$store.commit("travel/setDragGroup", {
+          value,
+          key: this.dateKey
+        });
+      }
     }
   },
   methods: {
@@ -64,15 +65,7 @@ export default {
     checkMove: function(e) {
       window.console.log("Future index: " + e.draggedContext.futureIndex);
     }
+    // ...mapActions("travel", ["updateDragSite"])
   }
 };
 </script>
-<style scoped>
-.buttons {
-  margin-top: 35px;
-}
-.ghost {
-  opacity: 0.5;
-  background: #c8ebfb;
-}
-</style>
