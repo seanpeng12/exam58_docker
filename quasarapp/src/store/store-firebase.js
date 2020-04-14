@@ -12,14 +12,13 @@ const state = {
 };
 const mutations = {
   updateSchedule(state, payload) {
-    console.log("payload (from mutation)", payload);
-
+    // console.log("payload (from mutation)", payload);
     // Object.assign(state.sightseeingMembers[payload.id], payload.updates);
   },
   updateDragSite(state, payload) {
-    console.log("payload (from mutation)", payload.updates);
-    // state.everydaySites.id = payload.id;
-    // state.everydaySites.site = payload.updates.site;
+    // console.log("payload (from mutation)", payload.updates);
+    state.everydaySites.id = payload.id;
+    state.everydaySites.site = payload;
     // Array.assign(state.everydaySites[payload.id], payload.updates);
   },
   addSchedule(state, payload) {
@@ -32,7 +31,9 @@ const mutations = {
     Vue.delete(state.sightseeingMembers, id);
   },
   addEverydaySite(state, everyday) {
-    state.everydaySites = everyday;
+    // state.everydaySites = everyday;
+    Vue.set(state.everydaySites, everyday.id, everyday.everyday);
+
     console.log("資料格式", everyday);
   },
   setDragkey(state, everydaySite) {
@@ -40,7 +41,7 @@ const mutations = {
     // console.log("setDragkey", state.everydaySites);
   },
   setDragGroup(state, { value, key }) {
-    state.everydaySites[key] = value;
+    state.everydaySites[key].site = value;
   }
 };
 const actions = {
@@ -56,18 +57,19 @@ const actions = {
     dispatch("fbEverySiteData", pass_id);
   },
   updateDragSite({ commit }, payload) {
-    console.log("updateDragSite", payload);
+    // console.log("updateDragSite", payload);
     commit("updateDragSite", payload);
   },
   deleteSchedule({ commit }, id) {
     console.log(id);
-
     commit("deleteSchedule", id);
   },
   setDragkey({ commit }, value) {
     commit("setDragkey", value);
-    // state.everydaySites = everydaySite;
-    // console.log("setDragkey", state.everydaySites);
+  },
+  storeEverydaySites(context) {
+    let jsonPages = JSON.parse(JSON.stringify(context.state.everydaySites));
+    // console.log("jsonPages:", jsonPages);
   },
   fbReadData({ commit }) {
     const uid = firebaseAuth.currentUser.uid;
@@ -93,30 +95,48 @@ const actions = {
       commit("addSchedule", payload);
     });
   },
+  // fbEverySiteData({ commit }, pass_id) {
+  //   const uid = firebaseAuth.currentUser.uid;
+  //   const everyday = [];
+  //   const itinerary_eve = fstore
+  //     .collection("sightseeingMember")
+  //     .doc(uid)
+  //     .collection("我的旅程表")
+  //     .doc(pass_id)
+  //     .collection("每一天");
+  //   itinerary_eve.get().then(function(querySnapshot) {
+  //     querySnapshot.forEach(function(doc) {
+  //       // console.log("every", doc.data());
+  //       // console.log("every", doc.id);
+  //       var everydaySite = doc.data();
+  //       var everydayId = doc.id;
+  //       everyday.push({
+  //         id: everydayId,
+  //         site: everydaySite.site
+  //         // date: everydaySite.date
+  //       });
+  //     });
+  //     // console.log(everyday);
+
+  //     commit("addEverydaySite", everyday);
+  //   });
+  // }
   fbEverySiteData({ commit }, pass_id) {
     const uid = firebaseAuth.currentUser.uid;
-    const everyday = [];
+    // const everyday = [];
     const itinerary_eve = fstore
       .collection("sightseeingMember")
       .doc(uid)
       .collection("我的旅程表")
       .doc(pass_id)
       .collection("每一天");
-    itinerary_eve.get().then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-        // console.log("every", doc.data());
-        // console.log("every", doc.id);
-        var everydaySite = doc.data();
-        var everydayId = doc.id;
-        everyday.push({
-          id: everydayId,
-          site: everydaySite.site,
-          date: everydaySite.date
+    itinerary_eve.onSnapshot(snapshot => {
+      snapshot.forEach(doc => {
+        commit("addEverydaySite", {
+          id: doc.id,
+          everyday: doc.data()
         });
       });
-      // console.log(everyday);
-
-      commit("addEverydaySite", everyday);
     });
   }
 };

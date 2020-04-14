@@ -9,14 +9,15 @@
         ghost-class="ghost"
         :move="checkMove"
         @start="dragging = true"
-        @end="dragging = false"
+        @end="(dragging = false), storeEverydaySites()"
         group="site"
+        :options="{ group: { pull: true, put: true }, animation: 20 }"
       >
         <q-btn
           color="black"
-          v-for="(s, key) in siteGroup"
+          v-for="(site, key) in siteGroup"
           :key="key"
-          :label="s"
+          :label="site"
           style="margin: 4px"
           unelevated
         />
@@ -26,32 +27,32 @@
 </template>
 <script>
 import draggable from "vuedraggable";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
-  props: ["date", "dateKey", "site", "everydaySite"],
+  props: ["date", "dateKey", "index"],
   data() {
     return {
-      enabled: true,
-      i: this.key
+      enabled: true
     };
   },
   components: {
     draggable
   },
   computed: {
+    ...mapGetters("travel", ["everydaySites"]),
     siteGroup: {
       get() {
-        var dateKey = this.dateKey;
-        console.log("get everydaySite", this.everydaySite.site[0]);
-
-        return this.everydaySite.site;
+        var date = this.date;
+        // console.log("everydaySite", this.everydaySites[date]);
+        return this.everydaySites[date].site;
       },
       set(value) {
-        console.log("computed setter");
         this.$store.commit("travel/setDragGroup", {
           value,
-          key: this.dateKey
+          key: this.date
         });
+        // console.log("value:", value, " key: ", this.index);
       }
     }
   },
@@ -63,9 +64,9 @@ export default {
       this.list = [{ name: "Edgard", id: id++ }];
     },
     checkMove: function(e) {
-      window.console.log("Future index: " + e.draggedContext.futureIndex);
-    }
-    // ...mapActions("travel", ["updateDragSite"])
+      // window.console.log("Future index: " + e.draggedContext.futureIndex);
+    },
+    ...mapActions("travel", ["storeEverydaySites"])
   }
 };
 </script>

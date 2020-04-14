@@ -28,12 +28,12 @@ const routes = [
     path: "/ftore_data",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/ftore_data.vue") }]
+  },
+  {
+    path: "/drag",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/drag.vue") }]
   }
-  // {
-  //   path: "/drag",
-  //   component: () => import("layouts/MainLayout.vue"),
-  //   children: [{ path: "", component: () => import("pages/drag.vue") }]
-  // }
 ];
 
 // Always leave this as last one

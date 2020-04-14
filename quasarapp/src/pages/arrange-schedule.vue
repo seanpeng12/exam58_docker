@@ -47,12 +47,13 @@
       <div class="row">
         <div class="col-6">
           <draggableC
-            v-for="(everydaySite, key) in EverydaySite"
-            :key="key"
-            :date="everydaySite.id"
-            :dateKey="key"
-            :everydaySite="everydaySite"
+            v-for="(everydaySite, key, index) in EverydaySites"
+            :key="index"
+            :index="index"
+            :date="key"
           ></draggableC>
+          <!-- <p class="weekday">{{ everydaySite.id }}</p> -->
+
           <!-- <draggable
               v-model="EverydaySite"
               :disabled="!enabled"
@@ -276,8 +277,8 @@ export default {
       route: ["台北101", "象山", "我家"],
       ssite: ["台北101", "象山", "十分老街"],
       options: ["台北市", "基隆市", "高雄市", "南投縣", "台南市"],
-      id: "",
-      enabled: true
+      id: ""
+      // enabled: true
       // list: [
       //   { name: "John", id: 0 },
       //   { name: "Joao", id: 1 },
@@ -286,21 +287,27 @@ export default {
     };
   },
   components: {
-    draggableC: () => import("components/drag/draggable.vue")
+    draggableC: () => import("components/drag/draggableC.vue")
   },
   computed: {
     ...mapGetters("travel", ["everydaySites"]),
-    EverydaySite: {
+    EverydaySites: {
       get() {
         return this.everydaySites;
       },
-      set(value) {
-        this.setDragkey(value);
+      set(everydaySite) {
+        this.setDragkey(everydaySite);
+        console.log(everydaySite);
       }
     }
   },
   methods: {
-    ...mapActions("travel", ["updateDragSite", "setDragkey"])
+    ...mapActions("travel", ["updateDragSite", "setDragkey", "fbEverySiteData"])
+  },
+  created() {
+    var pass_id = this.$route.query.pass_id;
+    this.id = pass_id;
+    // this.fbEverySiteData(this.id);
   }
 };
 </script>

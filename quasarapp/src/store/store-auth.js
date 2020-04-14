@@ -1,4 +1,4 @@
-// import { LocalStorage } from "quasar";
+import { LocalStorage } from "quasar";
 import { firebaseAuth, google_provider } from "boot/firebase";
 import { showErrorMessage } from "src/functions/function-show-error-message";
 const state = {
@@ -46,13 +46,13 @@ const actions = {
     firebaseAuth.onAuthStateChanged(user => {
       if (user) {
         commit("setLoggedIn", true);
-        // LocalStorage.set("loggedIn", true);
+        LocalStorage.set("loggedIn", true);
         // this.$router.push("/").catch((err) => {});
         // 每次載入頁面就會判斷登入者狀態，如果為true就會觸發store-firebase(index.js定義為travel)的fbReadData
         dispatch("travel/fbReadData", null, { root: true });
       } else {
         commit("setLoggedIn", false);
-        // LocalStorage.set("loggedIn", false);
+        LocalStorage.set("loggedIn", false);
         // this.$router.replace("/Pageauth").catch((err) => {});
       }
     });
