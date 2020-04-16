@@ -1,4 +1,4 @@
-import { axiosInstance } from 'boot/axios'
+import axios, { axiosInstance } from 'boot/axios'
 
 const state = {
   // 測試(cardview.vue)
@@ -28,7 +28,7 @@ const state = {
       time:"19:30"
     }
   },
-  
+
 }
 const mutations = {
   updateTask(state,payload) {
@@ -37,7 +37,8 @@ const mutations = {
   },
   FETCH_posts(state, posts){
     return state.posts = posts
-  }
+  },
+
 
 }
 const actions = {
@@ -51,12 +52,14 @@ const actions = {
     axiosInstance.get('http://127.0.0.1:80/api/site_data')
         .then(res => {
             commit('FETCH_posts', res.data);
-            console.log("vuex-成功接收site_data值");
+            console.log("vuex-觸發site_data值");
 
         }).catch(err => {
         console.log(err);
     })
   },
+
+
 
 
 }
@@ -69,7 +72,8 @@ const getters = {
   },
   post: (state) =>{
     return state.post;
-  }
+  },
+
 
 }
 

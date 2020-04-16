@@ -36,27 +36,51 @@ const routes = [{
     }],
   },
   {
-    path: "/demend",
+    path: "/site_demend",
     component: () => import("layouts/MainLayout.vue"),
     children: [{
       path: "",
-      component: () => import("pages/demendPage/singlePage.vue")
+      component: () => import("pages/demendPage/s_demendPage.vue")
     }],
   },
   {
-    path: "/ProsCons",
+    path: "/hotel_demend",
     component: () => import("layouts/MainLayout.vue"),
     children: [{
       path: "",
-      component: () => import("pages/prosconsPage/prosConsPage.vue")
+      component: () => import("pages/demendPage/h_demendPage.vue")
     }],
   },
   {
-    path: "/Path",
+    path: "/site_ProsCons",
     component: () => import("layouts/MainLayout.vue"),
     children: [{
       path: "",
-      component: () => import("pages/pathPage/pathPage.vue")
+      component: () => import("pages/prosconsPage/s_prosConsPage.vue")
+    }],
+  },
+  {
+    path: "/hotel_ProsCons",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{
+      path: "",
+      component: () => import("pages/prosconsPage/h_prosConsPage.vue")
+    }],
+  },
+  {
+    path: "/site_Path",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{
+      path: "",
+      component: () => import("pages/pathPage/s_pathPage.vue")
+    }],
+  },
+  {
+    path: "/hotel_Path",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{
+      path: "",
+      component: () => import("pages/pathPage/h_pathPage.vue")
     }],
   },
   {

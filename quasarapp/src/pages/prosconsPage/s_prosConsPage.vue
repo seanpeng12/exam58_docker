@@ -2,11 +2,11 @@
   <q-page>
     <!-- web page 區域 -->
     <div class="q-pa-md doc-container">
-      <div class="gt-xs column items-center" style="height: 250px;">
+      <div class="gt-xs q-pa-lg q-ma-sm column items-center text-black bg-grey-3" style="height: 250px;">
         <div class="col">
           <div class="text-center img_background">
             <div>
-              <b class="text" style="font-size: 30px;font-family: Microsoft JhengHei;">優缺點分析</b>
+              <p style="font-size: 28px;font-family: Microsoft JhengHei;">景點優缺點分析</p>
             </div>
           </div>
         </div>
@@ -50,6 +50,7 @@
               </div>
               <!--  -->
             </div>
+            
           </div>
         </div>
         <!-- 按鈕 -->

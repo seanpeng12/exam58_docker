@@ -57,7 +57,7 @@ export default {
   },
 
   mounted: function() {
-    // this.mapActions.init();
+    // 載入時跑vuex action -> fetchPosts()
     this.fetchPosts();
   }
 }

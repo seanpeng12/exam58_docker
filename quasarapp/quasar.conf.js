@@ -72,6 +72,12 @@ module.exports = function (ctx) {
         "QFooter",
         "QFab",
         "QFabAction",
+        'QList',
+        'QItem',
+        'QItemSection',
+        'QItemLabel',
+        'QCheckbox'
+
       ],
       directives: ["GoBack", "ClosePopup"],
 

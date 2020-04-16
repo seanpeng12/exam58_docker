@@ -8,6 +8,7 @@ use App\Site_data;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 use Illuminate\Support\Facades\DB as FacadesDB;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class PostController extends Controller
 {
@@ -141,7 +142,10 @@ class PostController extends Controller
         }
 
 
-        return response()->json(array('response：' => $process->getOutput(), 'PHPCheck' => 'please check "public" dir has 2 csv data。'), 200);
+        return response()->json(array(
+            'response：' => $process->getOutput(),
+            'PHPCheck' => 'please check "public" dir has 2 csv data。'
+        ), 200);
     }
     // 路徑分析R圖
     function runRafterPHP(Request $request)
@@ -158,23 +162,63 @@ class PostController extends Controller
         }
         // $process->start(); // to run Async
 
-        return response()->json(array('response：' => $process->getOutput(), 'RnewFileCheck' => '請確認是否R是否執行!'), 200);
+        return response()->json(array(
+            'response：' => $process->getOutput(),
+            'RnewFileCheck' => '請確認是否R是否執行!'
+        ), 200);
     }
 
     // site_data API
     // 取所有景點(測試用，有設定量)
     function site_dataAll()
     {
-        return response()->json(Site_data::where('id', '<', "S0008")->get(), 200);
+        $sql = Site_data::where('id', '<', "S0008")->get();
+        return response()->json($sql, 200);
     }
 
     // 取單一景點
     function site_dataById($id)
     {
-        return response()->json(Site_data::find($id), 200);
+        $sql = Site_data::find($id);
+        return response()->json($sql, 200);
+    }
+    // 取該城市的所有景點名稱
+    function site_nameById($city)
+    {
+        $sql = Site_data::select('name')->where('city_name', '=', $city)->get();
+        return response()->json($sql, 200);
+        // return response()->json(Site_data::find($city_name), 200);
+    }
+    function bothCatagory(Request $request)
+    {
+        $city = $request->input('name');
+        $c1 = $request->input('c1');
+        $c2 = $request->input('c20');
+
+        $sql = FacadesDB::select("SELECT DISTINCT site_data.id, site_data.name, site_data.city_name, site_data.type,site_data.completed
+            FROM site_relationship, site_data, site_attr
+            WHERE (site_relationship.from_id = site_data.id AND site_relationship.to_id = site_attr.id)
+            AND site_data.city_name = '$city'
+            AND (site_attr.tag = '$c1' OR site_attr.tag = '$c2') GROUP BY site_data.id HAVING COUNT(*) > 1");
+        $completed = false;
+        return response()->json($sql, 200);
+
+        // 改寫eloquent
+        // $A = FacadesDB::table('site_relationship')
+        //     ->join('site_data', 'site_relationship.from_id', '=', 'site_data.id')
+        //     ->join('site_attr', 'site_relationship.to_id', '=', 'site_attr.id')
+        //     ->select("site_data.id, site_data.name, site_data.city_name, site_data.type")
+        //     ->where(function ($query) {
+        //         $query->where(['site_relationship.from_id' => 'site_data.id', 'site_relationship.to_id' => 'site_attr.id']);
+        //     })->andWhere(function ($query) {
+        //         $query->where(['site_data' => "台北"]);
+        //     })->andWhere(function ($query) {
+        //         $query->orWhere(['site_attr.tag' => "博物館", 'site_attr.tag' => "古蹟"]);
+        //     })->groupBy('site_data.id')->havingRaw('COUNT(*) > ?', [1])->get();
     }
     function site_dataCityAll()
     {
-        return response()->json(Site_data::select('city_name')->distinct()->get(), 200);
+        $sql = Site_data::select('city_name')->distinct()->get();
+        return response()->json($sql, 200);
     }
 }

@@ -45,16 +45,22 @@ Route::group(['middleware' => ['CORS']], function () {
     Route::post('/runR_city', 'PostController@runR_city');
     //執行R API(兩類別)
     Route::post('/runR_twoC', 'PostController@runR_twoC');
-
-
-    // 取得所有景點資料site_data
-    Route::get('/site_data', 'PostController@site_dataAll');
-    // 取單一景點site_data
-    Route::get('/site_data/{id}', 'PostController@site_dataById');
-
-    Route::get('/site_dataCity', 'PostController@site_dataCityAll');
     // 執行php(跑path.php)
     Route::post('/runPHP', 'PostController@runPHP');
     // 執行搭配php的R(跑path.php)
     Route::post('/runRafterPHP', 'PostController@runRafterPHP');
+    // 景點需求分析---取得交集資料
+    Route::post('/cat', 'PostController@bothCatagory');
+
+    // mysql
+    // 取得所有景點資料site_data
+    Route::get('/site_data', 'PostController@site_dataAll');
+    // 取單一景點site_data(整包object)
+    Route::get('/site_data/{id}', 'PostController@site_dataById');
+    // 下拉式選單---屬於該城市的所有景點name
+    Route::get('/site_name/{city}', 'PostController@site_nameById');
+    // 景點需求分析---取得交集資料
+    // Route::get('/cat', 'PostController@bothCatagory');
+    // 取得所有城市名稱
+    Route::get('/site_dataCity', 'PostController@site_dataCityAll');
 });

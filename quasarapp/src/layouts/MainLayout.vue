@@ -45,28 +45,52 @@
                 </q-item-section>
               </q-item>
 
-              <q-item clickable v-close-popup @click="onItemClick" to="/demend">
+              <q-item clickable v-close-popup @click="onItemClick" to="/site_demend">
                 <q-item-section>
                   <q-item-label>
-                    分析GO-
+                    景點GO-
+                    <b>需求分析</b>
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup @click="onItemClick" to="/hotel_demend">
+                <q-item-section>
+                  <q-item-label>
+                    飯店GO-
                     <b>需求分析</b>
                   </q-item-label>
                 </q-item-section>
               </q-item>
 
-              <q-item clickable v-close-popup @click="onItemClick" to="/ProsCons">
+              <q-item clickable v-close-popup @click="onItemClick" to="/site_ProsCons">
                 <q-item-section>
                   <q-item-label>
-                    分析GO-
+                    景點GO-
+                    <b>優缺點分析</b>
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup @click="onItemClick" to="/hotel_ProsCons">
+                <q-item-section>
+                  <q-item-label>
+                    飯店GO-
                     <b>優缺點分析</b>
                   </q-item-label>
                 </q-item-section>
               </q-item>
 
-              <q-item clickable v-close-popup @click="onItemClick" to="/Path">
+              <q-item clickable v-close-popup @click="onItemClick" to="/site_Path">
                 <q-item-section>
                   <q-item-label>
-                    分析GO-
+                    景點GO-
+                    <b>路徑分析</b>
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup @click="onItemClick" to="/hotel_Path">
+                <q-item-section>
+                  <q-item-label>
+                    飯店GO-
                     <b>路徑分析</b>
                   </q-item-label>
                 </q-item-section>

@@ -9,14 +9,20 @@
 
 
 
-      <div class="gt-xs q-pa-lg column items-center  text-black bg-grey-3" style="height: 170px;">
+      <div class="gt-xs q-pa-lg column items-center  text-black bg-grey-3" style="height: 200px;">
+        <div class="col">
+          <div class="text-center img_background">
+            <p style="font-size: 28px;font-family: Microsoft JhengHei;">飯店需求分析</p>
+            </div>
+        </div>
         <div class="col">
           <div class="text-center img_background">
             <div>
+
               <b
                 class="text"
                 style="font-size: 30px;font-family: Microsoft JhengHei;"
-              >選擇想分析的景點類型</b>
+              >選擇想分析的飯店城市/類型</b>
             </div>
           </div>
         </div>
@@ -87,7 +93,7 @@
                 <div class="q-gutter-md row">
                   <q-select
                     filled
-                    v-model="selected_p_detail_item"
+                    v-model="selected_p_detail_item_2"
                     use-input
                     hide-selected
                     fill-input
@@ -270,24 +276,40 @@
         </div>
         <!-- 懶人包區域 -->
         <div class="col">
+
           <div class="text-center img_background">
             <div>
               <b
                 class="text"
                 style="font-size: 30px;font-family: Microsoft JhengHei;"
-              >分析完成! 請點選您喜歡的景點：</b>
+              >分析完成! 符合您要求的旅館如下：</b>
             </div>
           </div>
-          <div class="text-center img_background">
-            <div
-              class="text"
-              style="font-size: 25px;font-family: Microsoft JhengHei;padding-top:15px;"
-            >國立台灣科學教育館</div>
+
+          <div class="center q-pa-md" style="font-family: Microsoft JhengHei;padding-top:15px;">
+            <!-- list start -->
+            <q-list bordered>
+
+              <q-item v-for="b in result" :key="b.id" v-ripple>
+                <q-item-section side top>
+                  <q-checkbox v-model="b.completed" />
+                </q-item-section>
+
+                <q-item-section>
+                  <q-item-label>{{ b.name}}</q-item-label>
+
+                </q-item-section>
+              </q-item>
+
+            </q-list>
+            <!-- list end -->
           </div>
+
+
           <!-- 加入最愛button -->
           <div class="q-pa-md doc-container">
-            <div class="gt-xs column items-center" style="height: 170px;">
-              <div class="col" style="margin-top: 80px">
+            <div class="gt-xs column items-center" style="height: 10px;">
+              <div class="col" style="margin-top: 10px">
                 <q-btn
                   :loading="loading4"
                   color="cyan-9"
@@ -353,16 +375,33 @@ export default {
       loading4: false,
       selected_p: "",
       selected_p_detail_item: "",
+      selected_p_detail_item_2: "",
       product_lists: ["台北", "高雄"],
       product_detail: {
-        台北: ["台北1", "台北2", "台北3"],
-        高雄: ["高雄1", "高雄2", "高雄3"]
+        台北: ["游泳池", "免費停車", "台北3"],
+        高雄: ["游泳池", "免費停車", "高雄3"]
       },
       citys: [],
-
-      city_object :[],
+      city_object:[],
+      result: [
+          {
+            id:1,
+            name:"台北凱達大飯店(萬華)",
+            completed:true,
+          },
+          {
+            id:2,
+            name:"方舟旅店-長安復興(中山區)",
+            completed:false,
+          },
+          {
+            id:3,
+            name:"信星旅馆-台北車站",
+            completed:false,
+          }
+        ],
       tab: "mails",
-      src: "./statics/between_relationship.html",
+      src: "./statics/h_between_relationship.html",
       options: stringOptions
     };
   },
@@ -380,10 +419,10 @@ export default {
         .get("http://127.0.0.1/api/site_dataCity")
         .then(function(response) {
           self.citys = response.data;
-          console.log("============");
-          console.log(self.citys);
-          console.log("============");
-          console.log("成功");
+          // console.log("============");
+          // console.log(self.citys);
+          // console.log("============");
+          // console.log("成功");
         })
         .catch(function(response) {
           console.log(response);
