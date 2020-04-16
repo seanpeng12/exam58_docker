@@ -1,4 +1,6 @@
-// import { LocalStorage } from "quasar";
+import {
+  LocalStorage
+} from "quasar";
 import {
   firebaseAuth,
   google_provider
@@ -7,41 +9,41 @@ import {
   showErrorMessage
 } from "src/functions/function-show-error-message";
 const state = {
-  loggedIn: false,
+  loggedIn: false
 };
 const mutations = {
   setLoggedIn(state, value) {
     state.loggedIn = value;
-  },
+  }
 };
 const actions = {
   registerUser({}, payload) {
     firebaseAuth
       .createUserWithEmailAndPassword(payload.email, payload.password)
-      .then((response) => {
+      .then(response => {
         console.log("response : ", response);
       })
-      .catch((error) => {
+      .catch(error => {
         showErrorMessage(error.message);
       });
   },
   loginUser({}, payload) {
     firebaseAuth
       .signInWithEmailAndPassword(payload.email, payload.password)
-      .then((response) => {
+      .then(response => {
         console.log("response : ", response);
       })
-      .catch((error) => {
+      .catch(error => {
         showErrorMessage(error.message);
       });
   },
   loginWithGoogle() {
     firebaseAuth
       .signInWithPopup(google_provider)
-      .then((result) => {
+      .then(result => {
         this.user = result.user;
       })
-      .catch((err) => console.error(err));
+      .catch(err => console.error(err));
   },
   logoutUser() {
     firebaseAuth.signOut();
@@ -51,29 +53,32 @@ const actions = {
     commit,
     dispatch
   }) {
-    firebaseAuth.onAuthStateChanged((user) => {
+    firebaseAuth.onAuthStateChanged(user => {
       if (user) {
         commit("setLoggedIn", true);
-        // LocalStorage.set("loggedIn", true);
+        LocalStorage.set("loggedIn", true);
         // this.$router.push("/").catch((err) => {});
-        // dispatch("schedules/fbReadData", null, { root: true });
+        // 每次載入頁面就會判斷登入者狀態，如果為true就會觸發store-firebase(index.js定義為travel)的fbReadData
+        dispatch("travel/fbReadData", null, {
+          root: true
+        });
       } else {
         commit("setLoggedIn", false);
-        // LocalStorage.set("loggedIn", false);
+        LocalStorage.set("loggedIn", false);
         // this.$router.replace("/Pageauth").catch((err) => {});
       }
     });
-  },
+  }
 };
 const getters = {
-  funcs: (state) => {
+  funcs: state => {
     return state.funcs;
-  },
+  }
 };
 export default {
   namespaced: true,
   state,
   mutations,
   actions,
-  getters,
+  getters
 };

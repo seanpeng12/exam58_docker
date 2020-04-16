@@ -50,7 +50,7 @@
       <!-- <q-card-actions align="right">
         <q-btn label="save" type="submit" color="primary" />
       </q-card-actions> -->
-      <pre>{{ scheduleToSubmit }}</pre>
+      <!-- <pre>{{ scheduleToSubmit }}</pre> -->
     </q-form>
   </q-card>
 </template>
@@ -61,8 +61,8 @@ export default {
     return {
       scheduleToSubmit: {
         title: "",
-        startDate: "",
-      },
+        startDate: ""
+      }
     };
   },
   methods: {
@@ -78,7 +78,7 @@ export default {
     submitSchedule() {
       this.addSchedule(this.scheduleToSubmit);
       this.$emit("close");
-    },
+    }
   },
   components: {
     modalHeader: () =>
@@ -88,7 +88,7 @@ export default {
     modalStartDate: () =>
       import("components/schedules/modals/shared/modalStartDate.vue"),
     modalButtons: () =>
-      import("components/schedules/modals/shared/modalButtons.vue"),
-  },
+      import("components/schedules/modals/shared/modalButtons.vue")
+  }
 };
 </script>

@@ -6,7 +6,7 @@
           <q-icon name="account_circle" color="primary" />
         </template>
 
-        <p>{{ tab }} to anywheree</p>
+        <p>{{ tab }}</p>
       </q-banner>
 
       <q-input

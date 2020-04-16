@@ -2,9 +2,9 @@
   <q-page padding>
     <div class="row">
       <schedule
-        v-for="(schedule, key) in schedules"
+        v-for="(sightseeingMember, key) in sightseeingMembers"
         :key="key"
-        :schedule="schedule"
+        :sightseeingMember="sightseeingMember"
         :id="key"
       ></schedule>
     </div>
@@ -28,11 +28,12 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+
 export default {
   data() {
     return {
       tab: "mails",
-      addSchedule: false,
+      addSchedule: false
       // schedules: [
       //   {
       //     title: "我的花蓮之旅"
@@ -47,13 +48,14 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("schedules", ["schedules"]),
+    // ...mapGetters("schedules", ["schedules"]),
+    ...mapGetters("travel", ["sightseeingMembers"])
   },
   components: {
     search: () => import("components/search.vue"),
     schedule: () => import("components/schedules/schedule.vue"),
-    addSchedule: () => import("components/schedules/modals/addSchedule.vue"),
-  },
+    addSchedule: () => import("components/schedules/modals/addSchedule.vue")
+  }
 };
 </script>
 <style lang="scss">

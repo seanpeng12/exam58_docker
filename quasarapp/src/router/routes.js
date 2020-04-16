@@ -8,7 +8,7 @@ const routes = [{
   },
   {
     path: "/arrange-schedule",
-    component: () => import("pages/arrange-schedule.vue"),
+    component: () => import("pages/arrange-schedule.vue")
     // children: [{ path: "", component: () => import("pages/class.vue") }]
   },
   {
@@ -99,13 +99,29 @@ const routes = [{
       component: () => import("pages/test/cardview.vue")
     }],
   },
+  {
+    path: "/ftore_data",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{
+      path: "",
+      component: () => import("pages/ftore_data.vue")
+    }]
+  },
+  {
+    path: "/drag",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{
+      path: "",
+      component: () => import("pages/drag.vue")
+    }]
+  }
 ];
 
 // Always leave this as last one
 if (process.env.MODE !== "ssr") {
   routes.push({
     path: "*",
-    component: () => import("pages/Error404.vue"),
+    component: () => import("pages/Error404.vue")
   });
 }
 
