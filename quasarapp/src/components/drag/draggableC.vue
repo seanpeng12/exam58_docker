@@ -18,7 +18,7 @@
           v-for="(site, key) in siteGroup"
           :key="key"
           :label="site"
-          style="margin: 4px"
+          style="margin-bottom: 3px; margin-left:4px; margin-top:3px"
           unelevated
         />
       </draggable>
@@ -30,7 +30,7 @@ import draggable from "vuedraggable";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
-  props: ["date", "dateKey", "index"],
+  props: ["date", "dateKey", "index", "id"],
   data() {
     return {
       enabled: true
@@ -48,11 +48,18 @@ export default {
         return this.everydaySites[date].site;
       },
       set(value) {
+        // 修改state
         this.$store.commit("travel/setDragGroup", {
           value,
           key: this.date
         });
-        // console.log("value:", value, " key: ", this.index);
+        // 存進資料庫
+        this.$store.dispatch("travel/fbUpdateEverySiteData", {
+          value,
+          key: this.date,
+          id: this.id
+        });
+        // console.log("value:", value, " key: ", this.date);
       }
     }
   },

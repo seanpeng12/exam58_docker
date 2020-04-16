@@ -1,24 +1,12 @@
 <template>
   <q-page padding>
     <div class="row">
-      <!-- <schedule
-        v-for="(sightseeingMember, key) in sightseeingMember"
-        :key="key"
-        :schedule="schedule"
-        :id="key"
-      ></schedule> -->
       <schedule
         v-for="(sightseeingMember, key) in sightseeingMembers"
         :key="key"
         :sightseeingMember="sightseeingMember"
         :id="key"
       ></schedule>
-      <!-- <div
-        v-for="sightseeingMember in sightseeingMembers"
-        :key="sightseeingMember.id"
-      >
-        <p>{{ sightseeingMember.title }}</p>
-      </div> -->
     </div>
     <div
       class="absolute-bottom-right q-ma-lg"

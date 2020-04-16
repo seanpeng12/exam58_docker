@@ -17,6 +17,17 @@
         flat
         @click="darkDialog = true"
       />
+
+      <q-btn
+        dense
+        color="warning"
+        icon="add"
+        label="增加天數"
+        class="absolute-top-right"
+        style="margin-right:4px"
+        flat
+      />
+
       <q-dialog v-model="darkDialog">
         <q-card>
           <q-card-section>
@@ -42,43 +53,19 @@
           </q-card-actions>
         </q-card>
       </q-dialog>
+
       <!-- 往上一頁結束 -->
 
       <div class="row">
-        <div class="col-6">
+        <div class="col-7">
           <draggableC
+            v-model="EverydaySites"
             v-for="(everydaySite, key, index) in EverydaySites"
             :key="index"
             :index="index"
             :date="key"
+            :id="id"
           ></draggableC>
-          <!-- <p class="weekday">{{ everydaySite.id }}</p> -->
-
-          <!-- <draggable
-              v-model="EverydaySite"
-              :disabled="!enabled"
-              class="list-group"
-              ghost-class="ghost"
-              :move="checkMove"
-              @start="dragging = true"
-              @end="dragging = false"
-              group="site"
-            >
-              <q-btn
-                color="black"
-                v-for="(site, key) in everydaySite.site"
-                :key="key"
-                :label="site"
-                style="margin: 4px"
-                unelevated
-                @click="
-                  updateDragSite({
-                    id: everydaySite.id,
-                    updates: { site: site }
-                  })
-                "
-              />
-            </draggable> -->
         </div>
       </div>
     </q-drawer>
@@ -293,11 +280,12 @@ export default {
     ...mapGetters("travel", ["everydaySites"]),
     EverydaySites: {
       get() {
+        console.log("parent from get:", this.everydaySites);
         return this.everydaySites;
       },
-      set(everydaySite) {
-        this.setDragkey(everydaySite);
-        console.log(everydaySite);
+      set(value) {
+        console.log("parent from set:", this.everydaySite);
+        this.setDragkey(value);
       }
     }
   },
@@ -307,20 +295,28 @@ export default {
   created() {
     var pass_id = this.$route.query.pass_id;
     this.id = pass_id;
+    // console.log(this.$route.query.pass_id);
+
     // this.fbEverySiteData(this.id);
   }
 };
 </script>
 <style lang="stylus">
 .weekday {
-        min-width: 350px;
+        min-width: 250px;
         height: 35px;
+        margin-bottom :3px;
+        margin-top :3px;
+        margin-left :3px;
+        padding-left:4px;
         // cursor: pointer;
         font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         font-size: 20px;
         //border:2px #54a9a9 dashed;
-        border-width: 2px 7px 5px 7px;
-        border-bottom-color: #400080;
+        border-width: 3px 7px 5px 7px;
+        border-top-color: #cce7bc;
+        border-bottom-color: #a2d383;
+
         border-style: solid dotted;
 
     }

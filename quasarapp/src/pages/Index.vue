@@ -41,7 +41,7 @@
           </div>
           <q-img
             class="rounded-borders col-6 full-height absolute-right"
-            src="https://cdn.quasar.dev/img/parallax1.jpg"
+            src="https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_631_10.jpg"
           />
         </div>
       </q-carousel-slide>
@@ -129,7 +129,7 @@ export default {
           tip: "給拿不定主意的你",
           illustrate:
             "只要選擇兩個想去的景點的類型，您即可找出符合A類型及B類型的景點",
-          img: require("assets/idea.png"),
+          img: require("assets/idea.png")
         },
 
         {
@@ -137,29 +137,29 @@ export default {
           tip: "不想踩雷的你",
           illustrate:
             "只要輸入您想了解的景點名稱，景點優缺點馬上一目瞭然，不必再花大量時間爬文。",
-          img: require("assets/plus.png"),
+          img: require("assets/plus.png")
         },
         {
           name: "路徑規劃",
           tip: "想要找尋受歡迎路線的你",
           illustrate:
             "只要輸入一個想去的景點作為起點，就可以找到受大眾歡迎的路線",
-          img: require("assets/road-1.png"),
+          img: require("assets/road-1.png")
         },
         {
           name: "安排一趟旅程",
           tip: "想要來一趟旅程的你",
           illustrate: "集合我們所有的分析功能，讓您一步一步的規畫屬於您的旅程",
-          img: require("assets/vacation.png"),
-        },
+          img: require("assets/vacation.png")
+        }
       ],
       watch: {
         vertical(val) {
           this.navPos = val === true ? "right" : "bottom";
-        },
-      },
+        }
+      }
     };
-  },
+  }
 };
 </script>
 

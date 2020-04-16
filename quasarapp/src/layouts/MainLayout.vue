@@ -130,39 +130,39 @@ const menuList = [
     icon: "home",
     label: "首頁",
     to: "/",
-    separator: true,
+    separator: true
   },
   {
     icon: "send",
     label: "Outbox",
-    separator: false,
+    separator: false
   },
   {
     icon: "delete",
     label: "Trash",
-    separator: false,
+    separator: false
   },
   {
     icon: "error",
     label: "Spam",
-    separator: true,
+    separator: true
   },
   {
     icon: "settings",
     label: "Settings",
-    separator: false,
+    separator: false
   },
   {
     icon: "feedback",
     label: "Send Feedback",
-    separator: false,
+    separator: false
   },
   {
     icon: "help",
     iconColor: "primary",
     label: "Help",
-    separator: false,
-  },
+    separator: false
+  }
 ];
 export default {
   name: "MainLayout",
@@ -171,17 +171,17 @@ export default {
     return {
       tab: "mails",
       rightDrawerOpen: false,
-      menuList,
+      menuList
     };
   },
   computed: {
-    ...mapState("auth", ["loggedIn"]),
+    ...mapState("auth", ["loggedIn"])
   },
   methods: {
     ...mapActions("auth", ["logoutUser"]),
     ...mapActions("auth", ["loginWithGoogle"]),
-    onItemClick() {},
-  },
+    onItemClick() {}
+  }
 };
 </script>
 <style lang="scss">
