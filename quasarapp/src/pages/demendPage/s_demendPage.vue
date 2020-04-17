@@ -5,15 +5,15 @@
       <div class="gt-xs q-pa-lg column items-center text-black bg-grey-3" style="height: 200px;">
         <div class="col">
           <div class="text-center img_background">
-            <p style="font-size: 28px;font-family: Microsoft JhengHei;">景點需求分析 {{after_axios}} {{selected_p}}{{selected_p_detail_item}}{{selected_p_detail_item_2}} </p>
+            <p style="font-size: 28px;font-family: Microsoft JhengHei;">景點需求分析</p>
           </div>
         </div>
         <div class="col">
           <div class="text-center img_background">
             <div>
               <b class="text" style="font-size: 30px;font-family: Microsoft JhengHei;">選擇想分析的景點城市/類型</b>
-              {{Rdata}}
-
+              <br />
+              <p>{{selected_p}} {{selected_p_detail_item}} {{selected_p_detail_item_2}}</p>
             </div>
           </div>
         </div>
@@ -264,15 +264,11 @@
         <div class="col">
           <div class="text-center img_background">
             <div>
-              <b
-                class="text"
-                style="font-size: 30px;font-family: Microsoft JhengHei;"
-              >{{txtinfo}}</b>
+              <b class="text" style="font-size: 30px;font-family: Microsoft JhengHei;">{{txtinfo}}</b>
             </div>
           </div>
           <div class="center q-pa-md" style="font-family: Microsoft JhengHei;padding-top:15px;">
-            <q-page>
-              <q-list bordered>
+            <q-list bordered>
               <q-item v-for="txtdata in txtdatas" :key="txtdata.id" v-ripple>
                 <q-item-section side top>
                   <q-checkbox v-model="txtdata.completed" />
@@ -283,7 +279,7 @@
                 </q-item-section>
               </q-item>
             </q-list>
-            </q-page>
+
             <!-- list start -->
             <!-- <q-list bordered>
               <q-item v-for="b in result" :key="b.id" v-ripple>
@@ -295,7 +291,7 @@
                   <q-item-label>{{ b.name}}</q-item-label>
                 </q-item-section>
               </q-item>
-            </q-list> -->
+            </q-list>-->
             <!-- list end -->
           </div>
           <div class="text-center img_background">
@@ -323,10 +319,7 @@
             </div>
           </div>
           <!-- button end -->
-          <div>
-
-
-          </div>
+          <div></div>
         </div>
       </div>
     </div>
@@ -366,48 +359,52 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import { mapActions } from 'vuex'
-import { mapFields } from 'vuex-map-fields';
+import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
+import { mapFields } from "vuex-map-fields";
 
 const stringOptions = ["台北", "桃園", "新竹", "苗栗", "台東"];
 export default {
   name: "vueFrame",
   components: {},
-  computed :{
-    ...mapGetters('demand',['citys','txtdatas','txtdata','src','Rdata']),
-    ...mapGetters('demand',['selected_p','selected_p_detail_item'
-    ,'selected_p_detail_item_2','product_lists','product_detail','after_axios']),
+  computed: {
+    ...mapGetters("demand", ["citys", "txtdatas", "src", "Rdata"]),
+    ...mapGetters("demand", [
+      "selected_p",
+      "selected_p_detail_item",
+      "selected_p_detail_item_2",
+      "product_lists",
+      "product_detail",
+      "after_axios"
+    ]),
     // ...mapFields([
     //   'after_axios',
     //   'selected_p',
     // ]),
     selected_p_trigger: {
       get: function() {
-        return this.$store.state.selected_p
+        return this.$store.state.selected_p;
       },
       set: function(value) {
-        this.$store.commit('demand/update_selected_p', value)
+        this.$store.commit("demand/update_selected_p", value);
       }
     },
-    selected_p_detail_item_trigger:{
+    selected_p_detail_item_trigger: {
       get: function() {
-        return this.$store.state.selected_p_detail_item
+        return this.$store.state.selected_p_detail_item;
       },
-      set: function(value){
-        this.$store.commit('demand/update_selected_p_detail_item', value)
+      set: function(value) {
+        this.$store.commit("demand/update_selected_p_detail_item", value);
       }
     },
-    selected_p_detail_item_2_trigger:{
+    selected_p_detail_item_2_trigger: {
       get: function() {
-        return this.$store.state.selected_p_detail_item_2
+        return this.$store.state.selected_p_detail_item_2;
       },
-      set: function(value){
-        this.$store.commit('demand/update_selected_p_detail_item_2', value)
+      set: function(value) {
+        this.$store.commit("demand/update_selected_p_detail_item_2", value);
       }
-    },
-
-
+    }
   },
   data() {
     return {
@@ -415,7 +412,7 @@ export default {
       n: 2000,
       loading4: false,
       input1: "",
-      txtinfo : "請先選擇城市與需求",
+      txtinfo: "請先選擇城市與需求",
 
       tab: "mails",
       // 預設options資料
@@ -431,9 +428,10 @@ export default {
   // },
   methods: {
     // 由此找vuex所需method
-    ...mapActions('demand',['fetchCitys']),
-    ...mapActions('demand',['changeSrc']),
-    ...mapActions('demand',['upload_axios']),
+    ...mapActions("demand", ["fetchCitys"]),
+    ...mapActions("demand", ["changeSrc"]),
+    ...mapActions("demand", ["upload_axios"]),
+    ...mapActions("demand", ["upload_axios_2"]),
 
     onProductChange: function() {
       // reset!
@@ -463,9 +461,8 @@ export default {
       document.getElementById("myFrame").src =
         "./statics/between_relationship.html";
       // this.src = "./statics/between_relationship.html";
-      this.txtinfo = "分析完成! 請點選您喜歡的景點：";
+      this.txtinfo = "分析完成! 已列出所有符合兩類別景點，請點選加入最愛：";
     },
-
 
     async upload() {
       this.txtinfo = "載入中...";
@@ -491,7 +488,6 @@ export default {
       //     console.log(response);
       //   });
 
-
       // axiosInstance.all([
       //   axiosInstance.post("http://127.0.0.1:80/api/runR_twoC", {
       //     name: this.selected_p,
@@ -512,15 +508,14 @@ export default {
       // })).catch(function(response) {
       //     console.log(response);
       // });
-
-
     }
   },
   watch: {
-    after_axios: function (val) {
-      this.changeSrc();
+    after_axios: function(val) {
       // console.log("監聽到!");
-    },
+      this.changeSrc();
+      this.upload_axios_2();
+    }
   },
   mounted: function() {
     this.fetchCitys();
