@@ -66,7 +66,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("schedules", ["addSchedule"]),
+    ...mapActions("travel", ["fbAddData"]),
     submitForm() {
       this.$refs.modalScheduleName.$refs.name.validate();
       //   console.log(this.$refs.name.hasError);
@@ -76,7 +76,7 @@ export default {
       }
     },
     submitSchedule() {
-      this.addSchedule(this.scheduleToSubmit);
+      this.fbAddData(this.scheduleToSubmit);
       this.$emit("close");
     }
   },

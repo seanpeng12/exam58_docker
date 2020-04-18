@@ -112,6 +112,26 @@ const actions = {
     //   });
     // });
   },
+  fbAddData({ commit }, payload) {
+    var moment = require("moment");
+
+    const uid = firebaseAuth.currentUser.uid;
+    var startDate = moment(payload.startDate).format("YYYY-MM-DD");
+
+    const addData = fstore
+      .collection("sightseeingMember")
+      .doc(uid)
+      .collection("我的旅程表")
+      .doc();
+    addData.set({
+      title: payload.title,
+      date: [startDate, ""]
+    });
+    addData
+      .collection("每一天")
+      .doc(startDate)
+      .set({ site: [] });
+  },
   fbDeleteData({ commit }, id) {
     const uid = firebaseAuth.currentUser.uid;
 

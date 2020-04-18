@@ -98,13 +98,6 @@ export default {
     siteGroup: {
       get() {
         var date = this.date;
-        // console.log(
-        //   moment(date)
-        //     .add(1, "d")
-        //     .format("YYYY-MM-DD")
-        // );
-
-        // console.log("everydaySite", this.everydaySites[date]);
         return this.everydaySites[date];
       },
       set(value) {
@@ -151,12 +144,6 @@ export default {
       });
     },
     deleteDay() {
-      // console.log(
-      //   "deleteDay",
-      //   moment(this.date)
-      //     .subtract(1, "d")
-      //     .format("YYYY-MM-DD")
-      // );
       this.$store.dispatch("travel/fbDeleteEveryday", {
         scheduleId: this.id,
         id: moment(this.date).format("YYYY-MM-DD")
