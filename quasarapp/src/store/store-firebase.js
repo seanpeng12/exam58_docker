@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { fstore, firebaseAuth } from "boot/firebase";
+import { fstore, firebaseAuth, firebaseApp, firestore } from "boot/firebase";
 import { uid } from "quasar";
 
 const state = {
@@ -32,11 +32,18 @@ const mutations = {
     // delete state.schedules[id];
     Vue.delete(state.sightseeingMembers, id);
   },
+  deleteEveryDay(state, id) {
+    // console.log("delete", id);
+    // delete state.schedules[id];
+    Vue.delete(state.everydaySites, id);
+    console.log("deleteEveryDay", id);
+  },
   addEverydaySite(state, everyday) {
     // state.everydaySites = everyday;
     Vue.set(state.everydaySites, everyday.id, everyday.everyday);
     // console.log("資料格式", everyday);
   },
+
   setDragkey(state, everydaySite) {
     state.everydaySites = everydaySite;
     // console.log("setDragkey", state.everydaySites);
@@ -67,12 +74,17 @@ const actions = {
     dispatch("fbDeleteData", id);
     // console.log("deleteSchedule from mutation", id);
   },
+  deleteEveryDaySite({ commit, dispatch }, payload) {
+    // commit("deleteSchedule", payload);
+    dispatch("fbDeleteEverySiteData", payload);
+    // console.log("deleteEveryDaySite from mutation", payload);
+  },
   setDragkey({ commit }, value) {
     commit("setDragkey", value);
   },
   storeEverydaySites(context) {
     // let jsonPages = JSON.parse(JSON.stringify(context.state.everydaySites));
-    console.log("jsonPages:", context.state.everydaySites["2020-05-22"]);
+    // console.log("jsonPages:", context.state.everydaySites);
   },
   fbReadData({ commit }) {
     const uid = firebaseAuth.currentUser.uid;
@@ -132,7 +144,7 @@ const actions = {
       snapshot.forEach(doc => {
         commit("addEverydaySite", {
           id: doc.id,
-          everyday: doc.data()
+          everyday: doc.data().site
         });
       });
     });
@@ -158,6 +170,59 @@ const actions = {
     //   });
     // });
     console.log("fbUpdateEverySiteData:", payload.key);
+  },
+  fbAddEverySiteData({ commit }, payload) {
+    const uid = firebaseAuth.currentUser.uid;
+
+    const updateDragSite = fstore
+      .collection("sightseeingMember")
+      .doc(uid)
+      .collection("我的旅程表")
+      .doc(payload.scheduleId)
+      .collection("每一天");
+    updateDragSite.doc(payload.id).set({
+      site: payload.everyday
+    });
+    commit("addEverydaySite", payload);
+    console.log("fbUpdateEverySiteData:", payload);
+  },
+  fbDeleteEverySiteData({ commit }, payload) {
+    const uid = firebaseAuth.currentUser.uid;
+    const deDate = payload.value.date;
+    const everydaySiteId = payload.id;
+
+    const deSite = payload.value.site;
+    const DeleteDragSite = fstore
+      .collection("sightseeingMember")
+      .doc(uid)
+      .collection("我的旅程表")
+      .doc(everydaySiteId)
+      .collection("每一天")
+      .doc(deDate);
+    DeleteDragSite.update({
+      site: firestore.FieldValue.arrayRemove(deSite)
+    });
+    console.log(deDate, deSite);
+  },
+  fbDeleteEveryday({ commit }, payload) {
+    const uid = firebaseAuth.currentUser.uid;
+    const deleteData = fstore
+      .collection("sightseeingMember")
+      .doc(uid)
+      .collection("我的旅程表")
+      .doc(payload.scheduleId)
+      .collection("每一天")
+      .doc(payload.id)
+      .delete();
+
+    deleteData
+      .then(function() {
+        console.log("Document successfully deleted!", payload.id);
+        commit("deleteEveryDay", payload.id);
+      })
+      .catch(function(error) {
+        console.error("Error removing document: ", error);
+      });
   }
 };
 const getters = {

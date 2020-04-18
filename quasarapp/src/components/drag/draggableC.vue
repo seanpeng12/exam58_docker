@@ -1,6 +1,30 @@
 <template>
-  <div>
-    <div class="col-6">
+  <div class="text-black">
+    <q-btn
+      push
+      dense
+      color="warning"
+      icon="add"
+      @click="addDay()"
+      label=""
+      class="absolute-top-right"
+      style="margin-right:4px"
+      flat
+    />
+
+    <q-btn
+      push
+      dense
+      color="warning"
+      icon="remove"
+      @click="deleteDay"
+      label=""
+      class="absolute-top"
+      style="margin-left:140px"
+      flat
+    />
+
+    <div class="col-4">
       <p class="weekday">{{ date }}</p>
       <draggable
         v-model="siteGroup"
@@ -13,14 +37,44 @@
         group="site"
         :options="{ group: { pull: true, put: true }, animation: 20 }"
       >
-        <q-btn
+        <!-- <q-btn
           color="black"
           v-for="(site, key) in siteGroup"
           :key="key"
           :label="site"
           style="margin-bottom: 3px; margin-left:4px; margin-top:3px"
           unelevated
-        />
+        /> -->
+
+        <q-item
+          bordered
+          dense
+          v-ripple
+          v-for="(site, key) in siteGroup"
+          :key="key"
+        >
+          <q-item-section side style="margin-left:0px">
+            <q-btn flat dense color="black" icon="drag_handle" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label lines="5">{{ site }}</q-item-label>
+            <!-- <q-item-label caption>February 22nd, 2019</q-item-label> -->
+          </q-item-section>
+
+          <q-item-section side>
+            <q-btn
+              flat
+              dense
+              round
+              color="red"
+              icon="delete"
+              @click="promptToDelete({ site: site, date: date })"
+            />
+          </q-item-section>
+        </q-item>
+        <!-- 刪除提醒 -->
+
+        <!-- 刪除提醒 end -->
       </draggable>
     </div>
   </div>
@@ -28,7 +82,7 @@
 <script>
 import draggable from "vuedraggable";
 import { mapGetters, mapActions } from "vuex";
-
+var moment = require("moment");
 export default {
   props: ["date", "dateKey", "index", "id"],
   data() {
@@ -44,15 +98,21 @@ export default {
     siteGroup: {
       get() {
         var date = this.date;
+        // console.log(
+        //   moment(date)
+        //     .add(1, "d")
+        //     .format("YYYY-MM-DD")
+        // );
+
         // console.log("everydaySite", this.everydaySites[date]);
-        return this.everydaySites[date].site;
+        return this.everydaySites[date];
       },
       set(value) {
         // 修改state
-        this.$store.commit("travel/setDragGroup", {
-          value,
-          key: this.date
-        });
+        // this.$store.commit("travel/setDragGroup", {
+        //   value,
+        //   key: this.date
+        // });
         // 存進資料庫
         this.$store.dispatch("travel/fbUpdateEverySiteData", {
           value,
@@ -73,7 +133,51 @@ export default {
     checkMove: function(e) {
       // window.console.log("Future index: " + e.draggedContext.futureIndex);
     },
-    ...mapActions("travel", ["storeEverydaySites"])
+    ...mapActions("travel", ["storeEverydaySites", "deleteEveryDaySite"]),
+    // 增加日期
+    addDay() {
+      console.log(
+        "addDay",
+        moment(this.date)
+          .add(1, "d")
+          .format("YYYY-MM-DD")
+      );
+      this.$store.dispatch("travel/fbAddEverySiteData", {
+        scheduleId: this.id,
+        id: moment(this.date)
+          .add(1, "d")
+          .format("YYYY-MM-DD"),
+        everyday: []
+      });
+    },
+    deleteDay() {
+      // console.log(
+      //   "deleteDay",
+      //   moment(this.date)
+      //     .subtract(1, "d")
+      //     .format("YYYY-MM-DD")
+      // );
+      this.$store.dispatch("travel/fbDeleteEveryday", {
+        scheduleId: this.id,
+        id: moment(this.date).format("YYYY-MM-DD")
+      });
+    },
+    promptToDelete(value) {
+      this.$q
+        .dialog({
+          title: "Confirm",
+          message: "確定要刪除嗎?",
+          cancel: true,
+          persistent: true
+        })
+        .onOk(() => {
+          this.$store.dispatch("travel/deleteEveryDaySite", {
+            value,
+            id: this.id
+          });
+          // this.deleteEveryDaySite(value);
+        });
+    }
   }
 };
 </script>

@@ -18,15 +18,16 @@
         @click="darkDialog = true"
       />
 
-      <q-btn
+      <!-- <q-btn
         dense
         color="warning"
         icon="add"
+        @click="addDay"
         label="增加天數"
         class="absolute-top-right"
         style="margin-right:4px"
         flat
-      />
+      /> -->
 
       <q-dialog v-model="darkDialog">
         <q-card>
@@ -57,7 +58,7 @@
       <!-- 往上一頁結束 -->
 
       <div class="row">
-        <div class="col-7">
+        <div class="col-12">
           <draggableC
             v-model="EverydaySites"
             v-for="(everydaySite, key, index) in EverydaySites"
@@ -264,7 +265,8 @@ export default {
       route: ["台北101", "象山", "我家"],
       ssite: ["台北101", "象山", "十分老街"],
       options: ["台北市", "基隆市", "高雄市", "南投縣", "台南市"],
-      id: ""
+      id: "",
+      date: ""
       // enabled: true
       // list: [
       //   { name: "John", id: 0 },
@@ -280,11 +282,12 @@ export default {
     ...mapGetters("travel", ["everydaySites"]),
     EverydaySites: {
       get() {
-        console.log("parent from get:", this.everydaySites);
+        // console.log("parent from get:", this.everydaySites);
         return this.everydaySites;
       },
       set(value) {
-        console.log("parent from set:", this.everydaySite);
+        // console.log("parent from set:", this.everydaySite);
+
         this.setDragkey(value);
       }
     }
