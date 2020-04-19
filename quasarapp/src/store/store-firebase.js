@@ -139,10 +139,9 @@ const actions = {
       .collection("sightseeingMember")
       .doc(uid)
       .collection("我的旅程表")
-      .doc(id)
-      .delete();
-
+      .doc(id);
     deleteData
+      .delete()
       .then(function() {
         console.log("Document successfully deleted!");
         commit("deleteSchedule", id);
@@ -150,6 +149,11 @@ const actions = {
       .catch(function(error) {
         console.error("Error removing document: ", error);
       });
+
+    // deleteData.update({
+    //   date: firestore.FieldValue.delete(),
+    //   title: firestore.FieldValue.delete()
+    // });
   },
   fbEverySiteData({ commit }, pass_id) {
     const uid = firebaseAuth.currentUser.uid;

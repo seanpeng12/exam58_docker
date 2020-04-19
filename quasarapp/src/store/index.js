@@ -1,16 +1,15 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-
 // firebase(possess)
 import auth from "./store-auth.js";
 import schedules from "./store-tasks.js";
+import collections from "./store-collection.js";
+
 // mysql(sean)
 import sitedata from "./store-sitedata.js";
 // 需求(sean)
 import demand from "./store-demand.js";
-
-
 
 import travel from "./store-firebase";
 Vue.use(Vuex);
@@ -24,14 +23,15 @@ Vue.use(Vuex);
  * with the Store instance.
  */
 
-export default function ( /* { ssrContext } */ ) {
+export default function(/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
       auth,
       schedules,
       sitedata,
       demand,
-      travel
+      travel,
+      collections
     },
 
     // enable strict mode (adds overhead!)

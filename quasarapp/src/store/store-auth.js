@@ -1,13 +1,6 @@
-import {
-  LocalStorage
-} from "quasar";
-import {
-  firebaseAuth,
-  google_provider
-} from "boot/firebase";
-import {
-  showErrorMessage
-} from "src/functions/function-show-error-message";
+import { LocalStorage } from "quasar";
+import { firebaseAuth, google_provider } from "boot/firebase";
+import { showErrorMessage } from "src/functions/function-show-error-message";
 const state = {
   loggedIn: false
 };
@@ -47,12 +40,10 @@ const actions = {
   },
   logoutUser() {
     firebaseAuth.signOut();
+    this.$router.push("/");
   },
 
-  handleAuthStateChange({
-    commit,
-    dispatch
-  }) {
+  handleAuthStateChange({ commit, dispatch }) {
     firebaseAuth.onAuthStateChanged(user => {
       if (user) {
         commit("setLoggedIn", true);
@@ -62,6 +53,11 @@ const actions = {
         dispatch("travel/fbReadData", null, {
           root: true
         });
+
+        dispatch("collections/fbReadData", null, {
+          root: true
+        });
+        console.log("登入成功");
       } else {
         commit("setLoggedIn", false);
         LocalStorage.set("loggedIn", false);
