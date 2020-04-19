@@ -9,11 +9,11 @@
             <q-item-label class>首頁</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item class="gt-xs" exact clickable to="/arrange-schedule" v-if="loggedIn">
+        <!-- <q-item class="gt-xs" exact clickable to="/arrange-schedule" v-if="loggedIn">
           <q-item-section>
             <q-item-label class>建立旅程表</q-item-label>
           </q-item-section>
-        </q-item>
+        </q-item> -->
         <div class="gt-xs">
           <q-btn
             v-if="!loggedIn"
@@ -39,13 +39,23 @@
                 </q-item-section>
               </q-item>
 
-              <q-item clickable v-close-popup @click="onItemClick" to="/mySchedule">
+              <q-item
+                clickable
+                v-close-popup
+                @click="onItemClick"
+                to="/mySchedule"
+              >
                 <q-item-section>
                   <q-item-label>我的旅程表</q-item-label>
                 </q-item-section>
               </q-item>
 
-              <q-item clickable v-close-popup @click="onItemClick" to="/site_demend">
+              <q-item
+                clickable
+                v-close-popup
+                @click="onItemClick"
+                to="/site_demend"
+              >
                 <q-item-section>
                   <q-item-label>
                     景點GO-
@@ -53,7 +63,12 @@
                   </q-item-label>
                 </q-item-section>
               </q-item>
-              <q-item clickable v-close-popup @click="onItemClick" to="/hotel_demend">
+              <q-item
+                clickable
+                v-close-popup
+                @click="onItemClick"
+                to="/hotel_demend"
+              >
                 <q-item-section>
                   <q-item-label>
                     飯店GO-
@@ -62,7 +77,12 @@
                 </q-item-section>
               </q-item>
 
-              <q-item clickable v-close-popup @click="onItemClick" to="/site_ProsCons">
+              <q-item
+                clickable
+                v-close-popup
+                @click="onItemClick"
+                to="/site_ProsCons"
+              >
                 <q-item-section>
                   <q-item-label>
                     景點GO-
@@ -70,7 +90,12 @@
                   </q-item-label>
                 </q-item-section>
               </q-item>
-              <q-item clickable v-close-popup @click="onItemClick" to="/hotel_ProsCons">
+              <q-item
+                clickable
+                v-close-popup
+                @click="onItemClick"
+                to="/hotel_ProsCons"
+              >
                 <q-item-section>
                   <q-item-label>
                     飯店GO-
@@ -79,7 +104,12 @@
                 </q-item-section>
               </q-item>
 
-              <q-item clickable v-close-popup @click="onItemClick" to="/site_Path">
+              <q-item
+                clickable
+                v-close-popup
+                @click="onItemClick"
+                to="/site_Path"
+              >
                 <q-item-section>
                   <q-item-label>
                     景點GO-
@@ -87,7 +117,12 @@
                   </q-item-label>
                 </q-item-section>
               </q-item>
-              <q-item clickable v-close-popup @click="onItemClick" to="/hotel_Path">
+              <q-item
+                clickable
+                v-close-popup
+                @click="onItemClick"
+                to="/hotel_Path"
+              >
                 <q-item-section>
                   <q-item-label>
                     飯店GO-
@@ -96,7 +131,12 @@
                 </q-item-section>
               </q-item>
 
-              <q-item clickable v-close-popup @click="onItemClick" to="/AjaxTest">
+              <q-item
+                clickable
+                v-close-popup
+                @click="onItemClick"
+                to="/AjaxTest"
+              >
                 <q-item-section>
                   <q-item-label>
                     測試ajax+axios傳值
@@ -104,7 +144,12 @@
                 </q-item-section>
               </q-item>
 
-              <q-item clickable v-close-popup @click="onItemClick" to="/CardTest">
+              <q-item
+                clickable
+                v-close-popup
+                @click="onItemClick"
+                to="/CardTest"
+              >
                 <q-item-section>
                   <q-item-label>
                     測試vuex

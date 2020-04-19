@@ -7,6 +7,7 @@ const state = {
   slide: "style",
   expend: false,
   collections: {},
+  search: "",
   watch: {}
 };
 const mutations = {
@@ -15,6 +16,9 @@ const mutations = {
     console.log("資料格式", payload);
 
     // state.sightseeingMembers = payload;
+  },
+  setSearch(state, value) {
+    state.search = value;
   }
 };
 const actions = {
@@ -36,11 +40,43 @@ const actions = {
         });
       });
     });
+  },
+  setSearch({ commit }, value) {
+    commit("setSearch", value);
   }
 };
 const getters = {
-  collections: state => {
+  // collections: state => {
+  //   return state.collections;
+  // }
+  collectionsFiltered: state => {
+    let collectionsFiltered = {};
+    if (state.search) {
+      Object.keys(state.collections).forEach(function(key) {
+        let collection = state.collections[key],
+          collectionNameLowerCase = collection.site_name.toLowerCase(),
+          collectionCityLowerCase = collection.city.toLowerCase(),
+          searchcollection = state.search.toLowerCase();
+        if (
+          collectionNameLowerCase.includes(searchcollection) ||
+          collectionCityLowerCase.includes(searchcollection)
+        ) {
+          collectionsFiltered[key] = collection;
+        }
+      });
+      return collectionsFiltered;
+    }
     return state.collections;
+  },
+  collections: (state, getters) => {
+    let collectionsFiltered = getters.collectionsFiltered;
+    let collections = {};
+    Object.keys(collectionsFiltered).forEach(function(key) {
+      let collection = collectionsFiltered[key];
+
+      collections[key] = collection;
+    });
+    return collections;
   }
 };
 export default {

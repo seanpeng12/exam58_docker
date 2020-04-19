@@ -19,44 +19,25 @@
           <div class="text-h5" style="font-weight: bold; font-family:cursive">
             My Collection
           </div>
-          <q-input
-            v-model="search"
-            filled
-            type="search"
-            placeholder="輸入城市/景點 或是想去的地方"
-            bg-color="white"
-            style="size: 50px"
-          >
-            <template v-slot:append>
-              <q-icon name="search" />
-            </template>
-          </q-input>
+          <br /><br /><br /><br />
+          <search />
         </div>
       </q-carousel-slide>
-      <!-- <q-carousel-slide
-        :name="2"
-        img-src="https://cdn.quasar.dev/img/parallax1.jpg"
-      />
-      <q-carousel-slide
-        :name="3"
-        img-src="https://cdn.quasar.dev/img/parallax2.jpg"
-      /> -->
     </q-carousel>
-    <div>
+    <div class="row">
+      <LCard
+        v-for="item in collections"
+        :key="item.site_name"
+        :collection="item"
+      ></LCard>
+    </div>
+    <!-- <div class="row">
       <q-card class="my-card" v-for="item in collections" :key="item.site_name">
         <q-img src="https://cdn.quasar.dev/img/chicken-salad.jpg" />
 
         <q-card-section>
-          <!-- <q-btn
-            fab
-            color="primary"
-            icon="place"
-            class="absolute"
-            style="top: 0; right: 12px; transform: translateY(-50%);"
-          /> -->
-
           <div class="row no-wrap items-center">
-            <div class="col text-h6 ellipsis">
+            <div class="col text-h8 ellipsis">
               {{ item.site_name }}
             </div>
             <div
@@ -84,29 +65,31 @@
 
         <q-card-section class="q-pt-none">
           <div class="ttext-caption text-grey">{{ item.address }}</div>
-          <!-- <div class="text-caption text-grey">
-            3621人瀏覽
-          </div> -->
         </q-card-section>
 
         <q-separator />
       </q-card>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 export default {
   data() {
     return {
-      slide: 1,
-      stars: 3.5,
-      search: ""
+      slide: 1
+      // stars: 3.5
+      // search: ""
     };
   },
   computed: {
-    ...mapGetters("collections", ["collections"])
+    ...mapGetters("collections", ["collections"]),
+    ...mapState("collections", ["search"])
+  },
+  components: {
+    search: () => import("components/search.vue"),
+    LCard: () => import("components/collection/LCard.vue")
   }
 };
 </script>

@@ -1,27 +1,40 @@
 <template>
-  <q-input bottom-slots v-model="text" label="search">
-    <template v-slot:before>
-      <!-- <q-icon name="flight_takeoff" /> -->
-    </template>
-
+  <q-input
+    v-model="searchField"
+    outlined
+    bg-color="white"
+    class="col"
+    label="輸入您想去的縣市或景點"
+  >
     <template v-slot:append>
       <q-icon
-        v-if="text !== ''"
+        v-if="searchField !== ''"
         name="close"
-        @click="text = ''"
+        @click="searchField = ''"
         class="cursor-pointer"
-        :text="text"
       />
       <q-icon name="search" />
-    </template> </q-input
-></template>
+    </template>
+  </q-input>
+</template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+
 export default {
-  data() {
-    return {
-      text: ""
-    };
+  computed: {
+    ...mapState("collections", ["search"]),
+    searchField: {
+      get() {
+        return this.search;
+      },
+      set(value) {
+        this.setSearch(value);
+      }
+    }
+  },
+  methods: {
+    ...mapActions("collections", ["setSearch"])
   }
 };
 </script>

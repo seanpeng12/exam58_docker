@@ -1,47 +1,63 @@
 <template>
-  <q-card inline>
-    <q-card-media>
-      <img :src="image" />
-    </q-card-media>
+  <!-- <div class="col"> -->
+  <!-- <q-card class="my-card" v-for="item in collections" :key="item.site_name"> -->
+  <q-card class="my-card">
+    <q-img src="https://cdn.quasar.dev/img/chicken-salad.jpg" />
 
-    <q-card-title>
-      <span>{{ title }}</span>
-      <div slot="subtitle" class="q-mt-sm">
-        <l-icon
-          :icon="'fas fa-star'"
-          :text="rate"
-          :color="'orange'"
-          class="q-mr-md"
-        />
-        <span class="q-mr-sm">{{ comment }}則評價</span>
-        <span>{{ view }}人瀏覽</span>
+    <q-card-section>
+      <!-- <q-btn
+            fab
+            color="primary"
+            icon="place"
+            class="absolute"
+            style="top: 0; right: 12px; transform: translateY(-50%);"
+          /> -->
+
+      <div class="row no-wrap items-center">
+        <div class="col text-h8 ellipsis">
+          {{ collection.site_name }}
+        </div>
+        <div
+          class="col-auto text-secondary text-caption q-pt-md row no-wrap items-center"
+        >
+          <q-icon name="place" />
+
+          台灣，{{ collection.city }}
+        </div>
       </div>
-    </q-card-title>
 
-    <q-card-main>
-      <l-icon
-        :icon="'fas fa-map-marker-alt'"
-        :text="locate"
-        :color="'grey'"
-        class="q-mr-md"
-      />
-    </q-card-main>
+      <div class="row text-caption text-grey">
+        <q-rating v-model="stars" :max="5" size="25px" />
+        <div class="col" style="margin-top:5px">
+          {{ collection.rate }}
+        </div>
+        <div
+          class="text-caption text-grey"
+          style="margin-top:5px; margin:left:10px"
+        >
+          {{ collection.comment }}則評價
+        </div>
+      </div>
+    </q-card-section>
+
+    <q-card-section class="q-pt-none">
+      <div class="ttext-caption text-grey">{{ collection.address }}</div>
+      <!-- <div class="text-caption text-grey">
+            3621人瀏覽
+          </div> -->
+    </q-card-section>
+
+    <q-separator />
   </q-card>
+  <!-- </div> -->
 </template>
-
 <script>
-import LIcon from "src/components/collection/LIcon.vue";
 export default {
-  props: {
-    image: String,
-    title: String,
-    rate: String,
-    comment: String,
-    view: String,
-    locate: String
-  },
-  components: {
-    LIcon
+  props: ["collection"],
+  data() {
+    return {
+      stars: 3.5
+    };
   }
 };
 </script>
