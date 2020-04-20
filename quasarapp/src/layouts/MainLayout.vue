@@ -33,7 +33,12 @@
 
           <q-btn-dropdown v-if="loggedIn" flat label="會員功能">
             <q-list>
-              <q-item clickable v-close-popup @click="onItemClick" to="/Like">
+              <q-item
+                clickable
+                v-close-popup
+                @click="onItemClick"
+                to="/collection"
+              >
                 <q-item-section>
                   <q-item-label>我的收藏景點</q-item-label>
                 </q-item-section>

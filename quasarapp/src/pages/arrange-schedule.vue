@@ -101,15 +101,27 @@
               <div class="text-h6">Tip: 加入您收藏景點</div>
               <!-- <div>透過需求分析</div>
               <div>自行搜尋</div> -->
-              <q-select
-                outlined
-                v-model="model"
-                :options="options"
-                label="選擇您想去的縣市"
-                style="width: 250px; padding-bottom: 32px"
-              />
-              <img src="~assets/step1.jpg" />
-
+              <search />
+              <div class="row">
+                <LCard
+                  v-for="item in collections"
+                  :key="item.site_name"
+                  :collection="item"
+                >
+                  <!-- 加入排程鈕 -->
+                  <template slot="addToSchedule">
+                    <q-btn
+                      icon-right="add"
+                      label="加進排程"
+                      color="warning"
+                      @click="promptToAddSite({ id: id, site: item.site_name })"
+                      dense
+                      size="12px"
+                      style="margin-left:20px"
+                    />
+                  </template>
+                </LCard>
+              </div>
               <q-btn
                 dense
                 label="前往下一步"
@@ -249,7 +261,7 @@
 
 <script>
 import { mapActions } from "vuex";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import draggable from "vuedraggable";
 
 export default {
@@ -276,13 +288,18 @@ export default {
     };
   },
   components: {
-    draggableC: () => import("components/drag/draggableC.vue")
+    draggableC: () => import("components/drag/draggableC.vue"),
+    LCard: () => import("components/collection/LCard.vue"),
+    search: () => import("components/search.vue")
   },
   computed: {
     ...mapGetters("travel", ["everydaySites"]),
+    ...mapGetters("collections", ["collections"]),
+    ...mapState("collections", ["search"]),
     EverydaySites: {
       get() {
         // console.log("parent from get:", this.everydaySites);
+
         return this.everydaySites;
       },
       set(value) {
@@ -293,7 +310,22 @@ export default {
     }
   },
   methods: {
-    ...mapActions("travel", ["updateDragSite", "setDragkey", "fbEverySiteData"])
+    ...mapActions("travel", [
+      "updateDragSite",
+      "setDragkey",
+      "fbEverySiteData"
+    ]),
+    // ...mapActions("travel", ["fbAddEverySiteData"]),
+    promptToAddSite(value) {
+      const dateList = Object.keys(this.everydaySites);
+      console.log("parent from get(idList):", dateList[0]);
+
+      this.$store.dispatch("travel/fbAddEverySiteData", {
+        site: value.site,
+        date: dateList[0],
+        scheduleId: this.id
+      });
+    }
   },
   created() {
     var pass_id = this.$route.query.pass_id;
@@ -304,23 +336,3 @@ export default {
   }
 };
 </script>
-<style lang="stylus">
-.weekday {
-        min-width: 250px;
-        height: 35px;
-        margin-bottom :3px;
-        margin-top :3px;
-        margin-left :3px;
-        padding-left:4px;
-        // cursor: pointer;
-        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-        font-size: 20px;
-        //border:2px #54a9a9 dashed;
-        border-width: 3px 7px 5px 7px;
-        border-top-color: #cce7bc;
-        border-bottom-color: #a2d383;
-
-        border-style: solid dotted;
-
-    }
-</style>

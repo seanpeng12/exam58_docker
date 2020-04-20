@@ -25,7 +25,17 @@
     />
 
     <div class="col-4">
-      <p class="weekday">{{ date }}</p>
+      <!-- <p class="weekday"></p> -->
+      <q-chip
+        outline
+        color="primary"
+        text-color="white"
+        icon="event"
+        size="1.1rem"
+      >
+        {{ date }}
+        &emsp;&emsp;&emsp;&emsp;&emsp;
+      </q-chip>
       <draggable
         v-model="siteGroup"
         :disabled="!enabled"
@@ -135,7 +145,7 @@ export default {
           .add(1, "d")
           .format("YYYY-MM-DD")
       );
-      this.$store.dispatch("travel/fbAddEverySiteData", {
+      this.$store.dispatch("travel/fbAddEverySiteDay", {
         scheduleId: this.id,
         id: moment(this.date)
           .add(1, "d")

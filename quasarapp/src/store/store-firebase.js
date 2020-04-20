@@ -195,7 +195,7 @@ const actions = {
     // });
     console.log("fbUpdateEverySiteData:", payload.key);
   },
-  fbAddEverySiteData({ commit }, payload) {
+  fbAddEverySiteDay({ commit }, payload) {
     const uid = firebaseAuth.currentUser.uid;
 
     const updateDragSite = fstore
@@ -208,7 +208,24 @@ const actions = {
       site: payload.everyday
     });
     commit("addEverydaySite", payload);
-    console.log("fbUpdateEverySiteData:", payload);
+    // console.log("fbUpdateEverySiteData:", payload);
+  },
+  fbAddEverySiteData({ commit }, payload) {
+    const uid = firebaseAuth.currentUser.uid;
+    const addDate = payload.date;
+    const scheduleId = payload.scheduleId;
+    const addSite = payload.site;
+    const addSites = fstore
+      .collection("sightseeingMember")
+      .doc(uid)
+      .collection("我的旅程表")
+      .doc(scheduleId)
+      .collection("每一天")
+      .doc(addDate);
+    addSites.update({
+      site: firestore.FieldValue.arrayUnion(addSite)
+    });
+    console.log("fbAddEverySiteData:", payload);
   },
   fbDeleteEverySiteData({ commit }, payload) {
     const uid = firebaseAuth.currentUser.uid;

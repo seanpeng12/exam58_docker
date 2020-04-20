@@ -13,7 +13,7 @@ const state = {
 const mutations = {
   addCollection(state, payload) {
     Vue.set(state.collections, payload.id, payload.collection);
-    console.log("資料格式", payload);
+    // console.log("資料格式", payload);
 
     // state.sightseeingMembers = payload;
   },
@@ -32,7 +32,7 @@ const actions = {
 
     userCollection.onSnapshot(Snapshot => {
       Snapshot.forEach(doc => {
-        console.log(doc.data());
+        // console.log(doc.data());
 
         commit("addCollection", {
           id: doc.id,
@@ -44,6 +44,13 @@ const actions = {
   setSearch({ commit }, value) {
     commit("setSearch", value);
   }
+  // 收藏景點加入排程
+  // collectionToSchedule({ commit, dispatch }, value) {
+  //   // console.log(value.data.site_name);
+  //   dispatch("travel/fbAddEverySiteData", value, {
+  //     root: true
+  //   });
+  // }
 };
 const getters = {
   // collections: state => {
