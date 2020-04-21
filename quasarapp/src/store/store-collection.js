@@ -44,13 +44,6 @@ const actions = {
   setSearch({ commit }, value) {
     commit("setSearch", value);
   }
-  // 收藏景點加入排程
-  // collectionToSchedule({ commit, dispatch }, value) {
-  //   // console.log(value.data.site_name);
-  //   dispatch("travel/fbAddEverySiteData", value, {
-  //     root: true
-  //   });
-  // }
 };
 const getters = {
   // collections: state => {

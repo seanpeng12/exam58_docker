@@ -98,15 +98,21 @@
           <q-separator />
           <q-tab-panels v-model="tab" animated>
             <q-tab-panel name="mails">
-              <div class="text-h6">Tip: 加入您收藏景點</div>
+              <!-- <q-banner class="bg-primary text-white">
+                <div class="text-h6 row"></div>
+              </q-banner> -->
+              <div class="col-5" style="max-width: 300px">
+                <search />
+              </div>
               <!-- <div>透過需求分析</div>
               <div>自行搜尋</div> -->
-              <search />
+
               <div class="row">
                 <LCard
-                  v-for="item in collections"
+                  v-for="(item, index, key) in collections"
                   :key="item.site_name"
                   :collection="item"
+                  :index="key"
                 >
                   <!-- 加入排程鈕 -->
                   <template slot="addToSchedule">
@@ -127,8 +133,7 @@
                 label="前往下一步"
                 class="row absolute-bottom-right"
                 color="secondary"
-                size="20px"
-                style="margin:8px"
+                style="max-width: 300px"
               />
             </q-tab-panel>
 
@@ -278,13 +283,8 @@ export default {
       ssite: ["台北101", "象山", "十分老街"],
       options: ["台北市", "基隆市", "高雄市", "南投縣", "台南市"],
       id: "",
-      date: ""
-      // enabled: true
-      // list: [
-      //   { name: "John", id: 0 },
-      //   { name: "Joao", id: 1 },
-      //   { name: "Jean", id: 2 }
-      // ]
+      date: "",
+      prompt: false
     };
   },
   components: {
@@ -299,12 +299,10 @@ export default {
     EverydaySites: {
       get() {
         // console.log("parent from get:", this.everydaySites);
-
         return this.everydaySites;
       },
       set(value) {
         // console.log("parent from set:", this.everydaySite);
-
         this.setDragkey(value);
       }
     }
@@ -318,13 +316,45 @@ export default {
     // ...mapActions("travel", ["fbAddEverySiteData"]),
     promptToAddSite(value) {
       const dateList = Object.keys(this.everydaySites);
-      console.log("parent from get(idList):", dateList[0]);
-
-      this.$store.dispatch("travel/fbAddEverySiteData", {
-        site: value.site,
-        date: dateList[0],
-        scheduleId: this.id
+      const item_1 = [];
+      // 日期作為下面item的物件選項(radio)
+      dateList.forEach(function(item, index, array) {
+        item_1.push({
+          label: item,
+          value: item,
+          color: "secondary"
+        });
       });
+
+      this.$q
+        .dialog({
+          title: "選擇您想加入的日期",
+          message: "日期:",
+          options: {
+            type: "radio",
+            model: "opt1",
+            // inline: true
+            items: item_1
+          },
+          cancel: true,
+          persistent: true
+        })
+        .onOk(data => {
+          console.log("promptToAddSite:", value, data);
+          this.$store.dispatch("travel/fbAddEverySiteData", {
+            site: value.site,
+            date: data,
+            scheduleId: this.id
+          });
+
+          // console.log('>>>> OK, received', data)
+        })
+        .onCancel(() => {
+          // console.log('>>>> Cancel')
+        })
+        .onDismiss(() => {
+          // console.log('I am triggered on both OK and Cancel')
+        });
     }
   },
   created() {

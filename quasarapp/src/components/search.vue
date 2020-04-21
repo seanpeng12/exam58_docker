@@ -2,6 +2,7 @@
   <q-input
     v-model="searchField"
     outlined
+    flat
     bg-color="white"
     class="col"
     label="輸入您想去的縣市或景點"

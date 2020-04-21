@@ -36,7 +36,7 @@ const mutations = {
     // console.log("delete", id);
     // delete state.schedules[id];
     Vue.delete(state.everydaySites, id);
-    console.log("deleteEveryDay", id);
+    // console.log("deleteEveryDay", id);
   },
   addEverydaySite(state, everyday) {
     // state.everydaySites = everyday;
@@ -195,6 +195,7 @@ const actions = {
     // });
     console.log("fbUpdateEverySiteData:", payload.key);
   },
+  // 排程中加入收藏景點到選定的日期
   fbAddEverySiteDay({ commit }, payload) {
     const uid = firebaseAuth.currentUser.uid;
 
@@ -225,7 +226,7 @@ const actions = {
     addSites.update({
       site: firestore.FieldValue.arrayUnion(addSite)
     });
-    console.log("fbAddEverySiteData:", payload);
+    // console.log("fbAddEverySiteData:", payload);
   },
   fbDeleteEverySiteData({ commit }, payload) {
     const uid = firebaseAuth.currentUser.uid;

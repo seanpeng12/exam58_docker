@@ -1,18 +1,8 @@
 <template>
-  <!-- <div class="col"> -->
-  <!-- <q-card class="my-card" v-for="item in collections" :key="item.site_name"> -->
   <q-card class="my-card" style="margin: 5px; width:220px">
     <q-img src="https://cdn.quasar.dev/img/chicken-salad.jpg" />
 
     <q-card-section>
-      <!-- <q-btn
-            fab
-            color="primary"
-            icon="place"
-            class="absolute"
-            style="top: 0; right: 12px; transform: translateY(-50%);"
-          /> -->
-
       <div class="row no-wrap items-center">
         <div class="col text-h7 ellipsis">
           {{ collection.site_name }}
@@ -55,11 +45,6 @@
             <q-linear-progress :value="1" color="blue-2" />
           </q-card>
         </q-dialog>
-
-        <!-- <div
-          class="text-caption text-grey"
-          style="margin-top:10px; margin-left:0px"
-        ></div> -->
       </div>
     </q-card-section>
 
@@ -76,11 +61,13 @@
 
     <q-separator />
   </q-card>
+  <!-- 選擇加入哪天 -->
+
   <!-- </div> -->
 </template>
 <script>
 export default {
-  props: ["collection"],
+  props: ["collection", "index"],
   data() {
     return {
       stars: 3.5,
