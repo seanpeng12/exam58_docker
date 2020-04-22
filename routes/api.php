@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Post;
@@ -43,24 +44,32 @@ Route::group(['middleware' => ['CORS']], function () {
     // R
     //執行R API
     Route::post('/runR_city', 'PostController@runR_city');
-    //執行R API(兩類別)
+
+    //執行R API(需求分析兩類別)
     Route::post('/runR_twoC', 'PostController@runR_twoC');
-    // 執行php(跑path.php)
+    // 執行php(跑路徑分析用path.php)
     Route::post('/runPHP', 'PostController@runPHP');
-    // 執行搭配php的R(跑path.php)
+    // 執行搭配php的R(跑路徑分析用path.php)
     Route::post('/runRafterPHP', 'PostController@runRafterPHP');
+
+
+    // mysql
     // 景點需求分析---取得交集資料
     Route::post('/cat', 'PostController@bothCatagory');
 
-    // mysql
+    // 景點優缺點分析---取得優點與缺點
+    Route::post('/good', 'PostController@runR_proscons');
+
     // 取得所有景點資料site_data
     Route::get('/site_data', 'PostController@site_dataAll');
     // 取單一景點site_data(整包object)
     Route::get('/site_data/{id}', 'PostController@site_dataById');
     // 下拉式選單---屬於該城市的所有景點name
     Route::get('/site_name/{city}', 'PostController@site_nameById');
-    // 景點需求分析---取得交集資料
-    // Route::get('/cat', 'PostController@bothCatagory');
-    // 取得所有城市名稱
+
+    // 取得所有城市名稱-第一層選單
     Route::get('/site_dataCity', 'PostController@site_dataCityAll');
+
+    // 取城市所有類別-第二層選單
+    Route::post('/site_dataCat', 'PostController@Catagory');
 });

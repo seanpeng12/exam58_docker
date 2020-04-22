@@ -1,6 +1,6 @@
-library(RMySQL)
-library('visNetwork')
-library('igraph')
+library('RMySQL', warn.conflicts = FALSE)
+library('visNetwork', warn.conflicts = FALSE)
+library('igraph', warn.conflicts = FALSE)
 
 con <- dbConnect(MySQL(), 
                  db = "homestead",
@@ -9,12 +9,12 @@ con <- dbConnect(MySQL(),
                  host = "140.136.155.116")
 dbSendQuery(con,"SET NAMES big5")
 
-#æ‰¾åˆ°ç›®æ¨™id
-sname <- 'è±¡å±±è‡ªç„¶æ­¥é“'
+#§ä¨ì¥Ø¼Ðid
+sname <- '¶H¤s¦ÛµM¨B¹D'
 id_sql <- paste("SELECT id FROM site_data WHERE name = '",sname,"'", sep="")
 sid <- dbGetQuery(con, id_sql)
 
-#æ‰¾åˆ°å¥½çš„(red)è£¡é¢degreeæœ€å¤§çš„
+#§ä¨ì¦nªº(red)¸Ì­±degree³Ì¤jªº
 b_sql <- paste("SELECT s.id, s.segment, s.color, s.site_id, sd.name, `degree.g.`  
                 FROM segment_data s, segment_degree d, site_data sd 
                 WHERE (s.id = d.id AND sd.id = d.site_id) 
@@ -24,7 +24,7 @@ good <- dbGetQuery(con, b_sql)
 DegreeMax <- max(good$degree.g.)
 # print(DegreeMax)
 
-# æ‰¾åˆ°maxdegreeçš„åç¨±
+# §ä¨ìmaxdegreeªº¦WºÙ
 g <- paste0("SELECT d.id, segment, color, `degree.g.` 
             FROM segment_data s, segment_degree d 
             WHERE (s.id = d.id) AND s.color = 'red' 
@@ -33,11 +33,11 @@ g <- paste0("SELECT d.id, segment, color, `degree.g.`
 gname <- dbGetQuery(con, g)
 #print(gname)
 
-#æ‰¾åˆ°èˆ‡maxdegreeé€£æŽ¥çš„é»ž
+#§ä¨ì»Pmaxdegree³s±µªºÂI
 gid = gname$id
 
-# =============ä»¥ä¸Šæ˜¯ç‚ºäº†æ‰¾åˆ°gid(degreeæœ€é«˜çš„é»ž)=============
-#è¢«é€£åˆ°æœ€å¤šçš„åœ–äº®å§
+# =============¥H¤W¬O¬°¤F§ä¨ìgid(degree³Ì°ªªºÂI)=============
+#³Q³s¨ì³Ì¦hªº¹Ï«G§a
 seg <- paste("SELECT s.id, s.segment, s.color, d.name
               FROM segment_data s, site_data d
               WHERE (d.id = s.site_id)
@@ -71,5 +71,5 @@ visSave(ccout, file = "C://xampp/htdocs/SNA_sean/exam58/public/R/bad.html",selfc
 # dbDisconnect(con)
 on.exit(dbDisconnect(con))
 
-# æ¸¬è©¦dbé€£æŽ¥
+# ´ú¸Õdb³s±µ
 lapply(dbListConnections(MySQL()), dbDisconnect)

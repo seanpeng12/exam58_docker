@@ -92,7 +92,7 @@ class PostController extends Controller
         }
         return response()->json(array('output' => $process->getOutput(), 'RhtmlCheck' => 'R/site_Betweeness_2020.R "城市"-> between_city.html。'), 200);
     }
-    // 成功
+    // 需求分析R圖-成功
     function runR_twoC(Request $request)
     {
 
@@ -122,6 +122,72 @@ class PostController extends Controller
             'c20' => $c20,
             'output' => $process->getOutput(),
             'RhtmlCheck' => 'R/betweenss_attr_2020.R "a b c"-> between_relationship.html。'
+        ), 200);
+    }
+    // 需求分析懶人包
+    function bothCatagory(Request $request)
+    {
+        $city = $request->input('name');
+        $c1 = $request->input('c1');
+        $c2 = $request->input('c20');
+
+        $sql = FacadesDB::select("SELECT DISTINCT site_data.id, site_data.name, site_data.city_name, site_data.type,site_data.completed
+            FROM site_relationship, site_data, site_attr
+            WHERE (site_relationship.from_id = site_data.id AND site_relationship.to_id = site_attr.id)
+            AND site_data.city_name = '$city'
+            AND (site_attr.tag = '$c1' OR site_attr.tag = '$c2') GROUP BY site_data.id HAVING COUNT(*) > 1");
+
+        // $sql =  FacadesDB::table('site_data')
+        //     ->selectRaw("DISTINCT site_data.id, site_data.name, site_data.city_name, site_data.type,site_data.completed
+        //     FROM site_relationship, site_data, site_attr
+        //     WHERE (site_relationship.from_id = site_data.id AND site_relationship.to_id = site_attr.id)
+        //     AND site_data.city_name = '$city'
+        //     AND (site_attr.tag = '$c1' OR site_attr.tag = '$c2') GROUP BY site_data.id HAVING COUNT(*) > 1")->get();
+
+
+        return response()->json($sql, 200);
+
+        // 改寫eloquent failed
+        // $A = FacadesDB::table('site_relationship')
+        //     ->join('site_data', 'site_relationship.from_id', '=', 'site_data.id')
+        //     ->join('site_attr', 'site_relationship.to_id', '=', 'site_attr.id')
+        //     ->select("site_data.id, site_data.name, site_data.city_name, site_data.type")
+        //     ->where(function ($query) {
+        //         $query->where(['site_relationship.from_id' => 'site_data.id', 'site_relationship.to_id' => 'site_attr.id']);
+        //     })->andWhere(function ($query) {
+        //         $query->where(['site_data' => "台北"]);
+        //     })->andWhere(function ($query) {
+        //         $query->orWhere(['site_attr.tag' => "博物館", 'site_attr.tag' => "古蹟"]);
+        //     })->groupBy('site_data.id')->havingRaw('COUNT(*) > ?', [1])->get();
+    }
+    // 優缺點分析執行
+    function runR_proscons(Request $request)
+    {
+        $name = $request->input();
+        $your_command_good = "Rscript R/degree.R";
+        $your_command_bad = "Rscript R/bad_degree.R";
+        $process = new Process($your_command_good);
+        $process2 = new Process($your_command_bad);
+
+        $process->start();
+        $process2->start();
+
+        $process->wait();
+        $process2->wait();
+
+
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+        if (!$process2->isSuccessful()) {
+            throw new ProcessFailedException($process2);
+        }
+        return response()->json(array(
+            'name' => $name,
+            'output' => $process->getOutput(),
+            'output2' => $process2->getOutput(),
+            'RhtmlCheck_1' => 'R/degree.R -> good.html。',
+            'RhtmlCheck_2' => 'R/bad_degree.R -> bad.html。'
         ), 200);
     }
     //路徑分析前置csv檔案，run path.php
@@ -169,56 +235,44 @@ class PostController extends Controller
     }
 
     // site_data API
-    // 取所有景點(測試用，有設定量)
+    // 取所有景點(測試用，有設定量以供測試)
     function site_dataAll()
     {
         $sql = Site_data::where('id', '<', "S0008")->get();
         return response()->json($sql, 200);
     }
 
-    // 取單一景點
+    // 輸入景點id->單一景點詳細資訊
     function site_dataById($id)
     {
         $sql = Site_data::find($id);
         return response()->json($sql, 200);
     }
-    // 取該城市的所有景點名稱
+    // 輸入城市->所有景點名稱
     function site_nameById($city)
     {
         $sql = Site_data::select('name')->where('city_name', '=', $city)->get();
         return response()->json($sql, 200);
         // return response()->json(Site_data::find($city_name), 200);
     }
-    function bothCatagory(Request $request)
-    {
-        $city = $request->input('name');
-        $c1 = $request->input('c1');
-        $c2 = $request->input('c20');
 
-        $sql = FacadesDB::select("SELECT DISTINCT site_data.id, site_data.name, site_data.city_name, site_data.type,site_data.completed
-            FROM site_relationship, site_data, site_attr
-            WHERE (site_relationship.from_id = site_data.id AND site_relationship.to_id = site_attr.id)
-            AND site_data.city_name = '$city'
-            AND (site_attr.tag = '$c1' OR site_attr.tag = '$c2') GROUP BY site_data.id HAVING COUNT(*) > 1");
-        $completed = false;
-        return response()->json($sql, 200);
 
-        // 改寫eloquent
-        // $A = FacadesDB::table('site_relationship')
-        //     ->join('site_data', 'site_relationship.from_id', '=', 'site_data.id')
-        //     ->join('site_attr', 'site_relationship.to_id', '=', 'site_attr.id')
-        //     ->select("site_data.id, site_data.name, site_data.city_name, site_data.type")
-        //     ->where(function ($query) {
-        //         $query->where(['site_relationship.from_id' => 'site_data.id', 'site_relationship.to_id' => 'site_attr.id']);
-        //     })->andWhere(function ($query) {
-        //         $query->where(['site_data' => "台北"]);
-        //     })->andWhere(function ($query) {
-        //         $query->orWhere(['site_attr.tag' => "博物館", 'site_attr.tag' => "古蹟"]);
-        //     })->groupBy('site_data.id')->havingRaw('COUNT(*) > ?', [1])->get();
-    }
+    // 取得所有城市
     function site_dataCityAll()
     {
         $sql = Site_data::select('city_name')->distinct()->get();
+        return response()->json($sql, 200);
+    }
+
+    // 輸入城市 ->類別名稱給下拉式選單
+    function Catagory(Request $request)
+    {
+        $city = $request->input('name');
+        $sql = FacadesDB::select("SELECT DISTINCT site_attr.tag FROM
+        ((site_data INNER JOIN site_relationship on site_data.id=site_relationship.from_id)
+        INNER JOIN site_attr on site_relationship.to_id=site_attr.id )
+        WHERE site_data.city_name = '$city'");
+
         return response()->json($sql, 200);
     }
 }

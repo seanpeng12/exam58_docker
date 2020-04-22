@@ -7,9 +7,10 @@ import auth from "./store-auth.js";
 import schedules from "./store-tasks.js";
 // mysql(sean)
 import sitedata from "./store-sitedata.js";
-// 需求(sean)
+// 需求分析資料(sean)
 import demand from "./store-demand.js";
-
+// 優缺分析資料(sean)
+import procons from "./store-procons.js";
 
 
 import travel from "./store-firebase";
@@ -31,6 +32,7 @@ export default function ( /* { ssrContext } */ ) {
       schedules,
       sitedata,
       demand,
+      procons,
       travel
     },
 
