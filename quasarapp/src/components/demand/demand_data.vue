@@ -3,12 +3,12 @@
     <div class="text-center img_background">
       <div>
         <b class="text" style="font-size: 30px;font-family: Microsoft JhengHei;">{{txtinfo}}</b>
-        <!-- <p>{{txtdatas}}</p> -->
+        <p>{{txtdatas}}</p>
       </div>
     </div>
     <div class="center q-pa-md" style="font-family: Microsoft JhengHei;padding-top:15px;">
       <q-list bordered>
-        <q-item v-for="txtdata in txtdatas" :key="txtdata.id">
+        <q-item v-for="(txtdata,key) in txtdatas" :key="key">
           <q-item-section side top>
             <q-checkbox
               :value="txtdata.name"
@@ -24,9 +24,9 @@
 
           <q-item-section side top>
             <q-icon name="done_all" size="18px"></q-icon>
-            <q-item-label caption>城市</q-item-label>
+            <q-item-label caption>{{txtdata.city_name}}</q-item-label>
             <q-item-label caption>
-              <small>類別 類別</small>
+              <small>{{key}}</small>
             </q-item-label>
           </q-item-section>
         </q-item>

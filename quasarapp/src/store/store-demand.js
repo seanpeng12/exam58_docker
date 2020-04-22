@@ -1,6 +1,7 @@
 import axios, {
   axiosInstance
 } from 'boot/axios'
+import Vue from 'vue'
 
 
 const state = {
@@ -17,11 +18,12 @@ const state = {
   cats: [],
 
   // 懶人包景點資料(預設假資料)
-  txtdatas: [{
-    id: 1,
-    name: "並將喜好項目勾選(此為預設)",
-    completed: "0"
-  }],
+  // txtdatas: [{
+  //   id: 1,
+  //   name: "並將喜好項目勾選(此為預設)",
+  //   completed: "0"
+  // }],
+  txtdatas: {},
   // 提示：
   txtinfo: "請先選擇城市與需求",
 
@@ -46,7 +48,10 @@ const mutations = {
     return state.Rdata = res
   },
   FETCH_txtdatas(state, res) {
-    return state.txtdatas = res
+    Vue.set(state.txtdatas, res.id, res.txtdata)
+    // console.log("FETCH_txtdatas from mutation:", state.txtdatas);
+
+    // return state.txtdatas = res
   },
   FETCH_index(state, index) {
     return state.after_axios += index
@@ -187,7 +192,40 @@ const actions = {
       .then(response => {
         console.log("成功2");
         console.log(response.data);
-        commit('FETCH_txtdatas', response.data);
+        const id = response.data.map(item => item.id);
+        const name = response.data.map(item => item.name);
+        const city_name = response.data.map(item => item.city_name);
+        const type = response.data.map(item => item.type);
+        const completed = response.data.map(item => item.completed);
+
+
+        // commit('FETCH_txtdatas', {
+        //   id: id,
+        //   txtdata: {
+        //     name: name,
+        //     city_name: city_name,
+        //     type: type,
+        //     completed: completed,
+        //   }
+        // })
+
+        id.forEach(function (data, index, array) {
+          commit('FETCH_txtdatas', {
+            id: data,
+            txtdata: {
+              name: name[index],
+              city_name: city_name[index],
+              type: type[index],
+              completed: completed[index],
+            }
+          })
+
+        })
+
+        // console.log("txtdatas from actions", txtdatas);
+
+
+        // commit('FETCH_txtdatas', txtdatas);
       })
       .catch(function (response) {
         console.log(response);
