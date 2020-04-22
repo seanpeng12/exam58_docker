@@ -2,7 +2,10 @@
   <q-page>
     <!-- web page 區域 -->
     <div class="q-pa-md doc-container">
-      <div class="gt-xs q-pa-lg q-ma-sm column items-center text-black bg-grey-3" style="height: 250px;">
+      <div
+        class="gt-xs q-pa-lg q-ma-sm column items-center text-black bg-grey-3"
+        style="height: 250px;"
+      >
         <div class="col">
           <div class="text-center img_background">
             <div>
@@ -29,13 +32,13 @@
                 <div class="q-gutter-md row">
                   <q-select
                     filled
-                    v-model="selected_p"
+                    v-model="selected_p_trigger"
                     v-on:change="onProductChange"
                     use-input
                     hide-selected
                     fill-input
                     input-debounce="0"
-                    :options="product_lists"
+                    :options="Object.values(citys).map(city => city.city_name)"
                     @filter="filterFn"
                     hint="請選擇城市"
                     style="width: 250px; padding-bottom: 32px"
@@ -50,7 +53,6 @@
               </div>
               <!--  -->
             </div>
-            
           </div>
         </div>
         <!-- 按鈕 -->
@@ -61,7 +63,7 @@
             @click="simulateProgress(4)"
             style="width: 150px"
           >
-            確定
+            開始優缺點分析
             <template v-slot:loading>
               <q-spinner-hourglass class="on-left" />Loading...
             </template>
@@ -211,11 +213,35 @@
         <div class="col">
           <div class="text-center img_background">
             <div>
-              <b
-                class="text"
-                style="font-size: 25px;font-family: Microsoft JhengHei;"
-              >已為您顯示 高雄所有景點 請點選進行分析：</b>
+              <b class="text" style="font-size: 30px;font-family: Microsoft JhengHei;">{{txtinfo}}</b>
             </div>
+          </div>
+          <div class="center q-pa-md" style="font-family: Microsoft JhengHei;padding-top:15px;">
+            <q-list bordered>
+              <q-item v-for="txtdata in txtdatas" :key="txtdata.id" v-ripple>
+                <q-item-section side top>
+                  <q-checkbox v-model="txtdata.completed" />
+                </q-item-section>
+
+                <q-item-section>
+                  <q-item-label>{{ txtdata.name}}</q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
+
+            <!-- list start -->
+            <!-- <q-list bordered>
+              <q-item v-for="b in result" :key="b.id" v-ripple>
+                <q-item-section side top>
+                  <q-checkbox v-model="b.completed" />
+                </q-item-section>
+
+                <q-item-section>
+                  <q-item-label>{{ b.name}}</q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>-->
+            <!-- list end -->
           </div>
           <div class="text-center img_background">
             <div
@@ -233,7 +259,7 @@
                   @click="simulateProgress(4)"
                   style="width: 300px"
                 >
-                  優缺點分析
+                  加入最愛
                   <template v-slot:loading>
                     <q-spinner-hourglass class="on-left" />Loading...
                   </template>
@@ -242,6 +268,7 @@
             </div>
           </div>
           <!-- button end -->
+          <div></div>
         </div>
       </div>
     </div>
@@ -299,41 +326,12 @@
       </div>
     </div>
     <!-- end -->
-
-    <!-- web iframe 區域 gt-xs -->
-    <div class="q-pa-md doc-container"></div>
-
-    <!-- phone iframe 區域 lt-sm-->
-    <div class="q-pa-md doc-container">
-      <!-- iframe col div -->
-      <div class="lt-sm col">
-        <q-page>
-          <iframe
-            style="height: 617px"
-            frameborder="0"
-            id="myFrame"
-            :src="src"
-            class="frameStyle"
-            ref="404 not found!"
-          ></iframe>
-          <div v-for="city in citys" :key="city" class="card">
-            <div class="card-header">{{ city.city_name }}</div>
-
-            <div class="card-body">{{ city.city_name }}</div>
-            <br />
-            <button class="btn btn-xs btn-primary">修改</button>
-            <button class="btn btn-xs btn-danger">刪除</button>
-            <br />
-          </div>
-        </q-page>
-        <!--  -->
-      </div>
-      <!-- iframe end -->
-    </div>
   </q-page>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 const stringOptions = ["台北", "桃園", "新竹", "苗栗", "台東"];
 export default {
   name: "vueFrame",
@@ -355,6 +353,7 @@ export default {
       },
       tab: "mails",
       src: "./statics/between_relationship.html",
+      // 預設靜態選單資料
       options: stringOptions
     };
   },

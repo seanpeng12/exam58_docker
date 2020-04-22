@@ -1,176 +1,287 @@
-import axios, { axiosInstance } from 'boot/axios'
+import axios, {
+  axiosInstance
+} from 'boot/axios'
+import Vue from 'vue'
 
 
 const state = {
   namespaced: true,
   // site-demand
-
-  // 選單城市資料
-  citys: [],
   // 選單選擇資料
-  selected_p: "初始資料",
+  selected_p: "",
   selected_p_detail_item: "",
   selected_p_detail_item_2: "",
-  product_lists: ["台北", "高雄"],
-  product_detail: {
-    台北: ["博物館", "特色博物館", "台北3"],
-    高雄: ["博物館", "古蹟", "高雄3"]
-  },
+
+  // 選單城市資料(axios用)
+  citys: [],
+  // 選單類別資料(axios用)
+  cats: [],
+
   // 懶人包景點資料(預設假資料)
-  txtdatas: [
-    {
-      id: 1,
-      name: "並將喜好項目勾選",
-      completed : false
-    }
-  ],
-  txtdata : {
-      id: 0,
-      name: "",
-      completed : false
-  },
+  // txtdatas: [{
+  //   id: 1,
+  //   name: "並將喜好項目勾選(此為預設)",
+  //   completed: "0"
+  // }],
+  txtdatas: {},
+  // 提示：
+  txtinfo: "請先選擇城市與需求",
+
   //src iframe
   src: "./statics/between_relationship.html",
   // R
   Rdata: {},
-  //
+  // 用以偵測是否按下按鈕(累積)
+  runR_value: 0,
+  //用以判斷跑完R(累積)
   after_axios: 0,
 }
 const mutations = {
 
-  FETCH_citys(state, citys){
+  FETCH_citys(state, citys) {
     return state.citys = citys
   },
-
-  FETCH_Rdata(state, res){
+  FETCH_cats(state, cats) {
+    return state.cats = cats
+  },
+  FETCH_Rdata(state, res) {
     return state.Rdata = res
   },
-  FETCH_txtdata(state, res){
-    return state.txtdata = res
+  FETCH_txtdatas(state, res) {
+    Vue.set(state.txtdatas, res.id, res.txtdata)
+    // console.log("FETCH_txtdatas from mutation:", state.txtdatas);
+
+    // return state.txtdatas = res
   },
-  FETCH_index(state, index){
-    return state.after_axios = index
+  FETCH_index(state, index) {
+    return state.after_axios += index
   },
-  update_selected_p(state, value){
+  update_selected_p(state, value) {
     return state.selected_p = value
   },
-  update_selected_p_detail_item(state, value){
+  update_selected_p_detail_item(state, value) {
     return state.selected_p_detail_item = value
   },
-  update_selected_p_detail_item_2(state, value){
+  update_selected_p_detail_item_2(state, value) {
     return state.selected_p_detail_item_2 = value
   },
+  update_txtdatas(state, value) {
+    return state.txtdatas = value
+  },
+  update_runR_value(state, value) {
+    return state.runR_value += value
+  },
+  update_txtinfo(state, value) {
+    return state.txtinfo = value
+  },
+
 
 }
 const actions = {
 
 
-  fetchCitys({commit}) {
+  fetchCitys({
+    commit
+  }) {
     axiosInstance.get("http://127.0.0.1/api/site_dataCity")
-    .then(res => {
-      commit('FETCH_citys', res.data);
-      console.log("vuex-觸發city值");
-      // this.citys = response.data;
-      // console.log("成功");
-    })
-    .catch(err => {
-      console.log(err);
-    })
+      .then(res => {
+        commit('FETCH_citys', res.data);
+        console.log("vuex-觸發city值");
+        // this.citys = response.data;
+        // console.log("成功");
+      })
+      .catch(err => {
+        console.log(err);
+      })
   },
-  async upload_axios ({commit}) {
-    const response = await axios.get('/days/')
-    commit('setDays', response.data)
+
+  fetchCats({
+    commit
+  }) {
+    axiosInstance.post("http://127.0.0.1/api/site_dataCat", {
+        name: state.selected_p,
+      })
+      .then(res => {
+        commit('FETCH_cats', res.data);
+        console.log("vuex-觸發第二層");
+      })
+      .catch(err => {
+        console.log(err);
+      });
   },
-  upload_axios({commit}) {
+
+  // upload_axios({
+  //   commit
+  // }) {
+  //   axiosInstance
+  //     .post("http://127.0.0.1:80/api/runR_twoC", {
+  //       name: state.selected_p,
+  //       c1: state.selected_p_detail_item,
+  //       c20: state.selected_p_detail_item_2
+  //     })
+  //     .then(response => {
+  //       console.log("成功");
+  //       console.log(response.data);
+  //       commit('FETCH_Rdata', response.data);
+  //       commit('FETCH_index', 1);
+  //     })
+  //     .catch(function (response) {
+  //       console.log(response);
+  //     });
+
+
+  //   // axiosInstance.all([
+  //   //   axiosInstance.post("http://127.0.0.1:80/api/runR_twoC", {
+  //   //     name: state.selected_p,
+  //   //     c1: state.selected_p_detail_item,
+  //   //     c20: state.selected_p_detail_item_2}),
+  //   //     axiosInstance.post("http://127.0.0.1:80/api/cat", {
+  //   //     name: state.selected_p,
+  //   //     c1: state.selected_p_detail_item,
+  //   //     c20: state.selected_p_detail_item_2}),
+  //   // ])
+  //   // .then(axiosInstance.spread((response1, response2) => {
+
+  //   //   // this.state.Rdata = response1.data
+  //   //   console.log("vuex-twoC?????");
+  //   //   console.log(response1.data);
+  //   //   // commit('FETCH_Rdata', response1.data);
+  //   //   // commit('FETCH_txtdata', response2.data);
+  //   //   // commit('FETCH_index', 1);
+  //   //   // this.Rdata = response1.data;
+  //   //   // this.txtdata = response2.data;
+  //   //   // 更改iframe src
+  //   //   // this.changeSrc();
+  //   //   // this.src = "./statics/between_relationship.html";
+  //   //   console.log("成功!~~~~~~~~~~~~~~~~~");
+  //   // })).catch(function(response) {
+  //   //     console.log(response);
+  //   //   });
+  // },
+  // ajax跑R圖
+  upload_axios({
+    commit
+  }) {
     axiosInstance
-        .post("http://127.0.0.1:80/api/runR_twoC", {
-          name: state.selected_p,
-          c1: state.selected_p_detail_item,
-          c20: state.selected_p_detail_item_2
+      .post("http://127.0.0.1:80/api/runR_twoC", {
+        name: state.selected_p,
+        c1: state.selected_p_detail_item,
+        c20: state.selected_p_detail_item_2
+      })
+      .then(response => {
+        console.log("成功");
+        console.log(response.data);
+        commit('FETCH_Rdata', response.data);
+        commit('FETCH_index', 1);
+      })
+      .catch(function (response) {
+        console.log(response);
+      });
+
+  },
+  // ajax取懶人包資料
+  upload_axios_2({
+    commit
+  }) {
+    axiosInstance
+      .post("http://127.0.0.1:80/api/cat", {
+        name: state.selected_p,
+        c1: state.selected_p_detail_item,
+        c20: state.selected_p_detail_item_2
+      })
+      .then(response => {
+        console.log("成功2");
+        console.log(response.data);
+        const id = response.data.map(item => item.id);
+        const name = response.data.map(item => item.name);
+        const city_name = response.data.map(item => item.city_name);
+        const type = response.data.map(item => item.type);
+        const completed = response.data.map(item => item.completed);
+
+
+        // commit('FETCH_txtdatas', {
+        //   id: id,
+        //   txtdata: {
+        //     name: name,
+        //     city_name: city_name,
+        //     type: type,
+        //     completed: completed,
+        //   }
+        // })
+
+        id.forEach(function (data, index, array) {
+          commit('FETCH_txtdatas', {
+            id: data,
+            txtdata: {
+              name: name[index],
+              city_name: city_name[index],
+              type: type[index],
+              completed: completed[index],
+            }
+          })
+
         })
-        .then(response => {
-          console.log("成功");
-          console.log(response.data);
-          commit('FETCH_Rdata', response.data);
-          commit('FETCH_index', 1);
-        })
-        .catch(function(response) {
-          console.log(response);
-        });
+
+        // console.log("txtdatas from actions", txtdatas);
 
 
-    // axiosInstance.all([
-    //   axiosInstance.post("http://127.0.0.1:80/api/runR_twoC", {
-    //     name: state.selected_p,
-    //     c1: state.selected_p_detail_item,
-    //     c20: state.selected_p_detail_item_2}),
-    //     axiosInstance.post("http://127.0.0.1:80/api/cat", {
-    //     name: state.selected_p,
-    //     c1: state.selected_p_detail_item,
-    //     c20: state.selected_p_detail_item_2}),
-    // ])
-    // .then(axiosInstance.spread((response1, response2) => {
-
-    //   // this.state.Rdata = response1.data
-    //   console.log("vuex-twoC?????");
-    //   console.log(response1.data);
-    //   // commit('FETCH_Rdata', response1.data);
-    //   // commit('FETCH_txtdata', response2.data);
-    //   // commit('FETCH_index', 1);
-    //   // this.Rdata = response1.data;
-    //   // this.txtdata = response2.data;
-    //   // 更改iframe src
-    //   // this.changeSrc();
-    //   // this.src = "./statics/between_relationship.html";
-    //   console.log("成功!~~~~~~~~~~~~~~~~~");
-    // })).catch(function(response) {
-    //     console.log(response);
-    //   });
+        // commit('FETCH_txtdatas', txtdatas);
+      })
+      .catch(function (response) {
+        console.log(response);
+      });
   }
-
-
 
 }
 const getters = {
 
-  citys: (state) =>{
+  citys: (state) => {
     return state.citys;
   },
-  txtdata: (state) =>{
+  cats: (state) => {
+    return state.cats;
+  },
+  txtdata: (state) => {
     return state.txtdata;
   },
-  txtdatas: (state) =>{
+  txtdatas: (state) => {
     return state.txtdatas;
   },
-  src:(state) =>{
+  src: (state) => {
     return state.src;
   },
-  Rdata:(state) => {
+  Rdata: (state) => {
     return state.Rdata;
   },
 
-  selected_p:(state) => {
+  selected_p: (state) => {
     return state.selected_p;
   },
-  selected_p_detail_item:(state) => {
+  selected_p_detail_item: (state) => {
     return state.selected_p_detail_item;
   },
-  selected_p_detail_item_2:(state) => {
+  selected_p_detail_item_2: (state) => {
     return state.selected_p_detail_item_2;
   },
-  product_lists:(state) => {
+  product_lists: (state) => {
     return state.product_lists;
   },
-  product_detail:(state) => {
+  product_detail: (state) => {
     return state.product_detail;
   },
-  after_axios:(state) => {
+  after_axios: (state) => {
     return state.after_axios;
+  },
+  runR_value: (state) => {
+    return state.runR_value;
+  },
+  txtinfo: (state) => {
+    return state.txtinfo;
   },
 }
 
 export default {
-  namespaced :true,
+  namespaced: true,
   state,
   mutations,
   actions,

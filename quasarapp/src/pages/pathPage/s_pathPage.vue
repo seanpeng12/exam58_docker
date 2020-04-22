@@ -3,7 +3,7 @@
     <!-- web page 區域 -->
     <div class="q-pa-md doc-container">
       <div class="gt-xs q-pa-md column items-center text-black bg-grey-3" style="height: 250px;">
-        <div class="col" >
+        <div class="col">
           <div class="text-center">
             <div>
               <b class="text" style="font-size: 30px;font-family: Microsoft JhengHei;">路徑分析</b>
@@ -12,7 +12,7 @@
         </div>
 
         <div class="col">
-          <div class="text-center ">
+          <div class="text-center">
             <div>
               <b
                 class="text"
@@ -213,9 +213,7 @@
         <div class="col">
           <div class="text-center img_background">
             <div>
-              <b
-                style="font-size: 25px;font-family: Microsoft JhengHei;"
-              >已為您顯示 台北所有景點 請點選進行分析：</b>
+              <b style="font-size: 25px;font-family: Microsoft JhengHei;">已為您顯示 台北所有景點 請點選進行分析：</b>
             </div>
           </div>
           <div class="text-center img_background">
@@ -273,9 +271,7 @@
         <div class="col">
           <div class="text-center img_background">
             <div>
-              <b
-                style="font-size: 25px;font-family: Microsoft JhengHei;"
-              >已為您顯示 台北所有景點 請點選進行分析：</b>
+              <b style="font-size: 25px;font-family: Microsoft JhengHei;">已為您顯示 台北所有景點 請點選進行分析：</b>
             </div>
           </div>
           <div class="text-center img_background">
@@ -406,7 +402,7 @@ export default {
       loading4: false,
       selected_p: "",
       selected_p_detail_item: "",
-      product_lists: ["台北",  "桃園", "新竹", "苗栗", "台東", "高雄"],
+      product_lists: ["台北", "桃園", "新竹", "苗栗", "台東", "高雄"],
       product_detail: {
         台北: ["沙灘", "公園", "台北101"],
         高雄: ["觀光風景區", "購物商城", "lativ"]

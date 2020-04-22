@@ -8,8 +8,10 @@ import collections from "./store-collection.js";
 
 // mysql(sean)
 import sitedata from "./store-sitedata.js";
-// 需求(sean)
+// 需求分析資料(sean)
 import demand from "./store-demand.js";
+// 優缺分析資料(sean)
+import procons from "./store-procons.js";
 
 import travel from "./store-firebase";
 Vue.use(Vuex);
@@ -30,8 +32,9 @@ export default function(/* { ssrContext } */) {
       schedules,
       sitedata,
       demand,
-      travel,
-      collections
+      collections,
+      procons,
+      travel
     },
 
     // enable strict mode (adds overhead!)
