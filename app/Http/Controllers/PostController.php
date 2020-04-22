@@ -131,7 +131,7 @@ class PostController extends Controller
         $c1 = $request->input('c1');
         $c2 = $request->input('c20');
 
-        $sql = FacadesDB::select("SELECT DISTINCT site_data.id, site_data.name, site_data.city_name, site_data.type,site_data.completed
+        $sql = FacadesDB::select("SELECT DISTINCT site_data.id,site_data.name,site_data.city_name,site_data.address,site_data.type,site_data.comment,site_data.rate,site_data.href
             FROM site_relationship, site_data, site_attr
             WHERE (site_relationship.from_id = site_data.id AND site_relationship.to_id = site_attr.id)
             AND site_data.city_name = '$city'

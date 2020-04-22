@@ -162,7 +162,7 @@ export default {
       this.selected_p_local = "";
       this.selected_p_detail_item_local = "";
       this.selected_p_detail_item_local2 = "";
-    },
+    }
     // 第一層選擇城市 > 回傳第二層資料
     // selected_p_local: {
     //   handler(val) {
@@ -178,9 +178,6 @@ export default {
     // selected_p_detail_item_local2: function(val) {
     //   this.$store.commit("demand/update_selected_p_detail_item_2", val);
     // },
-    txtdatas: function(val) {
-      this.temp = val;
-    }
   },
   mounted: function() {
     // 初始化時取第一層城市資料(vuex)

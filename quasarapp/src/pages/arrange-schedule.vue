@@ -4,7 +4,7 @@
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="left = !left" />
 
-        <q-toolbar-title>自我規劃旅程{{ id }} </q-toolbar-title>
+        <q-toolbar-title>自我規劃旅程{{ id }}</q-toolbar-title>
       </q-toolbar>
     </q-header>
 
@@ -27,29 +27,20 @@
         class="absolute-top-right"
         style="margin-right:4px"
         flat
-      /> -->
+      />-->
 
       <q-dialog v-model="darkDialog">
         <q-card>
           <q-card-section>
             <div class="text-h4 font-color: warn">
-              <q-icon name="report_problem" class="text-red" />
-              提醒您
+              <q-icon name="report_problem" class="text-red" />提醒您
             </div>
           </q-card-section>
 
-          <q-card-section class="q-pt-none">
-            請先儲存再跳回上一頁，以確保資料不會遺失
-          </q-card-section>
+          <q-card-section class="q-pt-none">請先儲存再跳回上一頁，以確保資料不會遺失</q-card-section>
 
           <q-card-actions align="right">
-            <q-btn
-              flat
-              label="前往上一頁"
-              color="primary"
-              to="/mySchedule"
-              v-close-popup
-            />
+            <q-btn flat label="前往上一頁" color="primary" to="/mySchedule" v-close-popup />
             <q-btn flat label="取消" color="primary" v-close-popup />
           </q-card-actions>
         </q-card>
@@ -100,12 +91,12 @@
             <q-tab-panel name="mails">
               <!-- <q-banner class="bg-primary text-white">
                 <div class="text-h6 row"></div>
-              </q-banner> -->
+              </q-banner>-->
               <div class="col-5" style="max-width: 300px">
                 <search />
               </div>
               <!-- <div>透過需求分析</div>
-              <div>自行搜尋</div> -->
+              <div>自行搜尋</div>-->
 
               <div class="row">
                 <LCard
@@ -148,10 +139,29 @@
                   unchecked-icon="clear"
                 />
               </div>
+              <p>{{after_axios}}</p>
+              <!-- 需求分析 select -->
+              <demand-select
+                :citys="citys"
+                :cats="cats"
+                :selected_p="selected_p"
+                :selected_p_detail_item="selected_p_detail_item"
+                :selected_p_detail_item_2="selected_p_detail_item_2"
+                @changed_1="selected_1"
+                @changed_2="selected_2"
+                @changed_3="selected_3"
+                @runR="run_R"
+              ></demand-select>
+              <!-- 需求分析 R圖 -->
+              <demand-r :src="src" :runR_value="runR_value"></demand-r>
 
-              <img src="~assets/step2_1.jpg" />
-              <img src="~assets/step2_2.jpg" />
-
+              <!-- 需求分析 懶人包 -->
+              <demand-data
+                :txtinfo="txtinfo"
+                :txtdatas="txtdatas"
+                @txtdatas_Update="txtdatas_toVuex"
+              ></demand-data>
+              <!-- END -->
               <q-btn
                 dense
                 label="前往下一步"
@@ -163,9 +173,7 @@
             </q-tab-panel>
 
             <q-tab-panel name="movies">
-              <div class="text-h6">
-                Tip: 路徑規畫分析(請從您的排程容器中選擇一個景點最為起始點)
-              </div>
+              <div class="text-h6">Tip: 路徑規畫分析(請從您的排程容器中選擇一個景點最為起始點)</div>
               <div class="row">
                 <q-select
                   outlined
@@ -177,7 +185,7 @@
                 <q-btn
                   dense
                   label="開始分析"
-                  class=""
+                  class
                   color="secondary"
                   size="15px"
                   style="width: 200px; margin-left:32px"
@@ -185,7 +193,7 @@
                 <q-btn
                   dense
                   label="納入此條路線"
-                  class=""
+                  class
                   color="warning"
                   size="15px"
                   style="margin-left: 100px"
@@ -193,7 +201,7 @@
                 <q-btn
                   dense
                   label="納入此景點"
-                  class=" "
+                  class
                   color="warning"
                   size="15px"
                   style="margin-left:20px"
@@ -210,9 +218,7 @@
               />
             </q-tab-panel>
             <q-tab-panel name="advantage">
-              <div class="text-h6">
-                Tip: 優缺點分析(請選擇您想了解該景點的評價分析)
-              </div>
+              <div class="text-h6">Tip: 優缺點分析(請選擇您想了解該景點的評價分析)</div>
               <div class="row">
                 <q-select
                   outlined
@@ -235,12 +241,7 @@
                   size="15px"
                   style="width: 200px; margin-left:32px"
                 />
-                <q-btn
-                  label="加入排程"
-                  color="warning"
-                  size="15px"
-                  style="margin-left:100px;"
-                />
+                <q-btn label="加入排程" color="warning" size="15px" style="margin-left:100px;" />
               </div>
               <img src="~assets/comment.jpg" />
               <q-btn
@@ -290,12 +291,29 @@ export default {
   components: {
     draggableC: () => import("components/drag/draggableC.vue"),
     LCard: () => import("components/collection/LCard.vue"),
-    search: () => import("components/search.vue")
+    search: () => import("components/search.vue"),
+    // 引用需求元件
+    demandSelect: () => import("components/demand/demand_select.vue"),
+    demandR: () => import("components/demand/demand_R.vue"),
+    demandData: () => import("components/demand/demand_data.vue")
   },
   computed: {
     ...mapGetters("travel", ["everydaySites"]),
     ...mapGetters("collections", ["collections"]),
     ...mapState("collections", ["search"]),
+    // demand
+    ...mapGetters("demand", [
+      "citys",
+      "cats",
+      "selected_p",
+      "selected_p_detail_item",
+      "selected_p_detail_item_2",
+      "src",
+      "runR_value",
+      "txtdatas",
+      "txtinfo",
+      "after_axios"
+    ]),
     EverydaySites: {
       get() {
         // console.log("parent from get:", this.everydaySites);
@@ -313,6 +331,13 @@ export default {
       "setDragkey",
       "fbEverySiteData"
     ]),
+    // 需求分析 由此找vuex所需method
+    ...mapActions("demand", ["fetchCitys"]),
+    ...mapActions("demand", ["fetchCats"]),
+    ...mapActions("demand", ["changeSrc"]),
+    ...mapActions("demand", ["upload_axios"]),
+    ...mapActions("demand", ["upload_axios_2"]),
+
     // ...mapActions("travel", ["fbAddEverySiteData"]),
     promptToAddSite(value) {
       const dateList = Object.keys(this.everydaySites);
@@ -355,6 +380,45 @@ export default {
         .onDismiss(() => {
           // console.log('I am triggered on both OK and Cancel')
         });
+    },
+    // 需求分析
+    changeSrc() {
+      document.getElementById("myFrame").contentWindow.location.reload(true);
+      document.getElementById("myFrame").src =
+        "./statics/between_relationship.html";
+      // this.src = "./statics/between_relationship.html";
+      this.$store.commit(
+        "demand/update_txtinfo",
+        "分析完成! 已列出所有符合兩類別景點，請點選加入最愛："
+      );
+    },
+    // 需求分析  from emit local then set vuex
+    selected_1(value) {
+      console.log("收到emit!");
+      this.$store.commit("demand/update_selected_p", value);
+      this.fetchCats();
+    },
+    // 需求分析  from emit local then set vuex
+    selected_2(value) {
+      this.$store.commit("demand/update_selected_p_detail_item", value);
+    },
+    // 需求分析  from emit local then set vuex
+    selected_3(value) {
+      this.$store.commit("demand/update_selected_p_detail_item_2", value);
+    },
+    // 需求分析  傳送runR引數至vuex
+    run_R(value) {
+      console.log("runRRRRRRRRRRRRRRR");
+      this.$store.commit("demand/update_runR_value", value);
+      this.$store.commit("demand/update_txtinfo", "載入中...");
+      // 更改為loading
+      document.getElementById("myFrame").src = "./statics/images/loader.gif";
+      // vuex 跑R
+      this.upload_axios();
+    },
+    // 需求分析 demand_data元件更改txtdatas至vuex
+    txtdatas_toVuex(value) {
+      this.$store.commit("demand/update_txtdatas", value);
     }
   },
   created() {
@@ -363,6 +427,25 @@ export default {
     // console.log(this.$route.query.pass_id);
 
     // this.fbEverySiteData(this.id);
+  },
+  watch: {
+    // 需求分析 用以偵測R跑完成
+    after_axios: function(val) {
+      // 更換iframe
+      this.changeSrc();
+      // 在呼叫ajax取懶人包(vuex)
+      this.upload_axios_2();
+      // 隱藏按鈕
+      this.isShow = false;
+      // 清空選取資料
+      this.selected_p_local = "";
+      this.selected_p_detail_item_local = "";
+      this.selected_p_detail_item_local2 = "";
+    }
+  },
+  mounted: function() {
+    // 需求分析 初始化時取第一層城市資料(vuex)
+    this.fetchCitys();
   }
 };
 </script>

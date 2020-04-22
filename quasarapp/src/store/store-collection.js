@@ -1,6 +1,13 @@
 import Vue from "vue";
-import { fstore, firebaseAuth, firebaseApp, firestore } from "boot/firebase";
-import { uid } from "quasar";
+import {
+  fstore,
+  firebaseAuth,
+  firebaseApp,
+  firestore
+} from "boot/firebase";
+import {
+  uid
+} from "quasar";
 
 const state = {
   name: "PageIndex1",
@@ -22,7 +29,9 @@ const mutations = {
   }
 };
 const actions = {
-  fbReadData({ commit }) {
+  fbReadData({
+    commit
+  }) {
     const uid = firebaseAuth.currentUser.uid;
     console.log("fbReadData", uid);
     const userCollection = fstore
@@ -41,7 +50,30 @@ const actions = {
       });
     });
   },
-  setSearch({ commit }, value) {
+  fbAddtoCollection({}, value) {
+    const uid = firebaseAuth.currentUser.uid;
+
+    const addToCollection = fstore
+      .collection("sightseeingMember")
+      .doc(uid)
+      .collection("我的收藏").doc();
+
+    addToCollection.set({
+        site_name: value.city_name,
+        id: value.id,
+
+      })
+      .then(function () {
+        console.log("Document successfully written!");
+      })
+      .catch(function (error) {
+        console.error("Error writing document: ", error);
+      });
+
+  },
+  setSearch({
+    commit
+  }, value) {
     commit("setSearch", value);
   }
 };
@@ -52,7 +84,7 @@ const getters = {
   collectionsFiltered: state => {
     let collectionsFiltered = {};
     if (state.search) {
-      Object.keys(state.collections).forEach(function(key) {
+      Object.keys(state.collections).forEach(function (key) {
         let collection = state.collections[key],
           collectionNameLowerCase = collection.site_name.toLowerCase(),
           collectionCityLowerCase = collection.city.toLowerCase(),
@@ -71,7 +103,7 @@ const getters = {
   collections: (state, getters) => {
     let collectionsFiltered = getters.collectionsFiltered;
     let collections = {};
-    Object.keys(collectionsFiltered).forEach(function(key) {
+    Object.keys(collectionsFiltered).forEach(function (key) {
       let collection = collectionsFiltered[key];
 
       collections[key] = collection;

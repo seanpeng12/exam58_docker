@@ -1,7 +1,7 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
 
-module.exports = function(ctx) {
+module.exports = function (ctx) {
   return {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
@@ -78,7 +78,8 @@ module.exports = function(ctx) {
         "QItemLabel",
         "QCheckbox",
         "QSelect",
-        "QToggle"
+        "QToggle",
+        'QScrollArea'
       ],
       directives: ["GoBack", "ClosePopup", "Mutation"],
 
@@ -134,8 +135,7 @@ module.exports = function(ctx) {
         orientation: "portrait",
         background_color: "#ffffff",
         theme_color: "#027be3",
-        icons: [
-          {
+        icons: [{
             src: "statics/icons/icon-128x128.png",
             sizes: "128x128",
             type: "image/png"
