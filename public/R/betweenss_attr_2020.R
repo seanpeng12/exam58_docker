@@ -12,9 +12,9 @@ b <- strsplit(args,"[[:space:]]")[[1]][3]
 
 connect <- dbConnect(MySQL(), 
                     db = "homestead",
-                    username = "homestead", 
-                    password = "secret",
-                    host = "localhost")
+                    username = "root", 
+                    password = "sightseeing",
+                    host = "sightseeing.nctu.me")
 
 # #homestead(共11個表)
 # dbListTables(connect)

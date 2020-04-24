@@ -76,7 +76,6 @@ class PostController extends Controller
     function runR_city(Request $request)
     {
 
-
         $id = "台北";
         $n = '"' . $id . '"';
 
@@ -163,9 +162,10 @@ class PostController extends Controller
     // 優缺點分析執行
     function runR_proscons(Request $request)
     {
-        $name = $request->input();
-        $your_command_good = "Rscript R/degree.R";
-        $your_command_bad = "Rscript R/bad_degree.R";
+        $name = $request->input("name");
+        // $n = '"' . $name . '"';
+        $your_command_good = "Rscript R/degree.R $name";
+        $your_command_bad = "Rscript R/bad_degree.R $name";
         $process = new Process($your_command_good);
         $process2 = new Process($your_command_bad);
 
@@ -184,10 +184,9 @@ class PostController extends Controller
         }
         return response()->json(array(
             'name' => $name,
-            'output' => $process->getOutput(),
-            'output2' => $process2->getOutput(),
-            'RhtmlCheck_1' => 'R/degree.R -> good.html。',
-            'RhtmlCheck_2' => 'R/bad_degree.R -> bad.html。'
+            'debug優點' => $process->getOutput(),
+            'debug缺點' => $process2->getOutput(),
+
         ), 200);
     }
     //路徑分析前置csv檔案，run path.php
@@ -274,5 +273,32 @@ class PostController extends Controller
         WHERE site_data.city_name = '$city'");
 
         return response()->json($sql, 200);
+    }
+    // 輸入城市 ->城市所有景點
+    function sitesByCity(Request $request)
+    {
+        $city = $request->input('city_name');
+        $sql = Site_data::select('name')->where('city_name', "=", "$city")->get();
+
+        return response()->json($sql, 200);
+    }
+
+    function prosData(Request $request)
+    {
+        $city = $request->input('name');
+        $sql_positive = FacadesDB::select("SELECT `segment`,`id`,`weight` FROM segment_data WHERE weight >= 2 AND evaluation = 'P' ORDER BY weight DESC LIMIT 20");
+
+
+
+        return response()->json($sql_positive, 200);
+    }
+
+    function consData(Request $request)
+    {
+        $city = $request->input('name');
+        $sql_negative = FacadesDB::select("SELECT `segment`,`id`,`weight` FROM segment_data WHERE weight >= 2 AND evaluation = 'N' ORDER BY weight DESC LIMIT 20");
+
+
+        return response()->json($sql_negative, 200);
     }
 }
