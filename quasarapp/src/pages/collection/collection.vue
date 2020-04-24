@@ -26,10 +26,25 @@
     </q-carousel>
     <div class="row">
       <LCard
-        v-for="item in collections"
-        :key="item.site_name"
+        v-for="(item, key) in collections"
+        :key="key"
         :collection="item"
-      ></LCard>
+        :index="key"
+      >
+        <template slot="deleteCollection">
+          <q-btn
+            no-caps
+            flat
+            dense
+            label="刪除收藏"
+            icon-right="delete"
+            size="10px"
+            color="red"
+            @click="promptToDelete(key)"
+            style="font-family: NSimSun; margin-left:40px"
+          />
+        </template>
+      </LCard>
     </div>
     <!-- <div class="row">
       <q-card class="my-card" v-for="item in collections" :key="item.site_name">
@@ -74,7 +89,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapGetters, mapState, mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -90,6 +105,21 @@ export default {
   components: {
     search: () => import("components/search.vue"),
     LCard: () => import("components/collection/LCard.vue")
+  },
+  methods: {
+    ...mapActions("collections", ["fbDeleteCollection"]),
+    promptToDelete(value) {
+      this.$q
+        .dialog({
+          title: "Confirm",
+          message: "確定要刪除嗎?",
+          cancel: true,
+          persistent: true
+        })
+        .onOk(() => {
+          this.fbDeleteCollection(value);
+        });
+    }
   }
 };
 </script>

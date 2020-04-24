@@ -55,7 +55,8 @@
         <q-icon name="place" />
 
         台灣，{{ collection.city }}
-        <slot name="addToSchedule"> </slot>
+        <slot name="addToSchedule"></slot>
+        <slot name="deleteCollection"></slot>
       </div>
     </q-card-section>
 
