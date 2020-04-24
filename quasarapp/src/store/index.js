@@ -11,7 +11,7 @@ import sitedata from "./store-sitedata.js";
 // 需求分析資料(sean)
 import demand from "./store-demand.js";
 // 優缺分析資料(sean)
-import procons from "./store-procons.js";
+import proscons from "./store-proscons.js";
 
 import travel from "./store-firebase";
 Vue.use(Vuex);
@@ -25,7 +25,7 @@ Vue.use(Vuex);
  * with the Store instance.
  */
 
-export default function(/* { ssrContext } */) {
+export default function ( /* { ssrContext } */ ) {
   const Store = new Vuex.Store({
     modules: {
       auth,
@@ -33,7 +33,7 @@ export default function(/* { ssrContext } */) {
       sitedata,
       demand,
       collections,
-      procons,
+      proscons,
       travel
     },
 
