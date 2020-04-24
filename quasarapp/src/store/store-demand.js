@@ -195,6 +195,10 @@ const actions = {
         const id = response.data.map(item => item.id);
         const name = response.data.map(item => item.name);
         const city_name = response.data.map(item => item.city_name);
+        const address = response.data.map(item => item.address);
+        const comment = response.data.map(item => item.comment);
+        const rate = response.data.map(item => item.rate);
+
         const type = response.data.map(item => item.type);
         const completed = response.data.map(item => item.completed);
 
@@ -215,6 +219,9 @@ const actions = {
             txtdata: {
               name: name[index],
               city_name: city_name[index],
+              address: address[index],
+              comment: comment[index],
+              rate: rate[index],
               type: type[index],
               completed: completed[index],
             }

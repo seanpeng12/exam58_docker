@@ -2,26 +2,14 @@
   <q-page>
     <div class="text-center img_background">
       <div>
-        <b
-          class="text"
-          style="font-size: 30px;font-family: Microsoft JhengHei;"
-          >{{ txtinfo }}</b
-        >
+        <b class="text" style="font-size: 30px;font-family: Microsoft JhengHei;">{{ txtinfo }}</b>
         <!-- <p>{{txtdatas}}</p> -->
       </div>
     </div>
-    <div
-      class="center q-pa-md"
-      style="font-family: Microsoft JhengHei;padding-top:15px;"
-    >
+    <div class="center q-pa-md" style="font-family: Microsoft JhengHei;padding-top:15px;">
       <q-scroll-area style="height: 450px; max-width: 450px;">
         <q-list>
-          <q-item
-            v-for="(txtdata, key) in txtdatas"
-            :key="key"
-            clickable
-            v-ripple
-          >
+          <q-item v-for="(txtdata, key) in txtdatas" :key="key" clickable v-ripple>
             <!-- <q-item-section side top>
               <q-checkbox
                 :value="txtdata.name"
@@ -51,7 +39,11 @@
               </q-btn>-->
               <addToCollectionBtn
                 :id="key"
-                :city_name="txtdata.name"
+                :city_name="txtdata.city_name"
+                :site_name="txtdata.name"
+                :address="txtdata.address"
+                :comment="txtdata.comment"
+                :rate="txtdata.rate"
               ></addToCollectionBtn>
               <!-- <q-item-label caption>{{txtdata.city_name}}</q-item-label> -->
               <q-item-label caption>
@@ -67,7 +59,7 @@
         class="text"
         style="font-size: 25px;font-family: Microsoft JhengHei;padding-top:15px;"
       >國立台灣科學教育館</div>
-    </div> -->
+    </div>-->
     <!-- 加入最愛button -->
     <!-- <div class="q-pa-md doc-container">
       <div class="gt-xs column items-center" style="height: 170px;">
@@ -85,7 +77,7 @@
           </q-btn>
         </div>
       </div>
-    </div> -->
+    </div>-->
     <!-- button end -->
   </q-page>
 </template>
