@@ -7,7 +7,7 @@
     label="加入收藏"
     style="margin-right:20px"
     size="10px"
-    @click="simulateProgress(2),addToCollection({id:id,city_name:city_name})"
+    @click="simulateProgress(2),addToCollection({id:id,city_name:city_name,address:address,comment:comment,rate:rate,site_name:site_name})"
   >
     <template v-slot:loading>
       <q-icon name="check"></q-icon>已加入
@@ -17,7 +17,15 @@
 <script>
 import { mapActions } from "vuex";
 export default {
-  props: ["id", "city_name"],
+  props: [
+    "id",
+    "city_name",
+    "comment",
+    "address",
+    "comment",
+    "rate",
+    "site_name"
+  ],
   data() {
     return {
       loading2: false
