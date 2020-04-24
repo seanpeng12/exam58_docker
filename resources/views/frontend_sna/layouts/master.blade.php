@@ -43,7 +43,6 @@
 
 
 
-    </script>
 
   const settings = {timestampsInSnapshots: true};
   firebase.firestore().settings(settings);
@@ -51,16 +50,6 @@
     </script>
 
 
-<<<<<<< HEAD
-<style>
-  .cursor{
-    cursor: pointer;
-  }
-</style>
-    
-=======
-
->>>>>>> ce59034887a1c63fba6bd605e617633555d6bb4d
 
 
 

@@ -37,10 +37,18 @@
             </div>
           </q-card-section>
 
-          <q-card-section class="q-pt-none">請先儲存再跳回上一頁，以確保資料不會遺失</q-card-section>
+          <q-card-section class="q-pt-none"
+            >請先儲存再跳回上一頁，以確保資料不會遺失</q-card-section
+          >
 
           <q-card-actions align="right">
-            <q-btn flat label="前往上一頁" color="primary" to="/mySchedule" v-close-popup />
+            <q-btn
+              flat
+              label="前往上一頁"
+              color="primary"
+              @click="lastReloadPage()"
+              v-close-popup
+            />
             <q-btn flat label="取消" color="primary" v-close-popup />
           </q-card-actions>
         </q-card>
@@ -101,7 +109,7 @@
               <div class="row">
                 <LCard
                   v-for="(item, index, key) in collections"
-                  :key="item.site_name"
+                  :key="key"
                   :collection="item"
                   :index="key"
                 >
@@ -139,7 +147,7 @@
                   unchecked-icon="clear"
                 />
               </div>
-              <p>{{after_axios}}</p>
+              <p>{{ after_axios }}</p>
               <!-- 需求分析 select -->
               <demand-select
                 :citys="citys"
@@ -173,7 +181,9 @@
             </q-tab-panel>
 
             <q-tab-panel name="movies">
-              <div class="text-h6">Tip: 路徑規畫分析(請從您的排程容器中選擇一個景點最為起始點)</div>
+              <div class="text-h6">
+                Tip: 路徑規畫分析(請從您的排程容器中選擇一個景點最為起始點)
+              </div>
               <div class="row">
                 <q-select
                   outlined
@@ -218,7 +228,9 @@
               />
             </q-tab-panel>
             <q-tab-panel name="advantage">
-              <div class="text-h6">Tip: 優缺點分析(請選擇您想了解該景點的評價分析)</div>
+              <div class="text-h6">
+                Tip: 優缺點分析(請選擇您想了解該景點的評價分析)
+              </div>
               <div class="row">
                 <q-select
                   outlined
@@ -241,7 +253,12 @@
                   size="15px"
                   style="width: 200px; margin-left:32px"
                 />
-                <q-btn label="加入排程" color="warning" size="15px" style="margin-left:100px;" />
+                <q-btn
+                  label="加入排程"
+                  color="warning"
+                  size="15px"
+                  style="margin-left:100px;"
+                />
               </div>
               <img src="~assets/comment.jpg" />
               <q-btn
@@ -339,6 +356,10 @@ export default {
     ...mapActions("demand", ["upload_axios_2"]),
 
     // ...mapActions("travel", ["fbAddEverySiteData"]),
+    lastReloadPage() {
+      this.$router.push("/mySchedule");
+      this.$router.go(0);
+    },
     promptToAddSite(value) {
       const dateList = Object.keys(this.everydaySites);
       const item_1 = [];
