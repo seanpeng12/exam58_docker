@@ -1,21 +1,14 @@
 <template>
   <!-- 折疊式優缺點R圖 -->
   <div class="q-pa-md" style="max-width: auto">
-    <q-expansion-item
-      dark
-      class="q-pa-lg q-ma-sm bg-teal-6"
-      style="color:white;font-weight: bold;font-size : 25px;font-family: Microsoft JhengHei;"
-      v-model="expanded"
-      icon="show_chart"
-      label="優缺點分析結果"
-      caption="景點名稱"
-    >
-      <div class="text-h6 q-md-lg text-center">
-        <b>拖曳畫面以檢視，滾輪可放大</b>
-      </div>
+    <div class="q-pa-lg q-ma-sm bg-teal-6"
+      style="color:white;font-weight: bold;font-size : 25px;font-family: Microsoft JhengHei;" >
+      <p>優缺點分析結果</p>
+
+      <!--  -->
       <q-card>
         <q-card-section>
-          <!-- 左右頁 -->
+          <!-- 左優點 右缺點 -->
           <div class="q-pa-md" align="center">
             <div class="q-gutter-y-md" style="max-width: 1200px;">
               <q-card>
@@ -41,7 +34,7 @@
                       id="myFrame_good"
                       :src="src_good"
                       class="frameStyle"
-                      ref="404 not found!"
+                      ref="myFrame_good"
                     ></iframe>
                   </q-tab-panel>
 
@@ -52,7 +45,7 @@
                       id="myFrame_bad"
                       :src="src_bad"
                       class="frameStyle"
-                      ref="404 not found!"
+                      ref="myFrame_bad"
                     ></iframe>
                   </q-tab-panel>
                 </q-tab-panels>
@@ -62,7 +55,25 @@
           <!--  -->
         </q-card-section>
       </q-card>
-    </q-expansion-item>
+      <!-- end -->
+    </div>
+
+    <!-- <q-expansion-item
+      dark
+      class="q-pa-lg q-ma-sm bg-teal-6"
+      style="color:white;font-weight: bold;font-size : 25px;font-family: Microsoft JhengHei;"
+      v-model="expanded"
+      icon="show_chart"
+      label="優缺點分析結果"
+      caption="景點名稱"
+    >
+      <div class="text-h6 q-md-lg text-center">
+        <b>拖曳畫面以檢視，滾輪可放大</b>
+      </div>
+
+    </q-expansion-item> -->
+
+
   </div>
 </template>
 <script>
@@ -78,19 +89,27 @@ export default {
     };
   },
   computed: {
-    // 取得vuex state變動值
-    ...mapGetters("proscons", ["run_index"]),
+    // 取得vuex state變動偵測值
+    ...mapGetters("proscons", ["run_index","data_index"]),
     // src_good src_bad
     ...mapGetters("proscons", ["src_good", "src_bad"])
   },
   methods: {
     // 由此找vuex所需method
-    ...mapActions("proscons", ["fetchGoodR", "fetchBadR"])
+    ...mapActions("proscons", ["fetchGoodR", "fetchBadR"]),
+    changeSrc() {
+
+      this.$refs.myFrame_good.contentWindow.location.reload(true);
+      this.$refs.myFrame_bad.contentWindow.location.reload(true);
+
+      console.log("change重整畫面成功!",this.a);
+      this.$store.commit("proscons/Update_Data_Index",1);
+    },
   },
   watch: {
     run_index(val) {
       this.changeSrc();
-      console.log("Update_Run_Index!");
+      console.log("R組件偵測到Update_Run_Index!");
     }
   }
 };

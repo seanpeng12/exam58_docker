@@ -71,18 +71,20 @@ Route::group(['middleware' => ['CORS']], function () {
 
 // 優缺點分析
 Route::group(['middleware' => ['CORS']], function () {
-    // 景點優缺點分析---優點與缺點R圖(傳入sid未完成)
-    Route::post('/proscons', 'PostController@runR_proscons');
-    // 優點
+
+    // 景點優缺點分析 name->sid(S0102)->跑優點與缺點R圖(只能使用象山自然步道)
+    Route::post('/proscons', 'ProsCosController@runR_proscons');
+    // 優點懶人包
     Route::post('/prosData', 'PostController@prosData');
-    // 缺點
+    // 缺點懶人包
     Route::post('/consData', 'PostController@consData');
 });
 
 // 路徑分析
 Route::group(['middleware' => ['CORS']], function () {
-    // 執行php(跑路徑分析用path.php)
-    Route::post('/runPHP', 'PostController@runPHP');
+
+    // 路徑分析(PHP + R)
+    Route::post('/runPath', 'PathController@runPath');
     // 執行搭配php的R(跑路徑分析用path.php)
-    Route::post('/runRafterPHP', 'PostController@runRafterPHP');
+    Route::post('/runRafterPHP', 'PathController@runRafterPHP');
 });

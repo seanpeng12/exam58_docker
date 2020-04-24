@@ -10,8 +10,8 @@ con <- dbConnect(MySQL(),
 dbSendQuery(con,"SET NAMES big5")
 
 args <- commandArgs(TRUE)
-# sid <- args
-sid <- 'S0102'
+sid <- args
+# sid <- 'S0102'
 node_sql <- paste("SELECT * FROM segment_data WHERE site_id = '",sid,"'AND evaluation = 'P'", sep="")
 node_sql
 relationship_sql <- paste("SELECT from_id,to_id,weight,color FROM `segment_relationship` SR WHERE site_id = '",sid,"' AND SR.from_id = ANY(SELECT id FROM segment_data WHERE site_id = '",sid,"' AND evaluation = 'P')", sep="")

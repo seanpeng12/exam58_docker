@@ -71,7 +71,7 @@ class PostController extends Controller
 
 
 
-    // R
+    // 測試R
 
     function runR_city(Request $request)
     {
@@ -159,79 +159,8 @@ class PostController extends Controller
         //         $query->orWhere(['site_attr.tag' => "博物館", 'site_attr.tag' => "古蹟"]);
         //     })->groupBy('site_data.id')->havingRaw('COUNT(*) > ?', [1])->get();
     }
-    // 優缺點分析執行
-    function runR_proscons(Request $request)
-    {
-        $name = $request->input("name");
-        // $n = '"' . $name . '"';
-        $your_command_good = "Rscript R/degree.R $name";
-        $your_command_bad = "Rscript R/bad_degree.R $name";
-        $process = new Process($your_command_good);
-        $process2 = new Process($your_command_bad);
-
-        $process->start();
-        $process2->start();
-
-        $process->wait();
-        $process2->wait();
 
 
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
-        if (!$process2->isSuccessful()) {
-            throw new ProcessFailedException($process2);
-        }
-        return response()->json(array(
-            'name' => $name,
-            'debug優點' => $process->getOutput(),
-            'debug缺點' => $process2->getOutput(),
-
-        ), 200);
-    }
-    //路徑分析前置csv檔案，run path.php
-    function runPHP(Request $request)
-    {
-
-        // 以外部指令的方式呼叫 R 進行繪圖->between_relationship.html
-
-        $your_command = "php C:\\xampp\\htdocs\\SNA_sean\\exam58\\public\\php\\path.php";
-        $process = new Process($your_command);
-        $process->setTimeout(180);
-        $process->run(); // to run Sync
-        // $process->start(); // to run Async
-
-        // executes after the command finishes
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
-
-
-        return response()->json(array(
-            'response：' => $process->getOutput(),
-            'PHPCheck' => 'please check "public" dir has 2 csv data。'
-        ), 200);
-    }
-    // 路徑分析R圖
-    function runRafterPHP(Request $request)
-    {
-
-        // 以外部指令的方式呼叫 R 進行繪圖->between_relationship.html
-
-        $your_command = "Rscript php/new_path.R";
-        $process = new Process($your_command);
-        $process->run(); // to run Sync
-        // executes after the command finishes
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
-        // $process->start(); // to run Async
-
-        return response()->json(array(
-            'response：' => $process->getOutput(),
-            'RnewFileCheck' => '請確認是否R是否執行!'
-        ), 200);
-    }
 
     // site_data API
     // 取所有景點(測試用，有設定量以供測試)

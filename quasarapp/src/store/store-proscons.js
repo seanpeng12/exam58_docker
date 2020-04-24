@@ -16,8 +16,10 @@ const state = {
   // 選單景點資料(axios用)
   sites: [],
 
-  // R執行完呼叫用
+  // R執行完呼叫重新整理用
   run_index: 0,
+  // R執行完呼叫懶人包用
+  data_index:0,
 
   // r 圖產生位置
   src_good: "./statics/good.html",
@@ -44,6 +46,9 @@ const mutations = {
   },
   Update_Run_Index(state, value) {
     return state.run_index += value
+  },
+  Update_Data_Index(state, value) {
+    return state.data_index += value
   },
   Update_Good_Src(state, value) {
     return state.src_good = value
@@ -99,6 +104,7 @@ const actions = {
       })
       .then(res => {
         console.log("執行優缺分析完成，產生good,bad.html ");
+        // 讓R執行數
         commit('Update_Run_Index', 1);
 
       })
@@ -163,6 +169,9 @@ const getters = {
   },
   run_index: (state) => {
     return state.run_index;
+  },
+  data_index: (state) => {
+    return state.data_index;
   },
   src_good: (state) => {
     return state.src_good;

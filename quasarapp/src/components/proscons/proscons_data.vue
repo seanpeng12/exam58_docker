@@ -61,6 +61,7 @@ export default {
     // 取得vuex state值
     ...mapGetters("proscons", [
       "run_index",
+      "data_index",
       "prosData",
       "consData",
       "selected_site"
@@ -69,6 +70,11 @@ export default {
   methods: {
     // 由此找vuex所需method
     ...mapActions("proscons", ["fetchPros", "fetchCons"])
+  },
+  watch:{
+    data_index(val){
+      console.log("取得val");
+    }
   },
   mounted() {
     this.fetchCons();
