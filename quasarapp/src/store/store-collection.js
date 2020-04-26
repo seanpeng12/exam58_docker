@@ -1,13 +1,7 @@
+import axios, { axiosInstance } from "boot/axios";
 import Vue from "vue";
-import {
-  fstore,
-  firebaseAuth,
-  firebaseApp,
-  firestore
-} from "boot/firebase";
-import {
-  uid
-} from "quasar";
+import { fstore, firebaseAuth, firebaseApp, firestore } from "boot/firebase";
+import { uid } from "quasar";
 
 const state = {
   name: "PageIndex1",
@@ -32,9 +26,7 @@ const mutations = {
   }
 };
 const actions = {
-  fbReadData({
-    commit
-  }) {
+  fbReadData({ commit }) {
     const uid = firebaseAuth.currentUser.uid;
     console.log("fbReadData", uid);
     const userCollection = fstore
@@ -55,7 +47,7 @@ const actions = {
   },
   fbAddtoCollection({}, value) {
     const uid = firebaseAuth.currentUser.uid;
-    const collectionId = value.id
+    const collectionId = value.id;
     const addToCollection = fstore
       .collection("sightseeingMember")
       .doc(uid)
@@ -71,16 +63,14 @@ const actions = {
         comment: value.comment,
         rate: value.rate
       })
-      .then(function () {
+      .then(function() {
         console.log("Document successfully written!");
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.error("Error writing document: ", error);
       });
   },
-  fbDeleteCollection({
-    commit
-  }, id) {
+  fbDeleteCollection({ commit }, id) {
     const uid = firebaseAuth.currentUser.uid;
     const deleteData = fstore
       .collection("sightseeingMember")
@@ -89,17 +79,54 @@ const actions = {
       .doc(id);
     deleteData
       .delete()
-      .then(function () {
+      .then(function() {
         console.log("Document successfully deleted!");
         commit("deleteCollection", id);
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.error("Error removing document: ", error);
       });
   },
-  setSearch({
-    commit
-  }, value) {
+  fbAddToPrefer({ commit }, id) {
+    axiosInstance
+      .post("http://127.0.0.1/api/preferTag", {
+        site_id: id
+      })
+      .then(res => {
+        const site_id = res.data.map(item => item.tag);
+        console.log("vuex-post api取prefer:", site_id);
+        const uid = firebaseAuth.currentUser.uid;
+        const addToPrefer = fstore
+          .collection("sightseeingMember")
+          .doc(uid)
+          .collection("偏好分析");
+        const increment = firestore.FieldValue.increment(1);
+
+        site_id.forEach(function(data, index) {
+          addToPrefer
+            .doc(data)
+            .get()
+            .then(function(doc) {
+              if (doc.exists) {
+                addToPrefer.doc(data).update({
+                  time: increment
+                });
+              } else {
+                addToPrefer.doc(data).set({
+                  time: increment
+                });
+              }
+            })
+            .catch(function(error) {
+              console.log("Error getting document:", error);
+            });
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  },
+  setSearch({ commit }, value) {
     commit("setSearch", value);
   }
 };
@@ -110,7 +137,7 @@ const getters = {
   collectionsFiltered: state => {
     let collectionsFiltered = {};
     if (state.search) {
-      Object.keys(state.collections).forEach(function (key) {
+      Object.keys(state.collections).forEach(function(key) {
         let collection = state.collections[key],
           collectionNameLowerCase = collection.site_name.toLowerCase(),
           collectionCityLowerCase = collection.city.toLowerCase(),
@@ -129,7 +156,7 @@ const getters = {
   collections: (state, getters) => {
     let collectionsFiltered = getters.collectionsFiltered;
     let collections = {};
-    Object.keys(collectionsFiltered).forEach(function (key) {
+    Object.keys(collectionsFiltered).forEach(function(key) {
       let collection = collectionsFiltered[key];
 
       collections[key] = collection;

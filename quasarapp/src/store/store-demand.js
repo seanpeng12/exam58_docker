@@ -1,8 +1,6 @@
-import axios, {
-  axiosInstance
-} from 'boot/axios'
-import Vue from 'vue'
-
+import axios, { axiosInstance } from "boot/axios";
+import Vue from "vue";
+import { fstore, firebaseAuth, firebaseApp, firestore } from "boot/firebase";
 
 const state = {
   namespaced: true,
@@ -34,75 +32,69 @@ const state = {
   // 用以偵測是否按下按鈕(累積)
   runR_value: 0,
   //用以判斷跑完R(累積)
-  after_axios: 0,
-}
+  after_axios: 0
+};
 const mutations = {
-
   FETCH_citys(state, citys) {
-    return state.citys = citys
+    return (state.citys = citys);
   },
   FETCH_cats(state, cats) {
-    return state.cats = cats
+    return (state.cats = cats);
   },
   FETCH_Rdata(state, res) {
-    return state.Rdata = res
+    return (state.Rdata = res);
   },
   FETCH_txtdatas(state, res) {
-    Vue.set(state.txtdatas, res.id, res.txtdata)
-    // console.log("FETCH_txtdatas from mutation:", state.txtdatas);
+    Vue.set(state.txtdatas, res.id, res.txtdata);
+
+    console.log("FETCH_txtdatas from mutation:", state.txtdatas);
 
     // return state.txtdatas = res
   },
   FETCH_index(state, index) {
-    return state.after_axios += index
+    return (state.after_axios += index);
   },
   update_selected_p(state, value) {
-    return state.selected_p = value
+    return (state.selected_p = value);
   },
   update_selected_p_detail_item(state, value) {
-    return state.selected_p_detail_item = value
+    return (state.selected_p_detail_item = value);
   },
   update_selected_p_detail_item_2(state, value) {
-    return state.selected_p_detail_item_2 = value
+    return (state.selected_p_detail_item_2 = value);
   },
   update_txtdatas(state, value) {
-    return state.txtdatas = value
+    return (state.txtdatas = value);
   },
   update_runR_value(state, value) {
-    return state.runR_value += value
+    return (state.runR_value += value);
   },
   update_txtinfo(state, value) {
-    return state.txtinfo = value
-  },
-
-
-}
+    return (state.txtinfo = value);
+  }
+};
 const actions = {
-
-
-  fetchCitys({
-    commit
-  }) {
-    axiosInstance.get("http://127.0.0.1/api/site_dataCity")
+  fetchCitys({ commit }) {
+    axiosInstance
+      .get("http://127.0.0.1/api/site_dataCity")
       .then(res => {
-        commit('FETCH_citys', res.data);
+        commit("FETCH_citys", res.data);
         console.log("vuex-觸發city值");
         // this.citys = response.data;
         // console.log("成功");
       })
       .catch(err => {
         console.log(err);
-      })
+      });
   },
 
-  fetchCats({
-    commit
-  }) {
-    axiosInstance.post("http://127.0.0.1/api/site_dataCat", {
-        name: state.selected_p,
+  fetchCats({ commit }) {
+    axiosInstance
+      .post("http://127.0.0.1/api/site_dataCat", {
+        name: state.selected_p
       })
       .then(res => {
-        commit('FETCH_cats', res.data);
+        commit("FETCH_cats", res.data);
         console.log("vuex-觸發第二層");
       })
       .catch(err => {
@@ -128,7 +120,6 @@ const actions = {
   //     .catch(function (response) {
   //       console.log(response);
   //     });
-
 
   //   // axiosInstance.all([
   //   //   axiosInstance.post("http://127.0.0.1:80/api/runR_twoC", {
@@ -159,9 +150,7 @@ const actions = {
   //   //   });
   // },
   // ajax跑R圖
-  upload_axios({
-    commit
-  }) {
+  upload_axios({ commit }) {
     axiosInstance
       .post("http://127.0.0.1:80/api/runR_twoC", {
         name: state.selected_p,
@@ -171,18 +160,15 @@ const actions = {
       .then(response => {
         console.log("成功");
         console.log(response.data);
-        commit('FETCH_Rdata', response.data);
-        commit('FETCH_index', 1);
+        commit("FETCH_Rdata", response.data);
+        commit("FETCH_index", 1);
       })
-      .catch(function (response) {
+      .catch(function(response) {
         console.log(response);
       });
-
   },
   // ajax取懶人包資料
-  upload_axios_2({
-    commit
-  }) {
+  upload_axios_2({ commit }) {
     axiosInstance
       .post("http://127.0.0.1:80/api/cat", {
         name: state.selected_p,
@@ -191,7 +177,7 @@ const actions = {
       })
       .then(response => {
         console.log("成功2");
-        console.log(response.data);
+        // console.log(response.data);
         const id = response.data.map(item => item.id);
         const name = response.data.map(item => item.name);
         const city_name = response.data.map(item => item.city_name);
@@ -202,7 +188,6 @@ const actions = {
         const type = response.data.map(item => item.type);
         const completed = response.data.map(item => item.completed);
 
-
         // commit('FETCH_txtdatas', {
         //   id: id,
         //   txtdata: {
@@ -212,80 +197,115 @@ const actions = {
         //     completed: completed,
         //   }
         // })
-
-        id.forEach(function (data, index, array) {
-          commit('FETCH_txtdatas', {
-            id: data,
-            txtdata: {
-              name: name[index],
-              city_name: city_name[index],
-              address: address[index],
-              comment: comment[index],
-              rate: rate[index],
-              type: type[index],
-              completed: completed[index],
-            }
-          })
-
-        })
+        const uid = firebaseAuth.currentUser.uid;
+        const checkCollectionExists = fstore
+          .collection("sightseeingMember")
+          .doc(uid)
+          .collection("我的收藏");
+        id.forEach(function(data, index, array) {
+          checkCollectionExists
+            .doc(data)
+            .get()
+            .then(function(doc) {
+              if (doc.exists) {
+                commit("FETCH_txtdatas", {
+                  id: data,
+                  txtdata: {
+                    name: name[index],
+                    city_name: city_name[index],
+                    address: address[index],
+                    comment: comment[index],
+                    rate: rate[index],
+                    type: type[index],
+                    exists: true
+                  }
+                });
+              } else {
+                commit("FETCH_txtdatas", {
+                  id: data,
+                  txtdata: {
+                    name: name[index],
+                    city_name: city_name[index],
+                    address: address[index],
+                    comment: comment[index],
+                    rate: rate[index],
+                    type: type[index],
+                    exists: false
+                  }
+                });
+              }
+            })
+            .catch(function(error) {
+              console.log("Error getting document:", error);
+            });
+          // commit("FETCH_txtdatas", {
+          //   id: data,
+          //   txtdata: {
+          //     name: name[index],
+          //     city_name: city_name[index],
+          //     address: address[index],
+          //     comment: comment[index],
+          //     rate: rate[index],
+          //     type: type[index],
+          //     completed: completed[index]
+          //   }
+          // });
+        });
 
         // console.log("txtdatas from actions", txtdatas);
 
-
         // commit('FETCH_txtdatas', txtdatas);
       })
-      .catch(function (response) {
+      .catch(function(response) {
         console.log(response);
       });
   }
-
-}
+};
 const getters = {
-
-  citys: (state) => {
+  citys: state => {
     return state.citys;
   },
-  cats: (state) => {
+  cats: state => {
     return state.cats;
   },
-  txtdata: (state) => {
+  txtdata: state => {
     return state.txtdata;
   },
-  txtdatas: (state) => {
+  txtdatas: state => {
     return state.txtdatas;
   },
-  src: (state) => {
+  src: state => {
     return state.src;
   },
-  Rdata: (state) => {
+  Rdata: state => {
     return state.Rdata;
   },
 
-  selected_p: (state) => {
+  selected_p: state => {
     return state.selected_p;
   },
-  selected_p_detail_item: (state) => {
+  selected_p_detail_item: state => {
     return state.selected_p_detail_item;
   },
-  selected_p_detail_item_2: (state) => {
+  selected_p_detail_item_2: state => {
     return state.selected_p_detail_item_2;
   },
-  product_lists: (state) => {
+  product_lists: state => {
     return state.product_lists;
   },
-  product_detail: (state) => {
+  product_detail: state => {
     return state.product_detail;
   },
-  after_axios: (state) => {
+  after_axios: state => {
     return state.after_axios;
   },
-  runR_value: (state) => {
+  runR_value: state => {
     return state.runR_value;
   },
-  txtinfo: (state) => {
+  txtinfo: state => {
     return state.txtinfo;
-  },
-}
+  }
+};
 
 export default {
   namespaced: true,
@@ -293,4 +313,4 @@ export default {
   mutations,
   actions,
   getters
-}
+};

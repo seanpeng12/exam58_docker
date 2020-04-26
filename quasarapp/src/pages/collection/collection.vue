@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <q-carousel
       v-model="slide"
       color="white"
@@ -46,45 +46,6 @@
         </template>
       </LCard>
     </div>
-    <!-- <div class="row">
-      <q-card class="my-card" v-for="item in collections" :key="item.site_name">
-        <q-img src="https://cdn.quasar.dev/img/chicken-salad.jpg" />
-
-        <q-card-section>
-          <div class="row no-wrap items-center">
-            <div class="col text-h8 ellipsis">
-              {{ item.site_name }}
-            </div>
-            <div
-              class="col-auto text-secondary text-caption q-pt-md row no-wrap items-center"
-            >
-              <q-icon name="place" />
-
-              台灣，{{ item.city }}
-            </div>
-          </div>
-
-          <div class="row text-caption text-grey">
-            <q-rating v-model="stars" :max="5" size="25px" />
-            <div class="col" style="margin-top:5px">
-              {{ item.rate }}
-            </div>
-            <div
-              class="text-caption text-grey"
-              style="margin-top:5px; margin:left:10px"
-            >
-              {{ item.comment }}則評價
-            </div>
-          </div>
-        </q-card-section>
-
-        <q-card-section class="q-pt-none">
-          <div class="ttext-caption text-grey">{{ item.address }}</div>
-        </q-card-section>
-
-        <q-separator />
-      </q-card>
-    </div> -->
   </div>
 </template>
 

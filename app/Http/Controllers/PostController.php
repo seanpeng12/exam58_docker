@@ -301,4 +301,14 @@ class PostController extends Controller
 
         return response()->json($sql_negative, 200);
     }
+
+    function preferTag(Request $request)
+    {
+        $id = $request->input('site_id');
+        $sql = FacadesDB::select("SELECT site_data.id, site_attr.tag FROM site_data, site_relationship, site_attr
+        WHERE (site_data.id = site_relationship.from_id and site_relationship.to_id = site_attr.id) 
+        AND site_data.id = '$id'");
+
+        return response()->json($sql,200);
+    }
 }

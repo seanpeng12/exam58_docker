@@ -147,9 +147,10 @@
                   unchecked-icon="clear"
                 />
               </div>
-              <p>{{ after_axios }}</p>
+              <!-- <p>{{ after_axios }}</p> -->
               <!-- 需求分析 select -->
               <demand-select
+                v-if="fourth == false"
                 :citys="citys"
                 :cats="cats"
                 :selected_p="selected_p"
@@ -160,15 +161,62 @@
                 @changed_3="selected_3"
                 @runR="run_R"
               ></demand-select>
-              <!-- 需求分析 R圖 -->
-              <demand-r :src="src" :runR_value="runR_value"></demand-r>
 
-              <!-- 需求分析 懶人包 -->
-              <demand-data
-                :txtinfo="txtinfo"
-                :txtdatas="txtdatas"
-                @txtdatas_Update="txtdatas_toVuex"
-              ></demand-data>
+              <demand-prefer
+                v-else
+                :citys="citys"
+                :cats="cats"
+                :selected_p="selected_p"
+                :selected_p_detail_item="selected_p_detail_item"
+                :selected_p_detail_item_2="selected_p_detail_item_2"
+                @changed_1="pre_selected_1"
+                @changed_2="selected_2"
+                @changed_3="selected_3"
+                @runR="run_R"
+              ></demand-prefer>
+
+              <!-- 需求分析 R圖 -->
+
+              <div class="q-pt-none">
+                <div class="row">
+                  <div class="col">
+                    <demand-r :src="src" :runR_value="runR_value"></demand-r>
+                  </div>
+
+                  <!-- 需求分析 懶人包 -->
+                  <div class="col">
+                    <q-scroll-area style="height: 450px; max-width: 450px;">
+                      <q-list>
+                        <demand-data
+                          v-for="(txtdata, key) in txtdatas"
+                          :txtinfo="txtinfo"
+                          :key="key"
+                          :txtdata="txtdata"
+                          @txtdatas_Update="txtdatas_toVuex"
+                        >
+                          <template slot="addToSchedule">
+                            <q-space />
+                            <q-btn
+                              icon-right="add"
+                              label="加進排程"
+                              color="warning"
+                              @click="
+                                promptToAddSite({
+                                  id: key,
+                                  site: txtdata.name
+                                })
+                              "
+                              dense
+                              size="12px"
+                              style="margin-left:20px"
+                            />
+                          </template>
+                        </demand-data>
+                      </q-list>
+                    </q-scroll-area>
+                  </div>
+                </div>
+              </div>
               <!-- END -->
               <q-btn
                 dense
@@ -311,6 +359,7 @@ export default {
     search: () => import("components/search.vue"),
     // 引用需求元件
     demandSelect: () => import("components/demand/demand_select.vue"),
+    demandPrefer: () => import("components/demand/prefer_select.vue"),
     demandR: () => import("components/demand/demand_R.vue"),
     demandData: () => import("components/demand/demand_data.vue")
   },
@@ -354,7 +403,8 @@ export default {
     ...mapActions("demand", ["changeSrc"]),
     ...mapActions("demand", ["upload_axios"]),
     ...mapActions("demand", ["upload_axios_2"]),
-
+    // 偏好分析
+    ...mapActions("prefers", ["searchPrefer"]),
     // ...mapActions("travel", ["fbAddEverySiteData"]),
     lastReloadPage() {
       this.$router.push("/mySchedule");
@@ -426,6 +476,11 @@ export default {
     // 需求分析  from emit local then set vuex
     selected_3(value) {
       this.$store.commit("demand/update_selected_p_detail_item_2", value);
+    },
+    pre_selected_1(value) {
+      console.log("收到emit!");
+      this.$store.commit("demand/update_selected_p", value);
+      this.searchPrefer();
     },
     // 需求分析  傳送runR引數至vuex
     run_R(value) {

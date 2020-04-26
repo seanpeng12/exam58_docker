@@ -16,7 +16,7 @@
         <div
           class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap"
         >
-          <div class="column" style="height: 500px;">
+          <div class="col-4" style="height: 500px;">
             <div class="col">
               <!-- <h2 class="q-mt-xl q-ml-xl absolute-top h2">
                 來去旅行
@@ -39,10 +39,12 @@
               </h5>
             </div>
           </div>
-          <q-img
-            class="rounded-borders col-6 full-height absolute-right"
-            src="https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_631_10.jpg"
-          />
+          <div class="col">
+            <q-img
+              class="rounded-borders col-6 full-height absolute-right"
+              src="https://jobus.tw/wp-content/uploads/2017/06/30318941_l.jpg"
+            />
+          </div>
         </div>
       </q-carousel-slide>
     </q-carousel>
