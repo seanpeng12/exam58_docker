@@ -27,7 +27,37 @@
         </div>
         <!-- 懶人包區域 -->
         <div class="col">
-          <demand-data :txtinfo="txtinfo" :txtdatas="txtdatas" @txtdatas_Update="txtdatas_toVuex"></demand-data>
+          <div>
+            <b
+              class="text"
+              style="font-size: 30px;font-family: Microsoft JhengHei;"
+              >{{ txtinfo }}</b
+            >
+          </div>
+          <q-scroll-area style="height: 450px; max-width: 450px;">
+            <q-list>
+              <demand-data
+                v-for="(txtdata, key) in txtdatas"
+                :key="key"
+                :txtinfo="txtinfo"
+                :txtdata="txtdata"
+                @txtdatas_Update="txtdatas_toVuex"
+              >
+                <template slot="addToCollection">
+                  <q-space />
+                  <addToCollectionBtn
+                    :exists="txtdata.exists"
+                    :id="key"
+                    :city_name="txtdata.city_name"
+                    :site_name="txtdata.name"
+                    :address="txtdata.address"
+                    :comment="txtdata.comment"
+                    :rate="txtdata.rate"
+                  ></addToCollectionBtn>
+                </template>
+              </demand-data>
+            </q-list>
+          </q-scroll-area>
         </div>
       </div>
     </div>
@@ -49,7 +79,8 @@ export default {
   components: {
     demandSelect: () => import("components/demand/demand_select.vue"),
     demandR: () => import("components/demand/demand_R.vue"),
-    demandData: () => import("components/demand/demand_data.vue")
+    demandData: () => import("components/demand/demand_data.vue"),
+    addToCollectionBtn: () => import("components/demand/addToCollectionBtn.vue")
   },
   computed: {
     // 取得vuex state值

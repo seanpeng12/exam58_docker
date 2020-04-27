@@ -3,7 +3,7 @@
   <div class="gt-xs col">
     <q-page>
       <iframe
-        style="height: 602px"
+        style="height: 602px;width:602px"
         frameborder="0"
         id="myFrame"
         :src="src"

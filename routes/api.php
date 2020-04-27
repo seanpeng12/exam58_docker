@@ -96,3 +96,11 @@ Route::group(['middleware' => ['CORS']], function () {
     // 執行搭配php的R(跑路徑分析用path.php)
     Route::post('/runRafterPHP', 'PathController@runRafterPHP');
 });
+
+Route::group(['middleware' => ['CORS']], function () {
+
+    Route::post('/preferTag', 'PostController@preferTag');
+   
+});
+
+

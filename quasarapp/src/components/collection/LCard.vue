@@ -1,5 +1,5 @@
 <template>
-  <q-card class="my-card" style="margin: 5px; width:220px">
+  <q-card class="my-card" style="margin-right: 8px; width:220px">
     <q-img src="https://cdn.quasar.dev/img/chicken-salad.jpg" />
 
     <q-card-section>

@@ -16,11 +16,8 @@
         <div
           class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap"
         >
-          <div class="column" style="height: 500px;">
-            <div class="col">
-              <!-- <h2 class="q-mt-xl q-ml-xl absolute-top h2">
-                來去旅行
-              </h2>-->
+          <div class="col" style="height: 500px;">
+            <div class="col" style="margin-top:65px">
               <div align="center">
                 <q-img
                   width="70%"
@@ -28,8 +25,19 @@
                   style="max-height: 400px;"
                 ></q-img>
               </div>
+              <!-- <h2 class="q-mt-xl q-ml-xl absolute-top h2">
+                來去旅行
+              </h2>-->
+              <!-- <div align="center">
+                <q-img
+                  width="70%"
+                  src="~assets/logo_0.png"
+                  style="max-height: 400px;"
+                ></q-img>
+              </div> -->
             </div>
-
+          </div>
+          <div class="col" style="margin-top:65px">
             <div class="col" style="margin-left: 80spx;">
               <h5 class="q-mt-none q-ml-xl">
                 <br />這是一套幫助您在規劃旅程時，
@@ -39,10 +47,6 @@
               </h5>
             </div>
           </div>
-          <q-img
-            class="rounded-borders col-6 full-height absolute-right"
-            src="https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_631_10.jpg"
-          />
         </div>
       </q-carousel-slide>
     </q-carousel>
@@ -149,7 +153,7 @@ export default {
           tip: "想要找尋受歡迎路線的你",
           illustrate:
             "只要輸入一個想去的景點作為起點，就可以找到受大眾歡迎的路線",
-          img: require("assets/road-1.png"),
+          img: require("assets/road.png"),
           expanded: false
         },
         {

@@ -5,6 +5,7 @@ import Vuex from "vuex";
 import auth from "./store-auth.js";
 import schedules from "./store-tasks.js";
 import collections from "./store-collection.js";
+import prefers from "./store-prefer.js";
 
 // mysql(sean)
 import sitedata from "./store-sitedata.js";
@@ -25,7 +26,7 @@ Vue.use(Vuex);
  * with the Store instance.
  */
 
-export default function ( /* { ssrContext } */ ) {
+export default function(/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
       auth,
@@ -34,7 +35,8 @@ export default function ( /* { ssrContext } */ ) {
       demand,
       collections,
       proscons,
-      travel
+      travel,
+      prefers
     },
 
     // enable strict mode (adds overhead!)
