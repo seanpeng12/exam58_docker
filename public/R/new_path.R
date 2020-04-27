@@ -1,8 +1,8 @@
 library('visNetwork')
 library('igraph')
 
-n<-read.csv("path_node.csv", header=T, as.is=T, sep=',', fileEncoding = 'utf-8')
-sr<-read.csv("path_edge.csv", header=T, as.is=T, sep=',', fileEncoding = 'utf-8')
+n<-read.csv("C://xampp/htdocs/SNA_sean/exam58/public/path_node.csv", header=T, as.is=T, sep=',', fileEncoding = 'utf-8')
+sr<-read.csv("C://xampp/htdocs/SNA_sean/exam58/public/path_edge.csv", header=T, as.is=T, sep=',', fileEncoding = 'utf-8')
 
 
 s_name <- n[1,1]
@@ -18,4 +18,4 @@ ccout <- visNetwork(nodes, edges, width = "100%")%>%
   visOptions(highlightNearest = TRUE, selectedBy= "group",
              nodesIdSelection = list(enabled = TRUE,  selected = s_name))
 
-visSave(ccout, file = "C://xampp/htdocs/SNA_sean/exam58/public/R/path.html",selfcontained = TRUE, background = "white")
+visSave(ccout, file = "C://xampp/htdocs/SNA_sean/exam58/quasarapp/src/statics/path.html",selfcontained = TRUE, background = "white")

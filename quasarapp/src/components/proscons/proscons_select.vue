@@ -4,7 +4,7 @@
       <div class="col">
         <div class="text-center img_background">
 
-          <p style="font-size: 28px;font-family: Microsoft JhengHei;">景點優缺點分析 {{run_index}} </p>
+          <p style="font-size: 28px;font-family: Microsoft JhengHei;">景點優缺點分析 </p>
         </div>
       </div>
       <div class="col">
@@ -127,7 +127,8 @@ export default {
       "sites",
       "selected_city",
       "selected_site",
-      "run_index"
+      "run_index",
+      "data_index"
     ])
   },
 

@@ -32,7 +32,10 @@ export default {
     prosconsData: () => import("components/proscons/proscons_data.vue")
   },
   data() {
-    return {};
+    return {
+
+
+    };
   },
   computed: {
     // 取得vuex state變動值

@@ -50,8 +50,16 @@ Route::group(['middleware' => ['CORS']], function () {
 
 
     // mysql
-    // 景點需求分析---取得交集資料
+    // 景點需求分析---取得c1/c2(交集)景點
     Route::post('/cat', 'PostController@bothCatagory');
+
+    // 景點需求分析---取(聯集-交集)景點
+    Route::post('/cat_diff', 'PostController@diffCatagory');
+
+
+
+
+
 
     // 取得所有景點資料site_data
     Route::get('/site_data', 'PostController@site_dataAll');

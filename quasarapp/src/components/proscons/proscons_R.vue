@@ -1,7 +1,7 @@
 <template>
   <!-- 折疊式優缺點R圖 -->
-  <div class="q-pa-md" style="max-width: auto">
-    <div class="q-pa-lg q-ma-sm bg-teal-6"
+  <div class="q-pa-md" style="max-width: auto"  v-if="isShow_R">
+    <div class="q-pa-lg q-ma-sm bg-teal-5"
       style="color:white;font-weight: bold;font-size : 25px;font-family: Microsoft JhengHei;" >
       <p>優缺點分析結果</p>
 
@@ -35,6 +35,7 @@
                       :src="src_good"
                       class="frameStyle"
                       ref="myFrame_good"
+
                     ></iframe>
                   </q-tab-panel>
 
@@ -45,7 +46,6 @@
                       id="myFrame_bad"
                       :src="src_bad"
                       class="frameStyle"
-                      ref="myFrame_bad"
                     ></iframe>
                   </q-tab-panel>
                 </q-tab-panels>
@@ -85,7 +85,8 @@ export default {
     return {
       tab: "mails",
       // dropdownitem
-      expanded: true
+      expanded: true,
+      isShow_R:true
     };
   },
   computed: {
@@ -98,18 +99,17 @@ export default {
     // 由此找vuex所需method
     ...mapActions("proscons", ["fetchGoodR", "fetchBadR"]),
     changeSrc() {
+      // 重新整理myframe_good
+      this.$refs.myFrame_good.contentWindow.location.reload();
+      console.log("change重整畫面成功!");
 
-      this.$refs.myFrame_good.contentWindow.location.reload(true);
-      this.$refs.myFrame_bad.contentWindow.location.reload(true);
-
-      console.log("change重整畫面成功!",this.a);
       this.$store.commit("proscons/Update_Data_Index",1);
     },
   },
   watch: {
     run_index(val) {
       this.changeSrc();
-      console.log("R組件偵測到Update_Run_Index!");
+      console.log("R組件偵測到Run_Index改變：執行changeSrc",val);
     }
   }
 };

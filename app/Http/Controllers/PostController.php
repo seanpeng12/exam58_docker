@@ -162,6 +162,31 @@ class PostController extends Controller
 
 
 
+
+    function diffCatagory(Request $request)
+    {
+        $city = $request->input('name');
+        $c1 = $request->input('c1');
+        $c2 = $request->input('c20');
+
+        // 取(聯集-交集)，傳回含單一tag
+        $sql_diff = FacadesDB::select("SELECT DISTINCT site_data.id,site_data.name,site_data.city_name,site_data.address,site_data.type,site_data.comment
+        ,site_data.rate,site_data.href,site_attr.tag
+        FROM site_relationship, site_data, site_attr
+        WHERE (site_relationship.from_id = site_data.id AND site_relationship.to_id = site_attr.id)
+        AND site_data.city_name ='$city'
+        AND (site_attr.tag = '$c1' OR site_attr.tag = '$c2')
+        GROUP BY site_data.id
+        HAVING COUNT(*) = 1
+        ORDER BY site_data.rate DESC");
+
+        return response()->json($sql_diff, 200);
+    }
+
+
+
+
+
     // site_data API
     // 取所有景點(測試用，有設定量以供測試)
     function site_dataAll()

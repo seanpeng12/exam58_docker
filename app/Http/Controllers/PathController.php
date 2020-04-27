@@ -22,7 +22,7 @@ class PathController extends Controller
         $process->setTimeout(180);
 
         // 讀取csv，以外部指令的方式呼叫 R 進行繪圖->between_relationship.html
-        $your_command_R = "Rscript php/new_path.R";
+        $your_command_R = "Rscript R/new_path.R";
         $process2 = new Process($your_command_R);
 
         $process->start();
@@ -41,7 +41,7 @@ class PathController extends Controller
 
 
         return response()->json(array(
-            'response' => '成功'
+            'response' => '成功，產生csv在public，R/path.R讀取csv'
         ), 200);
     }
     // 路徑分析R圖
@@ -50,7 +50,7 @@ class PathController extends Controller
 
         // 以外部指令的方式呼叫 R 進行繪圖->between_relationship.html
 
-        $your_command = "Rscript php/new_path.R";
+        $your_command = "Rscript R/new_path.R";
         $process = new Process($your_command);
         $process->run(); // to run Sync
         // executes after the command finishes

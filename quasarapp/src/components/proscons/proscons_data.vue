@@ -1,8 +1,8 @@
 <template>
   <!-- 懶人包 -->
-  <div class="q-pa-md doc-container">
+  <div class="q-pa-md doc-container"  v-if="isShow_data">
     <!-- 標題 -->
-    <div class="gt-xs q-pa-lg q-ma-sm column text-black bg-blue-grey-3" style="height: 180px;">
+    <div class="gt-xs q-pa-lg q-ma-sm column text-black bg-blue-grey-2" style="height: 200px;">
       <div class="col">
         <div class="img_background">
           <div>
@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-    <div class="gt-xs q-pa-lg q-ma-sm column text-black bg-blue-grey-3" style="height: 180px;">
+    <div class="gt-xs q-pa-lg q-ma-sm column text-white bg-blue-grey-6" style="height: 200px;">
       <div class="col">
         <div class="img_background">
           <div>
@@ -54,7 +54,8 @@ export default {
     return {
       tab: "mails",
       // dropdownitem
-      expanded: true
+      expanded: true,
+      isShow_data:true,
     };
   },
   computed: {
@@ -73,7 +74,7 @@ export default {
   },
   watch:{
     data_index(val){
-      console.log("取得val");
+      console.log("偵測到data_index改變：取得val",val);
     }
   },
   mounted() {
