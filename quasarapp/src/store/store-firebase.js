@@ -125,7 +125,9 @@ const actions = {
       .doc();
     addData.set({
       title: payload.title,
-      date: [startDate, ""]
+      // date: [startDate, ""]
+      startDate: startDate,
+      endDate: ""
     });
     addData
       .collection("每一天")
@@ -209,6 +211,16 @@ const actions = {
       site: payload.everyday
     });
     commit("addEverydaySite", payload);
+    // 更新endDate
+    const updateLastDate = fstore
+      .collection("sightseeingMember")
+      .doc(uid)
+      .collection("我的旅程表")
+      .doc(payload.scheduleId);
+
+    updateLastDate.update({
+      endDate: payload.id
+    });
     // console.log("fbUpdateEverySiteData:", payload);
   },
   fbAddEverySiteData({ commit }, payload) {
@@ -244,9 +256,11 @@ const actions = {
     DeleteDragSite.update({
       site: firestore.FieldValue.arrayRemove(deSite)
     });
-    console.log(deDate, deSite);
+    // console.log("dedate", deDate);
   },
   fbDeleteEveryday({ commit }, payload) {
+    var moment = require("moment");
+
     const uid = firebaseAuth.currentUser.uid;
     const deleteData = fstore
       .collection("sightseeingMember")
@@ -261,6 +275,20 @@ const actions = {
       .then(function() {
         console.log("Document successfully deleted!", payload.id);
         commit("deleteEveryDay", payload.id);
+        // 更新endDate
+        var endtDate = moment(payload.id)
+          .subtract(1, "d")
+          .format("YYYY-MM-DD");
+        const updateLastDate = fstore
+          .collection("sightseeingMember")
+          .doc(uid)
+          .collection("我的旅程表")
+          .doc(payload.scheduleId);
+
+        updateLastDate.update({
+          endDate: endtDate
+        });
+        console.log("updateLastDate", payload.id);
       })
       .catch(function(error) {
         console.error("Error removing document: ", error);

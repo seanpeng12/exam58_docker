@@ -6,7 +6,7 @@
           {{ sightseeingMember.title }}
         </div>
         <p class="absolute-right q-pt-lg" style="margin-right:8px">
-          {{ sightseeingMember.date[0] + "~" + sightseeingMember.date[1] }}
+          {{ sightseeingMember.startDate + "~" + sightseeingMember.endDate }}
         </p>
       </div>
     </q-img>
