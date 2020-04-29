@@ -49,19 +49,33 @@ const mutations = {
   FETCH_txtdatas(state, res) {
     Vue.set(state.txtdatas, res.id, res.txtdata);
 
-    // console.log("FETCH_txtdatas from mutation:", state.txtdatas);
+    console.log("FETCH_txtdatas from mutation:", state.txtdatas);
 
     // return state.txtdatas = res
+  },
+  resetTxtdatas(state) {
+    // console.log("reset");
+    // Vue.set(state.txtdatas, null, null);
+    state.txtdatas = {};
+    // console.log(state.txtdatas);
+  },
+  resetTxtdatas_diff(state) {
+    // console.log("reset");
+    // Vue.set(state.txtdatas, null, null);
+    state.txtdatas_diff = {};
+    // console.log(state.txtdatas);
   },
   FETCH_txtdatas_diff(state, res) {
     Vue.set(state.txtdatas_diff, res.id, res.txtdata_diff);
 
-    console.log("FETCH_txtdatas from mutation:", state.txtdatas_diff);
+    // console.log("FETCH_txtdatas from mutation:", state.txtdatas_diff);
   },
   FETCH_index(state, index) {
     return (state.after_axios += index);
   },
   update_selected_p(state, value) {
+    console.log("update_selected_p", value);
+
     return (state.selected_p = value);
   },
   update_selected_p_detail_item(state, value) {
@@ -317,6 +331,10 @@ const actions = {
       .catch(function(response) {
         console.log(response);
       });
+  },
+  resetTxtdatas({ commit }) {
+    commit("resetTxtdatas");
+    commit("resetTxtdatas_diff");
   }
 };
 const getters = {

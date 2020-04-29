@@ -1,6 +1,6 @@
 <template>
   <q-card class="my-card">
-    <q-img src="~assets/IMG_3593.jpg">
+    <q-img src="~assets/IMG_4530.jpg">
       <div class="absolute-bottom">
         <div class="text-h7" style="font-weight: bold;">
           {{ sightseeingMember.title }}
@@ -31,7 +31,10 @@
         @click="
           updateSchedule({
             id: id,
-            updates: { title: sightseeingMember.title }
+            updates: {
+              title: sightseeingMember.title,
+              startDate: sightseeingMember.startDate
+            }
           })
         "
       >

@@ -59,11 +59,18 @@ const actions = {
 
     // 傳id給arrange-schedule
     const pass_id = payload.id;
-    this.$router.push({
-      path: "/arrange-schedule?",
-      query: { pass_id: `${pass_id}` }
-    });
-    dispatch("fbEverySiteData", pass_id);
+    this.$router
+      .push({
+        path: "/arrange-schedule?",
+        query: {
+          pass_id: `${pass_id}`,
+          startDate: `${payload.updates.startDate}`
+        }
+      })
+      .then(() => {
+        this.$router.go(0);
+      });
+    // dispatch("fbEverySiteData", pass_id);
   },
   updateDragSite({ commit }, payload) {
     // console.log("updateDragSite", payload);
@@ -151,11 +158,6 @@ const actions = {
       .catch(function(error) {
         console.error("Error removing document: ", error);
       });
-
-    // deleteData.update({
-    //   date: firestore.FieldValue.delete(),
-    //   title: firestore.FieldValue.delete()
-    // });
   },
   fbEverySiteData({ commit }, pass_id) {
     const uid = firebaseAuth.currentUser.uid;

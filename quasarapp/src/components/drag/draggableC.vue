@@ -12,32 +12,6 @@
       size="10px"
       style="margin-right:6px;margin-top:5px"
     />
-    <!-- <q-btn
-      dense
-      color="warning"
-      label="天數"
-      class="absolute-top"
-      style="margin-left:180px"
-      flat
-    /> -->
-    <!-- <q-chip
-      outline
-      square
-      color="warning"
-      text-color="white"
-      icon="event"
-      size="12px"
-      style="width:70px;margin-left:155px"
-      class="absolute-top"
-      label="天數"
-    ></q-chip> -->
-    <q-breadcrumbs-el
-      label="天數"
-      icon="touch_app"
-      style="width:70px;margin-left:130px;margin-top:8px"
-      class="absolute-top text-primary"
-    />
-
     <q-btn
       push
       round
@@ -50,9 +24,14 @@
       style="margin-left:195px;margin-top:5px"
       size="10px"
     />
+    <q-breadcrumbs-el
+      label="天數"
+      icon="touch_app"
+      style="width:70px;margin-left:130px;margin-top:8px"
+      class="absolute-top text-primary"
+    />
 
     <div class="col-4">
-      <!-- <p class="weekday"></p> -->
       <q-chip
         outline
         color="primary"
@@ -68,21 +47,11 @@
         :disabled="!enabled"
         class="list-group "
         ghost-class="ghost"
-        :move="checkMove"
         @start="dragging = true"
         @end="(dragging = false), storeEverydaySites()"
         group="site"
         :options="{ group: { pull: true, put: true }, animation: 20 }"
       >
-        <!-- <q-btn
-          color="black"
-          v-for="(site, key) in siteGroup"
-          :key="key"
-          :label="site"
-          style="margin-bottom: 3px; margin-left:4px; margin-top:3px"
-          unelevated
-        /> -->
-
         <q-item
           bordered
           dense
@@ -109,9 +78,6 @@
             />
           </q-item-section>
         </q-item>
-        <!-- 刪除提醒 -->
-
-        <!-- 刪除提醒 end -->
       </draggable>
     </div>
   </div>
@@ -121,7 +87,7 @@ import draggable from "vuedraggable";
 import { mapGetters, mapActions } from "vuex";
 var moment = require("moment");
 export default {
-  props: ["date", "dateKey", "index", "id"],
+  props: ["date", "dateKey", "index", "id", "startDate"],
   data() {
     return {
       enabled: true
@@ -154,9 +120,6 @@ export default {
     }
   },
   methods: {
-    checkMove: function(e) {
-      // window.console.log("Future index: " + e.draggedContext.futureIndex);
-    },
     ...mapActions("travel", ["storeEverydaySites", "deleteEveryDaySite"]),
     // 增加日期
     addDay() {
@@ -175,10 +138,30 @@ export default {
       });
     },
     deleteDay() {
-      this.$store.dispatch("travel/fbDeleteEveryday", {
-        scheduleId: this.id,
-        id: moment(this.date).format("YYYY-MM-DD")
-      });
+      if (this.date == this.startDate) {
+        this.$q.dialog({
+          title: "此操作無法執行",
+          message: "排程表中至少要有一天",
+
+          persistent: true
+        });
+      } else {
+        this.$q
+          .dialog({
+            title: this.date + "這天將被刪除",
+            message: "刪除本天，您所納進的景點也會跟著一並刪除唷!",
+            cancel: true,
+            persistent: true
+          })
+          .onOk(() => {
+            this.$store.dispatch("travel/fbDeleteEveryday", {
+              scheduleId: this.id,
+              id: moment(this.date).format("YYYY-MM-DD")
+            });
+          });
+      }
+
+      //
     },
     promptToDelete(value) {
       this.$q

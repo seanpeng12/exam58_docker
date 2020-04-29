@@ -4,9 +4,7 @@
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="left = !left" />
 
-        <q-toolbar-title
-          >自我規劃旅程{{ id }}{{ firstPrefer.prefer1 }}</q-toolbar-title
-        >
+        <q-toolbar-title>自我規劃旅程{{ id }}</q-toolbar-title>
       </q-toolbar>
     </q-header>
 
@@ -67,6 +65,7 @@
             :index="index"
             :date="key"
             :id="id"
+            :startDate="startDate"
           ></draggableC>
         </div>
       </div>
@@ -471,7 +470,8 @@ export default {
       options: ["台北市", "基隆市", "高雄市", "南投縣", "台南市"],
       id: "",
       date: "",
-      prompt: false
+      prompt: false,
+      startDate: ""
     };
   },
   components: {
@@ -538,8 +538,9 @@ export default {
     ...mapActions("prefers", ["searchPrefer"]),
     // ...mapActions("travel", ["fbAddEverySiteData"]),
     lastReloadPage() {
-      this.$router.push("/mySchedule");
-      this.$router.go(0);
+      this.$router.push("/mySchedule").then(() => {
+        this.$router.go(0);
+      });
     },
     promptToAddSite(value) {
       const dateList = Object.keys(this.everydaySites);
@@ -640,12 +641,17 @@ export default {
     }
   },
   created() {
+    // 旅程表ID
     var pass_id = this.$route.query.pass_id;
     this.id = pass_id;
+
+    var pass_startDate = this.$route.query.startDate;
+    this.startDate = pass_startDate;
     // console.log(this.$route.query.pass_id);
 
     // this.fbEverySiteData(this.id);
   },
+
   watch: {
     // 需求分析 用以偵測R跑完成
     after_axios: function(val) {
@@ -666,6 +672,7 @@ export default {
   mounted: function() {
     // 需求分析 初始化時取第一層城市資料(vuex)
     this.fetchCitys();
+    this.$store.dispatch("auth/handleAuthStateChange", this.id);
   }
 };
 </script>

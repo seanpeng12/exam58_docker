@@ -43,7 +43,7 @@ const actions = {
     this.$router.push("/");
   },
 
-  handleAuthStateChange({ commit, dispatch }) {
+  handleAuthStateChange({ commit, dispatch }, scheduleId) {
     firebaseAuth.onAuthStateChanged(user => {
       if (user) {
         commit("setLoggedIn", true);
@@ -55,6 +55,9 @@ const actions = {
         });
 
         dispatch("collections/fbReadData", null, {
+          root: true
+        });
+        dispatch("travel/fbEverySiteData", scheduleId, {
           root: true
         });
         console.log("登入成功");

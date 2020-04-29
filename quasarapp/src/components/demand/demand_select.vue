@@ -1,15 +1,24 @@
 <template>
   <div class="q-pa-md doc-container">
-    <div class="gt-xs q-pa-lg column items-center text-black bg-grey-3" style="height: 200px;">
+    <div
+      class="gt-xs q-pa-lg column items-center text-black bg-grey-3"
+      style="height: 200px;"
+    >
       <div class="col">
         <div class="text-center img_background">
-          <p style="font-size: 28px;font-family: Microsoft JhengHei;">景點需求分析</p>
+          <p style="font-size: 28px;font-family: Microsoft JhengHei;">
+            景點需求分析
+          </p>
         </div>
       </div>
       <div class="col">
         <div class="text-center img_background">
           <div>
-            <b class="text" style="font-size: 30px;font-family: Microsoft JhengHei;">選擇想分析的景點城市/類型</b>
+            <b
+              class="text"
+              style="font-size: 30px;font-family: Microsoft JhengHei;"
+              >選擇想分析的景點城市/類型</b
+            >
             <br />
 
             <!-- 以下測試 -->
@@ -43,7 +52,9 @@
                 >
                   <template v-slot:no-option>
                     <q-item>
-                      <q-item-section class="text-grey">沒有結果</q-item-section>
+                      <q-item-section class="text-grey"
+                        >沒有結果</q-item-section
+                      >
                     </q-item>
                   </template>
                 </q-select>
@@ -70,7 +81,9 @@
                 >
                   <template v-slot:no-option>
                     <q-item>
-                      <q-item-section class="text-grey">沒有結果</q-item-section>
+                      <q-item-section class="text-grey"
+                        >沒有結果</q-item-section
+                      >
                     </q-item>
                   </template>
                 </q-select>
@@ -97,7 +110,9 @@
                 >
                   <template v-slot:no-option>
                     <q-item>
-                      <q-item-section class="text-grey">沒有結果</q-item-section>
+                      <q-item-section class="text-grey"
+                        >沒有結果</q-item-section
+                      >
                     </q-item>
                   </template>
                 </q-select>
@@ -123,12 +138,14 @@
             <q-spinner-hourglass class="on-left" />Loading...
           </template>
         </q-btn>
+        <q-btn @click="resetTxtdatas">reset</q-btn>
         <!-- end -->
       </div>
     </div>
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 const stringOptions = ["台北", "桃園", "新竹", "苗栗", "台東"];
 export default {
   props: [
@@ -186,6 +203,7 @@ export default {
   //   }
   // },
   methods: {
+    ...mapActions("demand", ["resetTxtdatas", "resetTxtdatas_diff"]),
     // 計算loading時間
     simulateProgress(number) {
       // we set loading state
@@ -202,7 +220,11 @@ export default {
       this.selected_p_detail_item = "";
     },
     runR(val) {
-      this.$emit("runR", val);
+      this.resetTxtdatas().then(() => {
+        console.log("runR");
+
+        this.$emit("runR", val);
+      });
     },
     // 第一層過濾清單
     filterFn(val, update, abort) {
@@ -242,4 +264,5 @@ export default {
     }
   }
 };
-</script>>
+</script>
+>
