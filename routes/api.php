@@ -56,11 +56,6 @@ Route::group(['middleware' => ['CORS']], function () {
     // 景點需求分析---取(聯集-交集)景點
     Route::post('/cat_diff', 'PostController@diffCatagory');
 
-
-
-
-
-
     // 取得所有景點資料site_data
     Route::get('/site_data', 'PostController@site_dataAll');
     // 取單一景點site_data(整包object)
@@ -95,12 +90,15 @@ Route::group(['middleware' => ['CORS']], function () {
     Route::post('/runPath', 'PathController@runPath');
     // 執行搭配php的R(跑路徑分析用path.php)
     Route::post('/runRafterPHP', 'PathController@runRafterPHP');
+
+    Route::post('/PathData', 'PathController@PathData');
 });
 
+
+// 偏好分析用
 Route::group(['middleware' => ['CORS']], function () {
 
     Route::post('/preferTag', 'PostController@preferTag');
-   
+
+    Route::post('/getGoogleImg', 'PathController@getGoogleImg');
 });
-
-

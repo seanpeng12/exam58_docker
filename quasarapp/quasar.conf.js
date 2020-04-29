@@ -81,7 +81,10 @@ module.exports = function (ctx) {
         "QToggle",
         'QScrollArea',
         'QExpansionItem',
-        'QChip'
+        'QChip',
+        'QStepper',
+        'QStep',
+        'QStepperNavigation'
       ],
       directives: ["GoBack", "ClosePopup", "Mutation"],
 

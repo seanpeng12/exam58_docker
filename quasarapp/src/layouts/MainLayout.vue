@@ -1,8 +1,8 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-header class="bg-dark text-white" elevated>
+    <q-header class="bg-blue-grey-7 text-white" elevated>
       <q-toolbar>
-        <q-toolbar-title class="title">SIGHTSEEING</q-toolbar-title>
+        <q-toolbar-title class="title" style="font-family:Verdana, Geneva, sans-serif;">SightSeeing</q-toolbar-title>
         <!-- gt-xs view -->
         <q-item class="gt-xs" exact clickable to="/">
           <q-item-section>
@@ -20,7 +20,7 @@
             to="/PageAuth"
             color="amber"
             icon-right="account_circle"
-            label="Email註冊&登入"
+            label="Email註冊與登入"
           />
           <q-btn
             v-if="!loggedIn"
@@ -215,11 +215,10 @@
     <!-- qfooter -->
     <q-footer>
       <!-- tab section -->
-      <q-tabs class="lt-sm" v-model="tab">
+      <q-tabs class="lt-sm bg-blue-grey-7" v-model="tab">
         <q-route-tab to="/" icon="home" label="首頁" />
-        <q-route-tab to="/settings" icon="settings" label="Setting" />
-        <q-route-tab to="/sql" icon="settings_remote" label="測試Post" />
-        <q-route-tab to="/cardV" icon="book" label="測試Card" />
+        <q-route-tab to="/collection" icon="bookmark_border" label="我的收藏" />
+        <q-route-tab to="/mySchedule" icon="explore" label="旅遊規劃" />
       </q-tabs>
       <!--  -->
     </q-footer>
