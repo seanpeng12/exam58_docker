@@ -9,9 +9,15 @@ const state = {
   slide: "style",
   expend: false,
   prefer: {},
+  firstPrefers: {},
   watch: {}
 };
-const mutations = {};
+const mutations = {
+  firstPrefer(state, payload) {
+    state.firstPrefers = payload;
+    // console.log("firstPrefer", payload);
+  }
+};
 const actions = {
   fbReadData({ commit }) {
     const uid = firebaseAuth.currentUser.uid;
@@ -32,7 +38,7 @@ const actions = {
       });
     });
   },
-  searchPrefer({}) {
+  searchPrefer({ commit }) {
     const uid = firebaseAuth.currentUser.uid;
     console.log("fbReadData", uid);
     const userPrefer = fstore
@@ -46,8 +52,13 @@ const actions = {
         //We know there is one doc in the querySnapshot
         const prefer_1 = querySnapshot.docs[0];
         const prefer_2 = querySnapshot.docs[1];
-        console.log(prefer_1.id, prefer_2.id);
 
+        commit("demand/update_selected_p_detail_item", prefer_1.id, {
+          root: true
+        });
+        commit("demand/update_selected_p_detail_item_2", prefer_2.id, {
+          root: true
+        });
         return prefer_1, prefer_2;
       } else {
         console.log("No document corresponding to the query!");
@@ -66,7 +77,11 @@ const actions = {
     // });
   }
 };
-const getters = {};
+const getters = {
+  firstPrefer: state => {
+    return state.firstPrefers;
+  }
+};
 export default {
   namespaced: true,
 

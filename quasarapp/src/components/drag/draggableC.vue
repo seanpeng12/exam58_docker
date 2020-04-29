@@ -3,25 +3,52 @@
     <q-btn
       push
       dense
-      color="warning"
+      round
+      color="light-blue-9"
       icon="add"
       @click="addDay()"
       label=""
       class="absolute-top-right"
-      style="margin-right:4px"
+      size="10px"
+      style="margin-right:6px;margin-top:5px"
+    />
+    <!-- <q-btn
+      dense
+      color="warning"
+      label="天數"
+      class="absolute-top"
+      style="margin-left:180px"
       flat
+    /> -->
+    <!-- <q-chip
+      outline
+      square
+      color="warning"
+      text-color="white"
+      icon="event"
+      size="12px"
+      style="width:70px;margin-left:155px"
+      class="absolute-top"
+      label="天數"
+    ></q-chip> -->
+    <q-breadcrumbs-el
+      label="天數"
+      icon="touch_app"
+      style="width:70px;margin-left:130px;margin-top:8px"
+      class="absolute-top text-primary"
     />
 
     <q-btn
       push
+      round
       dense
-      color="warning"
+      color="light-blue-9"
       icon="remove"
       @click="deleteDay"
       label=""
       class="absolute-top"
-      style="margin-left:140px"
-      flat
+      style="margin-left:195px;margin-top:5px"
+      size="10px"
     />
 
     <div class="col-4">
@@ -127,12 +154,6 @@ export default {
     }
   },
   methods: {
-    add: function() {
-      this.list.push({ name: "Juan " + id, id: id++ });
-    },
-    replace: function() {
-      this.list = [{ name: "Edgard", id: id++ }];
-    },
     checkMove: function(e) {
       // window.console.log("Future index: " + e.draggedContext.futureIndex);
     },

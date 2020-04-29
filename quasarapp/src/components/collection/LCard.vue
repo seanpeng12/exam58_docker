@@ -1,5 +1,5 @@
 <template>
-  <q-card class="my-card" style="margin-right: 8px; width:220px">
+  <q-card class="my-card" style="width:220px">
     <q-img src="https://cdn.quasar.dev/img/chicken-salad.jpg" />
 
     <q-card-section>
@@ -9,13 +9,23 @@
         </div>
       </div>
 
-      <div class="row text-caption text-grey">
-        <div class="col" style="margin-top:10px;">
+      <div class="row text-caption text-grey q-mt-sm">
+        <!-- <div class="col" style="margin-top:10px;"> -->
+        <div class="col-1">
           <q-icon name="star" color="orange" size="20px" />
-          <span style=" color:orange; font-size:14px;margin-left:5px;">{{
-            collection.rate
-          }}</span>
-          <span class="q-ml-md">{{ collection.comment }}則評價</span>
+        </div>
+
+        <div
+          class="col-2"
+          style=" color:orange; font-size:14px; margin-left:5px"
+        >
+          {{ collection.rate }}
+        </div>
+        <div class="col-4" style="margin-left:2px">
+          {{ collection.comment }}則評價
+        </div>
+        <div class="col-3" style="margin-left:20px">
+          <q-space />
           <q-btn
             label="詳細地址"
             color="secondary"
@@ -23,9 +33,9 @@
             dense
             outlined
             size="10px"
-            style="margin-left:8px"
           />
         </div>
+        <!-- </div> -->
         <!-- dialog -->
         <q-dialog v-model="dialog" :position="position">
           <q-card style="width: 350px">
@@ -39,8 +49,6 @@
                   地址: {{ collection.address }}
                 </div>
               </div>
-
-              <q-space />
             </q-card-section>
             <q-linear-progress :value="1" color="blue-2" />
           </q-card>

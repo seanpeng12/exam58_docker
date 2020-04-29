@@ -238,38 +238,13 @@
           theseArgs = theseArgs.concat([task.data]);
           task = task.code;
         }
-        var taskFunc = tryEval(task);
+        var taskFunc = eval("(" + task + ")");
         if (typeof(taskFunc) !== "function") {
           throw new Error("Task must be a function! Source:\n" + task);
         }
         taskFunc.apply(target, theseArgs);
       });
     }
-  }
-
-  // Attempt eval() both with and without enclosing in parentheses.
-  // Note that enclosing coerces a function declaration into
-  // an expression that eval() can parse
-  // (otherwise, a SyntaxError is thrown)
-  function tryEval(code) {
-    var result = null;
-    try {
-      result = eval(code);
-    } catch(error) {
-      if (!error instanceof SyntaxError) {
-        throw error;
-      }
-      try {
-        result = eval("(" + code + ")");
-      } catch(e) {
-        if (e instanceof SyntaxError) {
-          throw error;
-        } else {
-          throw e;
-        }
-      }
-    }
-    return result;
   }
 
   function initSizing(el) {
@@ -664,56 +639,17 @@
     invokePostRenderHandlers();
   }
 
-
-  function has_jQuery3() {
-    if (!window.jQuery) {
-      return false;
-    }
-    var $version = window.jQuery.fn.jquery;
-    var $major_version = parseInt($version.split(".")[0]);
-    return $major_version >= 3;
-  }
-
-  /*
-  / Shiny 1.4 bumped jQuery from 1.x to 3.x which means jQuery's
-  / on-ready handler (i.e., $(fn)) is now asyncronous (i.e., it now
-  / really means $(setTimeout(fn)).
-  / https://jquery.com/upgrade-guide/3.0/#breaking-change-document-ready-handlers-are-now-asynchronous
-  /
-  / Since Shiny uses $() to schedule initShiny, shiny>=1.4 calls initShiny
-  / one tick later than it did before, which means staticRender() is
-  / called renderValue() earlier than (advanced) widget authors might be expecting.
-  / https://github.com/rstudio/shiny/issues/2630
-  /
-  / For a concrete example, leaflet has some methods (e.g., updateBounds)
-  / which reference Shiny methods registered in initShiny (e.g., setInputValue).
-  / Since leaflet is privy to this life-cycle, it knows to use setTimeout() to
-  / delay execution of those methods (until Shiny methods are ready)
-  / https://github.com/rstudio/leaflet/blob/18ec981/javascript/src/index.js#L266-L268
-  /
-  / Ideally widget authors wouldn't need to use this setTimeout() hack that
-  / leaflet uses to call Shiny methods on a staticRender(). In the long run,
-  / the logic initShiny should be broken up so that method registration happens
-  / right away, but binding happens later.
-  */
-  function maybeStaticRenderLater() {
-    if (shinyMode && has_jQuery3()) {
-      window.jQuery(window.HTMLWidgets.staticRender);
-    } else {
-      window.HTMLWidgets.staticRender();
-    }
-  }
-
+  // Wait until after the document has loaded to render the widgets.
   if (document.addEventListener) {
     document.addEventListener("DOMContentLoaded", function() {
       document.removeEventListener("DOMContentLoaded", arguments.callee, false);
-      maybeStaticRenderLater();
+      window.HTMLWidgets.staticRender();
     }, false);
   } else if (document.attachEvent) {
     document.attachEvent("onreadystatechange", function() {
       if (document.readyState === "complete") {
         document.detachEvent("onreadystatechange", arguments.callee);
-        maybeStaticRenderLater();
+        window.HTMLWidgets.staticRender();
       }
     });
   }
@@ -801,7 +737,7 @@
       if (o !== null && typeof o === "object" && part in o) {
         if (i == (l - 1)) { // if we are at the end of the line then evalulate
           if (typeof o[part] === "string")
-            o[part] = tryEval(o[part]);
+            o[part] = eval("(" + o[part] + ")");
         } else { // otherwise continue to next embedded object
           o = o[part];
         }
@@ -2719,9 +2655,6 @@ if (HTMLWidgets.shinyMode){
             if(data.options.byselection.hideColor){
               el.byselectionColor = data.options.byselection.hideColor;
             }
-            if(data.options.byselection.highlight !== undefined){
-              el.byselectionHighlight = data.options.byselection.highlight;
-            }
           }
           
           if(data.options.byselection !== undefined){
@@ -3159,10 +3092,8 @@ HTMLWidgets.widget({
 
     if(x.byselection.enabled){
       el_id.byselectionColor = x.byselection.hideColor;
-      el_id.byselectionHighlight = x.byselection.highlight;
     } else {
       el_id.byselectionColor = 'rgba(200,200,200,0.5)';
-      el_id.byselectionHighlight = false;
     }
     
     if(x.idselection.enabled){
@@ -3247,7 +3178,7 @@ HTMLWidgets.widget({
         instance.network.selectNodes([id]);
       }
       if(el_id.highlight){
-        neighbourhoodHighlight(instance.network.getSelection().nodes, "click", el_id.highlightAlgorithm, true);
+        neighbourhoodHighlight(instance.network.getSelection().nodes, "click", el_id.highlightAlgorithm);
       }else{
         if(init){
           selectNode = document.getElementById('nodeSelect'+el.id);
@@ -3824,7 +3755,7 @@ HTMLWidgets.widget({
             var r = confirm("Do you want to delete " + data.nodes.length + " node(s) and " + data.edges.length + " edges ?");
             if (r === true) {
               deleteSubGraph(data, callback);
-            } else { clearPopUp(); callback(null); }
+            }
         };
       } else if(typeof(x.options.manipulation.deleteNode) === typeof(true)){
         if(x.options.manipulation.deleteNode){
@@ -3832,7 +3763,7 @@ HTMLWidgets.widget({
               var r = confirm("Do you want to delete " + data.nodes.length + " node(s) and " + data.edges.length + " edges ?");
               if (r === true) {
                 deleteSubGraph(data, callback);
-              } else { clearPopUp(); callback(null); }
+              }
           };
         } else {
           options.manipulation.deleteNode = false;
@@ -3846,7 +3777,7 @@ HTMLWidgets.widget({
             var r = confirm("Do you want to delete " + data.edges.length + " edges ?");
             if (r === true) {
               deleteSubGraph(data, callback);
-            } else { clearPopUp(); callback(null); }
+            }
         };
       } else if(typeof(x.options.manipulation.deleteEdge) === typeof(true)){
         if(x.options.manipulation.deleteEdge){
@@ -3854,7 +3785,7 @@ HTMLWidgets.widget({
               var r = confirm("Do you want to delete " + data.edges.length + " edges ?");
               if (r === true) {
                 deleteSubGraph(data, callback);
-              } else { clearPopUp(); callback(null); }
+              }
           };
         } else {
           options.manipulation.deleteEdge = false;
@@ -4175,12 +4106,6 @@ HTMLWidgets.widget({
           edges.update(edgesHardToRead);
             
           nodes.update(updateArray);
-          
-          // select for highlight
-          if(el_id.highlight && x.nodes && el_id.byselectionHighlight){
-              neighbourhoodHighlight(connectedNodes, "click", el_id.highlightAlgorithm, false);
-              instance.network.selectNodes(connectedNodes)
-          }
         }
       }
       else if (el_id.selectActive === true) {
@@ -4196,7 +4121,7 @@ HTMLWidgets.widget({
     var is_hovered = false;
     var is_clicked = false;
     
-    function neighbourhoodHighlight(params, action_type, algorithm, reset_selectedBy) {
+    function neighbourhoodHighlight(params, action_type, algorithm) {
 
       var nodes_in_clusters = instance.network.body.modules.clustering.clusteredNodes;
       var have_cluster_nodes = false;
@@ -4610,7 +4535,7 @@ HTMLWidgets.widget({
         }
       }
       // reset selectedBy list if actived
-      if(el_id.byselection && reset_selectedBy){
+      if(el_id.byselection){
         resetList("selectedBy", el.id, 'selectedBy');
       }
     }
@@ -4648,7 +4573,7 @@ HTMLWidgets.widget({
     // shared click function (selectedNodes)
     document.getElementById("graph"+el.id).myclick = function(params){
         if(el_id.highlight && x.nodes){
-          neighbourhoodHighlight(params.nodes, "click", el_id.highlightAlgorithm, true);
+          neighbourhoodHighlight(params.nodes, "click", el_id.highlightAlgorithm);
         }else if((el_id.idselection || el_id.byselection) && x.nodes){
           onClickIDSelection(params)
         }
@@ -4657,7 +4582,7 @@ HTMLWidgets.widget({
     // Set event in relation with highlightNearest      
     instance.network.on("click", function(params){
         if(el_id.highlight && x.nodes){
-          neighbourhoodHighlight(params.nodes, "click", el_id.highlightAlgorithm, true);
+          neighbourhoodHighlight(params.nodes, "click", el_id.highlightAlgorithm);
         }else if((el_id.idselection || el_id.byselection) && x.nodes){
           onClickIDSelection(params)
         } 
@@ -4665,13 +4590,13 @@ HTMLWidgets.widget({
     
     instance.network.on("hoverNode", function(params){
       if(el_id.hoverNearest && x.nodes){
-        neighbourhoodHighlight([params.node], "hover", el_id.highlightAlgorithm, true);
+        neighbourhoodHighlight([params.node], "hover", el_id.highlightAlgorithm);
       } 
     });
 
     instance.network.on("blurNode", function(params){
       if(el_id.hoverNearest && x.nodes){
-        neighbourhoodHighlight([], "hover", el_id.highlightAlgorithm, true);
+        neighbourhoodHighlight([], "hover", el_id.highlightAlgorithm);
       }      
     });
     
@@ -4835,7 +4760,7 @@ HTMLWidgets.widget({
         // reset some parameters / data before
         if (el_id.selectActive === true | el_id.highlightActive === true) {
           //reset nodes
-          neighbourhoodHighlight([], "click", el_id.highlightAlgorithm, true);
+          neighbourhoodHighlight([], "click", el_id.highlightAlgorithm);
           if (el_id.selectActive === true){
             el_id.selectActive = false;
             resetList('selectedBy',el.id, 'selectedBy');
@@ -5190,11 +5115,11 @@ HTMLWidgets.widget({
 </head>
 <body style="background-color: white;">
 <div id="htmlwidget_container">
-<div id="htmlwidget-162440de552ee54ec348" class="visNetwork html-widget" style="width:100%;height:500px;">
+<div id="htmlwidget-e38c862d5d23aecfc4d8" class="visNetwork html-widget" style="width:100%;height:500px;">
 
 </div>
 </div>
-<script type="application/json" data-for="htmlwidget-162440de552ee54ec348">{"x":{"nodes":{"id":[2,5,7,15,16,17,34,37,39,41,42,43,44],"label":["攝影擁擠","身障者不方便","登山無趣","標示不清楚","人多","垃圾桶不具備","年長的人評價差的","步道多","步道大","樓梯多","規劃簡陋","規劃多","步道小"],"color":["#E6B7BE","#E6B7BE","#E6B7BE","#E6B7BE","#C42A56","#E6B7BE","#E6B7BE","#E6B7BE","#E6B7BE","#E6B7BE","#E6B7BE","#E6B7BE","#E6B7BE"],"font.size":[30,30,30,30,30,30,30,30,30,30,30,30,30],"value":[1,1,1,1,11,1,1,1,1,1,1,1,1],"x":[-0.756015576604761,0.95890569246334,0.572016940007688,0.111813173097898,-0.315694308042617,-0.141055491788808,-0.191717482831665,0.192722304345537,1,0.783647536411731,-0.751309769241421,-1,-0.368306398738862],"y":[0.668229562227367,0.346054261655232,0.899706650486535,-0.739326183113038,-0.578960177812818,-0.185082557481915,1,0.460086938968761,-0.230260545189942,-0.817211112147175,-0.365048231219069,-0.0521465776533749,-1]},"edges":{"from":[15,16,16,42,44],"to":[16,17,42,43,16],"value":[4,4,4,4,4],"color":["#E6B7BE","#E6B7BE","#E6B7BE","#E6B7BE","#E6B7BE"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":false},"physics":{"stabilization":false}},"groups":null,"width":"100%","height":"500px","idselection":{"enabled":false},"byselection":{"enabled":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","igraphlayout":{"type":"square"}},"evals":[],"jsHooks":[]}</script>
-<script type="application/htmlwidget-sizing" data-for="htmlwidget-162440de552ee54ec348">{"viewer":{"width":"100%","height":"500px","padding":15,"fill":false},"browser":{"width":"100%","height":"500px","padding":40,"fill":false}}</script>
+<script type="application/json" data-for="htmlwidget-e38c862d5d23aecfc4d8">{"x":{"nodes":{"id":[2,5,7,15,16,17,34,37,39,41,42,43,44],"label":["攝影擁擠","身障者不方便","登山無趣","標示不清楚","人多","垃圾桶不具備","年長的人評價差的","步道多","步道大","樓梯多","規劃簡陋","規劃多","步道小"],"color":["#E6B7BE","#E6B7BE","#E6B7BE","#E6B7BE","#C42A56","#E6B7BE","#E6B7BE","#E6B7BE","#E6B7BE","#E6B7BE","#E6B7BE","#E6B7BE","#E6B7BE"],"font.size":[30,30,30,30,30,30,30,30,30,30,30,30,30],"value":[1,1,1,1,11,1,1,1,1,1,1,1,1],"x":[1,0.913518625724664,0.535807173312731,-0.742778975430462,-0.587227412858959,-0.186748180100352,0.571341837623862,-0.0974296657329704,-0.704457684061401,0.406859838343101,-0.407185982623456,-0.135704392020925,-1],"y":[0.277785208418401,-0.355587663058736,0.912903540036111,0.160252923730856,-0.266893415788717,-0.113626644056008,-0.840508140346336,1,0.841350459107374,0.313767625980777,-0.713966750362377,-1,-0.327916806784377]},"edges":{"from":[15,16,16,42,44],"to":[16,17,42,43,16],"value":[4,4,4,4,4],"color":["#E6B7BE","#E6B7BE","#E6B7BE","#E6B7BE","#E6B7BE"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":false},"physics":{"stabilization":false}},"groups":null,"width":"100%","height":"500px","idselection":{"enabled":false},"byselection":{"enabled":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","igraphlayout":{"type":"square"}},"evals":[],"jsHooks":[]}</script>
+<script type="application/htmlwidget-sizing" data-for="htmlwidget-e38c862d5d23aecfc4d8">{"viewer":{"width":"100%","height":"500px","padding":15,"fill":false},"browser":{"width":"100%","height":"500px","padding":40,"fill":false}}</script>
 </body>
 </html>

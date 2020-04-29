@@ -1,7 +1,7 @@
 <template>
   <!-- <q-page> -->
-  <q-item clickable v-ripple>
-    <q-item-section>{{ txtdata.name }}</q-item-section>
+  <q-item clickable v-ripple v-if="txtdata_diff.tag == selected_p_detail_item">
+    <q-item-section>{{ txtdata_diff.name }}</q-item-section>
     <slot name="addToSchedule"></slot>
     <slot name="addToCollection"></slot>
   </q-item>
@@ -13,7 +13,7 @@
 </template>
 <script>
 export default {
-  props: ["txtinfo", "txtdata"],
+  props: ["txtinfo_diff", "txtdata_diff", "selected_p_detail_item"],
   data() {
     return {
       loading4: false,
@@ -26,13 +26,13 @@ export default {
       get: function() {
         console.log("取得資料");
         txtdata.completed;
-        return this.txtdatas;
+        return this.txtdatas_diff;
       },
       // 回傳並要s_demandPage上傳vuex
       set: function(value) {
         console.log("被觸發");
 
-        this.$emit("txtdatas_Update", val);
+        this.$emit("txtdatas_diff_Update", val);
       }
     }
   },

@@ -1,3 +1,9 @@
+<script
+  async
+  defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A"
+></script>
+
 <template>
   <div class="container mt-4">
     <h2 class="text-center text-secondary pb-2">台北市營運餐廳</h2>
@@ -9,11 +15,7 @@
       <div class="google-map" id="map"></div>
     </div></div
 ></template>
-<script
-  async
-  defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A"
-></script>
+
 <script>
 export default {
   name: "Restaurants",

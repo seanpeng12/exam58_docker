@@ -4,7 +4,9 @@
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="left = !left" />
 
-        <q-toolbar-title>自我規劃旅程{{ id }}</q-toolbar-title>
+        <q-toolbar-title
+          >自我規劃旅程{{ id }}{{ firstPrefer.prefer1 }}</q-toolbar-title
+        >
       </q-toolbar>
     </q-header>
 
@@ -112,6 +114,7 @@
                   :key="key"
                   :collection="item"
                   :index="key"
+                  style="margin:4px;"
                 >
                   <!-- 加入排程鈕 -->
                   <template slot="addToSchedule">
@@ -122,7 +125,7 @@
                       @click="promptToAddSite({ id: id, site: item.site_name })"
                       dense
                       size="12px"
-                      style="margin-left:20px"
+                      style="margin-left:30px"
                     />
                   </template>
                 </LCard>
@@ -149,6 +152,7 @@
               </div>
               <!-- <p>{{ after_axios }}</p> -->
               <!-- 需求分析 select -->
+
               <demand-select
                 v-if="fourth == false"
                 :citys="citys"
@@ -161,7 +165,7 @@
                 @changed_3="selected_3"
                 @runR="run_R"
               ></demand-select>
-
+              <!-- 偏好分析 -->
               <demand-prefer
                 v-else
                 :citys="citys"
@@ -184,36 +188,163 @@
                   </div>
 
                   <!-- 需求分析 懶人包 -->
+
                   <div class="col">
-                    <q-scroll-area style="height: 450px; max-width: 450px;">
-                      <q-list>
-                        <demand-data
-                          v-for="(txtdata, key) in txtdatas"
-                          :txtinfo="txtinfo"
-                          :key="key"
-                          :txtdata="txtdata"
-                          @txtdatas_Update="txtdatas_toVuex"
-                        >
-                          <template slot="addToSchedule">
-                            <q-space />
-                            <q-btn
-                              icon-right="add"
-                              label="加進排程"
-                              color="warning"
-                              @click="
-                                promptToAddSite({
-                                  id: key,
-                                  site: txtdata.name
-                                })
-                              "
-                              dense
-                              size="12px"
-                              style="margin-left:20px"
-                            />
-                          </template>
-                        </demand-data>
-                      </q-list>
-                    </q-scroll-area>
+                    <p
+                      class="text"
+                      style="font-size: 30px;font-family: Microsoft JhengHei;"
+                    >
+                      {{ txtinfo }}
+                    </p>
+
+                    <q-list bordered>
+                      <q-expansion-item
+                        group="somegroup"
+                        icon="explore"
+                        :label="
+                          selected_p_detail_item +
+                            '&&' +
+                            selected_p_detail_item_2
+                        "
+                        default-opened
+                        header-class="text-purple"
+                      >
+                        <q-card>
+                          <q-card-section>
+                            <q-scroll-area
+                              style="height:200px; max-width: 600px;"
+                            >
+                              <q-list>
+                                <demand-data
+                                  v-for="(txtdata, key) in txtdatas"
+                                  :key="key"
+                                  :txtinfo="txtinfo"
+                                  :txtdata="txtdata"
+                                  @txtdatas_Update="txtdatas_toVuex"
+                                >
+                                  <template slot="addToSchedule">
+                                    <q-space />
+                                    <q-btn
+                                      icon-right="add"
+                                      label="加進排程"
+                                      color="warning"
+                                      @click="
+                                        promptToAddSite({
+                                          id: key,
+                                          site: txtdata.name
+                                        })
+                                      "
+                                      dense
+                                      size="12px"
+                                      style="margin-left:20px"
+                                    />
+                                  </template>
+                                </demand-data>
+                              </q-list>
+                            </q-scroll-area>
+                          </q-card-section>
+                        </q-card>
+                      </q-expansion-item>
+
+                      <q-separator />
+
+                      <q-expansion-item
+                        group="somegroup"
+                        icon="explore"
+                        :label="selected_p_detail_item"
+                        header-class="text-primary"
+                      >
+                        <q-card>
+                          <q-card-section>
+                            <!-- test txtdatas_diff -->
+                            <q-scroll-area
+                              style="height:200px; max-width: 600px;"
+                            >
+                              <q-list>
+                                <demandDataDiff
+                                  v-for="(txtdata, key) in txtdatas_diff"
+                                  :key="key"
+                                  :txtinfo_diff="txtinfo"
+                                  :txtdata_diff="txtdata"
+                                  :selected_p_detail_item="
+                                    selected_p_detail_item
+                                  "
+                                  @txtdatas_Update="txtdatas_toVuex"
+                                >
+                                  <template slot="addToSchedule">
+                                    <q-space />
+                                    <q-btn
+                                      icon-right="add"
+                                      label="加進排程"
+                                      color="warning"
+                                      @click="
+                                        promptToAddSite({
+                                          id: key,
+                                          site: txtdata.name
+                                        })
+                                      "
+                                      dense
+                                      size="12px"
+                                      style="margin-left:20px"
+                                    />
+                                  </template>
+                                </demandDataDiff>
+                              </q-list>
+                            </q-scroll-area>
+                          </q-card-section>
+                        </q-card>
+                      </q-expansion-item>
+
+                      <q-separator />
+
+                      <q-expansion-item
+                        group="somegroup"
+                        icon="explore"
+                        :label="selected_p_detail_item_2"
+                        header-class="text-primary"
+                      >
+                        <q-card>
+                          <q-card-section>
+                            <q-scroll-area
+                              style="height:200px; max-width: 600px;"
+                            >
+                              <q-list>
+                                <demandDataDiff2
+                                  v-for="(txtdata, key) in txtdatas_diff"
+                                  :key="key"
+                                  :txtinfo_diff="txtinfo"
+                                  :txtdata_diff="txtdata"
+                                  :selected_p_detail_item_2="
+                                    selected_p_detail_item_2
+                                  "
+                                  @txtdatas_Update="txtdatas_toVuex"
+                                >
+                                  <template slot="addToSchedule">
+                                    <q-space />
+                                    <q-btn
+                                      icon-right="add"
+                                      label="加進排程"
+                                      color="warning"
+                                      @click="
+                                        promptToAddSite({
+                                          id: key,
+                                          site: txtdata.name
+                                        })
+                                      "
+                                      dense
+                                      size="12px"
+                                      style="margin-left:20px"
+                                    />
+                                  </template>
+                                </demandDataDiff2>
+                              </q-list>
+                            </q-scroll-area>
+                          </q-card-section>
+                        </q-card>
+                      </q-expansion-item>
+
+                      <q-separator />
+                    </q-list>
                   </div>
                 </div>
               </div>
@@ -279,36 +410,26 @@
               <div class="text-h6">
                 Tip: 優缺點分析(請選擇您想了解該景點的評價分析)
               </div>
-              <div class="row">
-                <q-select
-                  outlined
-                  v-model="model_city"
-                  :options="options"
-                  label="選擇您想去的縣市"
-                  style="width: 250px; margin-left:
-              32px"
-                />
-                <q-select
-                  outlined
-                  v-model="model"
-                  :options="ssite"
-                  label="輸入您想去的景點"
-                  style="width: 250px; margin-left:32px"
-                />
-                <q-btn
-                  label="開始分析"
-                  color="secondary"
-                  size="15px"
-                  style="width: 200px; margin-left:32px"
-                />
-                <q-btn
-                  label="加入排程"
-                  color="warning"
-                  size="15px"
-                  style="margin-left:100px;"
-                />
-              </div>
-              <img src="~assets/comment.jpg" />
+              <q-page>
+                <!-- proscons-select 區域 -->
+                <proscons-select></proscons-select>
+                <!-- end proscons select -->
+
+                <!-- 左右區域 web -->
+                <div class="q-pa-md">
+                  <div class="row">
+                    <div class="col-6">
+                      <proscons-data></proscons-data>
+                    </div>
+                    <!-- 懶人包區域 -->
+                    <div class="col-6">
+                      <proscons-r></proscons-r>
+                    </div>
+                  </div>
+                </div>
+                <!-- end -->
+              </q-page>
+
               <q-btn
                 dense
                 label="前往下一步"
@@ -361,12 +482,19 @@ export default {
     demandSelect: () => import("components/demand/demand_select.vue"),
     demandPrefer: () => import("components/demand/prefer_select.vue"),
     demandR: () => import("components/demand/demand_R.vue"),
-    demandData: () => import("components/demand/demand_data.vue")
+    demandData: () => import("components/demand/demand_data.vue"),
+    demandDataDiff: () => import("components/demand/demand_data_diff.vue"),
+    demandDataDiff2: () => import("components/demand/demand_data_diff2.vue"),
+    // 引用優缺點元件
+    prosconsSelect: () => import("components/proscons/proscons_select.vue"),
+    prosconsR: () => import("components/proscons/proscons_R.vue"),
+    prosconsData: () => import("components/proscons/proscons_data.vue")
   },
   computed: {
     ...mapGetters("travel", ["everydaySites"]),
     ...mapGetters("collections", ["collections"]),
     ...mapState("collections", ["search"]),
+    ...mapGetters("prefers", ["firstPrefer"]),
     // demand
     ...mapGetters("demand", [
       "citys",
@@ -378,8 +506,11 @@ export default {
       "runR_value",
       "txtdatas",
       "txtinfo",
-      "after_axios"
+      "after_axios",
+      "txtdatas_diff"
     ]),
+    // 取得vuex state變動值、優缺分析
+    ...mapGetters("proscons", ["run_index"]),
     EverydaySites: {
       get() {
         // console.log("parent from get:", this.everydaySites);
@@ -402,7 +533,7 @@ export default {
     ...mapActions("demand", ["fetchCats"]),
     ...mapActions("demand", ["changeSrc"]),
     ...mapActions("demand", ["upload_axios"]),
-    ...mapActions("demand", ["upload_axios_2"]),
+    ...mapActions("demand", ["upload_axios_2", "upload_axios_2_diff"]),
     // 偏好分析
     ...mapActions("prefers", ["searchPrefer"]),
     // ...mapActions("travel", ["fbAddEverySiteData"]),
@@ -479,8 +610,19 @@ export default {
     },
     pre_selected_1(value) {
       console.log("收到emit!");
-      this.$store.commit("demand/update_selected_p", value);
       this.searchPrefer();
+      this.$store.commit("demand/update_selected_p", value);
+      //.then(() => {
+      //   this.$store.commit(
+      //     "demand/update_selected_p_detail_item",
+      //     this.firstPrefer.prefer1
+      //   );
+      //   this.$store.commit(
+      //     "demand/update_selected_p_detail_item_2",
+      //     this.firstPrefer.prefer2
+      //   );
+      // });
+      // console.log(this.firstPrefer.prefer1, this.firstPrefer.prefer2);
     },
     // 需求分析  傳送runR引數至vuex
     run_R(value) {
@@ -511,6 +653,8 @@ export default {
       this.changeSrc();
       // 在呼叫ajax取懶人包(vuex)
       this.upload_axios_2();
+      this.upload_axios_2_diff();
+
       // 隱藏按鈕
       this.isShow = false;
       // 清空選取資料

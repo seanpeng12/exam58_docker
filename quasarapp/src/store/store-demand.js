@@ -22,6 +22,8 @@ const state = {
   //   completed: "0"
   // }],
   txtdatas: {},
+  // 差集
+  txtdatas_diff: {},
   // 提示：
   txtinfo: "請先選擇城市與需求",
 
@@ -47,9 +49,14 @@ const mutations = {
   FETCH_txtdatas(state, res) {
     Vue.set(state.txtdatas, res.id, res.txtdata);
 
-    console.log("FETCH_txtdatas from mutation:", state.txtdatas);
+    // console.log("FETCH_txtdatas from mutation:", state.txtdatas);
 
     // return state.txtdatas = res
+  },
+  FETCH_txtdatas_diff(state, res) {
+    Vue.set(state.txtdatas_diff, res.id, res.txtdata_diff);
+
+    console.log("FETCH_txtdatas from mutation:", state.txtdatas_diff);
   },
   FETCH_index(state, index) {
     return (state.after_axios += index);
@@ -58,9 +65,13 @@ const mutations = {
     return (state.selected_p = value);
   },
   update_selected_p_detail_item(state, value) {
+    console.log(value);
+
     return (state.selected_p_detail_item = value);
   },
   update_selected_p_detail_item_2(state, value) {
+    console.log(value);
+
     return (state.selected_p_detail_item_2 = value);
   },
   update_txtdatas(state, value) {
@@ -184,19 +195,8 @@ const actions = {
         const address = response.data.map(item => item.address);
         const comment = response.data.map(item => item.comment);
         const rate = response.data.map(item => item.rate);
-
         const type = response.data.map(item => item.type);
-        const completed = response.data.map(item => item.completed);
 
-        // commit('FETCH_txtdatas', {
-        //   id: id,
-        //   txtdata: {
-        //     name: name,
-        //     city_name: city_name,
-        //     type: type,
-        //     completed: completed,
-        //   }
-        // })
         const uid = firebaseAuth.currentUser.uid;
         const checkCollectionExists = fstore
           .collection("sightseeingMember")
@@ -238,23 +238,81 @@ const actions = {
             .catch(function(error) {
               console.log("Error getting document:", error);
             });
-          // commit("FETCH_txtdatas", {
-          //   id: data,
-          //   txtdata: {
-          //     name: name[index],
-          //     city_name: city_name[index],
-          //     address: address[index],
-          //     comment: comment[index],
-          //     rate: rate[index],
-          //     type: type[index],
-          //     completed: completed[index]
-          //   }
-          // });
         });
 
         // console.log("txtdatas from actions", txtdatas);
 
         // commit('FETCH_txtdatas', txtdatas);
+      })
+      .catch(function(response) {
+        console.log(response);
+      });
+  },
+  // 取差集diff
+  upload_axios_2_diff({ commit }) {
+    axiosInstance
+      .post("http://127.0.0.1:80/api/cat_diff", {
+        name: state.selected_p,
+        c1: state.selected_p_detail_item,
+        c20: state.selected_p_detail_item_2
+      })
+      .then(response => {
+        console.log("成功取diff");
+        // console.log(response.data);
+        const id = response.data.map(item => item.id);
+        const name = response.data.map(item => item.name);
+        const city_name = response.data.map(item => item.city_name);
+        const address = response.data.map(item => item.address);
+        const comment = response.data.map(item => item.comment);
+        const rate = response.data.map(item => item.rate);
+
+        const type = response.data.map(item => item.type);
+        const tag = response.data.map(item => item.tag);
+
+        const uid = firebaseAuth.currentUser.uid;
+        const checkCollectionExists = fstore
+          .collection("sightseeingMember")
+          .doc(uid)
+          .collection("我的收藏");
+        id.forEach(function(data, index, array) {
+          checkCollectionExists
+            .doc(data)
+            .get()
+            .then(function(doc) {
+              if (doc.exists) {
+                commit("FETCH_txtdatas_diff", {
+                  id: data,
+                  txtdata_diff: {
+                    name: name[index],
+                    city_name: city_name[index],
+                    address: address[index],
+                    comment: comment[index],
+                    rate: rate[index],
+                    type: type[index],
+                    tag: tag[index],
+                    exists: true
+                  }
+                });
+              } else {
+                commit("FETCH_txtdatas_diff", {
+                  id: data,
+                  txtdata_diff: {
+                    name: name[index],
+                    city_name: city_name[index],
+                    address: address[index],
+                    comment: comment[index],
+                    rate: rate[index],
+                    type: type[index],
+                    tag: tag[index],
+                    exists: false
+                  }
+                });
+              }
+            })
+            .catch(function(error) {
+              console.log("Error getting document:", error);
+            });
+        });
       })
       .catch(function(response) {
         console.log(response);
@@ -268,8 +326,8 @@ const getters = {
   cats: state => {
     return state.cats;
   },
-  txtdata: state => {
-    return state.txtdata;
+  txtdatas_diff: state => {
+    return state.txtdatas_diff;
   },
   txtdatas: state => {
     return state.txtdatas;

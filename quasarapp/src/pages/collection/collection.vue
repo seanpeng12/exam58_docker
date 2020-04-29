@@ -30,6 +30,7 @@
         :key="key"
         :collection="item"
         :index="key"
+        style="margin-right: 8px; "
       >
         <template slot="deleteCollection">
           <q-btn

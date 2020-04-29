@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md doc-container">
     <div
-      class="gt-xs q-pa-lg column items-center text-black bg-grey-3"
+      class="gt-xs q-pa-lg items-center text-black bg-grey-3"
       style="height: 200px;"
     >
       <div class="col">
@@ -20,127 +20,50 @@
               >選擇想旅遊的城市</b
             >
             <br />
-
-            <!-- 以下測試 -->
-            <!-- <p>{{Object.values(citys).map(city => city.city_name)}}</p>
-              <div v-for="city in citys" :key="city.index">{{k[city.index] = city.city_name}}</div>
-            <p>{{k}}</p>-->
           </div>
         </div>
       </div>
 
-      <div class="col">
-        <!-- 三個下拉式選單 -->
-        <div class="row">
-          <div class="col">
-            <!-- 下拉式選單 -->
+      <div class="row">
+        <div class="col" style="margin-left:200px; margin-top:25px">
+          <q-select
+            filled
+            v-model="selected_p_local"
+            v-on:change="onProductChange"
+            use-input
+            hide-selected
+            fill-input
+            input-debounce="0"
+            :options="options"
+            @filter="filterFn"
+            label="選擇城市"
+            style="width: 250px;"
+          >
+            <template v-slot:no-option>
+              <q-item>
+                <q-item-section class="text-grey">沒有結果</q-item-section>
+              </q-item>
+            </template>
+          </q-select>
+        </div>
 
-            <div class="q-pa-md">
-              <div class="q-gutter-md row">
-                <q-select
-                  filled
-                  v-model="selected_p_local"
-                  v-on:change="onProductChange"
-                  use-input
-                  hide-selected
-                  fill-input
-                  input-debounce="0"
-                  :options="options"
-                  @filter="filterFn"
-                  hint="選擇城市"
-                  style="width: 250px; padding-bottom: 32px"
-                >
-                  <template v-slot:no-option>
-                    <q-item>
-                      <q-item-section class="text-grey"
-                        >沒有結果</q-item-section
-                      >
-                    </q-item>
-                  </template>
-                </q-select>
-              </div>
-            </div>
-            <!--  -->
-          </div>
-          <div class="col">
-            <!-- 下拉式選單 -->
-
-            <div class="q-pa-md">
-              <div class="q-gutter-md row">
-                <q-select
-                  filled
-                  v-model="selected_p_detail_item_local"
-                  use-input
-                  hide-selected
-                  fill-input
-                  input-debounce="0"
-                  :options="options"
-                  @filter="filterFn_2"
-                  hint="選擇類型"
-                  style="width: 250px; padding-bottom: 32px"
-                >
-                  <template v-slot:no-option>
-                    <q-item>
-                      <q-item-section class="text-grey"
-                        >沒有結果</q-item-section
-                      >
-                    </q-item>
-                  </template>
-                </q-select>
-              </div>
-            </div>
-            <!--  -->
-          </div>
-          <div class="col">
-            <!-- 下拉式選單 -->
-
-            <div class="q-pa-md">
-              <div class="q-gutter-md row">
-                <q-select
-                  filled
-                  v-model="selected_p_detail_item_local2"
-                  use-input
-                  hide-selected
-                  fill-input
-                  input-debounce="0"
-                  :options="options"
-                  @filter="filterFn_3"
-                  hint="請選擇類型"
-                  style="width: 250px; padding-bottom: 32px"
-                >
-                  <template v-slot:no-option>
-                    <q-item>
-                      <q-item-section class="text-grey"
-                        >沒有結果</q-item-section
-                      >
-                    </q-item>
-                  </template>
-                </q-select>
-              </div>
-            </div>
-            <!--  -->
-          </div>
+        <div class="col" style="margin-top:35px">
+          <!-- 按鈕 -->
+          <q-btn
+            :loading="loading4"
+            color="cyan-9"
+            @click="simulateProgress(4)"
+            v-on:click="runR(1)"
+          >
+            開始分析
+            <template v-slot:loading>
+              <q-spinner-hourglass class="on-left" />Loading...
+            </template>
+          </q-btn>
         </div>
       </div>
     </div>
-    <div class="gt-xs q-pa-lg column items-center text-black bg-grey-3">
-      <div class="col">
-        <!-- 按鈕 -->
-        <q-btn
-          :loading="loading4"
-          color="cyan-9"
-          @click="simulateProgress(4)"
-          v-on:click="runR(1)"
-          style="width: 150px"
-        >
-          開始分析
-          <template v-slot:loading>
-            <q-spinner-hourglass class="on-left" />Loading...
-          </template>
-        </q-btn>
-        <!-- end -->
-      </div>
-    </div>
+    <div class="gt-xs q-pa-lg column items-center text-black bg-grey-3"></div>
   </div>
 </template>
 <script>
