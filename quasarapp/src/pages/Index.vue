@@ -12,7 +12,9 @@
       height="500px"
       class="bg-white-1"
     >
+
       <q-carousel-slide :name="1" class="row no-wrap">
+
         <div
           class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap"
         >

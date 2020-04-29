@@ -13,7 +13,8 @@ import sitedata from "./store-sitedata.js";
 import demand from "./store-demand.js";
 // 優缺分析資料(sean)
 import proscons from "./store-proscons.js";
-
+// 路徑分析資料(sean)
+import path from "./store-path.js";
 import travel from "./store-firebase";
 Vue.use(Vuex);
 
@@ -32,11 +33,12 @@ export default function(/* { ssrContext } */) {
       auth,
       schedules,
       sitedata,
-      demand,
       collections,
-      proscons,
       travel,
-      prefers
+      prefers,
+      demand,
+      proscons,
+      path
     },
 
     // enable strict mode (adds overhead!)

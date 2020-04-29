@@ -161,7 +161,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        
+
 
         /*
          * Package Service Providers...
@@ -234,7 +234,7 @@ return [
         'GMaps' => FarhanWazir\GoogleMaps\Facades\GMapsFacade::class,
         'providers' => Geocoder\Laravel\Providers\GeocoderService::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
-        
+
     ],
 
 ];
