@@ -11,8 +11,10 @@ import prefers from "./store-prefer.js";
 import sitedata from "./store-sitedata.js";
 // 需求分析資料(sean)
 import demand from "./store-demand.js";
+import h_demand from "./store-h-demand.js";
 // 優缺分析資料(sean)
 import proscons from "./store-proscons.js";
+import h_proscons from "./store-h-proscons.js";
 // 路徑分析資料(sean)
 import path from "./store-path.js";
 import travel from "./store-firebase";
@@ -37,7 +39,9 @@ export default function(/* { ssrContext } */) {
       travel,
       prefers,
       demand,
+      h_demand,
       proscons,
+      h_proscons,
       path
     },
 

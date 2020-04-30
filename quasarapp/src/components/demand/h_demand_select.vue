@@ -7,7 +7,7 @@
       <div class="col">
         <div class="text-center img_background">
           <p style="font-size: 28px;font-family: Microsoft JhengHei;">
-            景點需求分析
+            飯店需求分析
           </p>
         </div>
       </div>
@@ -203,7 +203,7 @@ export default {
   //   }
   // },
   methods: {
-    ...mapActions("demand", ["resetTxtdatas", "resetTxtdatas_diff"]),
+    ...mapActions("h_demand", ["resetTxtdatas", "resetTxtdatas_diff"]),
     // 計算loading時間
     simulateProgress(number) {
       // we set loading state

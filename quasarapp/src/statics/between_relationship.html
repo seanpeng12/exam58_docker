@@ -238,13 +238,38 @@
           theseArgs = theseArgs.concat([task.data]);
           task = task.code;
         }
-        var taskFunc = eval("(" + task + ")");
+        var taskFunc = tryEval(task);
         if (typeof(taskFunc) !== "function") {
           throw new Error("Task must be a function! Source:\n" + task);
         }
         taskFunc.apply(target, theseArgs);
       });
     }
+  }
+
+  // Attempt eval() both with and without enclosing in parentheses.
+  // Note that enclosing coerces a function declaration into
+  // an expression that eval() can parse
+  // (otherwise, a SyntaxError is thrown)
+  function tryEval(code) {
+    var result = null;
+    try {
+      result = eval(code);
+    } catch(error) {
+      if (!error instanceof SyntaxError) {
+        throw error;
+      }
+      try {
+        result = eval("(" + code + ")");
+      } catch(e) {
+        if (e instanceof SyntaxError) {
+          throw error;
+        } else {
+          throw e;
+        }
+      }
+    }
+    return result;
   }
 
   function initSizing(el) {
@@ -639,17 +664,56 @@
     invokePostRenderHandlers();
   }
 
-  // Wait until after the document has loaded to render the widgets.
+
+  function has_jQuery3() {
+    if (!window.jQuery) {
+      return false;
+    }
+    var $version = window.jQuery.fn.jquery;
+    var $major_version = parseInt($version.split(".")[0]);
+    return $major_version >= 3;
+  }
+
+  /*
+  / Shiny 1.4 bumped jQuery from 1.x to 3.x which means jQuery's
+  / on-ready handler (i.e., $(fn)) is now asyncronous (i.e., it now
+  / really means $(setTimeout(fn)).
+  / https://jquery.com/upgrade-guide/3.0/#breaking-change-document-ready-handlers-are-now-asynchronous
+  /
+  / Since Shiny uses $() to schedule initShiny, shiny>=1.4 calls initShiny
+  / one tick later than it did before, which means staticRender() is
+  / called renderValue() earlier than (advanced) widget authors might be expecting.
+  / https://github.com/rstudio/shiny/issues/2630
+  /
+  / For a concrete example, leaflet has some methods (e.g., updateBounds)
+  / which reference Shiny methods registered in initShiny (e.g., setInputValue).
+  / Since leaflet is privy to this life-cycle, it knows to use setTimeout() to
+  / delay execution of those methods (until Shiny methods are ready)
+  / https://github.com/rstudio/leaflet/blob/18ec981/javascript/src/index.js#L266-L268
+  /
+  / Ideally widget authors wouldn't need to use this setTimeout() hack that
+  / leaflet uses to call Shiny methods on a staticRender(). In the long run,
+  / the logic initShiny should be broken up so that method registration happens
+  / right away, but binding happens later.
+  */
+  function maybeStaticRenderLater() {
+    if (shinyMode && has_jQuery3()) {
+      window.jQuery(window.HTMLWidgets.staticRender);
+    } else {
+      window.HTMLWidgets.staticRender();
+    }
+  }
+
   if (document.addEventListener) {
     document.addEventListener("DOMContentLoaded", function() {
       document.removeEventListener("DOMContentLoaded", arguments.callee, false);
-      window.HTMLWidgets.staticRender();
+      maybeStaticRenderLater();
     }, false);
   } else if (document.attachEvent) {
     document.attachEvent("onreadystatechange", function() {
       if (document.readyState === "complete") {
         document.detachEvent("onreadystatechange", arguments.callee);
-        window.HTMLWidgets.staticRender();
+        maybeStaticRenderLater();
       }
     });
   }
@@ -737,7 +801,7 @@
       if (o !== null && typeof o === "object" && part in o) {
         if (i == (l - 1)) { // if we are at the end of the line then evalulate
           if (typeof o[part] === "string")
-            o[part] = eval("(" + o[part] + ")");
+            o[part] = tryEval(o[part]);
         } else { // otherwise continue to next embedded object
           o = o[part];
         }
@@ -2655,6 +2719,9 @@ if (HTMLWidgets.shinyMode){
             if(data.options.byselection.hideColor){
               el.byselectionColor = data.options.byselection.hideColor;
             }
+            if(data.options.byselection.highlight !== undefined){
+              el.byselectionHighlight = data.options.byselection.highlight;
+            }
           }
           
           if(data.options.byselection !== undefined){
@@ -3092,8 +3159,10 @@ HTMLWidgets.widget({
 
     if(x.byselection.enabled){
       el_id.byselectionColor = x.byselection.hideColor;
+      el_id.byselectionHighlight = x.byselection.highlight;
     } else {
       el_id.byselectionColor = 'rgba(200,200,200,0.5)';
+      el_id.byselectionHighlight = false;
     }
     
     if(x.idselection.enabled){
@@ -3178,7 +3247,7 @@ HTMLWidgets.widget({
         instance.network.selectNodes([id]);
       }
       if(el_id.highlight){
-        neighbourhoodHighlight(instance.network.getSelection().nodes, "click", el_id.highlightAlgorithm);
+        neighbourhoodHighlight(instance.network.getSelection().nodes, "click", el_id.highlightAlgorithm, true);
       }else{
         if(init){
           selectNode = document.getElementById('nodeSelect'+el.id);
@@ -3755,7 +3824,7 @@ HTMLWidgets.widget({
             var r = confirm("Do you want to delete " + data.nodes.length + " node(s) and " + data.edges.length + " edges ?");
             if (r === true) {
               deleteSubGraph(data, callback);
-            }
+            } else { clearPopUp(); callback(null); }
         };
       } else if(typeof(x.options.manipulation.deleteNode) === typeof(true)){
         if(x.options.manipulation.deleteNode){
@@ -3763,7 +3832,7 @@ HTMLWidgets.widget({
               var r = confirm("Do you want to delete " + data.nodes.length + " node(s) and " + data.edges.length + " edges ?");
               if (r === true) {
                 deleteSubGraph(data, callback);
-              }
+              } else { clearPopUp(); callback(null); }
           };
         } else {
           options.manipulation.deleteNode = false;
@@ -3777,7 +3846,7 @@ HTMLWidgets.widget({
             var r = confirm("Do you want to delete " + data.edges.length + " edges ?");
             if (r === true) {
               deleteSubGraph(data, callback);
-            }
+            } else { clearPopUp(); callback(null); }
         };
       } else if(typeof(x.options.manipulation.deleteEdge) === typeof(true)){
         if(x.options.manipulation.deleteEdge){
@@ -3785,7 +3854,7 @@ HTMLWidgets.widget({
               var r = confirm("Do you want to delete " + data.edges.length + " edges ?");
               if (r === true) {
                 deleteSubGraph(data, callback);
-              }
+              } else { clearPopUp(); callback(null); }
           };
         } else {
           options.manipulation.deleteEdge = false;
@@ -4106,6 +4175,12 @@ HTMLWidgets.widget({
           edges.update(edgesHardToRead);
             
           nodes.update(updateArray);
+          
+          // select for highlight
+          if(el_id.highlight && x.nodes && el_id.byselectionHighlight){
+              neighbourhoodHighlight(connectedNodes, "click", el_id.highlightAlgorithm, false);
+              instance.network.selectNodes(connectedNodes)
+          }
         }
       }
       else if (el_id.selectActive === true) {
@@ -4121,7 +4196,7 @@ HTMLWidgets.widget({
     var is_hovered = false;
     var is_clicked = false;
     
-    function neighbourhoodHighlight(params, action_type, algorithm) {
+    function neighbourhoodHighlight(params, action_type, algorithm, reset_selectedBy) {
 
       var nodes_in_clusters = instance.network.body.modules.clustering.clusteredNodes;
       var have_cluster_nodes = false;
@@ -4535,7 +4610,7 @@ HTMLWidgets.widget({
         }
       }
       // reset selectedBy list if actived
-      if(el_id.byselection){
+      if(el_id.byselection && reset_selectedBy){
         resetList("selectedBy", el.id, 'selectedBy');
       }
     }
@@ -4573,7 +4648,7 @@ HTMLWidgets.widget({
     // shared click function (selectedNodes)
     document.getElementById("graph"+el.id).myclick = function(params){
         if(el_id.highlight && x.nodes){
-          neighbourhoodHighlight(params.nodes, "click", el_id.highlightAlgorithm);
+          neighbourhoodHighlight(params.nodes, "click", el_id.highlightAlgorithm, true);
         }else if((el_id.idselection || el_id.byselection) && x.nodes){
           onClickIDSelection(params)
         }
@@ -4582,7 +4657,7 @@ HTMLWidgets.widget({
     // Set event in relation with highlightNearest      
     instance.network.on("click", function(params){
         if(el_id.highlight && x.nodes){
-          neighbourhoodHighlight(params.nodes, "click", el_id.highlightAlgorithm);
+          neighbourhoodHighlight(params.nodes, "click", el_id.highlightAlgorithm, true);
         }else if((el_id.idselection || el_id.byselection) && x.nodes){
           onClickIDSelection(params)
         } 
@@ -4590,13 +4665,13 @@ HTMLWidgets.widget({
     
     instance.network.on("hoverNode", function(params){
       if(el_id.hoverNearest && x.nodes){
-        neighbourhoodHighlight([params.node], "hover", el_id.highlightAlgorithm);
+        neighbourhoodHighlight([params.node], "hover", el_id.highlightAlgorithm, true);
       } 
     });
 
     instance.network.on("blurNode", function(params){
       if(el_id.hoverNearest && x.nodes){
-        neighbourhoodHighlight([], "hover", el_id.highlightAlgorithm);
+        neighbourhoodHighlight([], "hover", el_id.highlightAlgorithm, true);
       }      
     });
     
@@ -4760,7 +4835,7 @@ HTMLWidgets.widget({
         // reset some parameters / data before
         if (el_id.selectActive === true | el_id.highlightActive === true) {
           //reset nodes
-          neighbourhoodHighlight([], "click", el_id.highlightAlgorithm);
+          neighbourhoodHighlight([], "click", el_id.highlightAlgorithm, true);
           if (el_id.selectActive === true){
             el_id.selectActive = false;
             resetList('selectedBy',el.id, 'selectedBy');
@@ -5115,11 +5190,11 @@ HTMLWidgets.widget({
 </head>
 <body style="background-color: white;">
 <div id="htmlwidget_container">
-<div id="htmlwidget-366cf0660ba77250e71e" class="visNetwork html-widget" style="width:100%;height:500px;">
+<div id="htmlwidget-1d638cb2728d448d9499" class="visNetwork html-widget" style="width:100%;height:500px;">
 
 </div>
 </div>
-<script type="application/json" data-for="htmlwidget-366cf0660ba77250e71e">{"x":{"nodes":{"id":["1","2","S0966","S0988","S1038","S1041","S1044","S1058","S1071","S1090","S1172","S1183","S1192","S1238","S1341","S1355","S1360","S1417","S1519","S1537","S1555","S1575","S1606","S1632","S1644","S1672","S1692","S1756","S1882","S1938","S1946","S2097","S2106","S2107","S2109","S2110","S2111","S2156","S2162","S2171","S2176","S2196","S2200","S2222","S2243","S2253","S2278","S2286","S2291","S2294","S2332","S2345","S2393","S2399","S2400","S2422","S2423","S2424","S2425","S2426","S2432","S2458","S2470","S2471","S2472","S2473","S2474","S2475","S2476","S2477","S2478"],"group":["景點與地標","景點與地標","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site"],"label":["景點和地標","古蹟","五福宮","後慈湖","義美觀光工廠","中平路故事館","桃園景福宮","中壢市中正公園","大溪古鎮","大溪橋","眷村故事館","壽山巖觀音寺","坑口社區彩繪村","東南亞藝文圖書","齋明寺","大火房浣衣池","桃拾生活廣場","李騰芳古厝","小小兵Minions彩繪牆","東和音樂體驗館","福仁宮","三元宮(桃園)","蓮座山觀音寺","武德殿(桃園)","大溪河濱公園","大溪陵寢","大溪木器街","大溪藝文之家","大湳公園","新溪口吊橋","思親亭","白沙岬燈塔","舊百吉隧道","石管局大草坪","富岡老街","大溪老街","水中土地公","白木屋品牌文化館","新屋綠色隧道","三坑子老街","永安漁港","楊梅老街","甘泉寺","楓樹村","桃園縣客家文化館","大溪花海農場","菱潭興創基地","范姜祖堂","林家古厝蓮園","褒忠祠","龍潭聖蹟亭","大慶洞","巴陵鐵塔","羅浮橋","榮華埧","馬祖新村眷村文創園區","中壢五號基地藝文基地","航空城願景館","蛋寶生技不老村","蘆竹大夫第","赫赫星際隕石村","原住民文化會館","親子橋","太極宮","憲兵學校","溪口部落","仁和宮(桃園)","南天宮","北天真武玄殿","桃園佛教蓮社","聖績亭"],"color":["red","red","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue"],"title":["<p> 景點和地標 <\/p>","<p> 古蹟 <\/p>","<p> 五福宮 <\/p>","<p> 後慈湖 <\/p>","<p> 義美觀光工廠 <\/p>","<p> 中平路故事館 <\/p>","<p> 桃園景福宮 <\/p>","<p> 中壢市中正公園 <\/p>","<p> 大溪古鎮 <\/p>","<p> 大溪橋 <\/p>","<p> 眷村故事館 <\/p>","<p> 壽山巖觀音寺 <\/p>","<p> 坑口社區彩繪村 <\/p>","<p> 東南亞藝文圖書 <\/p>","<p> 齋明寺 <\/p>","<p> 大火房浣衣池 <\/p>","<p> 桃拾生活廣場 <\/p>","<p> 李騰芳古厝 <\/p>","<p> 小小兵Minions彩繪牆 <\/p>","<p> 東和音樂體驗館 <\/p>","<p> 福仁宮 <\/p>","<p> 三元宮(桃園) <\/p>","<p> 蓮座山觀音寺 <\/p>","<p> 武德殿(桃園) <\/p>","<p> 大溪河濱公園 <\/p>","<p> 大溪陵寢 <\/p>","<p> 大溪木器街 <\/p>","<p> 大溪藝文之家 <\/p>","<p> 大湳公園 <\/p>","<p> 新溪口吊橋 <\/p>","<p> 思親亭 <\/p>","<p> 白沙岬燈塔 <\/p>","<p> 舊百吉隧道 <\/p>","<p> 石管局大草坪 <\/p>","<p> 富岡老街 <\/p>","<p> 大溪老街 <\/p>","<p> 水中土地公 <\/p>","<p> 白木屋品牌文化館 <\/p>","<p> 新屋綠色隧道 <\/p>","<p> 三坑子老街 <\/p>","<p> 永安漁港 <\/p>","<p> 楊梅老街 <\/p>","<p> 甘泉寺 <\/p>","<p> 楓樹村 <\/p>","<p> 桃園縣客家文化館 <\/p>","<p> 大溪花海農場 <\/p>","<p> 菱潭興創基地 <\/p>","<p> 范姜祖堂 <\/p>","<p> 林家古厝蓮園 <\/p>","<p> 褒忠祠 <\/p>","<p> 龍潭聖蹟亭 <\/p>","<p> 大慶洞 <\/p>","<p> 巴陵鐵塔 <\/p>","<p> 羅浮橋 <\/p>","<p> 榮華埧 <\/p>","<p> 馬祖新村眷村文創園區 <\/p>","<p> 中壢五號基地藝文基地 <\/p>","<p> 航空城願景館 <\/p>","<p> 蛋寶生技不老村 <\/p>","<p> 蘆竹大夫第 <\/p>","<p> 赫赫星際隕石村 <\/p>","<p> 原住民文化會館 <\/p>","<p> 親子橋 <\/p>","<p> 太極宮 <\/p>","<p> 憲兵學校 <\/p>","<p> 溪口部落 <\/p>","<p> 仁和宮(桃園) <\/p>","<p> 南天宮 <\/p>","<p> 北天真武玄殿 <\/p>","<p> 桃園佛教蓮社 <\/p>","<p> 聖績亭 <\/p>"],"shape":["square","square",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"font.size":[30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30],"x":[0.332208676827941,-0.618234877449682,0.650346532993844,-0.0612824312539394,0.441547263147416,-0.762255577083148,-0.279883931196468,0.55473348925499,-0.917471240473326,0.659348975056854,-0.141502431111665,0.197016875762591,0.536718779857164,1,-0.238496423430044,0.0928995028620609,0.0172868117555145,0.215293013248612,0.329929212714021,0.856162283057781,0.782683789713547,0.111695656427041,0.318682072220526,0.129910317446741,0.733496274054813,0.823517050992007,0.808575566967219,0.742497100483886,0.545721478709207,0.399188983916749,0.734575453355293,0.251995659475673,0.51270736176333,-0.117085583626287,0.589535127708655,-1,0.271236471927748,0.400312678914671,0.386344706487443,-0.293098126750175,0.112947587566342,-0.195394257858209,0.96306750479717,0.373443190168909,0.593338560219659,-0.316163857653919,0.51919246513265,0.989458652559066,0.852648192677731,-0.0072617264683047,0.907804245779563,0.877595222544097,0.720572054672419,-0.138033671350956,0.707162039438713,0.967967539379886,-0.252106706351521,0.247254762713307,0.112350671788774,-0.176312622472186,0.125109854437811,0.570794205445501,0.00268394649109327,-0.0546570448072194,-0.145801974393802,0.647575516434871,0.0195870222086365,-0.26917392130069,-0.196287579206646,0.889423756222876,-0.0665762456864823],"y":[0.411827476725484,-0.630156907640986,0.823515028224995,0.63116391627597,-0.102231718449631,-1,0.587205061173934,-0.138155899262322,-0.954398245146614,0.200902608635706,0.52288294967911,-0.132702114242318,0.0934815527712487,0.362978090068322,0.683766131708378,0.279986126600565,0.449214140356906,0.733173616230859,-0.140958238589093,0.638495865498805,0.848875394502594,-0.0466698686530359,0.157357602559001,0.845766984037448,0.572756338964116,0.0314962950440909,0.210223550563049,0.72327377868984,0.300691901869318,0.992065012839446,0.375469122223655,1,0.811555185096168,0.83936863435329,0.508494247086708,-0.831845109327194,0.892642819782638,0.0211872677596272,0.84880865588927,0.48180775285093,0.962620223886972,0.106730531146786,0.235296666200563,0.673342236450086,-0.0326500177347662,0.382125508505643,0.957579758638695,0.483696661032856,0.481675791929043,0.902703340527708,0.124442114236169,0.335435925221838,-0.0618525467880838,0.380277780760025,0.0730452632097509,0.601526053373665,-0.166327762223174,0.00046586799962367,0.601796184302732,-0.2144405098845,0.122768679374324,0.676628155183307,-0.0015376045306591,0.233942705392172,0.74022561733888,0.936265051610252,0.755210277435318,0.290488661381554,0.214524754751797,0.75055365010571,0.0876714867030672]},"edges":{"from":["S0966","S0988","S1038","S1044","S1058","S1090","S1172","S1183","S1192","S1238","S1341","S1355","S1360","S1417","S1519","S1537","S1555","S1575","S1606","S1632","S1644","S1672","S1692","S1756","S1882","S1938","S1946","S2097","S2106","S2107","S2109","S2111","S2156","S2162","S2171","S2176","S2196","S2200","S2222","S2243","S2253","S2278","S2286","S2291","S2294","S2332","S2345","S2393","S2399","S2400","S2422","S2423","S2424","S2425","S2426","S2432","S2458","S2470","S2471","S2472","S2473","S2474","S2475","S2476","S2477","S2478","S1041","S1071","S2110","S2423","S2426"],"to":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":false},"physics":{"stabilization":false}},"groups":["景點與地標","site"],"width":"100%","height":"500px","idselection":{"enabled":true,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)"},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","igraphlayout":{"type":"square"},"highlight":{"enabled":true,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":false,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"}},"evals":[],"jsHooks":[]}</script>
-<script type="application/htmlwidget-sizing" data-for="htmlwidget-366cf0660ba77250e71e">{"viewer":{"width":"100%","height":"500px","padding":15,"fill":false},"browser":{"width":"100%","height":"500px","padding":40,"fill":false}}</script>
+<script type="application/json" data-for="htmlwidget-1d638cb2728d448d9499">{"x":{"nodes":{"id":["1","2","S0101","S0102","S0105","S0108","S0137","S0139","S0140","S0143","S0144","S0148","S0152","S0157","S0158","S0162","S0163","S0176","S0180","S0181","S0192","S0199","S0200","S0202","S0204","S0206","S0210","S0216","S0218","S0219","S0220","S0221","S0228","S0234","S0238","S0240","S0246","S0252","S0253","S0254","S0257","S0261","S0272","S0283","S0295","S0303","S0306","S0312","S0318","S0321","S0323","S0324","S0328","S0340","S0344","S0348","S0357","S0361","S0370","S0380","S0382","S0384","S0387","S0391","S0393","S0396","S0397","S0402","S0415","S0420","S0422","S0435","S0439","S0442","S0448","S0453","S0458","S0463","S0464","S0469","S0470","S0472","S0473","S0475","S0476","S0477","S0478","S0484","S0499","S0500","S0510","S0516","S0517","S0518","S0529","S0530","S0533","S0545","S0546","S0547","S0548","S0558","S0559","S0563","S0578","S0579","S0581","S0582","S0586","S0591","S0595","S0601","S0606","S0610","S0616","S0627","S0628","S0630","S0638","S0641","S0642","S0648","S0650","S0659","S0661","S0662","S0663","S0666","S0670","S0674","S0675","S0676","S0677","S0678","S0679","S0681","S0682","S0684","S0687","S0688","S0689","S0690","S0694","S0698","S0700","S0701","S0703","S0704","S0713","S0715","S0716","S0717","S0718","S0737","S0739","S0742","S0743","S0744","S0748","S0749","S0765","S0780","S0784","S0786","S0792","S0793","S0804","S0805","S0806","S0808"],"group":["景點與地標","景點與地標","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site"],"label":["景點和地標","古蹟","中正紀念堂","象山自然步道","大龍峒保安宮","台北孔廟","林安泰古厝","大稻埕碼頭","MAJI","台北小巨蛋","捷運北門站","松山文創園區","迪化207博物館","陽明山冷水坑吊橋","台北101觀景台","華山1914文化創意產業園區","碧山巖","國父紀念館","法鼓山農禪寺","華陰街","天后宮","磯永吉小屋","櫞?文庫","士林官邸","松山火車站","剝皮寮老街","東門","小油坑遊憩區","彩虹橋","白石湖吊橋","新芳春行特展","二二八和平紀念公園","艋舺青山宮","文昌廟(台北)","白石湖","捷運中山站線型公園","饒河夜市足沐腳底按摩","?寧街","台北自由廣場","前街","廣州街觀光夜市","臺灣總督府交通局鐵道部","台北四面佛","幾米月亮公車","四四南村","莊義芳商行","新富町文化市場","臺灣新文化運動紀念館","歪腰郵筒","大稻埕碼頭廣場","清代機器局遺構","松山奉天宮","大稻埕辜宅","蔡瑞月舞蹈研究社","樟山寺","玄天宮","臺北世界貿易中心一館","台北賓館","R22A","殷海光故居","普濟寺 中山區","張大千先生紀念館(摩耶精舍)","剝皮?","士林慈誠宮","梁實秋故居","台北世貿三館","濕地","大直橋","五福財神爺廟","台北中山堂","新興公園","中山公民會館","平菁街42巷櫻花","芝山公園","志生紀念館","景美觀光商圈","臺北監獄圍牆遺蹟","陽明山中山樓","台北偶戲館","信義公民會館","彩虹河濱公園","西昌街夜市","雙境廟","林語堂故居","紀州庵文學森林","臺北保霞宮","艋舺老街","懷恩堂","國父史蹟館(逸仙公園)","臺北市鄉土教育中心","糖?文化園區","郭子儀紀念堂","大屯山","華山市場","神農宮","臺北市客家文化主題公園","艋舺龍山文創B2","五福旅遊","錢穆故居紀念館","麥帥二橋","麥帥一橋","臺北市電影主題公園","陽明山竹子湖海芋","代天殿靈雲宮","臺北郵局","R22","Park","善導寺","普?寺","陽明書屋","新光人壽保險摩天大樓","逸仙公園","義芳居古厝","關渡渡船碼頭","防空壕迷宮","吳氏宗祠","平安鐘","監察院","竹子湖花與樹繡球花田","高家繡球花田水尾第二園區","耕莘文教院","玉溪有容Studio","國史館","陳悅記祖宅","圓山遺址","周氏節孝坊","專賣局","欽差行臺","皇太子殿下行啟記念碑","小南門","台灣善光寺","社子大橋","南門町三二三","琴道館","台鐵LDK58蒸氣火車","李國鼎故居","陽明山光復樓","蒸氣火車頭","中華民國行政院","黃氏節孝坊","?氏節孝坊","TAV","齊東詩舍","蒲添生故居","孫立人官邸","杏壇","司法大廈","急公好義坊","大天后宮?址","嚴家淦先生故居","光復廳","臺灣廣播電臺放送亭","南海學園","雨前?","台北文衡聖帝殿","天皇宮(台北)","錦州街","基隆路二段","萬和宮","和安宮","米洛克-老房子","太原五百完人紀念建築群","龍岡清真寺","工作是","關渡老街","芝山岩","內溝山","木柵璋山寺","照明淨寺","學海書院"],"color":["red","red","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue"],"title":["<p> 景點和地標 <\/p>","<p> 古蹟 <\/p>","<p> 中正紀念堂 <\/p>","<p> 象山自然步道 <\/p>","<p> 大龍峒保安宮 <\/p>","<p> 台北孔廟 <\/p>","<p> 林安泰古厝 <\/p>","<p> 大稻埕碼頭 <\/p>","<p> MAJI <\/p>","<p> 台北小巨蛋 <\/p>","<p> 捷運北門站 <\/p>","<p> 松山文創園區 <\/p>","<p> 迪化207博物館 <\/p>","<p> 陽明山冷水坑吊橋 <\/p>","<p> 台北101觀景台 <\/p>","<p> 華山1914文化創意產業園區 <\/p>","<p> 碧山巖 <\/p>","<p> 國父紀念館 <\/p>","<p> 法鼓山農禪寺 <\/p>","<p> 華陰街 <\/p>","<p> 天后宮 <\/p>","<p> 磯永吉小屋 <\/p>","<p> 櫞?文庫 <\/p>","<p> 士林官邸 <\/p>","<p> 松山火車站 <\/p>","<p> 剝皮寮老街 <\/p>","<p> 東門 <\/p>","<p> 小油坑遊憩區 <\/p>","<p> 彩虹橋 <\/p>","<p> 白石湖吊橋 <\/p>","<p> 新芳春行特展 <\/p>","<p> 二二八和平紀念公園 <\/p>","<p> 艋舺青山宮 <\/p>","<p> 文昌廟(台北) <\/p>","<p> 白石湖 <\/p>","<p> 捷運中山站線型公園 <\/p>","<p> 饒河夜市足沐腳底按摩 <\/p>","<p> ?寧街 <\/p>","<p> 台北自由廣場 <\/p>","<p> 前街 <\/p>","<p> 廣州街觀光夜市 <\/p>","<p> 臺灣總督府交通局鐵道部 <\/p>","<p> 台北四面佛 <\/p>","<p> 幾米月亮公車 <\/p>","<p> 四四南村 <\/p>","<p> 莊義芳商行 <\/p>","<p> 新富町文化市場 <\/p>","<p> 臺灣新文化運動紀念館 <\/p>","<p> 歪腰郵筒 <\/p>","<p> 大稻埕碼頭廣場 <\/p>","<p> 清代機器局遺構 <\/p>","<p> 松山奉天宮 <\/p>","<p> 大稻埕辜宅 <\/p>","<p> 蔡瑞月舞蹈研究社 <\/p>","<p> 樟山寺 <\/p>","<p> 玄天宮 <\/p>","<p> 臺北世界貿易中心一館 <\/p>","<p> 台北賓館 <\/p>","<p> R22A <\/p>","<p> 殷海光故居 <\/p>","<p> 普濟寺 中山區 <\/p>","<p> 張大千先生紀念館(摩耶精舍) <\/p>","<p> 剝皮? <\/p>","<p> 士林慈誠宮 <\/p>","<p> 梁實秋故居 <\/p>","<p> 台北世貿三館 <\/p>","<p> 濕地 <\/p>","<p> 大直橋 <\/p>","<p> 五福財神爺廟 <\/p>","<p> 台北中山堂 <\/p>","<p> 新興公園 <\/p>","<p> 中山公民會館 <\/p>","<p> 平菁街42巷櫻花 <\/p>","<p> 芝山公園 <\/p>","<p> 志生紀念館 <\/p>","<p> 景美觀光商圈 <\/p>","<p> 臺北監獄圍牆遺蹟 <\/p>","<p> 陽明山中山樓 <\/p>","<p> 台北偶戲館 <\/p>","<p> 信義公民會館 <\/p>","<p> 彩虹河濱公園 <\/p>","<p> 西昌街夜市 <\/p>","<p> 雙境廟 <\/p>","<p> 林語堂故居 <\/p>","<p> 紀州庵文學森林 <\/p>","<p> 臺北保霞宮 <\/p>","<p> 艋舺老街 <\/p>","<p> 懷恩堂 <\/p>","<p> 國父史蹟館(逸仙公園) <\/p>","<p> 臺北市鄉土教育中心 <\/p>","<p> 糖?文化園區 <\/p>","<p> 郭子儀紀念堂 <\/p>","<p> 大屯山 <\/p>","<p> 華山市場 <\/p>","<p> 神農宮 <\/p>","<p> 臺北市客家文化主題公園 <\/p>","<p> 艋舺龍山文創B2 <\/p>","<p> 五福旅遊 <\/p>","<p> 錢穆故居紀念館 <\/p>","<p> 麥帥二橋 <\/p>","<p> 麥帥一橋 <\/p>","<p> 臺北市電影主題公園 <\/p>","<p> 陽明山竹子湖海芋 <\/p>","<p> 代天殿靈雲宮 <\/p>","<p> 臺北郵局 <\/p>","<p> R22 <\/p>","<p> Park <\/p>","<p> 善導寺 <\/p>","<p> 普?寺 <\/p>","<p> 陽明書屋 <\/p>","<p> 新光人壽保險摩天大樓 <\/p>","<p> 逸仙公園 <\/p>","<p> 義芳居古厝 <\/p>","<p> 關渡渡船碼頭 <\/p>","<p> 防空壕迷宮 <\/p>","<p> 吳氏宗祠 <\/p>","<p> 平安鐘 <\/p>","<p> 監察院 <\/p>","<p> 竹子湖花與樹繡球花田 <\/p>","<p> 高家繡球花田水尾第二園區 <\/p>","<p> 耕莘文教院 <\/p>","<p> 玉溪有容Studio <\/p>","<p> 國史館 <\/p>","<p> 陳悅記祖宅 <\/p>","<p> 圓山遺址 <\/p>","<p> 周氏節孝坊 <\/p>","<p> 專賣局 <\/p>","<p> 欽差行臺 <\/p>","<p> 皇太子殿下行啟記念碑 <\/p>","<p> 小南門 <\/p>","<p> 台灣善光寺 <\/p>","<p> 社子大橋 <\/p>","<p> 南門町三二三 <\/p>","<p> 琴道館 <\/p>","<p> 台鐵LDK58蒸氣火車 <\/p>","<p> 李國鼎故居 <\/p>","<p> 陽明山光復樓 <\/p>","<p> 蒸氣火車頭 <\/p>","<p> 中華民國行政院 <\/p>","<p> 黃氏節孝坊 <\/p>","<p> ?氏節孝坊 <\/p>","<p> TAV <\/p>","<p> 齊東詩舍 <\/p>","<p> 蒲添生故居 <\/p>","<p> 孫立人官邸 <\/p>","<p> 杏壇 <\/p>","<p> 司法大廈 <\/p>","<p> 急公好義坊 <\/p>","<p> 大天后宮?址 <\/p>","<p> 嚴家淦先生故居 <\/p>","<p> 光復廳 <\/p>","<p> 臺灣廣播電臺放送亭 <\/p>","<p> 南海學園 <\/p>","<p> 雨前? <\/p>","<p> 台北文衡聖帝殿 <\/p>","<p> 天皇宮(台北) <\/p>","<p> 錦州街 <\/p>","<p> 基隆路二段 <\/p>","<p> 萬和宮 <\/p>","<p> 和安宮 <\/p>","<p> 米洛克-老房子 <\/p>","<p> 太原五百完人紀念建築群 <\/p>","<p> 龍岡清真寺 <\/p>","<p> 工作是 <\/p>","<p> 關渡老街 <\/p>","<p> 芝山岩 <\/p>","<p> 內溝山 <\/p>","<p> 木柵璋山寺 <\/p>","<p> 照明淨寺 <\/p>","<p> 學海書院 <\/p>"],"shape":["square","square",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"font.size":[30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30],"x":[0.537553664432548,-0.60383992826849,0.556342918972456,0.784235268801975,-0.594373925165842,-0.940507631842749,-0.647067014809306,0.304980276560195,0.361406916173209,0.409032358816264,0.724497428462167,0.931989595029592,-0.994659541080542,0.544809515285977,0.398223373253918,0.758142680353348,0.353458626266214,0.789837771558738,-0.717496193163862,0.993145391798252,-0.69718278742988,0.795626983008292,0.974110055297223,0.215307141570488,-0.966932523354808,-0.806303224894072,0.574343425926064,0.911562532596745,0.43302700020503,0.384654840918156,-0.840321323145246,-0.84877211751439,0.653295550072218,0.234605571575976,0.603860098448885,0.280120961788375,0.730168100764554,0.548490508556611,0.634274165559382,0.265118418748546,0.415061788626129,0.462201137227666,0.863131738880276,0.442190716122548,0.246986372456399,0.345441217638664,-0.0867309009745572,-0.0472549015239839,0.888157763594731,0.803297028279436,-0.744144682946757,0.294914221740481,-0.0265005275860543,-0.868545266653894,0.67523355849653,0.506612262086346,0.250850862566536,-0.0721882692852508,-0.0968227611623195,-0.800859085265204,-0.579369372776576,0.6119303131294,0.834524128286087,-0.800711456897927,-0.711089743128212,0.740462608991297,0.685809505177572,0.8611656485096,0.411023942715276,-0.875659579913972,0.409514471966381,0.880885642889292,0.722937835073604,-0.750067692772227,0.349060508874238,0.957640462924958,-0.562262680901969,0.949489010137244,0.715443656309116,0.195268208376857,0.532367315015309,0.799103439579606,0.929802616586979,-0.924824080803682,0.446223437378476,0.9117414503986,0.778702503066169,0.887958936878942,-0.688132227173916,-0.953318364105515,0.809281262174178,0.602461911458803,0.983209103242985,0.293187494662118,0.725379079727968,0.733757025665368,0.229114431267155,0.727455503569125,0.482825645078068,0.522483485065877,0.912322317866348,0.63711964408572,0.288442306559943,0.809719621478369,-0.857881451459054,-0.807126899054748,0.666303997887723,-0.905711218385304,0.660978079328699,0.323558802265167,0.655795439765509,-1,-0.64603961139793,0.847209361891718,1,0.658138549809995,0.853525838569209,-0.747676213850916,0.179860227585008,0.236079302887988,-0.687124968780521,0.310250213498474,-0.85385040846225,-0.892988239791127,0.968399412837635,-0.065755895619542,-0.924265692761955,0.354620584535118,-0.0412926687747205,-0.62373463493604,-0.998263483711415,0.844519740029512,-0.889228712317554,0.304362205956223,0.943057813603512,0.901758523568744,-0.76929688414777,0.570838973445939,-0.511623497241947,0.603898418530094,0.49402855398536,0.809881603416165,0.903435443290606,-0.771840098589891,-0.960767581634757,0.593397561964571,-0.901850771623245,-0.0429639663451711,0.783144679210235,-0.497350432719776,0.482657354048109,0.823516218445428,-0.0850490567598681,0.666772258652109,0.418821932520829,0.482677272939263,0.73943260810871,0.713807320908199,0.477877802086661,0.635071178304654,-0.943999828313733,-0.817520732076459,0.370436405037795,0.356684091283797,0.856450684581658,-0.673375977240588,0.56073054490919,0.50644785978553,0.194354531419239,-0.793008441955117],"y":[0.269762982110151,-0.40443733220319,-0.163155442751786,0.707212915720269,-0.814307924623938,-0.549217270666295,-0.0479488039570722,0.71310292090105,-0.190204062824716,0.769572072503778,-0.387407611154524,0.10788948882353,-0.256413418014461,-0.306003770514345,0.258940673413811,-0.0204083430091063,0.532216365388114,-0.124974169719694,-0.715691916700425,0.204788032608375,-0.995219413861301,0.815258767726712,0.518106956584548,0.50612334434792,-0.707554812001579,-0.743130860028928,0.818990232128537,-0.15921154290569,0.0497085432819087,-0.067712347382531,-0.0161873601805596,-0.350086612273828,0.434144357938237,0.209865924245278,0.72359371504359,0.478746354782954,-0.165015154673074,-0.421292356067919,0.11297893703154,-0.0660367934185835,0.455097665661402,0.832496677296134,-0.245213110761727,0.637795850403489,0.759937030457733,-0.28724672381512,-0.0875530381256774,-0.20846690575499,0.301090637372919,-0.226174508468561,-0.320861695886581,0.841940234512446,-0.160449489875581,-0.808577191906051,-0.224867650703656,0.511671969640457,0.365948891863799,-0.147791863216638,-0.0244574045106626,0.0641506539944454,-0.678378958449018,0.564105173813585,-0.0149881231706834,-0.466861945416187,0.0570326667118928,-0.289675704120641,-0.0196621568950006,0.144780180256211,-0.352771602373639,-0.688232225167921,0.905417101441911,0.619379075356977,0.754995794093957,-0.953361850694736,0.810122317701009,-0.012127456590432,-0.941464900623117,0.298077021314336,0.951501041914504,0.294504943778652,0.653514298350625,-0.32570538061776,0.203361543489191,-0.390760303181682,0.986524974294195,0.518708014546631,0.0920278681024191,0.0370494440087041,-0.167008164696048,-0.153298386824618,0.427390916264454,-0.390708365421996,0.0879405870907435,0.025867646430175,0.859221130508445,0.608160344149106,0.665884780158111,0.341171272741021,-0.187228344440181,1,-0.0643601376452371,-0.122456022998244,0.603338033197298,0.210820155231025,-0.895700544426111,-0.946650310702058,0.664752122955766,-0.014178269785782,0.803927785339973,0.347523480444578,0.985526609391201,-0.391087187822672,-0.904842393997334,0.507639227857261,0.338234139238935,-0.423902111017144,-0.128895723513204,-0.031643719908046,0.416502914778875,0.0950781954904738,-0.819475796919546,-0.139099966586453,-0.586915123658729,-0.22104193221231,0.423120386912248,-0.0126159797923961,-0.781199070523937,0.918357506709437,-0.105678151750098,-1,-0.501904129100896,0.718651689575069,-0.108243182806515,0.199285762410535,0.619746971497059,0.409306215847264,-0.843759293035157,-0.0136492050848538,-0.860475884976018,-0.258608823843966,0.913100357811725,0.596925995278926,0.717902595834814,-0.601732205835484,-0.624616214756992,0.994354745133856,-0.48002050207771,-0.0531992469448422,0.904167759078656,-0.728769411725776,-0.0563331842783009,0.319634636168729,0.0404101772930099,-0.327361727592107,-0.232069425844467,-0.400207151101682,0.493751262895952,0.188685158076435,-0.302797894526331,0.898656979958054,-0.297397397878782,-0.227997107086846,0.667705911344427,0.092951209841567,0.818228247825508,-0.591431244459325,0.913991792246613,0.760026118090301,0.590571948765084,-0.120012336131576]},"edges":{"from":["S0101","S0102","S0139","S0140","S0143","S0144","S0148","S0157","S0158","S0162","S0163","S0176","S0181","S0199","S0200","S0202","S0210","S0216","S0218","S0219","S0228","S0234","S0238","S0240","S0246","S0252","S0253","S0254","S0257","S0261","S0272","S0283","S0295","S0303","S0306","S0312","S0318","S0321","S0324","S0328","S0344","S0348","S0357","S0361","S0370","S0384","S0387","S0396","S0397","S0402","S0415","S0422","S0435","S0439","S0448","S0453","S0463","S0464","S0469","S0470","S0472","S0473","S0476","S0477","S0478","S0484","S0510","S0516","S0517","S0518","S0529","S0530","S0533","S0545","S0546","S0547","S0548","S0558","S0559","S0563","S0581","S0586","S0591","S0595","S0610","S0616","S0627","S0628","S0638","S0641","S0648","S0661","S0662","S0666","S0670","S0676","S0678","S0679","S0681","S0684","S0688","S0689","S0690","S0694","S0701","S0704","S0713","S0716","S0717","S0718","S0737","S0739","S0742","S0743","S0744","S0748","S0749","S0784","S0786","S0792","S0804","S0805","S0806","S0105","S0108","S0137","S0152","S0180","S0192","S0204","S0206","S0220","S0221","S0306","S0312","S0323","S0328","S0340","S0361","S0370","S0380","S0382","S0391","S0393","S0420","S0442","S0458","S0475","S0499","S0500","S0578","S0579","S0582","S0601","S0606","S0630","S0642","S0650","S0659","S0662","S0663","S0670","S0674","S0675","S0677","S0682","S0687","S0698","S0700","S0703","S0704","S0715","S0718","S0765","S0780","S0793","S0808"],"to":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":false},"physics":{"stabilization":false}},"groups":["景點與地標","site"],"width":"100%","height":"500px","idselection":{"enabled":true,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","igraphlayout":{"type":"square"},"highlight":{"enabled":true,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":false,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"}},"evals":[],"jsHooks":[]}</script>
+<script type="application/htmlwidget-sizing" data-for="htmlwidget-1d638cb2728d448d9499">{"viewer":{"width":"100%","height":"500px","padding":15,"fill":false},"browser":{"width":"100%","height":"500px","padding":40,"fill":false}}</script>
 </body>
 </html>

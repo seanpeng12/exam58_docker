@@ -46,22 +46,9 @@ export default {
   },
   computed: {
     // 取得vuex state變動值
-    ...mapGetters("path", ["run_index"])
-  },
-  methods: {
-    changeSrc() {
-      document
-        .getElementById("myFrame_good")
-        .contentWindow.location.reload(true);
-      document.getElementById("myFrame_good").src = "./statics/good.html";
 
-      document
-        .getElementById("myFrame_bad")
-        .contentWindow.location.reload(true);
-      document.getElementById("myFrame_bad").src = "./statics/bad.html";
-    }
   },
-  watch: {}
+
 };
 </script>
 

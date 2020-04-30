@@ -95,16 +95,6 @@ const routes = [
     ]
   },
   {
-    path: "/hotel_Path",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/pathPage/h_pathPage.vue")
-      }
-    ]
-  },
-  {
     path: "/AjaxTest",
     component: () => import("layouts/MainLayout.vue"),
     children: [

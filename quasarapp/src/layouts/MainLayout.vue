@@ -122,21 +122,9 @@
                   </q-item-label>
                 </q-item-section>
               </q-item>
-              <q-item
-                clickable
-                v-close-popup
-                @click="onItemClick"
-                to="/hotel_Path"
-              >
-                <q-item-section>
-                  <q-item-label>
-                    飯店GO-
-                    <b>路徑分析</b>
-                  </q-item-label>
-                </q-item-section>
-              </q-item>
 
-              <q-item
+
+              <!-- <q-item
                 clickable
                 v-close-popup
                 @click="onItemClick"
@@ -147,9 +135,9 @@
                     測試ajax+axios傳值
                   </q-item-label>
                 </q-item-section>
-              </q-item>
+              </q-item> -->
 
-              <q-item
+              <!-- <q-item
                 clickable
                 v-close-popup
                 @click="onItemClick"
@@ -160,7 +148,8 @@
                     測試vuex
                   </q-item-label>
                 </q-item-section>
-              </q-item>
+              </q-item> -->
+
             </q-list>
           </q-btn-dropdown>
           <q-btn

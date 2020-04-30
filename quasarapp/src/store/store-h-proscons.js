@@ -117,7 +117,7 @@ const actions = {
     commit,
   }) {
     axiosInstance.post("http://127.0.0.1/api/prosData", {
-        name: state.selected_site,
+        name: "1",
       })
       .then(res => {
         console.log("取得優點");
@@ -133,7 +133,7 @@ const actions = {
     commit,
   }) {
     axiosInstance.post("http://127.0.0.1/api/consData", {
-        name: state.selected_site,
+        name: "1",
       })
       .then(res => {
         console.log("取得缺點");

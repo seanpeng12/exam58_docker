@@ -1,6 +1,6 @@
 <template>
-  <q-card class="my-card" style="width:220px">
-    <q-img src="https://cdn.quasar.dev/img/chicken-salad.jpg" />
+  <q-card class="my-card" style="width:220px;">
+    <q-img src="https://tw.bring-you.info/imgs/2017/08/Seine-3.jpg" />
 
     <q-card-section>
       <div class="row no-wrap items-center">

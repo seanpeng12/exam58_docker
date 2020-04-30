@@ -2,27 +2,26 @@
   <!-- 懶人包 -->
   <div class="q-pa-md doc-container"  v-if="isShow_data">
     <!-- 標題 -->
-    <div class="gt-xs q-pa-lg q-ma-sm column text-black bg-blue-grey-2" style="height: 250px;">
+    <div class="gt-xs q-pa-lg q-ma-sm column text-black bg-blue-grey-2" style="height: 200px;">
       <div class="col">
         <div class="img_background">
           <div>
             <p
               style="font-size: 26px;font-weight:bold;font-family: Microsoft JhengHei;"
-            >{{selected_site}}的優點!</p>
+            >{{selected_site}}的優點</p>
             <div>
-               <q-scroll-area style="height: 210px; max-width: auto;">
+              <div>
                 <q-chip square v-for="a in prosData.data" :key="a.id">
-                    <q-avatar icon="bookmark" color="green" text-color="white" />
-                    {{a.segment}}
+                  <q-avatar icon="bookmark" color="green" text-color="white" />
+                  {{a.segment}}
                 </q-chip>
-
-              </q-scroll-area>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="gt-xs q-pa-lg q-ma-sm column text-white bg-blue-grey-6" style="height: 250px;">
+    <div class="gt-xs q-pa-lg q-ma-sm column text-white bg-blue-grey-6" style="height: 200px;">
       <div class="col">
         <div class="img_background">
           <div>
@@ -61,7 +60,7 @@ export default {
   },
   computed: {
     // 取得vuex state值
-    ...mapGetters("proscons", [
+    ...mapGetters("h_proscons", [
       "run_index",
       "data_index",
       "prosData",
@@ -71,13 +70,16 @@ export default {
   },
   methods: {
     // 由此找vuex所需method
-    ...mapActions("proscons", ["fetchPros", "fetchCons"])
+    ...mapActions("h_proscons", ["fetchPros", "fetchCons"])
   },
   watch:{
     data_index(val){
       console.log("偵測到data_index改變：取得val",val);
     }
   },
-
+  mounted() {
+    this.fetchCons();
+    this.fetchPros();
+  }
 };
 </script>

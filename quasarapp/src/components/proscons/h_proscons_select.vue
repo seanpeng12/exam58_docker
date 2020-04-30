@@ -4,7 +4,7 @@
       <div class="col">
         <div class="text-center img_background">
 
-          <p style="font-size: 28px;font-family: Microsoft JhengHei;">景點優缺點分析 </p>
+          <p style="font-size: 28px;font-family: Microsoft JhengHei;">飯店優缺點分析 </p>
         </div>
       </div>
       <div class="col">
@@ -122,7 +122,7 @@ export default {
   },
   computed: {
     // 取得vuex state值
-    ...mapGetters("proscons", [
+    ...mapGetters("h_proscons", [
       "citys",
       "sites",
       "selected_city",
@@ -134,11 +134,9 @@ export default {
 
   methods: {
     // 由此找vuex所需method
-    ...mapActions("proscons", ["fetchCitys"]),
-    ...mapActions("proscons", ["fetchSites"]),
-    ...mapActions("proscons", ["fetchProsConsR"]),
-    ...mapActions("proscons", ["fetchCons"]),
-    ...mapActions("proscons", ["fetchPros"]),
+    ...mapActions("h_proscons", ["fetchCitys"]),
+    ...mapActions("h_proscons", ["fetchSites"]),
+    ...mapActions("h_proscons", ["fetchProsConsR"]),
 
     // 計算loading時間
     simulateProgress(number) {
@@ -153,10 +151,7 @@ export default {
 
     runR() {
       this.fetchProsConsR();
-      this.fetchCons();
-      this.fetchPros();
-      console.log("觸發 fetchProsConsR及優缺懶人包");
-
+      console.log("觸發 fetchProsConsR")
     },
     // 第一層過濾清單
     filterFn(val, update, abort) {
@@ -179,13 +174,13 @@ export default {
   watch: {
     selected_city_local(val) {
       console.log("偵測到變動 commit city!", val);
-      this.$store.commit("proscons/Update_Selected_City", val);
+      this.$store.commit("h_proscons/Update_Selected_City", val);
       // 執行第二層ajax(vuex)
       this.fetchSites();
     },
     selected_site_local(val) {
       console.log("偵測到變動 commit site!", val);
-      this.$store.commit("proscons/Update_Selected_Site", val);
+      this.$store.commit("h_proscons/Update_Selected_Site", val);
     }
   },
   mounted: function() {

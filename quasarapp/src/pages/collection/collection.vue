@@ -24,7 +24,10 @@
         </div>
       </q-carousel-slide>
     </q-carousel>
-    <div class="row">
+    <div class="row" style="background-color:#a9c9c6">
+      <p class="q-ma-md text-h5 text-white" style="font-weight: bold; font-family:NSimSun;">您可使用快速搜尋，找到您收藏的景點或旅館資訊</p>
+    </div>
+    <div class="row" style="margin-left :auto;margin-right :auto">
       <LCard
         v-for="(item, key) in collections"
         :key="key"

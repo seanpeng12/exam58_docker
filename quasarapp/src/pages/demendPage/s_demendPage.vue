@@ -15,7 +15,8 @@
       @changed_2="selected_2"
       @changed_3="selected_3"
       @runR="run_R"
-    ></demand-select>
+    >
+    </demand-select>
     <!-- end web page -->
 
     <!-- 左右區域 web -->

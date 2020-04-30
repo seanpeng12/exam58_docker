@@ -40,34 +40,42 @@ Route::group(['middleware' => ['CORS']], function () {
 
 // 需求分析
 Route::group(['middleware' => ['CORS']], function () {
-
-    // R
-    //執行R API(單一城市所有景點R圖)
-    Route::post('/runR_city', 'PostController@runR_city');
-
+    // 景點
+    // 取得所有城市名稱-第一層選單
+    Route::get('/site_dataCity', 'PostController@site_dataCityAll');
+    // 取城市所有類別-第二層選單
+    Route::post('/site_dataCat', 'PostController@Catagory');
     //執行R API(需求分析兩類別R圖)
     Route::post('/runR_twoC', 'PostController@runR_twoC');
-
-
-    // mysql
     // 景點需求分析---取得c1/c2(交集)景點
     Route::post('/cat', 'PostController@bothCatagory');
-
     // 景點需求分析---取(聯集-交集)景點
     Route::post('/cat_diff', 'PostController@diffCatagory');
 
+    // 飯店
+    // 取得所有城市名稱-第一層選單
+    Route::get('/h_site_dataCity', 'DemandController@site_dataCityAll');
+    // 取城市所有類別-第二層選單
+    Route::post('/h_site_dataCat', 'DemandController@Catagory');
+    //執行R API(需求分析兩類別R圖)
+    Route::post('/h_runR_twoC', 'DemandController@runR_twoC');
+    // 景點需求分析---取得c1/c2(交集)景點
+    Route::post('/h_cat', 'DemandController@bothCatagory');
+    // 景點需求分析---取(聯集-交集)景點
+    Route::post('/h_cat_diff', 'DemandController@diffCatagory');
+
+
+
+
+    // 測試區域
+    //執行R API(單一城市所有景點R圖)
+    Route::post('/runR_city', 'PostController@runR_city');
     // 取得所有景點資料site_data
     Route::get('/site_data', 'PostController@site_dataAll');
     // 取單一景點site_data(整包object)
     Route::get('/site_data/{id}', 'PostController@site_dataById');
     // 下拉式選單---屬於該城市的所有景點name
     Route::get('/site_name/{city}', 'PostController@site_nameById');
-
-
-    // 取得所有城市名稱-第一層選單
-    Route::get('/site_dataCity', 'PostController@site_dataCityAll');
-    // 取城市所有類別-第二層選單
-    Route::post('/site_dataCat', 'PostController@Catagory');
     // 輸入城市 ->城市所有景點
     Route::post('/sitesByCity', 'PostController@sitesByCity');
 });
