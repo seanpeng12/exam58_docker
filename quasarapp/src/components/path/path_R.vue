@@ -1,15 +1,17 @@
 <template>
   <!-- 折疊式優缺點R圖 -->
-  <div class="q-pa-md" style="max-width: auto"  v-if="isShow_R">
-    <div class="q-pa-lg q-ma-sm bg-teal-8"
-      style="color:white;font-weight: bold;font-size : 25px;font-family: Microsoft JhengHei;" >
+  <div class="q-pa-sm" style="max-width: auto" v-if="isShow_R">
+    <div
+      class="q-pa-md q-ma-sm bg-teal-8"
+      style="color:white;font-weight: bold;font-size : 25px;font-family: Microsoft JhengHei;"
+    >
       <p>路徑分析圖</p>
 
       <!--  -->
       <q-card>
         <q-card-section>
           <!-- 左優點 右缺點 -->
-          <div class="q-pa-md" align="center">
+          <div class="q-pa-none" align="center">
             <div class="q-gutter-y-md" style="max-width: 1200px;">
               <q-card>
                 <q-tabs
@@ -20,12 +22,22 @@
                   align="justify"
                   narrow-indicator
                 >
-                  <q-tab name="mails" class="text-black" label="給定起點分析第一層/第二層景點" style="font-weight:bold;font-family: Microsoft JhengHei;" />
+                  <q-tab
+                    name="mails"
+                    class="text-black"
+                    label="給定起點分析第一層/第二層景點"
+                    style="font-weight:bold;font-family: Microsoft JhengHei;"
+                  />
                 </q-tabs>
 
                 <q-separator />
 
-                <q-tab-panels class="text-dark" v-model="tab" style="max-height: 500px;" animated>
+                <q-tab-panels
+                  class="text-dark"
+                  v-model="tab"
+                  style="max-height: 500px;"
+                  animated
+                >
                   <q-tab-panel name="mails">
                     <iframe
                       style="height: 1500px"
@@ -34,10 +46,8 @@
                       :src="src_path"
                       class="frameStyle"
                       ref="myFrame_good"
-
                     ></iframe>
                   </q-tab-panel>
-
                 </q-tab-panels>
               </q-card>
             </div>
@@ -47,9 +57,6 @@
       </q-card>
       <!-- end -->
     </div>
-
-
-
   </div>
 </template>
 <script>
@@ -62,12 +69,12 @@ export default {
       tab: "mails",
       // dropdownitem
       expanded: true,
-      isShow_R:true
+      isShow_R: true
     };
   },
   computed: {
     // 取得vuex state變動偵測值
-    ...mapGetters("path", ["run_index","data_index"]),
+    ...mapGetters("path", ["run_index", "data_index"]),
     // src_good src_bad
     ...mapGetters("path", ["src_path"])
   },
@@ -79,13 +86,13 @@ export default {
       this.$refs.myFrame_good.contentWindow.location.reload();
       console.log("change重整畫面成功!");
 
-      this.$store.commit("path/Update_Data_Index",1);
-    },
+      this.$store.commit("path/Update_Data_Index", 1);
+    }
   },
   watch: {
     run_index(val) {
       this.changeSrc();
-      console.log("R組件偵測到Run_Index改變：執行changeSrc",val);
+      console.log("R組件偵測到Run_Index改變：執行changeSrc", val);
     }
   }
 };

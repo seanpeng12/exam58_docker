@@ -203,31 +203,6 @@ export default {
       "after_axios",
       "runR_value"
     ])
-
-    // selected_p_trigger: {
-    //   get: function() {
-    //     return this.$store.state.selected_p;
-    //   },
-    //   set: function(value) {
-    //     this.$store.commit("demand/update_selected_p", value);
-    //   }
-    // },
-    // selected_p_detail_item_trigger: {
-    //   get: function() {
-    //     return this.$store.state.selected_p_detail_item;
-    //   },
-    //   set: function(value) {
-    //     this.$store.commit("demand/update_selected_p_detail_item", value);
-    //   }
-    // },
-    // selected_p_detail_item_2_trigger: {
-    //   get: function() {
-    //     return this.$store.state.selected_p_detail_item_2;
-    //   },
-    //   set: function(value) {
-    //     this.$store.commit("demand/update_selected_p_detail_item_2", value);
-    //   }
-    // }
   },
   data() {
     return {
@@ -300,21 +275,6 @@ export default {
       this.selected_p_detail_item_local = "";
       this.selected_p_detail_item_local2 = "";
     }
-    // 第一層選擇城市 > 回傳第二層資料
-    // selected_p_local: {
-    //   handler(val) {
-    //     // 傳送第一層城市到vuex
-
-    //   },
-    //   deep: true
-    // },
-
-    // selected_p_detail_item_local: function(val) {
-    //   this.$store.commit("demand/update_selected_p_detail_item", val);
-    // },
-    // selected_p_detail_item_local2: function(val) {
-    //   this.$store.commit("demand/update_selected_p_detail_item_2", val);
-    // },
   },
   mounted: function() {
     // 初始化時取第一層城市資料(vuex)
