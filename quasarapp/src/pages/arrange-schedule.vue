@@ -18,17 +18,6 @@
         @click="darkDialog = true"
       />
 
-      <!-- <q-btn
-        dense
-        color="warning"
-        icon="add"
-        @click="addDay"
-        label="增加天數"
-        class="absolute-top-right"
-        style="margin-right:4px"
-        flat
-      />-->
-
       <q-dialog v-model="darkDialog">
         <q-card>
           <q-card-section>
@@ -140,12 +129,12 @@
 
             <q-tab-panel name="alarms">
               <div class="text-h6">
-                Tip: 需求分析
+                <!-- Tip: 需求分析 -->
                 <q-toggle
                   v-model="fourth"
                   checked-icon="check"
                   color="red"
-                  label="使用您過去的偏好類別"
+                  label="依照您曾經收藏類型推薦"
                   unchecked-icon="clear"
                 />
               </div>
@@ -182,13 +171,13 @@
 
               <div class="q-pt-none">
                 <div class="row">
-                  <div class="col">
+                  <div class="col-7">
                     <demand-r :src="src" :runR_value="runR_value"></demand-r>
                   </div>
 
                   <!-- 需求分析 懶人包 -->
 
-                  <div class="col">
+                  <div class="col q-mt-xl">
                     <p
                       class="text"
                       style="font-size: 30px;font-family: Microsoft JhengHei;"
@@ -359,43 +348,96 @@
             </q-tab-panel>
 
             <q-tab-panel name="movies">
-              <div class="text-h6">
-                Tip: 路徑規畫分析(請從您的排程容器中選擇一個景點最為起始點)
+              <div class="q-pa-md ">
+                <div class="q-pa-md doc-container  text-black bg-grey-3">
+                  <div class="row">
+                    <div class="text-h4 text-center">
+                      <b> 路徑規畫分析</b>
+                      <q-btn
+                        class="q-ma-md"
+                        dense
+                        icon="help"
+                        label="點我說明"
+                        color="negative"
+                        size="10px"
+                        @click="sliders = true"
+                      />
+                      <q-dialog v-model="sliders">
+                        <q-card style="width:500px" class="q-px-sm q-pb-md">
+                          <q-card-section>
+                            <div class="text-h6">
+                              <b>使用說明</b>
+                            </div>
+                          </q-card-section>
+
+                          <q-item-label header style="color:#57a5ba">
+                            <q-icon
+                              name="assignment_turned_in"
+                              style="color:#57a5ba"
+                              size="20px"
+                            /><b>目的</b></q-item-label
+                          >
+                          <q-item dense>
+                            <q-item-section avatar> </q-item-section>
+                            <q-item-section>
+                              為您找出受歡迎的大眾路線
+                            </q-item-section>
+                          </q-item>
+
+                          <q-item-label header style="color:#57a5ba"
+                            ><q-icon
+                              name="help"
+                              style="color:#57a5ba"
+                              size="20px"
+                            /><b>使用說明</b></q-item-label
+                          >
+                          <q-item dense>
+                            <q-item-section avatar> </q-item-section>
+                            <q-item-section>
+                              <p>Step1. 選擇您所要到達的城市</p>
+                              <p>Step2. 選擇您的起點</p>
+                              <p>Step3. 按下分析鈕</p>
+                              <p>Step4. 依據起點推薦第二景點</p>
+                              <p>Step5. 依據第二景點推薦，點選第三景點</p>
+                              <p>Step6. 一鍵加入排程</p>
+                            </q-item-section>
+                          </q-item>
+                          <q-item-label header style="color:#57a5ba"
+                            ><q-icon
+                              name="multiline_chart"
+                              style="color:#57a5ba"
+                              size="20px"
+                            /><b>分析圖式說明</b></q-item-label
+                          >
+                          <q-item dense>
+                            <q-item-section avatar> </q-item-section>
+                            <q-item-section>
+                              <q-slider color="teal" :step="0" />
+                            </q-item-section>
+                          </q-item>
+                        </q-card>
+                      </q-dialog>
+                    </div>
+                  </div>
+                  <div class="row q-pl-xl">
+                    <path-select></path-select>
+                  </div>
+                </div>
               </div>
-              <div class="row">
-                <q-select
-                  outlined
-                  v-model="model_route"
-                  :options="route"
-                  label="選擇路徑的起點"
-                  style="width: 250px; margin-left:32px"
-                />
-                <q-btn
-                  dense
-                  label="開始分析"
-                  class
-                  color="secondary"
-                  size="15px"
-                  style="width: 200px; margin-left:32px"
-                />
-                <q-btn
-                  dense
-                  label="納入此條路線"
-                  class
-                  color="warning"
-                  size="15px"
-                  style="margin-left: 100px"
-                />
-                <q-btn
-                  dense
-                  label="納入此景點"
-                  class
-                  color="warning"
-                  size="15px"
-                  style="margin-left:20px"
-                />
+              <div class="row-8">
+                <path-button-toggle></path-button-toggle>
               </div>
-              <img src="~assets/route.jpg" />
+              <div class="q-pa-none">
+                <div class="row">
+                  <div class="col-6">
+                    <path-data></path-data>
+                  </div>
+                  <!-- 懶人包區域 -->
+                  <div class="col-6">
+                    <path-r></path-r>
+                  </div>
+                </div>
+              </div>
               <q-btn
                 dense
                 label="前往下一步"
@@ -465,13 +507,14 @@ export default {
       model_route: null,
       model_city: null,
       fourth: true,
-      route: ["台北101", "象山", "我家"],
-      ssite: ["台北101", "象山", "十分老街"],
-      options: ["台北市", "基隆市", "高雄市", "南投縣", "台南市"],
+
       id: "",
       date: "",
       prompt: false,
-      startDate: ""
+      startDate: "",
+      sliders: false,
+      slider: 1,
+      step: 1
     };
   },
   components: {
@@ -488,7 +531,12 @@ export default {
     // 引用優缺點元件
     prosconsSelect: () => import("components/proscons/proscons_select.vue"),
     prosconsR: () => import("components/proscons/proscons_R.vue"),
-    prosconsData: () => import("components/proscons/proscons_data.vue")
+    prosconsData: () => import("components/proscons/proscons_data.vue"),
+    // path
+    pathSelect: () => import("components/path/path_select.vue"),
+    pathR: () => import("components/path/path_R.vue"),
+    pathData: () => import("components/path/path_data.vue"),
+    pathButtonToggle: () => import("components/path/path_button_toggle.vue")
   },
   computed: {
     ...mapGetters("travel", ["everydaySites"]),

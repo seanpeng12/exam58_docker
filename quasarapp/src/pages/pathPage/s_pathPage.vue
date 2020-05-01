@@ -1,7 +1,33 @@
 <template>
   <q-page>
-    <!-- proscons-select 區域 -->
-    <path-select></path-select>
+    <div class="q-pa-md doc-container">
+      <div
+        class="gt-xs q-pa-lg  column items-center text-black bg-grey-3"
+        style="height:300px;"
+      >
+        <div class="col">
+          <div class="text-center img_background">
+            <p style="font-size: 28px;font-family: Microsoft JhengHei;">
+              路徑分析
+            </p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="text-center img_background">
+            <div>
+              <b
+                class="text"
+                style="font-size: 20px;font-family: Microsoft JhengHei;"
+                >不採雷的路線推薦，給拿不定下一站的您!</b
+              >
+              <br />
+            </div>
+          </div>
+        </div>
+        <path-select></path-select>
+      </div>
+    </div>
+    <!-- </div> -->
     <!-- end proscons select -->
     <div class="q-pa-md">
       <div class="q-gutter-y-md">
@@ -21,8 +47,6 @@
       </div>
     </div>
     <!-- end -->
-
-
   </q-page>
 </template>
 
@@ -39,10 +63,7 @@ export default {
     pathButtonToggle: () => import("components/path/path_button_toggle.vue")
   },
   data() {
-    return {
-
-
-    };
+    return {};
   },
   computed: {
     // 取得vuex state變動值
@@ -52,5 +73,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

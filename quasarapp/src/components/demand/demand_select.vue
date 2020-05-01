@@ -129,7 +129,7 @@
         <q-btn
           :loading="loading4"
           color="cyan-9"
-          @click="simulateProgress(4)"
+          @click="showLoading()"
           v-on:click="runR(1)"
           style="width: 150px"
         >
@@ -138,13 +138,15 @@
             <q-spinner-hourglass class="on-left" />Loading...
           </template>
         </q-btn>
-        <q-btn @click="resetTxtdatas">reset</q-btn>
+
         <!-- end -->
       </div>
     </div>
   </div>
 </template>
 <script>
+import { QSpinnerFacebook } from "quasar";
+
 import { mapActions } from "vuex";
 const stringOptions = ["台北", "桃園", "新竹", "苗栗", "台東"];
 export default {
@@ -214,6 +216,8 @@ export default {
         this[`loading${number}`] = false;
       }, 1000);
     },
+    // loading
+
     // ???
     onProductChange: function() {
       // reset!

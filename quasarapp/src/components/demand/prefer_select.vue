@@ -1,72 +1,61 @@
 <template>
-  <div class="q-pa-md doc-container">
-    <div
-      class="gt-xs q-pa-lg items-center text-black bg-grey-3"
-      style="height: 200px;"
-    >
-      <div class="col">
-        <div class="text-center img_background">
-          <p style="font-size: 28px;font-family: Microsoft JhengHei;">
-            景點偏好分析
-          </p>
-        </div>
-      </div>
-      <div class="col">
-        <div class="text-center img_background">
-          <div>
-            <b
-              class="text"
-              style="font-size: 30px;font-family: Microsoft JhengHei;"
-              >選擇想旅遊的城市</b
-            >
-            <br />
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col" style="margin-left:200px; margin-top:25px">
-          <q-select
-            filled
-            v-model="selected_p_local"
-            v-on:change="onProductChange"
-            use-input
-            hide-selected
-            fill-input
-            input-debounce="0"
-            :options="options"
-            @filter="filterFn"
-            label="選擇城市"
-            style="width: 250px;"
-          >
-            <template v-slot:no-option>
-              <q-item>
-                <q-item-section class="text-grey">沒有結果</q-item-section>
-              </q-item>
-            </template>
-          </q-select>
-        </div>
-
-        <div class="col" style="margin-top:35px">
-          <!-- 按鈕 -->
-          <q-btn
-            :loading="loading4"
-            color="cyan-9"
-            @click="simulateProgress(4)"
-            v-on:click="runR(1)"
-          >
-            開始分析
-            <template v-slot:loading>
-              <q-spinner-hourglass class="on-left" />Loading...
-            </template>
-          </q-btn>
-        </div>
+  <div class="q-pa-md doc-container  text-black bg-grey-3">
+    <div class="row-12">
+      <div class="text-center img_background">
+        <b
+          style="font-size: 28px;font-family: Microsoft JhengHei;padding-top:10px"
+        >
+          需求推薦分析
+        </b>
+        <!-- <b class="text" style="font-size: 30px;font-family: Microsoft JhengHei;"
+          >選擇想到達的城市</b
+        > -->
       </div>
     </div>
-    <div class="gt-xs q-pa-lg column items-center text-black bg-grey-3"></div>
+    <div class="gt-xs q-pa-sm row items-center" style="height: 100px;">
+      <!-- <div class="row q-pt-md q-mb-lg"> -->
+      <div class="col-3"></div>
+      <div class="col-4">
+        <q-select
+          filled
+          v-model="selected_p_local"
+          v-on:change="onProductChange"
+          use-input
+          hide-selected
+          fill-input
+          input-debounce="0"
+          :options="options"
+          @filter="filterFn"
+          label="選擇城市"
+          style="width: 250px;"
+        >
+          <template v-slot:no-option>
+            <q-item>
+              <q-item-section class="text-grey">沒有結果</q-item-section>
+            </q-item>
+          </template>
+        </q-select>
+      </div>
+
+      <div class="col">
+        <!-- 按鈕 -->
+        <q-btn
+          :loading="loading4"
+          color="cyan-9"
+          @click="simulateProgress(4)"
+          v-on:click="runR(1)"
+        >
+          開始分析
+          <template v-slot:loading>
+            <q-spinner-hourglass />Loading...
+          </template>
+        </q-btn>
+      </div>
+    </div>
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 const stringOptions = ["台北", "桃園", "新竹", "苗栗", "台東"];
 export default {
   props: [
@@ -124,6 +113,7 @@ export default {
   //   }
   // },
   methods: {
+    ...mapActions("demand", ["resetTxtdatas", "resetTxtdatas_diff"]),
     // 計算loading時間
     simulateProgress(number) {
       // we set loading state
@@ -140,7 +130,9 @@ export default {
       this.selected_p_detail_item = "";
     },
     runR(val) {
-      this.$emit("runR", val);
+      this.resetTxtdatas().then(() => {
+        this.$emit("runR", val);
+      });
     },
     // 第一層過濾清單
     filterFn(val, update, abort) {

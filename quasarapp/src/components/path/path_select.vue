@@ -1,10 +1,14 @@
 <template>
-  <div class="q-pa-md doc-container">
-    <div class="gt-xs q-pa-lg column items-center text-black bg-grey-3" style="height: 200px;">
-      <div class="col">
+  <!-- <div class="q-pa-md doc-container"> -->
+  <!-- <div
+      class="gt-xs q-pa-lg column items-center text-black bg-grey-3"
+      style="height: 200px;"
+    > -->
+  <!-- <div class="col">
         <div class="text-center img_background">
-
-          <p style="font-size: 28px;font-family: Microsoft JhengHei;">路徑分析 </p>
+          <p style="font-size: 28px;font-family: Microsoft JhengHei;">
+            路徑分析
+          </p>
         </div>
       </div>
       <div class="col">
@@ -13,75 +17,71 @@
             <b
               class="text"
               style="font-size: 20px;font-family: Microsoft JhengHei;"
-            >不採雷的路線推薦，給拿不定下一站的您!</b>
+              >不採雷的路線推薦，給拿不定下一站的您!</b
+            >
             <br />
           </div>
         </div>
-      </div>
+      </div> -->
 
+  <div class="col">
+    <!-- 三個下拉式選單 -->
+    <div class="row">
       <div class="col">
-        <!-- 三個下拉式選單 -->
-        <div class="row">
-          <div class="col">
-            <!-- 下拉式選單 -->
+        <!-- 下拉式選單 -->
 
-            <div class="q-pa-md">
-              <div class="q-gutter-md row">
-                <q-select
-                  filled
-                  v-model="selected_city_local"
-                  use-input
-                  hide-selected
-                  fill-input
-                  input-debounce="0"
-                  :options="options"
-                  @filter="filterFn"
-                  hint="選擇城市"
-                  style="width: 250px; padding-bottom: 32px"
-                >
-                  <template v-slot:no-option>
-                    <q-item>
-                      <q-item-section class="text-grey">沒有結果</q-item-section>
-                    </q-item>
-                  </template>
-                </q-select>
-              </div>
-            </div>
-            <!--  -->
-          </div>
-          <div class="col">
-            <!-- 下拉式選單 -->
-
-            <div class="q-pa-md">
-              <div class="q-gutter-md row">
-                <q-select
-                  filled
-                  v-model="selected_site_local"
-                  use-input
-                  hide-selected
-                  fill-input
-                  input-debounce="0"
-                  :options="options"
-                  @filter="filterFn_2"
-                  hint="選擇景點"
-                  style="width: 250px; padding-bottom: 32px"
-                >
-                  <template v-slot:no-option>
-                    <q-item>
-                      <q-item-section class="text-grey">沒有結果</q-item-section>
-                    </q-item>
-                  </template>
-                </q-select>
-              </div>
-            </div>
-            <!--  -->
+        <div class="q-pa-md">
+          <div class="q-gutter-md row">
+            <q-select
+              filled
+              v-model="selected_city_local"
+              use-input
+              hide-selected
+              fill-input
+              input-debounce="0"
+              :options="options"
+              @filter="filterFn"
+              hint="選擇城市"
+              style="width: 250px; padding-bottom: 32px"
+            >
+              <template v-slot:no-option>
+                <q-item>
+                  <q-item-section class="text-grey">沒有結果</q-item-section>
+                </q-item>
+              </template>
+            </q-select>
           </div>
         </div>
+        <!--  -->
       </div>
-    </div>
-    <div class="gt-xs q-pa-lg column items-center text-black bg-grey-3">
       <div class="col">
-        <!-- 按鈕 -->
+        <!-- 下拉式選單 -->
+
+        <div class="q-pa-md">
+          <div class="q-gutter-md row">
+            <q-select
+              filled
+              v-model="selected_site_local"
+              use-input
+              hide-selected
+              fill-input
+              input-debounce="0"
+              :options="options"
+              @filter="filterFn_2"
+              hint="選擇景點"
+              style="width: 250px; padding-bottom: 32px"
+            >
+              <template v-slot:no-option>
+                <q-item>
+                  <q-item-section class="text-grey">沒有結果</q-item-section>
+                </q-item>
+              </template>
+            </q-select>
+          </div>
+        </div>
+        <!--  -->
+      </div>
+      <div class="col q-pa-md" style="margin-top:8px">
         <q-btn
           :loading="loading4"
           color="cyan-9"
@@ -94,10 +94,29 @@
             <q-spinner-hourglass class="on-left" />Loading...
           </template>
         </q-btn>
-        <!-- end -->
       </div>
     </div>
   </div>
+  <!-- </div> -->
+  <!-- </div> -->
+  <!-- <div class="gt-xs q-pa-lg column items-center text-black bg-grey-3">
+      <div class="col"> -->
+  <!-- 按鈕 -->
+  <!-- <q-btn
+      :loading="loading4"
+      color="cyan-9"
+      @click="simulateProgress(4)"
+      v-on:click="runR()"
+      style="width: 150px"
+    >
+      選擇你的起始點
+      <template v-slot:loading>
+        <q-spinner-hourglass class="on-left" />Loading...
+      </template>
+    </q-btn>
+  </div> -->
+  <!-- </div>
+  </div> -->
 </template>
 
 <script>
@@ -156,7 +175,7 @@ export default {
       this.fetchProsConsR();
       // 取第一層懶人包
       this.fetchPath();
-      console.log("觸發 fetchProsConsR")
+      console.log("觸發 fetchProsConsR");
     },
     // 第一層過濾清單
     filterFn(val, update, abort) {
@@ -193,4 +212,5 @@ export default {
     this.fetchCitys();
   }
 };
-</script>>
+</script>
+>
