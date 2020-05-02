@@ -53,9 +53,65 @@
           ></q-item-label
         >
         <q-item dense>
-          <q-item-section avatar> </q-item-section>
           <q-item-section>
-            <q-slider color="teal" :step="0" />
+            <div class="row">
+              <div class="col-3 q-ml-md">
+                <q-icon name="fas fa-circle" color="primary"
+                  ><span style="color:black; margin-left:2px">
+                    起點</span
+                  ></q-icon
+                >
+              </div>
+              <div class="col-5">
+                <q-icon name="fas fa-circle" color="yellow" style="margin:4px"
+                  ><span style="color:black;margin-left:2px">
+                    路線順序第二的景點</span
+                  ></q-icon
+                >
+              </div>
+              <div class="col">
+                <q-icon name="fas fa-circle" color="red-6" style="margin:4px"
+                  ><span style="color:black;margin-left:2px">
+                    路線順序第三的景點</span
+                  ></q-icon
+                >
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <span style="margin-left:10px"
+                >1.<q-icon
+                  name="fas fa-circle"
+                  color="primary"
+                  class="q-mx-xs"
+                />(起點)與<q-icon
+                  name="fas fa-circle"
+                  color="yellow"
+                  class="q-mx-xs"
+                />(第二景點)的連線表示，其他使用者在去過起始點後會前往的景點，<span
+                  style="font-weight:bold"
+                  >線條越粗</span
+                >表示越多人有同樣的安排
+              </span>
+              <br />
+            </div>
+            <div class="row">
+              <span style="margin-left:10px"
+                >2. 以此類推，當選定<q-icon
+                  name="fas fa-circle"
+                  color="yellow"
+                  class="q-mx-xs"
+                />(第二個景點)，那麼<q-icon
+                  name="fas fa-circle"
+                  color="red"
+                  class="q-mx-xs"
+                />為<q-icon
+                  name="fas fa-circle"
+                  color="yellow"
+                  class="q-mx-xs"
+                />的下一個景點(第三個景點)</span
+              >
+            </div>
           </q-item-section>
         </q-item>
       </q-card>

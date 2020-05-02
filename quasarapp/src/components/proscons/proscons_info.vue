@@ -53,9 +53,75 @@
           ></q-item-label
         >
         <q-item dense>
-          <q-item-section avatar> </q-item-section>
+          <!-- <q-item-section avatar></q-item-section> -->
           <q-item-section>
-            <q-slider color="teal" :step="0" />
+            <div class="row ">
+              <q-chip icon="bookmark" style="font-weight:bold">優點</q-chip>
+            </div>
+            <div class="row q-mt-md">
+              1. 評論被提到頻率:
+              <div class="col q-ml-xl">
+                <q-icon name="fas fa-circle" style="margin:5px;color:green"
+                  ><span style="color:black; "> 曾被提及 </span></q-icon
+                >
+              </div>
+              <div class="col q-ml-md">
+                <q-icon name="fas fa-circle" style="color:#33FF66"
+                  ><span style="color:black; margin-left:5px">
+                    最常被提及
+                  </span></q-icon
+                >
+              </div>
+              <div class="col q-ml-md">
+                <q-icon name="fas fa-circle" style="margin:5px;color:#33FFCC"
+                  ><span style="color:black;margin-left:5px">
+                    經常被提及
+                  </span></q-icon
+                >
+              </div>
+            </div>
+            <div class="row">
+              2.
+              <q-icon name="fas fa-circle" class="q-ml-xs q-mr-xs"></q-icon
+              >間的相連表示容易被同時提到
+            </div>
+            <div class="row q-mt-md">
+              <q-chip
+                icon="bookmark"
+                color="blue-grey-6"
+                text-color="white"
+                style="font-weight:bold"
+                >缺點</q-chip
+              >
+            </div>
+
+            <div class="row q-mt-md">
+              1. 評論被提到次數為:
+              <div class="col q-ml-xl">
+                <q-icon name="fas fa-circle" style="color:#E6B7BE"
+                  ><span style="color:black; "> 曾被提及</span></q-icon
+                >
+              </div>
+              <div class="col q-ml-md">
+                <q-icon name="fas fa-circle" style="color:#C42A56"
+                  ><span style="color:black; margin-left:5px">
+                    最常被提及</span
+                  ></q-icon
+                >
+              </div>
+              <div class="col q-ml-md">
+                <q-icon name="fas fa-circle" style="margin:5px;color:#D6727C"
+                  ><span style="color:black;margin-left:5px">
+                    經常被提及</span
+                  ></q-icon
+                >
+              </div>
+            </div>
+            <div class="row">
+              2.
+              <q-icon name="fas fa-circle" class="q-ml-xs q-mr-xs"></q-icon
+              >間的相連表示容易被同時提到
+            </div>
           </q-item-section>
         </q-item>
       </q-card>

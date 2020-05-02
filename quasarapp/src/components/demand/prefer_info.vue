@@ -55,7 +55,56 @@
         <q-item dense>
           <q-item-section avatar> </q-item-section>
           <q-item-section>
-            <q-slider color="teal" :step="0" />
+            <div class="row">
+              <div class="col">
+                <q-icon name="fas fa-circle" color="primary"
+                  ><span style="color:black; margin-left:10px">
+                    表示景點</span
+                  ></q-icon
+                >
+              </div>
+              <div class="col">
+                <q-icon name="fas fa-square" color="red-6" style="margin:5px"
+                  ><span style="color:black;margin-left:10px">
+                    表示景點類型</span
+                  ></q-icon
+                >
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              1.
+              <span style="margin-left:10px"
+                ><q-icon
+                  name="fas fa-circle"
+                  color="primary"
+                  class="q-mx-xs"/>與<q-icon
+                  name="fas fa-square"
+                  color="red-6"
+                  class="q-mx-xs"/>
+                連成線，表示該景點的類型屬於<q-icon
+                  name="fas fa-square"
+                  color="red-6"
+                  class="q-mx-xs"
+              /></span>
+              <br />
+            </div>
+            <div class="row">
+              2.
+              <span style="margin-left:10px"
+                >如果<q-icon
+                  name="fas fa-circle"
+                  color="primary"
+                  class="q-mx-xs"
+                />
+                與兩個<q-icon
+                  name="fas fa-square"
+                  color="red-6"
+                  class="q-mx-xs"
+                />
+                相連，表示該景點同時擁有2種類型</span
+              >
+            </div>
           </q-item-section>
         </q-item>
       </q-card>
