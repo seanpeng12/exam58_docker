@@ -52,6 +52,8 @@ Route::group(['middleware' => ['CORS']], function () {
     // 景點需求分析---取(聯集-交集)景點
     Route::post('/cat_diff', 'PostController@diffCatagory');
 
+
+
     // 飯店
     // 取得所有城市名稱-第一層選單
     Route::get('/h_site_dataCity', 'DemandController@site_dataCityAll');
@@ -76,19 +78,34 @@ Route::group(['middleware' => ['CORS']], function () {
     Route::get('/site_data/{id}', 'PostController@site_dataById');
     // 下拉式選單---屬於該城市的所有景點name
     Route::get('/site_name/{city}', 'PostController@site_nameById');
-    // 輸入城市 ->城市所有景點
-    Route::post('/sitesByCity', 'PostController@sitesByCity');
 });
 
 // 優缺點分析
 Route::group(['middleware' => ['CORS']], function () {
+    // 景點
+    // 第一層選單(取得所有城市名稱-第一層選單)
+    Route::get('/proscons_site_data_City', 'ProsCosController@site_dataCityAll');
+    // 第二層選單：輸入城市 ->城市所有景點
+    Route::post('/sitesByCity', 'ProsCosController@sitesByCity');
 
-    // 景點優缺點分析 name->sid(S0102)->跑優點與缺點R圖(只能使用象山自然步道)
+    // 優缺點R分析 name->sid(S0102)->跑優點與缺點R圖(只能使用象山自然步道)
     Route::post('/proscons', 'ProsCosController@runR_proscons');
     // 優點懶人包
-    Route::post('/prosData', 'PostController@prosData');
+    Route::post('/prosData', 'ProsCosController@prosData');
     // 缺點懶人包
-    Route::post('/consData', 'PostController@consData');
+    Route::post('/consData', 'ProsCosController@consData');
+
+    // 飯店
+    // 第一層選單(取得所有城市名稱-第一層選單)
+    Route::get('/proscons_hotel_data_City', 'ProsCosController@hotel_dataCityAll');
+    // 第二層選單：輸入城市 ->城市所有景點
+    Route::post('/h_sitesByCity', 'ProsCosController@h_sitesByCity');
+    // 優缺點R分析 name->sid(S0102)->跑優點與缺點R圖(只能使用象山自然步道)
+    Route::post('/h_proscons', 'ProsCosController@h_runR_proscons');
+    // 優點懶人包
+    Route::post('/h_prosData', 'ProsCosController@h_prosData');
+    // 缺點懶人包
+    Route::post('/h_consData', 'ProsCosController@h_consData');
 });
 
 // 路徑分析

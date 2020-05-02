@@ -1,6 +1,6 @@
 <template>
   <!-- 懶人包 -->
-  <div class="q-pa-md doc-container"  v-if="isShow_data">
+  <div class="q-pa-md doc-container" v-if="isShow_data">
     <!-- 標題 -->
     <div class="gt-xs q-pa-lg q-ma-sm column text-black bg-blue-grey-2" style="height: 250px;">
       <div class="col">
@@ -8,14 +8,13 @@
           <div>
             <p
               style="font-size: 26px;font-weight:bold;font-family: Microsoft JhengHei;"
-            >{{selected_site}}的優點!</p>
+            >{{selected_site}}的優點</p>
             <div>
-               <q-scroll-area style="height: 210px; max-width: auto;">
+              <q-scroll-area style="height: 210px; max-width: auto;">
                 <q-chip square v-for="a in prosData.data" :key="a.id">
-                    <q-avatar icon="bookmark" color="green" text-color="white" />
-                    {{a.segment}}
+                  <q-avatar icon="bookmark" color="green" text-color="white" />
+                  {{a.segment}}
                 </q-chip>
-
               </q-scroll-area>
             </div>
           </div>
@@ -56,7 +55,7 @@ export default {
       tab: "mails",
       // dropdownitem
       expanded: true,
-      isShow_data:true,
+      isShow_data: true
     };
   },
   computed: {
@@ -69,15 +68,11 @@ export default {
       "selected_site"
     ])
   },
-  methods: {
-    // 由此找vuex所需method
-    ...mapActions("proscons", ["fetchPros", "fetchCons"])
-  },
-  watch:{
-    data_index(val){
-      console.log("偵測到data_index改變：取得val",val);
+  methods: {},
+  watch: {
+    data_index(val) {
+      console.log("偵測到data_index改變：取得val", val);
     }
-  },
-
+  }
 };
 </script>

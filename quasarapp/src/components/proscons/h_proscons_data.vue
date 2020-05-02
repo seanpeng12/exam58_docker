@@ -1,8 +1,8 @@
 <template>
   <!-- 懶人包 -->
-  <div class="q-pa-md doc-container"  v-if="isShow_data">
+  <div class="q-pa-md doc-container" v-if="isShow_data">
     <!-- 標題 -->
-    <div class="gt-xs q-pa-lg q-ma-sm column text-black bg-blue-grey-2" style="height: 200px;">
+    <div class="gt-xs q-pa-lg q-ma-sm column text-black bg-blue-grey-2" style="height: 250px;">
       <div class="col">
         <div class="img_background">
           <div>
@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-    <div class="gt-xs q-pa-lg q-ma-sm column text-white bg-blue-grey-6" style="height: 200px;">
+    <div class="gt-xs q-pa-lg q-ma-sm column text-white bg-blue-grey-6" style="height: 250px;">
       <div class="col">
         <div class="img_background">
           <div>
@@ -55,7 +55,7 @@ export default {
       tab: "mails",
       // dropdownitem
       expanded: true,
-      isShow_data:true,
+      isShow_data: true
     };
   },
   computed: {
@@ -68,18 +68,11 @@ export default {
       "selected_site"
     ])
   },
-  methods: {
-    // 由此找vuex所需method
-    ...mapActions("h_proscons", ["fetchPros", "fetchCons"])
-  },
-  watch:{
-    data_index(val){
-      console.log("偵測到data_index改變：取得val",val);
+  methods: {},
+  watch: {
+    data_index(val) {
+      console.log("偵測到data_index改變：取得val", val);
     }
-  },
-  mounted() {
-    this.fetchCons();
-    this.fetchPros();
   }
 };
 </script>

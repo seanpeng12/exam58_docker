@@ -1,6 +1,13 @@
-import axios, { axiosInstance } from "boot/axios";
+import axios, {
+  axiosInstance
+} from "boot/axios";
 import Vue from "vue";
-import { fstore, firebaseAuth, firebaseApp, firestore } from "boot/firebase";
+import {
+  fstore,
+  firebaseAuth,
+  firebaseApp,
+  firestore
+} from "boot/firebase";
 
 const state = {
   namespaced: true,
@@ -15,7 +22,7 @@ const state = {
   // 選單類別資料(axios用)
   cats: [],
 
-  // 懶人包景點資料(預設假資料)
+  // 懶人包飯店資料(預設假資料)
   // txtdatas: [{
   //   id: 1,
   //   name: "並將喜好項目勾選(此為預設)",
@@ -28,7 +35,7 @@ const state = {
   txtinfo: "請先選擇城市與需求",
 
   //src iframe
-  src: "./statics/between_relationship.html",
+  src: "./statics/h_between_relationship.html",
   // R
   Rdata: {},
   // 用以偵測是否按下按鈕(累積)
@@ -99,7 +106,9 @@ const mutations = {
   }
 };
 const actions = {
-  fetchCitys({ commit }) {
+  fetchCitys({
+    commit
+  }) {
     axiosInstance
       .get("http://127.0.0.1/api/h_site_dataCity")
       .then(res => {
@@ -113,7 +122,9 @@ const actions = {
       });
   },
 
-  fetchCats({ commit }) {
+  fetchCats({
+    commit
+  }) {
     axiosInstance
       .post("http://127.0.0.1/api/h_site_dataCat", {
         name: state.selected_p
@@ -175,7 +186,9 @@ const actions = {
   //   //   });
   // },
   // ajax跑R圖
-  upload_axios({ commit }) {
+  upload_axios({
+    commit
+  }) {
     axiosInstance
       .post("http://127.0.0.1:80/api/h_runR_twoC", {
         name: state.selected_p,
@@ -188,12 +201,14 @@ const actions = {
         commit("FETCH_Rdata", response.data);
         commit("FETCH_index", 1);
       })
-      .catch(function(response) {
+      .catch(function (response) {
         console.log(response);
       });
   },
   // ajax取懶人包資料
-  upload_axios_2({ commit }) {
+  upload_axios_2({
+    commit
+  }) {
     axiosInstance
       .post("http://127.0.0.1:80/api/h_cat", {
         name: state.selected_p,
@@ -216,11 +231,11 @@ const actions = {
           .collection("sightseeingMember")
           .doc(uid)
           .collection("我的收藏");
-        id.forEach(function(data, index, array) {
+        id.forEach(function (data, index, array) {
           checkCollectionExists
             .doc(data)
             .get()
-            .then(function(doc) {
+            .then(function (doc) {
               if (doc.exists) {
                 commit("FETCH_txtdatas", {
                   id: data,
@@ -249,7 +264,7 @@ const actions = {
                 });
               }
             })
-            .catch(function(error) {
+            .catch(function (error) {
               console.log("Error getting document:", error);
             });
         });
@@ -258,12 +273,14 @@ const actions = {
 
         // commit('FETCH_txtdatas', txtdatas);
       })
-      .catch(function(response) {
+      .catch(function (response) {
         console.log(response);
       });
   },
   // 取差集diff
-  upload_axios_2_diff({ commit }) {
+  upload_axios_2_diff({
+    commit
+  }) {
     axiosInstance
       .post("http://127.0.0.1:80/api/h_cat_diff", {
         name: state.selected_p,
@@ -288,11 +305,11 @@ const actions = {
           .collection("sightseeingMember")
           .doc(uid)
           .collection("我的收藏");
-        id.forEach(function(data, index, array) {
+        id.forEach(function (data, index, array) {
           checkCollectionExists
             .doc(data)
             .get()
-            .then(function(doc) {
+            .then(function (doc) {
               if (doc.exists) {
                 commit("FETCH_txtdatas_diff", {
                   id: data,
@@ -323,16 +340,18 @@ const actions = {
                 });
               }
             })
-            .catch(function(error) {
+            .catch(function (error) {
               console.log("Error getting document:", error);
             });
         });
       })
-      .catch(function(response) {
+      .catch(function (response) {
         console.log(response);
       });
   },
-  resetTxtdatas({ commit }) {
+  resetTxtdatas({
+    commit
+  }) {
     commit("resetTxtdatas");
     commit("resetTxtdatas_diff");
   }

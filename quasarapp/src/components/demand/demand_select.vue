@@ -1,24 +1,15 @@
 <template>
   <div class="q-pa-md doc-container">
-    <div
-      class="gt-xs q-pa-lg column items-center text-black bg-grey-3"
-      style="height: 200px;"
-    >
+    <div class="gt-xs q-pa-lg column items-center text-black bg-grey-3" style="height: 200px;">
       <div class="col">
         <div class="text-center img_background">
-          <p style="font-size: 28px;font-family: Microsoft JhengHei;">
-            景點需求分析
-          </p>
+          <p style="font-size: 28px;font-family: Microsoft JhengHei;">景點需求分析</p>
         </div>
       </div>
       <div class="col">
         <div class="text-center img_background">
           <div>
-            <b
-              class="text"
-              style="font-size: 30px;font-family: Microsoft JhengHei;"
-              >選擇想分析的景點城市/類型</b
-            >
+            <b class="text" style="font-size: 30px;font-family: Microsoft JhengHei;">選擇想分析的景點城市/類型</b>
             <br />
 
             <!-- 以下測試 -->
@@ -39,6 +30,7 @@
               <div class="q-gutter-md row">
                 <q-select
                   filled
+                  clearable
                   v-model="selected_p_local"
                   v-on:change="onProductChange"
                   use-input
@@ -52,9 +44,7 @@
                 >
                   <template v-slot:no-option>
                     <q-item>
-                      <q-item-section class="text-grey"
-                        >沒有結果</q-item-section
-                      >
+                      <q-item-section class="text-grey">沒有結果</q-item-section>
                     </q-item>
                   </template>
                 </q-select>
@@ -69,6 +59,7 @@
               <div class="q-gutter-md row">
                 <q-select
                   filled
+                  clearable
                   v-model="selected_p_detail_item_local"
                   use-input
                   hide-selected
@@ -81,9 +72,7 @@
                 >
                   <template v-slot:no-option>
                     <q-item>
-                      <q-item-section class="text-grey"
-                        >沒有結果</q-item-section
-                      >
+                      <q-item-section class="text-grey">沒有結果</q-item-section>
                     </q-item>
                   </template>
                 </q-select>
@@ -98,6 +87,7 @@
               <div class="q-gutter-md row">
                 <q-select
                   filled
+                  clearable
                   v-model="selected_p_detail_item_local2"
                   use-input
                   hide-selected
@@ -110,9 +100,7 @@
                 >
                   <template v-slot:no-option>
                     <q-item>
-                      <q-item-section class="text-grey"
-                        >沒有結果</q-item-section
-                      >
+                      <q-item-section class="text-grey">沒有結果</q-item-section>
                     </q-item>
                   </template>
                 </q-select>
@@ -172,7 +160,7 @@ export default {
       n: 2000,
       loading4: false,
       // 預設options資料
-      options: stringOptions,
+      options: stringOptions
     };
   },
   // computed: {
@@ -259,6 +247,9 @@ export default {
   watch: {
     selected_p_local(val) {
       this.$emit("changed_1", val);
+      //更改時先確認後面選單為空值
+      this.selected_p_detail_item_local = "";
+      this.selected_p_detail_item_local2 = "";
     },
     selected_p_detail_item_local(val) {
       this.$emit("changed_2", val);

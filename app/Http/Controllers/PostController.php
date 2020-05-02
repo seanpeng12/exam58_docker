@@ -228,49 +228,9 @@ class PostController extends Controller
 
         return response()->json($sql, 200);
     }
-    // 輸入城市 ->城市所有景點
-    function sitesByCity(Request $request)
-    {
-        $city = $request->input('city_name');
-        $sql = Site_data::select('name')->where('city_name', "=", "$city")->where('comment', ">", 30)->get();
-
-        return response()->json($sql, 200);
-    }
-
-    function prosData(Request $request)
-    {
-        $site_name = $request->input('name');
-
-        $sql = Site_data::select('id')->where('name', '=', $site_name)->get();
-
-        // json轉array取值
-        $obj = json_decode($sql);
-        $id = $obj[0]->id;
-
-
-        $sql_positive = FacadesDB::select("SELECT id,segment,weight FROM segment_data WHERE site_id = '$id' AND weight >= 1 AND evaluation = 'P' ORDER BY weight DESC LIMIT 15");
 
 
 
-        return response()->json($sql_positive, 200);
-    }
-
-    function consData(Request $request)
-    {
-        $site_name = $request->input('name');
-
-        $sql = Site_data::select('id')->where('name', '=', $site_name)->get();
-
-        // json轉array取值
-        $obj = json_decode($sql);
-        $id = $obj[0]->id;
-
-
-        $sql_negative = FacadesDB::select("SELECT id,segment,weight FROM segment_data WHERE site_id = '$id' AND weight >= 1 AND evaluation = 'N' ORDER BY weight DESC LIMIT 15");
-
-
-        return response()->json($sql_negative, 200);
-    }
     // 偏好分析存取至tag
     function preferTag(Request $request)
     {

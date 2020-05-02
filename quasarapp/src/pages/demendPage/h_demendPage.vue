@@ -15,8 +15,7 @@
       @changed_2="selected_2"
       @changed_3="selected_3"
       @runR="run_R"
-    >
-    </demand-select>
+    ></demand-select>
     <!-- end web page -->
 
     <!-- 左右區域 web -->
@@ -29,11 +28,7 @@
         <!-- 懶人包區域 -->
         <div class="col">
           <div>
-            <b
-              class="text"
-              style="font-size: 30px;font-family: Microsoft JhengHei;"
-              >{{ txtinfo }}</b
-            >
+            <b class="text" style="font-size: 30px;font-family: Microsoft JhengHei;">{{ txtinfo }}</b>
           </div>
 
           <div class="q-pa-md" style="max-width: 600px">
@@ -248,7 +243,7 @@ export default {
     changeSrc() {
       document.getElementById("myFrame").contentWindow.location.reload(true);
       document.getElementById("myFrame").src =
-        "./statics/between_relationship.html";
+        "./statics/h_between_relationship.html";
       // this.src = "./statics/between_relationship.html";
       this.$store.commit(
         "h_demand/update_txtinfo",

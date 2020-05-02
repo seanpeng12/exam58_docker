@@ -3,8 +3,7 @@
     <div class="gt-xs q-pa-lg column items-center text-black bg-grey-3" style="height: 200px;">
       <div class="col">
         <div class="text-center img_background">
-
-          <p style="font-size: 28px;font-family: Microsoft JhengHei;">飯店優缺點分析 </p>
+          <p style="font-size: 28px;font-family: Microsoft JhengHei;">飯店優缺點分析</p>
         </div>
       </div>
       <div class="col">
@@ -137,6 +136,8 @@ export default {
     ...mapActions("h_proscons", ["fetchCitys"]),
     ...mapActions("h_proscons", ["fetchSites"]),
     ...mapActions("h_proscons", ["fetchProsConsR"]),
+    ...mapActions("h_proscons", ["fetchCons"]),
+    ...mapActions("h_proscons", ["fetchPros"]),
 
     // 計算loading時間
     simulateProgress(number) {
@@ -150,8 +151,12 @@ export default {
     },
 
     runR() {
+      // R
       this.fetchProsConsR();
-      console.log("觸發 fetchProsConsR")
+      // 懶人包
+      this.fetchCons();
+      this.fetchPros();
+      console.log("觸發 fetchProsConsR及優缺懶人包，run_index+1");
     },
     // 第一層過濾清單
     filterFn(val, update, abort) {

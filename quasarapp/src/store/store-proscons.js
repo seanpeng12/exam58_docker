@@ -19,7 +19,7 @@ const state = {
   // R執行完呼叫重新整理用
   run_index: 0,
   // R執行完呼叫懶人包用
-  data_index:0,
+  data_index: 0,
 
   // r 圖產生位置
   src_good: "./statics/good.html",
@@ -69,7 +69,7 @@ const actions = {
   fetchCitys({
     commit
   }) {
-    axiosInstance.get("http://127.0.0.1/api/site_dataCity")
+    axiosInstance.get("http://127.0.0.1/api/proscons_site_data_City")
       .then(res => {
         commit('FETCH_Citys', res.data);
         console.log("vuex-get 城市");
@@ -120,7 +120,7 @@ const actions = {
         name: state.selected_site,
       })
       .then(res => {
-        console.log("取得優點");
+        console.log("取得景點優點");
         commit('Update_ProsData', res);
 
       })
@@ -136,7 +136,7 @@ const actions = {
         name: state.selected_site,
       })
       .then(res => {
-        console.log("取得缺點");
+        console.log("取得景點缺點");
         commit('Update_ConsData', res);
 
       })
