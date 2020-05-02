@@ -238,7 +238,11 @@
           theseArgs = theseArgs.concat([task.data]);
           task = task.code;
         }
+<<<<<<< HEAD
         var taskFunc = eval("(" + task + ")");
+=======
+        var taskFunc = tryEval(task);
+>>>>>>> 376d36de49d0b2adba826a46a79c6c34324bf89a
         if (typeof(taskFunc) !== "function") {
           throw new Error("Task must be a function! Source:\n" + task);
         }
@@ -247,6 +251,34 @@
     }
   }
 
+<<<<<<< HEAD
+=======
+  // Attempt eval() both with and without enclosing in parentheses.
+  // Note that enclosing coerces a function declaration into
+  // an expression that eval() can parse
+  // (otherwise, a SyntaxError is thrown)
+  function tryEval(code) {
+    var result = null;
+    try {
+      result = eval(code);
+    } catch(error) {
+      if (!error instanceof SyntaxError) {
+        throw error;
+      }
+      try {
+        result = eval("(" + code + ")");
+      } catch(e) {
+        if (e instanceof SyntaxError) {
+          throw error;
+        } else {
+          throw e;
+        }
+      }
+    }
+    return result;
+  }
+
+>>>>>>> 376d36de49d0b2adba826a46a79c6c34324bf89a
   function initSizing(el) {
     var sizing = sizingPolicy(el);
     if (!sizing)
@@ -639,17 +671,68 @@
     invokePostRenderHandlers();
   }
 
+<<<<<<< HEAD
   // Wait until after the document has loaded to render the widgets.
   if (document.addEventListener) {
     document.addEventListener("DOMContentLoaded", function() {
       document.removeEventListener("DOMContentLoaded", arguments.callee, false);
       window.HTMLWidgets.staticRender();
+=======
+
+  function has_jQuery3() {
+    if (!window.jQuery) {
+      return false;
+    }
+    var $version = window.jQuery.fn.jquery;
+    var $major_version = parseInt($version.split(".")[0]);
+    return $major_version >= 3;
+  }
+
+  /*
+  / Shiny 1.4 bumped jQuery from 1.x to 3.x which means jQuery's
+  / on-ready handler (i.e., $(fn)) is now asyncronous (i.e., it now
+  / really means $(setTimeout(fn)).
+  / https://jquery.com/upgrade-guide/3.0/#breaking-change-document-ready-handlers-are-now-asynchronous
+  /
+  / Since Shiny uses $() to schedule initShiny, shiny>=1.4 calls initShiny
+  / one tick later than it did before, which means staticRender() is
+  / called renderValue() earlier than (advanced) widget authors might be expecting.
+  / https://github.com/rstudio/shiny/issues/2630
+  /
+  / For a concrete example, leaflet has some methods (e.g., updateBounds)
+  / which reference Shiny methods registered in initShiny (e.g., setInputValue).
+  / Since leaflet is privy to this life-cycle, it knows to use setTimeout() to
+  / delay execution of those methods (until Shiny methods are ready)
+  / https://github.com/rstudio/leaflet/blob/18ec981/javascript/src/index.js#L266-L268
+  /
+  / Ideally widget authors wouldn't need to use this setTimeout() hack that
+  / leaflet uses to call Shiny methods on a staticRender(). In the long run,
+  / the logic initShiny should be broken up so that method registration happens
+  / right away, but binding happens later.
+  */
+  function maybeStaticRenderLater() {
+    if (shinyMode && has_jQuery3()) {
+      window.jQuery(window.HTMLWidgets.staticRender);
+    } else {
+      window.HTMLWidgets.staticRender();
+    }
+  }
+
+  if (document.addEventListener) {
+    document.addEventListener("DOMContentLoaded", function() {
+      document.removeEventListener("DOMContentLoaded", arguments.callee, false);
+      maybeStaticRenderLater();
+>>>>>>> 376d36de49d0b2adba826a46a79c6c34324bf89a
     }, false);
   } else if (document.attachEvent) {
     document.attachEvent("onreadystatechange", function() {
       if (document.readyState === "complete") {
         document.detachEvent("onreadystatechange", arguments.callee);
+<<<<<<< HEAD
         window.HTMLWidgets.staticRender();
+=======
+        maybeStaticRenderLater();
+>>>>>>> 376d36de49d0b2adba826a46a79c6c34324bf89a
       }
     });
   }
@@ -737,7 +820,11 @@
       if (o !== null && typeof o === "object" && part in o) {
         if (i == (l - 1)) { // if we are at the end of the line then evalulate
           if (typeof o[part] === "string")
+<<<<<<< HEAD
             o[part] = eval("(" + o[part] + ")");
+=======
+            o[part] = tryEval(o[part]);
+>>>>>>> 376d36de49d0b2adba826a46a79c6c34324bf89a
         } else { // otherwise continue to next embedded object
           o = o[part];
         }
@@ -2655,6 +2742,12 @@ if (HTMLWidgets.shinyMode){
             if(data.options.byselection.hideColor){
               el.byselectionColor = data.options.byselection.hideColor;
             }
+<<<<<<< HEAD
+=======
+            if(data.options.byselection.highlight !== undefined){
+              el.byselectionHighlight = data.options.byselection.highlight;
+            }
+>>>>>>> 376d36de49d0b2adba826a46a79c6c34324bf89a
           }
           
           if(data.options.byselection !== undefined){
@@ -3092,8 +3185,15 @@ HTMLWidgets.widget({
 
     if(x.byselection.enabled){
       el_id.byselectionColor = x.byselection.hideColor;
+<<<<<<< HEAD
     } else {
       el_id.byselectionColor = 'rgba(200,200,200,0.5)';
+=======
+      el_id.byselectionHighlight = x.byselection.highlight;
+    } else {
+      el_id.byselectionColor = 'rgba(200,200,200,0.5)';
+      el_id.byselectionHighlight = false;
+>>>>>>> 376d36de49d0b2adba826a46a79c6c34324bf89a
     }
     
     if(x.idselection.enabled){
@@ -3178,7 +3278,11 @@ HTMLWidgets.widget({
         instance.network.selectNodes([id]);
       }
       if(el_id.highlight){
+<<<<<<< HEAD
         neighbourhoodHighlight(instance.network.getSelection().nodes, "click", el_id.highlightAlgorithm);
+=======
+        neighbourhoodHighlight(instance.network.getSelection().nodes, "click", el_id.highlightAlgorithm, true);
+>>>>>>> 376d36de49d0b2adba826a46a79c6c34324bf89a
       }else{
         if(init){
           selectNode = document.getElementById('nodeSelect'+el.id);
@@ -3755,7 +3859,11 @@ HTMLWidgets.widget({
             var r = confirm("Do you want to delete " + data.nodes.length + " node(s) and " + data.edges.length + " edges ?");
             if (r === true) {
               deleteSubGraph(data, callback);
+<<<<<<< HEAD
             }
+=======
+            } else { clearPopUp(); callback(null); }
+>>>>>>> 376d36de49d0b2adba826a46a79c6c34324bf89a
         };
       } else if(typeof(x.options.manipulation.deleteNode) === typeof(true)){
         if(x.options.manipulation.deleteNode){
@@ -3763,7 +3871,11 @@ HTMLWidgets.widget({
               var r = confirm("Do you want to delete " + data.nodes.length + " node(s) and " + data.edges.length + " edges ?");
               if (r === true) {
                 deleteSubGraph(data, callback);
+<<<<<<< HEAD
               }
+=======
+              } else { clearPopUp(); callback(null); }
+>>>>>>> 376d36de49d0b2adba826a46a79c6c34324bf89a
           };
         } else {
           options.manipulation.deleteNode = false;
@@ -3777,7 +3889,11 @@ HTMLWidgets.widget({
             var r = confirm("Do you want to delete " + data.edges.length + " edges ?");
             if (r === true) {
               deleteSubGraph(data, callback);
+<<<<<<< HEAD
             }
+=======
+            } else { clearPopUp(); callback(null); }
+>>>>>>> 376d36de49d0b2adba826a46a79c6c34324bf89a
         };
       } else if(typeof(x.options.manipulation.deleteEdge) === typeof(true)){
         if(x.options.manipulation.deleteEdge){
@@ -3785,7 +3901,11 @@ HTMLWidgets.widget({
               var r = confirm("Do you want to delete " + data.edges.length + " edges ?");
               if (r === true) {
                 deleteSubGraph(data, callback);
+<<<<<<< HEAD
               }
+=======
+              } else { clearPopUp(); callback(null); }
+>>>>>>> 376d36de49d0b2adba826a46a79c6c34324bf89a
           };
         } else {
           options.manipulation.deleteEdge = false;
@@ -4106,6 +4226,15 @@ HTMLWidgets.widget({
           edges.update(edgesHardToRead);
             
           nodes.update(updateArray);
+<<<<<<< HEAD
+=======
+          
+          // select for highlight
+          if(el_id.highlight && x.nodes && el_id.byselectionHighlight){
+              neighbourhoodHighlight(connectedNodes, "click", el_id.highlightAlgorithm, false);
+              instance.network.selectNodes(connectedNodes)
+          }
+>>>>>>> 376d36de49d0b2adba826a46a79c6c34324bf89a
         }
       }
       else if (el_id.selectActive === true) {
@@ -4121,7 +4250,11 @@ HTMLWidgets.widget({
     var is_hovered = false;
     var is_clicked = false;
     
+<<<<<<< HEAD
     function neighbourhoodHighlight(params, action_type, algorithm) {
+=======
+    function neighbourhoodHighlight(params, action_type, algorithm, reset_selectedBy) {
+>>>>>>> 376d36de49d0b2adba826a46a79c6c34324bf89a
 
       var nodes_in_clusters = instance.network.body.modules.clustering.clusteredNodes;
       var have_cluster_nodes = false;
@@ -4535,7 +4668,11 @@ HTMLWidgets.widget({
         }
       }
       // reset selectedBy list if actived
+<<<<<<< HEAD
       if(el_id.byselection){
+=======
+      if(el_id.byselection && reset_selectedBy){
+>>>>>>> 376d36de49d0b2adba826a46a79c6c34324bf89a
         resetList("selectedBy", el.id, 'selectedBy');
       }
     }
@@ -4573,7 +4710,11 @@ HTMLWidgets.widget({
     // shared click function (selectedNodes)
     document.getElementById("graph"+el.id).myclick = function(params){
         if(el_id.highlight && x.nodes){
+<<<<<<< HEAD
           neighbourhoodHighlight(params.nodes, "click", el_id.highlightAlgorithm);
+=======
+          neighbourhoodHighlight(params.nodes, "click", el_id.highlightAlgorithm, true);
+>>>>>>> 376d36de49d0b2adba826a46a79c6c34324bf89a
         }else if((el_id.idselection || el_id.byselection) && x.nodes){
           onClickIDSelection(params)
         }
@@ -4582,7 +4723,11 @@ HTMLWidgets.widget({
     // Set event in relation with highlightNearest      
     instance.network.on("click", function(params){
         if(el_id.highlight && x.nodes){
+<<<<<<< HEAD
           neighbourhoodHighlight(params.nodes, "click", el_id.highlightAlgorithm);
+=======
+          neighbourhoodHighlight(params.nodes, "click", el_id.highlightAlgorithm, true);
+>>>>>>> 376d36de49d0b2adba826a46a79c6c34324bf89a
         }else if((el_id.idselection || el_id.byselection) && x.nodes){
           onClickIDSelection(params)
         } 
@@ -4590,13 +4735,21 @@ HTMLWidgets.widget({
     
     instance.network.on("hoverNode", function(params){
       if(el_id.hoverNearest && x.nodes){
+<<<<<<< HEAD
         neighbourhoodHighlight([params.node], "hover", el_id.highlightAlgorithm);
+=======
+        neighbourhoodHighlight([params.node], "hover", el_id.highlightAlgorithm, true);
+>>>>>>> 376d36de49d0b2adba826a46a79c6c34324bf89a
       } 
     });
 
     instance.network.on("blurNode", function(params){
       if(el_id.hoverNearest && x.nodes){
+<<<<<<< HEAD
         neighbourhoodHighlight([], "hover", el_id.highlightAlgorithm);
+=======
+        neighbourhoodHighlight([], "hover", el_id.highlightAlgorithm, true);
+>>>>>>> 376d36de49d0b2adba826a46a79c6c34324bf89a
       }      
     });
     
@@ -4760,7 +4913,11 @@ HTMLWidgets.widget({
         // reset some parameters / data before
         if (el_id.selectActive === true | el_id.highlightActive === true) {
           //reset nodes
+<<<<<<< HEAD
           neighbourhoodHighlight([], "click", el_id.highlightAlgorithm);
+=======
+          neighbourhoodHighlight([], "click", el_id.highlightAlgorithm, true);
+>>>>>>> 376d36de49d0b2adba826a46a79c6c34324bf89a
           if (el_id.selectActive === true){
             el_id.selectActive = false;
             resetList('selectedBy',el.id, 'selectedBy');
@@ -5115,11 +5272,20 @@ HTMLWidgets.widget({
 </head>
 <body style="background-color: white;">
 <div id="htmlwidget_container">
+<<<<<<< HEAD
 <div id="htmlwidget-b6af793fa991962cfcec" class="visNetwork html-widget" style="width:100%;height:500px;">
 
 </div>
 </div>
 <script type="application/json" data-for="htmlwidget-b6af793fa991962cfcec">{"x":{"nodes":{"id":["2","4","S0104","S0105","S0108","S0109","S0110","S0126","S0127","S0132","S0136","S0137","S0138","S0146","S0152","S0163","S0180","S0182","S0192","S0204","S0206","S0220","S0221","S0226","S0228","S0235","S0282","S0306","S0307","S0312","S0323","S0324","S0328","S0331","S0340","S0347","S0354","S0361","S0365","S0370","S0380","S0381","S0382","S0391","S0393","S0405","S0420","S0421","S0442","S0444","S0458","S0473","S0474","S0475","S0477","S0499","S0500","S0506","S0511","S0525","S0539","S0552","S0554","S0564","S0572","S0573","S0577","S0578","S0579","S0582","S0586","S0590","S0594","S0596","S0597","S0601","S0604","S0606","S0608","S0609","S0614","S0623","S0624","S0630","S0642","S0650","S0651","S0659","S0660","S0662","S0663","S0670","S0671","S0673","S0674","S0675","S0677","S0682","S0687","S0698","S0700","S0703","S0704","S0708","S0711","S0715","S0718","S0739","S0742","S0748","S0749","S0765","S0766","S0767","S0768","S0779","S0780","S0784","S0793","S0807","S0808"],"group":["景點與地標","景點與地標","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site"],"label":["古蹟","宗教聖地","龍山寺","大龍峒保安宮","台北孔廟","行天宮","松山慈佑宮","天主教台北聖家堂","霞海城隍廟","獅頭山","台北清真寺","林安泰古厝","關渡宮","指南宮","迪化207博物館","碧山巖","法鼓山農禪寺","台北景福宮","天后宮","松山火車站","剝皮寮老街","新芳春行特展","二二八和平紀念公園","文昌宮","艋舺青山宮","聖母無原罪主教座堂","松山慈惠堂","新富町文化市場","中山北路聖多福天主堂","臺灣新文化運動紀念館","清代機器局遺構","松山奉天宮","大稻埕辜宅","松山慈祐宮","蔡瑞月舞蹈研究社","文萌?","中山教會","台北賓館","臨濟護國禪寺","R22A 新北投站","殷海光故居","天恩宮","普濟寺 中山區","士林慈誠宮","梁實秋故居","進興宮","台北中山堂","艋舺清水巖祖師廟","芝山公園","西本願寺廟廣場","臺北監獄圍牆遺蹟","雙境廟","景美集應廟","林語堂故居","臺北保霞宮","國父史蹟館(逸仙公園)","臺北市鄉土教育中心","艋舺地藏庵","龍山宮","萬慶巖清水祖師廟","清真寺(台北)","福雲宮","永吉","台北南天宮","淡水福佑宮3D彩繪意象階梯","主的恢復展覽館","芝山巖惠濟宮","臺北郵局","R22 北投站","善導寺","普?寺","松山天寶聖道宮","晉德宮","北投行天宮","青龍宮","逸仙公園","松山龍山宮","義芳居古厝","順河宮","普濟寺 士林區","萬應宮","圓山水神社","松德宮","監察院","耕莘文教院","國史館","三聖宮","陳悅記祖宅","關渡玉女宮","周氏節孝坊","專賣局","皇太子殿下行啟記念碑","北投清天宮","天母白屋","小南門","台灣善光寺","南門町三二三","陽明山光復樓","中華民國行政院","蒲添生故居","孫立人官邸","司法大廈","急公好義坊","台北市聖靈寺","長慶廟","嚴家淦先生故居","南海學園","台北文衡聖帝殿","天皇宮(台北)","萬和宮","和安宮","米洛克-老房子","台北佛立寺","松山慈福宮","台北市福佑宮","內湖媽祖聖母殿","太原五百完人紀念建築群","龍岡清真寺","芝山岩","阿彌佛化","學海書院"],"color":["red","red","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue"],"title":["<p> 古蹟 <\/p>","<p> 宗教聖地 <\/p>","<p> 龍山寺 <\/p>","<p> 大龍峒保安宮 <\/p>","<p> 台北孔廟 <\/p>","<p> 行天宮 <\/p>","<p> 松山慈佑宮 <\/p>","<p> 天主教台北聖家堂 <\/p>","<p> 霞海城隍廟 <\/p>","<p> 獅頭山 <\/p>","<p> 台北清真寺 <\/p>","<p> 林安泰古厝 <\/p>","<p> 關渡宮 <\/p>","<p> 指南宮 <\/p>","<p> 迪化207博物館 <\/p>","<p> 碧山巖 <\/p>","<p> 法鼓山農禪寺 <\/p>","<p> 台北景福宮 <\/p>","<p> 天后宮 <\/p>","<p> 松山火車站 <\/p>","<p> 剝皮寮老街 <\/p>","<p> 新芳春行特展 <\/p>","<p> 二二八和平紀念公園 <\/p>","<p> 文昌宮 <\/p>","<p> 艋舺青山宮 <\/p>","<p> 聖母無原罪主教座堂 <\/p>","<p> 松山慈惠堂 <\/p>","<p> 新富町文化市場 <\/p>","<p> 中山北路聖多福天主堂 <\/p>","<p> 臺灣新文化運動紀念館 <\/p>","<p> 清代機器局遺構 <\/p>","<p> 松山奉天宮 <\/p>","<p> 大稻埕辜宅 <\/p>","<p> 松山慈祐宮 <\/p>","<p> 蔡瑞月舞蹈研究社 <\/p>","<p> 文萌? <\/p>","<p> 中山教會 <\/p>","<p> 台北賓館 <\/p>","<p> 臨濟護國禪寺 <\/p>","<p> R22A 新北投站 <\/p>","<p> 殷海光故居 <\/p>","<p> 天恩宮 <\/p>","<p> 普濟寺 中山區 <\/p>","<p> 士林慈誠宮 <\/p>","<p> 梁實秋故居 <\/p>","<p> 進興宮 <\/p>","<p> 台北中山堂 <\/p>","<p> 艋舺清水巖祖師廟 <\/p>","<p> 芝山公園 <\/p>","<p> 西本願寺廟廣場 <\/p>","<p> 臺北監獄圍牆遺蹟 <\/p>","<p> 雙境廟 <\/p>","<p> 景美集應廟 <\/p>","<p> 林語堂故居 <\/p>","<p> 臺北保霞宮 <\/p>","<p> 國父史蹟館(逸仙公園) <\/p>","<p> 臺北市鄉土教育中心 <\/p>","<p> 艋舺地藏庵 <\/p>","<p> 龍山宮 <\/p>","<p> 萬慶巖清水祖師廟 <\/p>","<p> 清真寺(台北) <\/p>","<p> 福雲宮 <\/p>","<p> 永吉 <\/p>","<p> 台北南天宮 <\/p>","<p> 淡水福佑宮3D彩繪意象階梯 <\/p>","<p> 主的恢復展覽館 <\/p>","<p> 芝山巖惠濟宮 <\/p>","<p> 臺北郵局 <\/p>","<p> R22 北投站 <\/p>","<p> 善導寺 <\/p>","<p> 普?寺 <\/p>","<p> 松山天寶聖道宮 <\/p>","<p> 晉德宮 <\/p>","<p> 北投行天宮 <\/p>","<p> 青龍宮 <\/p>","<p> 逸仙公園 <\/p>","<p> 松山龍山宮 <\/p>","<p> 義芳居古厝 <\/p>","<p> 順河宮 <\/p>","<p> 普濟寺 士林區 <\/p>","<p> 萬應宮 <\/p>","<p> 圓山水神社 <\/p>","<p> 松德宮 <\/p>","<p> 監察院 <\/p>","<p> 耕莘文教院 <\/p>","<p> 國史館 <\/p>","<p> 三聖宮 <\/p>","<p> 陳悅記祖宅 <\/p>","<p> 關渡玉女宮 <\/p>","<p> 周氏節孝坊 <\/p>","<p> 專賣局 <\/p>","<p> 皇太子殿下行啟記念碑 <\/p>","<p> 北投清天宮 <\/p>","<p> 天母白屋 <\/p>","<p> 小南門 <\/p>","<p> 台灣善光寺 <\/p>","<p> 南門町三二三 <\/p>","<p> 陽明山光復樓 <\/p>","<p> 中華民國行政院 <\/p>","<p> 蒲添生故居 <\/p>","<p> 孫立人官邸 <\/p>","<p> 司法大廈 <\/p>","<p> 急公好義坊 <\/p>","<p> 台北市聖靈寺 <\/p>","<p> 長慶廟 <\/p>","<p> 嚴家淦先生故居 <\/p>","<p> 南海學園 <\/p>","<p> 台北文衡聖帝殿 <\/p>","<p> 天皇宮(台北) <\/p>","<p> 萬和宮 <\/p>","<p> 和安宮 <\/p>","<p> 米洛克-老房子 <\/p>","<p> 台北佛立寺 <\/p>","<p> 松山慈福宮 <\/p>","<p> 台北市福佑宮 <\/p>","<p> 內湖媽祖聖母殿 <\/p>","<p> 太原五百完人紀念建築群 <\/p>","<p> 龍岡清真寺 <\/p>","<p> 芝山岩 <\/p>","<p> 阿彌佛化 <\/p>","<p> 學海書院 <\/p>"],"shape":["square","square",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"font.size":[30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30],"x":[0.597119531352166,-0.587721696779154,-0.795170541143241,-0.00425200300331308,0.793845670857368,-0.518625744294268,-0.794929794527693,-0.377418501761463,-0.83204218768085,-0.293533660546875,-0.658095541724846,0.650447534712568,-0.590382733635189,-0.264360318101504,0.400840963434614,-0.263651427408519,0.976043972233895,-0.871372864015265,0.494645923806258,0.837222750919761,0.755887519576011,0.875745389881017,0.450769043078972,-0.725886432734282,-0.442640098658179,-0.86203812504794,-0.669142609633409,0.436331883275037,-0.753761095397198,0.946576983199624,0.586854165718705,-0.421604312529808,0.677659231913063,-0.355154539215565,0.901296197451843,-0.673388370748262,-0.800081634586269,0.761023444551256,-0.710358622782845,0.711410248552703,0.48956943663263,-0.958085418965381,0.0310871853594779,0.868034898697706,0.790193492270785,-0.869142842034379,0.740723719694094,-0.388240060662663,0.0299162045054024,-0.800446226003251,0.806762465269006,-0.892588295411084,-0.546148716811823,0.880238012710324,-0.352782401285356,0.508008701589876,0.590956513546712,-0.61325803869025,-0.445473529361016,-0.523416806851589,-0.890629165478083,-0.42864784510907,-0.984822038318309,-0.986084838299514,-0.818135357428189,-0.739679400211492,-0.832420519103325,0.324253295311598,0.640754277554209,0.73538447325916,-0.918889449376639,-0.966798142412717,-0.281285412882661,-0.336289003193995,-0.817457149478766,0.945252260135485,-0.902480988165289,0.564934728917979,-0.577537525633063,-0.906561590667464,-0.765079712141244,-0.333825768308396,-0.434539903062722,0.575552830779765,0.868601830918705,0.578146194768294,-0.997129533996503,0.337486574210238,-0.588763282617089,0.455427431827442,0.382868527325415,0.484688110394568,-0.686427543839866,-0.359123663765481,0.968787511426484,-0.0124961425713589,1,0.80364868912133,0.692871275708233,0.667571903804423,0.9819549636713,0.401072791850877,0.876786463763788,-0.511196021793522,-0.598753283179876,0.792239813517139,0.934648843243361,-0.459429426465527,-1,-0.924621585423021,-0.947863065765628,0.347726321894783,-0.734950768131097,-0.677354210888658,-0.710862212120826,-0.501596068846654,0.688314694187984,-0.657424977320914,0.901612458657586,-0.497208739881028,0.806780976906298],"y":[-0.536704721745042,0.518102663109243,0.813425011933448,-0.0151948201528246,-0.688016357020859,0.990169658925628,0.369090210705529,0.414771781334834,0.485391162549467,0.449479371171397,1,-1,0.904944940786291,0.672211968914151,-0.730978944927335,0.56251605528053,-0.426855803376662,0.305274014421198,-0.289404377695,-0.867919853328129,-0.254826393659417,-0.749338156175935,-0.401758354643809,0.588783281926496,0.578174872715366,0.868608384320982,0.302924671498684,-0.596338999182205,0.907304229619268,-0.336585591500054,-0.768676984123485,0.822720301209415,-0.925493052259425,0.526689187940953,-0.850364489356534,0.907640644482163,0.263303101898918,-0.578275439108135,0.814329857973667,-0.401830509290123,-0.971526524713741,0.753335782455268,0.0304110392324655,-0.245709207164852,-0.791883458324741,0.756311098397346,-0.973080706021338,0.911378798509873,-0.0121787389448478,0.710299100797652,-0.938465986718917,0.217439940212705,0.704638365546555,-0.340331471856678,0.752889386257615,-0.704607072972422,-0.208701514009079,0.806930706443705,0.959602051100935,0.286319098968742,0.401677753722577,0.70648692283019,0.595027673022628,0.671833358330058,0.93093949795043,0.214109459220915,0.166245950275862,-0.699378463195564,-0.846102615622065,-0.857259676614623,0.827283448845019,0.369555346886562,0.773056464650898,0.638918094206169,0.596316802289482,-0.776084459551886,0.585205388968049,-0.895985212601883,0.139227178051474,0.67685911945235,0.120701741903227,0.853600354210281,0.236623787452558,-0.985633074718016,-0.538354056846024,-0.344733031700408,0.439975408167824,-0.594569504641867,0.99375611101632,-0.810867546286641,-0.482503573589218,-0.891383458881466,0.710661739667038,0.309907539300744,-0.693992311966189,-0.0552593061865279,-0.605894853328317,-0.332123964906405,-0.721769016642749,-0.278139441797948,-0.511361898226865,-0.893836061386216,-0.652229259860388,0.808439212401612,0.236485504182786,-0.184932986575016,-0.591815293258807,0.367058826347312,0.521712651968746,0.490378954140869,0.289810675009812,-0.811698129440341,0.987102844722598,0.164222242112398,0.417093589347639,0.898649949340027,-0.173979569623766,0.0908654228052019,-0.444144068063425,0.157923633834589,-0.453357008561225]},"edges":{"from":["S0105","S0108","S0137","S0152","S0180","S0192","S0204","S0206","S0220","S0221","S0306","S0312","S0323","S0328","S0340","S0361","S0370","S0380","S0382","S0391","S0393","S0420","S0442","S0458","S0475","S0499","S0500","S0578","S0579","S0582","S0601","S0606","S0630","S0642","S0650","S0659","S0662","S0663","S0670","S0674","S0675","S0677","S0682","S0687","S0698","S0700","S0703","S0704","S0715","S0718","S0765","S0780","S0793","S0808","S0104","S0105","S0109","S0110","S0126","S0127","S0132","S0136","S0138","S0146","S0163","S0182","S0226","S0228","S0235","S0282","S0307","S0324","S0331","S0347","S0354","S0365","S0381","S0382","S0405","S0421","S0442","S0444","S0473","S0474","S0477","S0506","S0511","S0525","S0539","S0552","S0554","S0564","S0572","S0573","S0577","S0586","S0590","S0594","S0596","S0597","S0604","S0608","S0609","S0614","S0623","S0624","S0651","S0660","S0671","S0673","S0675","S0708","S0711","S0739","S0742","S0748","S0749","S0766","S0767","S0768","S0779","S0784","S0807"],"to":[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":false},"physics":{"stabilization":false}},"groups":["景點與地標","site"],"width":"100%","height":"500px","idselection":{"enabled":true,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)"},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","igraphlayout":{"type":"square"},"highlight":{"enabled":true,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":false,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"}},"evals":[],"jsHooks":[]}</script>
 <script type="application/htmlwidget-sizing" data-for="htmlwidget-b6af793fa991962cfcec">{"viewer":{"width":"100%","height":"500px","padding":15,"fill":false},"browser":{"width":"100%","height":"500px","padding":40,"fill":false}}</script>
+=======
+<div id="htmlwidget-a7c19ec08dc144a66ec3" class="visNetwork html-widget" style="width:100%;height:500px;">
+
+</div>
+</div>
+<script type="application/json" data-for="htmlwidget-a7c19ec08dc144a66ec3">{"x":{"nodes":{"id":["1","2","S0101","S0102","S0105","S0108","S0137","S0139","S0140","S0143","S0144","S0148","S0152","S0157","S0158","S0162","S0163","S0176","S0180","S0181","S0192","S0199","S0200","S0202","S0204","S0206","S0210","S0216","S0218","S0219","S0220","S0221","S0228","S0234","S0238","S0240","S0246","S0252","S0253","S0254","S0257","S0261","S0272","S0283","S0295","S0303","S0306","S0312","S0318","S0321","S0323","S0324","S0328","S0340","S0344","S0348","S0357","S0361","S0370","S0380","S0382","S0384","S0387","S0391","S0393","S0396","S0397","S0402","S0415","S0420","S0422","S0435","S0439","S0442","S0448","S0453","S0458","S0463","S0464","S0469","S0470","S0472","S0473","S0475","S0476","S0477","S0478","S0484","S0499","S0500","S0510","S0516","S0517","S0518","S0529","S0530","S0533","S0545","S0546","S0547","S0548","S0558","S0559","S0563","S0578","S0579","S0581","S0582","S0586","S0591","S0595","S0601","S0606","S0610","S0616","S0627","S0628","S0630","S0638","S0641","S0642","S0648","S0650","S0659","S0661","S0662","S0663","S0666","S0670","S0674","S0675","S0676","S0677","S0678","S0679","S0681","S0682","S0684","S0687","S0688","S0689","S0690","S0694","S0698","S0700","S0701","S0703","S0704","S0713","S0715","S0716","S0717","S0718","S0737","S0739","S0742","S0743","S0744","S0748","S0749","S0765","S0780","S0784","S0786","S0792","S0793","S0804","S0805","S0806","S0808"],"group":["景點與地標","景點與地標","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site"],"label":["景點和地標","古蹟","中正紀念堂","象山自然步道","大龍峒保安宮","台北孔廟","林安泰古厝","大稻埕碼頭","MAJI 集食行樂","台北小巨蛋","捷運北門站","松山文創園區","迪化207博物館","陽明山冷水坑吊橋","台北101觀景台","華山1914文化創意產業園區","碧山巖","國父紀念館","法鼓山農禪寺","華陰街","天后宮","磯永吉小屋","櫞?文庫","士林官邸","松山火車站","剝皮寮老街","東門","小油坑遊憩區","彩虹橋","白石湖吊橋","新芳春行特展","二二八和平紀念公園","艋舺青山宮","文昌廟(台北)","白石湖","捷運中山站線型公園","饒河夜市足沐腳底按摩","?寧街","台北自由廣場","前街","廣州街觀光夜市","臺灣總督府交通局鐵道部","台北四面佛","幾米月亮公車","四四南村","莊義芳商行","新富町文化市場","臺灣新文化運動紀念館","歪腰郵筒","大稻埕碼頭廣場","清代機器局遺構","松山奉天宮","大稻埕辜宅","蔡瑞月舞蹈研究社","樟山寺","玄天宮","臺北世界貿易中心一館","台北賓館","R22A 新北投站","殷海光故居","普濟寺 中山區","張大千先生紀念館(摩耶精舍)","剝皮?","士林慈誠宮","梁實秋故居","台北世貿三館","濕地","大直橋","五福財神爺廟","台北中山堂","新興公園","中山公民會館","平菁街42巷櫻花","芝山公園","志生紀念館","景美觀光商圈","臺北監獄圍牆遺蹟","陽明山中山樓","台北偶戲館","信義公民會館","彩虹河濱公園","西昌街夜市","雙境廟","林語堂故居","紀州庵文學森林","臺北保霞宮","艋舺老街","懷恩堂","國父史蹟館(逸仙公園)","臺北市鄉土教育中心","糖?文化園區","郭子儀紀念堂","大屯山","華山市場","神農宮","臺北市客家文化主題公園","艋舺龍山文創B2","五福旅遊","錢穆故居紀念館","麥帥二橋","麥帥一橋","臺北市電影主題公園","陽明山竹子湖海芋","代天殿靈雲宮","臺北郵局","R22 北投站","Park Up","善導寺","普?寺","陽明書屋","新光人壽保險摩天大樓","逸仙公園","義芳居古厝","關渡渡船碼頭","防空壕迷宮","吳氏宗祠","平安鐘","監察院","竹子湖花與樹繡球花田","高家繡球花田水尾第二園區","耕莘文教院","玉溪有容Studio 94\r\n","國史館","陳悅記祖宅","圓山遺址","周氏節孝坊","專賣局","欽差行臺","皇太子殿下行啟記念碑","小南門","台灣善光寺","社子大橋","南門町三二三","琴道館","台鐵LDK58蒸氣火車","李國鼎故居","陽明山光復樓","蒸氣火車頭","中華民國行政院","黃氏節孝坊","?氏節孝坊","TAV Cafe 藝術村餐\坊","齊東詩舍","蒲添生故居","孫立人官邸","杏壇","司法大廈","急公好義坊","大天后宮?址","嚴家淦先生故居","光復廳","臺灣廣播電臺放送亭","南海學園","雨前?","台北文衡聖帝殿","天皇宮(台北)","錦州街","基隆路二段","萬和宮","和安宮","米洛克-老房子","太原五百完人紀念建築群","龍岡清真寺","工作是","關渡老街","芝山岩","內溝山","木柵璋山寺","照明淨寺","學海書院"],"color":["red","red","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue"],"shape":["square","square",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"font.size":[30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30],"x":[0.411369066171062,-0.499311885567474,0.413349347444935,0.32994798384962,-0.893909873453965,-0.693035951289494,-0.798653120034239,0.573550482152078,0.992219724500538,0.339192288589987,0.313990111908792,0.426589088247624,-0.234220860584622,0.825242884030212,0.521131115768641,0.129331008892741,0.7382844048082,0.692037090284572,-0.669037202695862,0.989804944871543,-1,0.618453949996116,-0.124960035407905,0.218203514327541,-0.955450658622325,-0.953984685805207,0.469650916578382,0.299237365656345,-0.0680373566097627,-0.128384100688311,-0.873432636268316,-0.813665169723123,0.674917859406186,0.0317992008602686,0.501916273535031,0.823730204087149,0.539604632189728,0.0425057355012581,0.0642859200016375,0.243027741388554,0.29205028441986,0.597850361479734,0.741033089624359,0.476414223184043,0.267606110768243,0.666757029761418,-0.0567163385533687,-0.00759244394348879,0.926924397484987,0.857490436107073,-0.386410330280553,0.907184647466518,-0.026887658249091,-0.881794812516591,0.139597309537687,0.812963353845427,0.803090633742191,-0.129510242119977,0.0224259086208201,-0.873418246269567,-0.679555784408158,0.587984459115189,0.522872310623002,-0.980347806139165,-0.67424461412513,0.759237167343842,0.905165545438268,0.46679581074764,0.859269281056604,-0.458406380488709,0.637260204181616,-0.112834795553393,0.0719157353866937,-0.390516540184266,0.393473611341051,0.78467133885922,-0.62192942955666,0.613724836665391,0.125205163993247,0.427180976853429,0.0991061032910672,0.104280765289758,0.967749838870182,-0.727795517137672,0.740090590180225,0.37030598889695,-0.0785504712869795,0.231458212788313,-0.69518061488425,-0.260689971536689,0.881253272790305,0.174810460892384,0.688829071001114,-0.0813667173041852,0.32030821478692,0.139033834215219,0.811384211443766,-0.0148059181776174,0.729216626758415,0.962083795946917,0.100564285833383,0.712295604600193,0.826825949128537,0.596115818401074,-0.375280280917421,-0.949679664250559,0.731087134217243,-0.868716148838874,0.440441484425335,0.349182986472862,0.597091732504473,-0.859442876597711,-0.971899774201933,0.624810077849157,0.23294964849817,0.918882269250372,0.61293351365039,-0.613912958845622,0.0140896432980262,0.915120637937615,-0.543171036238871,0.714003732603818,-0.469022267671628,-0.789059228952466,0.272729236071864,-0.0883375490286512,-0.885526803428264,0.228709935606189,-0.150134166431992,-0.300606266041544,-0.780857533364669,0.429288643006896,-0.192351688748132,0.201833496517453,0.704899416930278,0.882927067668755,-0.185900677243336,1,-0.7649678568138,0.554104062602566,0.0323291699270445,-0.0313391846892641,0.880921663814122,-0.782638423634826,-0.7445881058723,0.183980149088203,-0.58317517211285,-0.0505926562447511,-0.040498019352631,-0.52464418549457,0.652333454605137,0.507131619595659,-0.102260142385487,-0.0115650828650405,0.141802336628716,0.524541232938833,0.967546975720945,0.0410710525729008,0.361939474205547,-0.0634086033253499,-0.429537766737467,-0.321720941848669,0.859627084682549,-0.00485919836250359,0.997650721097911,-0.277794193706271,0.782164872955642,0.79454138926853,0.198057008755649,-0.552324686113965],"y":[0.501917448552008,-0.572502049038668,0.269359116921681,0.822021400991849,-0.645774820146375,-0.571293251752706,-0.825556320978573,0.0835970918119846,0.564056910714031,1,0.321094028690226,0.692655379848993,-0.674461497795627,0.648254459744119,0.991308803207252,0.449978781230912,0.472709329892633,0.952077794037295,-0.939363905207464,0.622222523827652,-0.667454966511625,0.311401044559239,0.466952528382754,0.541612159069805,-0.723197933865172,-0.804318067557028,0.202330369902731,0.650514536606287,0.619644901729914,0.579644801018904,-0.868464117616311,-0.918047532587035,0.193463043717164,0.382801540471368,0.77080203992659,0.846607760105661,0.84203236914916,0.841824702746412,0.900149059655469,0.410500521848783,0.226957176217092,0.510226687573924,0.663814971970011,0.35452413641956,0.148653435187603,0.898452498904011,-0.0819632559351873,-0.0710252272588253,0.754370026666718,0.216720354833938,-0.921883308801317,0.580117431824598,-0.111719461452306,-0.795957486153778,0.853256555027714,0.764681073765256,0.16430070203573,-0.0388489283321034,-0.109739126191484,-0.571258339512524,-0.423872282506069,0.905062131495229,0.138552520239308,-0.602787175473629,-0.815129969776879,0.221926811423959,0.647379711595879,0.0868587300406407,0.527196589282228,-0.795795118807509,0.826172259759863,0.674466960267847,0.627380869013454,-0.69514807716909,0.119188299234722,0.56927565944086,-1,0.748695435236179,0.357771211680289,0.906814367107434,0.714207364893138,0.551246992236807,0.694656026721723,-0.86773835211226,0.795740445858855,0.946845353539488,0.518001809944602,0.821605848754393,-0.72001660607671,-0.900682009298466,0.324991295776216,0.653938580835093,0.570707673896223,0.746641277209651,0.895928871834924,0.923371552683553,0.277998126680165,0.559048521213332,0.133186988990334,0.329365323593499,0.268614178065177,0.378194567921106,0.45037382161917,0.969106886494776,-0.839465361777468,-0.471477835574346,0.857667598925627,-0.717857214531641,0.990661033983969,0.753256198222586,0.181788939180418,-0.490900209420876,-0.537655143358601,0.651563601884456,0.896098236214486,0.477667403098102,0.407286738090763,-0.893024838589003,0.303485532235251,0.261132878631767,-0.930976118844147,0.733047883577142,-0.906757271498289,-0.39570723742257,0.97130057345985,-0.0221537534611513,-0.410135486792435,0.735358899098756,-0.0091674892460164,-0.75121984438623,-0.733474814170892,0.834794358246561,-0.850990870204159,0.296919512970287,0.279111940981674,0.396117266944719,-0.763049235780424,0.508765666638516,-0.497557902714703,0.2555210117241,0.486088361210715,0.815224973713562,0.805011687416076,-0.630634775452183,-0.960563415943954,0.215229347865885,-0.726438864310433,-0.0468854546576274,0.438844661976916,-0.998016995437856,0.108643166977787,0.919402112655146,-0.0734556019702198,0.726483156679808,0.783457260184707,0.660111430330396,0.392120142862313,0.77449896917666,0.173950008466624,0.369286694619632,-0.98903333842142,-0.955663560996344,0.713729091792825,0.661609187185408,0.447174500305534,-0.829961106706494,0.903911633477964,0.355453362707343,0.959586161025687,-0.821889820754429]},"edges":{"from":["S0101","S0102","S0139","S0140","S0143","S0144","S0148","S0157","S0158","S0162","S0163","S0176","S0181","S0199","S0200","S0202","S0210","S0216","S0218","S0219","S0228","S0234","S0238","S0240","S0246","S0252","S0253","S0254","S0257","S0261","S0272","S0283","S0295","S0303","S0306","S0312","S0318","S0321","S0324","S0328","S0344","S0348","S0357","S0361","S0370","S0384","S0387","S0396","S0397","S0402","S0415","S0422","S0435","S0439","S0448","S0453","S0463","S0464","S0469","S0470","S0472","S0473","S0476","S0477","S0478","S0484","S0510","S0516","S0517","S0518","S0529","S0530","S0533","S0545","S0546","S0547","S0548","S0558","S0559","S0563","S0581","S0586","S0591","S0595","S0610","S0616","S0627","S0628","S0638","S0641","S0648","S0661","S0662","S0666","S0670","S0676","S0678","S0679","S0681","S0684","S0688","S0689","S0690","S0694","S0701","S0704","S0713","S0716","S0717","S0718","S0737","S0739","S0742","S0743","S0744","S0748","S0749","S0784","S0786","S0792","S0804","S0805","S0806","S0105","S0108","S0137","S0152","S0180","S0192","S0204","S0206","S0220","S0221","S0306","S0312","S0323","S0328","S0340","S0361","S0370","S0380","S0382","S0391","S0393","S0420","S0442","S0458","S0475","S0499","S0500","S0578","S0579","S0582","S0601","S0606","S0630","S0642","S0650","S0659","S0662","S0663","S0670","S0674","S0675","S0677","S0682","S0687","S0698","S0700","S0703","S0704","S0715","S0718","S0765","S0780","S0793","S0808"],"to":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":false},"physics":{"stabilization":false}},"groups":["景點與地標","site"],"width":"100%","height":"500px","idselection":{"enabled":true,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","igraphlayout":{"type":"square"},"highlight":{"enabled":true,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":false,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"}},"evals":[],"jsHooks":[]}</script>
+<script type="application/htmlwidget-sizing" data-for="htmlwidget-a7c19ec08dc144a66ec3">{"viewer":{"width":"100%","height":"500px","padding":15,"fill":false},"browser":{"width":"100%","height":"500px","padding":40,"fill":false}}</script>
+>>>>>>> 376d36de49d0b2adba826a46a79c6c34324bf89a
 </body>
 </html>

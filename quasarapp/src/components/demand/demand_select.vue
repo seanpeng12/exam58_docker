@@ -200,6 +200,9 @@ export default {
   watch: {
     selected_p_local(val) {
       this.$emit("changed_1", val);
+      //更改時先確認後面選單為空值
+      this.selected_p_detail_item_local = "";
+      this.selected_p_detail_item_local2 = "";
     },
     selected_p_detail_item_local(val) {
       this.$emit("changed_2", val);

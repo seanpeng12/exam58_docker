@@ -1,24 +1,15 @@
 <template>
   <div class="q-pa-md doc-container">
-    <div
-      class="gt-xs q-pa-lg column items-center text-black bg-grey-3"
-      style="height: 200px;"
-    >
+    <div class="gt-xs q-pa-lg column items-center text-black bg-grey-3" style="height: 200px;">
       <div class="col">
         <div class="text-center img_background">
-          <p style="font-size: 28px;font-family: Microsoft JhengHei;">
-            飯店需求分析
-          </p>
+          <p style="font-size: 28px;font-family: Microsoft JhengHei;">飯店需求分析</p>
         </div>
       </div>
       <div class="col">
         <div class="text-center img_background">
           <div>
-            <b
-              class="text"
-              style="font-size: 30px;font-family: Microsoft JhengHei;"
-              >選擇想分析的景點城市/類型</b
-            >
+            <b class="text" style="font-size: 30px;font-family: Microsoft JhengHei;">選擇想分析的景點城市/類型</b>
             <br />
 
             <!-- 以下測試 -->
@@ -39,6 +30,7 @@
               <div class="q-gutter-md row">
                 <q-select
                   filled
+                  clearable
                   v-model="selected_p_local"
                   v-on:change="onProductChange"
                   use-input
@@ -52,9 +44,7 @@
                 >
                   <template v-slot:no-option>
                     <q-item>
-                      <q-item-section class="text-grey"
-                        >沒有結果</q-item-section
-                      >
+                      <q-item-section class="text-grey">沒有結果</q-item-section>
                     </q-item>
                   </template>
                 </q-select>
@@ -69,6 +59,7 @@
               <div class="q-gutter-md row">
                 <q-select
                   filled
+                  clearable
                   v-model="selected_p_detail_item_local"
                   use-input
                   hide-selected
@@ -81,9 +72,7 @@
                 >
                   <template v-slot:no-option>
                     <q-item>
-                      <q-item-section class="text-grey"
-                        >沒有結果</q-item-section
-                      >
+                      <q-item-section class="text-grey">沒有結果</q-item-section>
                     </q-item>
                   </template>
                 </q-select>
@@ -98,6 +87,7 @@
               <div class="q-gutter-md row">
                 <q-select
                   filled
+                  clearable
                   v-model="selected_p_detail_item_local2"
                   use-input
                   hide-selected
@@ -110,9 +100,7 @@
                 >
                   <template v-slot:no-option>
                     <q-item>
-                      <q-item-section class="text-grey"
-                        >沒有結果</q-item-section
-                      >
+                      <q-item-section class="text-grey">沒有結果</q-item-section>
                     </q-item>
                   </template>
                 </q-select>
@@ -126,19 +114,33 @@
     <div class="gt-xs q-pa-lg column items-center text-black bg-grey-3">
       <div class="col">
         <!-- 按鈕 -->
+
         <q-btn
-          :loading="loading4"
+          :loading="loading1"
+          :percentage="percentage1"
           color="cyan-9"
-          @click="simulateProgress(4)"
+          @click="startComputing(1)"
           v-on:click="runR(1)"
           style="width: 150px"
         >
-          開始分析
+          開始
           <template v-slot:loading>
-            <q-spinner-hourglass class="on-left" />Loading...
+            <q-spinner-gears class="on-left" />Computing...
           </template>
         </q-btn>
-        <q-btn @click="resetTxtdatas">reset</q-btn>
+
+        <q-btn size="10px" round color="blue-grey-8" icon="help" style="margin-left:10px">
+          <q-tooltip
+            anchor="center right"
+            self="center left"
+            :offset="[10, 10]"
+            content-class="bg-blue-grey-8"
+          >
+            依您
+            <strong>選擇的需求</strong>做分析，找出適合的飯店
+          </q-tooltip>
+        </q-btn>
+        <!-- <q-btn @click="resetTxtdatas">reset</q-btn> -->
         <!-- end -->
       </div>
     </div>
@@ -171,39 +173,29 @@ export default {
       loading4: false,
       // 預設options資料
       options: stringOptions,
+      // 開始按鈕2
+      loading1: false,
+      // 按鈕百分比
+      percentage1: 0
     };
   },
-  // computed: {
-  //   // 第一層
-  //   selected_p_local: {
-  //     get() {
-  //       return this.selected_p_local;
-  //     },
-  //     set(val) {
-  //       this.$emit("changed_1", val);
-  //     }
-  //   },
-  //   // 第二層
-  //   selected_p_detail_item_local: {
-  //     get() {
-  //       return this.selected_p_detail_item_local;
-  //     },
-  //     set(val) {
-  //       this.$emit("changed_2", val);
-  //     }
-  //   },
-  //   // 第三層
-  //   selected_p_detail_item_local2: {
-  //     get() {
-  //       return this.selected_p_detail_item_local2;
-  //     },
-  //     set(val) {
-  //       this.$emit("changed_3", val);
-  //     }
-  //   }
-  // },
+
   methods: {
     ...mapActions("h_demand", ["resetTxtdatas", "resetTxtdatas_diff"]),
+    startComputing(id) {
+      // 開啟loading狀態
+      this[`loading${id}`] = true;
+      this[`percentage${id}`] = 0;
+      // 設定增加速度間距
+      this[`interval${id}`] = setInterval(() => {
+        this[`percentage${id}`] += Math.floor(Math.random() * 8 + 10);
+        if (this[`percentage${id}`] >= 100) {
+          clearInterval(this[`interval${id}`]);
+          // 完成時關閉loading狀態
+          this[`loading${id}`] = false;
+        }
+      }, 700);
+    },
     // 計算loading時間
     simulateProgress(number) {
       // we set loading state
@@ -255,6 +247,9 @@ export default {
   watch: {
     selected_p_local(val) {
       this.$emit("changed_1", val);
+      this.selected_p_detail_item_local = "";
+      this.selected_p_detail_item_local2 = "";
+      this[`percentage1`] = 97;
     },
     selected_p_detail_item_local(val) {
       this.$emit("changed_2", val);

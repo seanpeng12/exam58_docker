@@ -28,12 +28,7 @@
 
                 <q-separator />
 
-                <q-tab-panels
-                  class="text-dark"
-                  v-model="tab"
-                  style="max-height: 500px;"
-                  animated
-                >
+                <q-tab-panels class="text-dark" v-model="tab" style="max-height: 500px;" animated>
                   <q-tab-panel name="mails">
                     <iframe
                       style="height: 1500px"
@@ -77,7 +72,7 @@
         <b>拖曳畫面以檢視，滾輪可放大</b>
       </div>
 
-    </q-expansion-item> -->
+    </q-expansion-item>-->
   </div>
 </template>
 <script>
@@ -105,7 +100,7 @@ export default {
     changeSrc() {
       // 重新整理myframe_good
       this.$refs.myFrame_good.contentWindow.location.reload();
-      console.log("change重整畫面成功!");
+      console.log("change重整畫面成功!data_index+1");
 
       this.$store.commit("proscons/Update_Data_Index", 1);
     }

@@ -128,10 +128,12 @@ export default {
     },
 
     runR() {
+      // R
       this.fetchProsConsR();
+      // 懶人包
       this.fetchCons();
       this.fetchPros();
-      console.log("觸發 fetchProsConsR及優缺懶人包");
+      console.log("觸發 fetchProsConsR及優缺懶人包，run_index+1");
     },
     // 第一層過濾清單
     filterFn(val, update, abort) {

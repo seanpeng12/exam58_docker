@@ -13,7 +13,7 @@ args <- commandArgs(TRUE)
 sid <- args
 # sid <- 'S0102'
 
-#找到好的(P)裡面degree最大的
+
 g_sql <- paste("SELECT s.degree 
                 FROM segment_data s, site_data sd 
                 WHERE (s.site_id = sd.id) 
@@ -22,7 +22,7 @@ g_sql <- paste("SELECT s.degree
 good <- dbGetQuery(con, g_sql)
 DegreeMax <- max(good$degree)
 
-# 找到maxdegree的名稱
+
 g <- paste0("SELECT id, segment, color, degree
             FROM segment_data s
             WHERE evaluation = 'P' 
@@ -30,11 +30,10 @@ g <- paste0("SELECT id, segment, color, degree
             AND degree = '",DegreeMax,"'",sep="")
 gname <- dbGetQuery(con, g)
 
-#找到與maxdegree的id
+
 gid = gname$id
 
-# =============以上是為了找到gid(degree最高的點)=============
-#被連到最多的圖亮吧
+
 seg <- paste("SELECT s.id, s.segment, s.color, s.site_id, sd.name  
               FROM segment_data s, site_data sd 
               WHERE (s.site_id = sd.id) 
@@ -67,5 +66,4 @@ visSave(ccout, file = "C://xampp/htdocs/SNA_sean/exam58/quasarapp/src/statics/go
 # dbDisconnect(con)
 on.exit(dbDisconnect(con))
 
-# 測試db連接
 lapply(dbListConnections(MySQL()), dbDisconnect)

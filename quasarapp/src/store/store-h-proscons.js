@@ -19,11 +19,11 @@ const state = {
   // R執行完呼叫重新整理用
   run_index: 0,
   // R執行完呼叫懶人包用
-  data_index:0,
+  data_index: 0,
 
   // r 圖產生位置
-  src_good: "./statics/good.html",
-  src_bad: "./statics/bad.html",
+  src_good: "./statics/h_good.html",
+  src_bad: "./statics/h_bad.html",
 
   // 優缺點懶人包
   prosData: [],
@@ -69,7 +69,7 @@ const actions = {
   fetchCitys({
     commit
   }) {
-    axiosInstance.get("http://127.0.0.1/api/site_dataCity")
+    axiosInstance.get("http://127.0.0.1/api/proscons_hotel_data_City")
       .then(res => {
         commit('FETCH_Citys', res.data);
         console.log("vuex-get 城市");
@@ -83,7 +83,7 @@ const actions = {
   fetchSites({
     commit
   }) {
-    axiosInstance.post("http://127.0.0.1/api/sitesByCity", {
+    axiosInstance.post("http://127.0.0.1/api/h_sitesByCity", {
         city_name: state.selected_city,
       })
       .then(res => {
@@ -99,11 +99,11 @@ const actions = {
     commit,
     dispatch
   }) {
-    axiosInstance.post("http://127.0.0.1/api/proscons", {
+    axiosInstance.post("http://127.0.0.1/api/h_proscons", {
         name: state.selected_site,
       })
       .then(res => {
-        console.log("執行優缺分析完成，產生good,bad.html ");
+        console.log("執行優缺分析完成，產生h_good,h_bad.html ");
         // 讓R執行數
         commit('Update_Run_Index', 1);
 
@@ -116,11 +116,11 @@ const actions = {
   fetchPros({
     commit,
   }) {
-    axiosInstance.post("http://127.0.0.1/api/prosData", {
-        name: "1",
+    axiosInstance.post("http://127.0.0.1/api/h_prosData", {
+        name: state.selected_site,
       })
       .then(res => {
-        console.log("取得優點");
+        console.log("取得飯店優點");
         commit('Update_ProsData', res);
 
       })
@@ -132,11 +132,11 @@ const actions = {
   fetchCons({
     commit,
   }) {
-    axiosInstance.post("http://127.0.0.1/api/consData", {
-        name: "1",
+    axiosInstance.post("http://127.0.0.1/api/h_consData", {
+        name: state.selected_site,
       })
       .then(res => {
-        console.log("取得缺點");
+        console.log("取得飯店缺點");
         commit('Update_ConsData', res);
 
       })

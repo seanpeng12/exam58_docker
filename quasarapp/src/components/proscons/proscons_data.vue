@@ -79,10 +79,7 @@ export default {
       "selected_site"
     ])
   },
-  methods: {
-    // 由此找vuex所需method
-    ...mapActions("proscons", ["fetchPros", "fetchCons"])
-  },
+  methods: {},
   watch: {
     data_index(val) {
       console.log("偵測到data_index改變：取得val", val);
