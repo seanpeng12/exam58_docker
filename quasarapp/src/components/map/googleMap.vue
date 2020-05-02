@@ -1,70 +1,104 @@
 <template>
-  <div class="container mt-4">
-    <h2 class="text-center text-secondary pb-2">台北市營運餐廳</h2>
-    <div class="map-container border rounded">
-      <ul class="nav justify-content-center border-bottom">
-        <!--營運地區 nav-->
-      </ul>
-      <!--地圖呈現在此-->
-      <div class="google-map" id="map"></div>
-    </div>
-  </div>
+  <div class="google-map" id="map"></div>
 </template>
-<script
-  async
-  defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A&callback=initMap"
-></script>
+
 <script>
 export default {
-  name: "Restaurants",
+  // 接收來自父元件的地圖設定資訊
+  props: {
+    center: {
+      type: Object,
+      default: () => ({ lat: 25.0325917, lng: 121.5624999 })
+    },
+    zoom: {
+      type: Number,
+      default: 14
+    },
+    streetViewControl: {
+      type: Boolean,
+      default: true
+    },
+    mapTypeControl: {
+      type: Boolean,
+      default: true
+    },
+    fullscreenControl: {
+      type: Boolean,
+      default: true
+    },
+    zoomControl: {
+      type: Boolean,
+      default: true
+    },
+    restaurants: {
+      type: Array,
+      default: () => []
+    }
+  },
   data() {
     return {
       map: null,
-      // 預設經緯度在信義區附近
-      lat: 25.0325917,
-      lng: 121.5624999
+      infowindow: null,
+      markers: []
     };
+  },
+  // 當發現中心位置改變時，更新中心位置與地標
+  watch: {
+    center(val) {
+      this.resetCenter();
+      this.setMarker();
+    }
   },
   mounted() {
     this.initMap();
     this.setMarker();
   },
   methods: {
-    // 建立地圖
     initMap() {
-      // 透過 Map 物件建構子建立新地圖 map 物件實例，並將地圖呈現在 id 為 map 的元素中
       this.map = new google.maps.Map(document.getElementById("map"), {
-        // 設定地圖的中心點經緯度位置
-        center: { lat: this.lat, lng: this.lng },
-        // 設定地圖縮放比例 0-20
-        zoom: 15,
-        // 限制使用者能縮放地圖的最大比例
+        center: this.center,
+        zoom: this.zoom,
         maxZoom: 20,
-        // 限制使用者能縮放地圖的最小比例
         minZoom: 3,
-        // 設定是否呈現右下角街景小人
-        streetViewControl: false,
-        // 設定是否讓使用者可以切換地圖樣式：一般、衛星圖等
-        mapTypeControl: false
+        streetViewControl: this.streetViewControl,
+        mapTypeControl: this.mapTypeControl,
+        fullscreenControl: this.fullscreenControl,
+        zoomControl: this.zoomControl
       });
     },
-    // 建立地標
+    resetCenter() {
+      // set center
+      this.map.panTo({ lat: this.center.lat, lng: this.center.lng });
+    },
+    clearMarkers() {
+      this.markers.forEach(marker => marker.setMap(null));
+      this.markers = [];
+    },
     setMarker() {
-      // 建立一個新地標
-      const marker = new google.maps.Marker({
-        // 設定地標的座標
-        position: { lat: this.lat, lng: this.lng },
-        // 設定地標要放在哪一個地圖
-        map: this.map
+      // clear existing markers
+      this.clearMarkers();
+      this.restaurants.forEach(location => {
+        const marker = new google.maps.Marker({
+          position: { lat: location.lat, lng: location.lng },
+          map: this.map
+        });
+        // save markers
+        this.markers.push(marker);
+        const infowindow = new google.maps.InfoWindow({
+          content: `
+          <div id="content">
+            <p id="firstHeading" class="firstHeading">${location.name}</p>
+          </div>
+        `,
+          maxWidth: 200
+        });
+        marker.addListener("click", () => {
+          if (this.infowindow) this.infowindow.close();
+          infowindow.open(this.map, marker);
+          this.infowindow = infowindow;
+        });
       });
     }
   }
 };
 </script>
-<style scoped>
-.google-map {
-  width: 100%;
-  height: 400px;
-}
-</style>

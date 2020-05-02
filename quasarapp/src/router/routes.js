@@ -125,12 +125,22 @@ const routes = [
     ]
   },
   {
-    path: "/drag",
+    path: "/map",
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {
         path: "",
-        component: () => import("pages/drag.vue")
+        component: () => import("pages/map.vue")
+      }
+    ]
+  },
+  {
+    path: "/waypoints",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/WayPoint.vue")
       }
     ]
   },

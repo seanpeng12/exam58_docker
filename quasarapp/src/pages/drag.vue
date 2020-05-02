@@ -1,12 +1,17 @@
 <template>
   <div class="container mt-4">
-    <h2 class="text-center text-secondary pb-2">台北市營運餐廳</h2>
-    <div class="map-container border rounded">
-      <ul class="nav justify-content-center border-bottom">
-        <!--營運地區 nav-->
-      </ul>
-      <!--地圖呈現在此-->
-      <div class="google-map" id="map"></div>
+    <h2 class=" text-center text-secondary pb-2">台北市營運餐廳</h2>
+    <div class=" row map-container border rounded">
+      <div class="col">
+        <ul class="nav justify-content-center border-bottom">
+          <!--營運地區 nav-->
+        </ul>
+        <!--地圖呈現在此-->
+        <div class="google-map" id="map"></div>
+      </div>
+      <div class="col">
+        <q-select filled v-model="model" :options="options" label="Filled" />
+      </div>
     </div></div
 ></template>
 
@@ -18,7 +23,22 @@ export default {
       map: null,
       // 預設經緯度在信義區附近
       lat: 25.0325917,
-      lng: 121.5624999
+      lng: 121.5624999,
+      model: null,
+      originOptions: ["Halifax, NS", "Boston, MA", "New York, NY", "Miami, FL"],
+      waypointOptions: [
+        "Montreal, QBC",
+        "Toronto, ONT",
+        "Chicago",
+        "Winnipeg",
+        "Fargo"
+      ],
+      endOptions: [
+        "Vancouver, BC",
+        "Seattle, WA",
+        "San Francisco, CA",
+        "Los Angeles, CA"
+      ]
     };
   },
   mounted() {
@@ -62,5 +82,46 @@ export default {
 .google-map {
   width: 100%;
   height: 400px;
+}
+#right-panel {
+  font-family: "Roboto", "sans-serif";
+  line-height: 30px;
+  padding-left: 10px;
+}
+
+#right-panel select,
+#right-panel input {
+  font-size: 15px;
+}
+
+#right-panel select {
+  width: 100%;
+}
+
+#right-panel i {
+  font-size: 12px;
+}
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 20px;
+}
+
+#right-panel {
+  margin: 20px;
+  border-width: 2px;
+  width: 20%;
+  height: 400px;
+  float: left;
+  text-align: left;
+  padding-top: 0;
+}
+#directions-panel {
+  margin-top: 10px;
+  background-color: #ffee77;
+  padding: 10px;
+  overflow: scroll;
+  height: 174px;
 }
 </style>

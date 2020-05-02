@@ -27,7 +27,7 @@
                           flat
                           @click="second_request(a.name)"
                           :label="a.name"
-                          style="color: #181858;font-family: Microsoft JhengHei;font-weight:bold"
+                          style="color: #004991;font-family: Microsoft JhengHei;font-weight:bold"
                           icon-right="arrow_forward_ios"
                         ></q-btn>
                         <span class="text-caption">
