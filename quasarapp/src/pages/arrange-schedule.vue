@@ -560,7 +560,7 @@ export default {
       "selected_site_3"
     ]),
     // 優缺點景點
-    ...mapGetters("proscons", ["run_index", "selected_site"]),
+    ...mapGetters("proscons", ["run_index", "prosConsSelected_site"]),
 
     // 取得vuex state變動值、優缺分析
     EverydaySites: {
@@ -686,6 +686,7 @@ export default {
           // console.log('I am triggered on both OK and Cancel')
         });
     },
+    // 優缺點加入排程
     promptToAddProsSite() {
       const dateList = Object.keys(this.everydaySites);
       const item_1 = [];
@@ -712,10 +713,10 @@ export default {
           persistent: true
         })
         .onOk(data => {
-          console.log(this.selected_site);
+          console.log(this.prosConsSelected_site);
 
           this.$store.dispatch("travel/fbAddEverySiteData", {
-            site: this.selected_site,
+            site: this.prosConsSelected_site,
             date: data,
             scheduleId: this.id
           });

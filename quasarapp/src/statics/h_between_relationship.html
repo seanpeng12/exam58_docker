@@ -238,38 +238,13 @@
           theseArgs = theseArgs.concat([task.data]);
           task = task.code;
         }
-        var taskFunc = tryEval(task);
+        var taskFunc = eval("(" + task + ")");
         if (typeof(taskFunc) !== "function") {
           throw new Error("Task must be a function! Source:\n" + task);
         }
         taskFunc.apply(target, theseArgs);
       });
     }
-  }
-
-  // Attempt eval() both with and without enclosing in parentheses.
-  // Note that enclosing coerces a function declaration into
-  // an expression that eval() can parse
-  // (otherwise, a SyntaxError is thrown)
-  function tryEval(code) {
-    var result = null;
-    try {
-      result = eval(code);
-    } catch(error) {
-      if (!error instanceof SyntaxError) {
-        throw error;
-      }
-      try {
-        result = eval("(" + code + ")");
-      } catch(e) {
-        if (e instanceof SyntaxError) {
-          throw error;
-        } else {
-          throw e;
-        }
-      }
-    }
-    return result;
   }
 
   function initSizing(el) {
@@ -664,56 +639,17 @@
     invokePostRenderHandlers();
   }
 
-
-  function has_jQuery3() {
-    if (!window.jQuery) {
-      return false;
-    }
-    var $version = window.jQuery.fn.jquery;
-    var $major_version = parseInt($version.split(".")[0]);
-    return $major_version >= 3;
-  }
-
-  /*
-  / Shiny 1.4 bumped jQuery from 1.x to 3.x which means jQuery's
-  / on-ready handler (i.e., $(fn)) is now asyncronous (i.e., it now
-  / really means $(setTimeout(fn)).
-  / https://jquery.com/upgrade-guide/3.0/#breaking-change-document-ready-handlers-are-now-asynchronous
-  /
-  / Since Shiny uses $() to schedule initShiny, shiny>=1.4 calls initShiny
-  / one tick later than it did before, which means staticRender() is
-  / called renderValue() earlier than (advanced) widget authors might be expecting.
-  / https://github.com/rstudio/shiny/issues/2630
-  /
-  / For a concrete example, leaflet has some methods (e.g., updateBounds)
-  / which reference Shiny methods registered in initShiny (e.g., setInputValue).
-  / Since leaflet is privy to this life-cycle, it knows to use setTimeout() to
-  / delay execution of those methods (until Shiny methods are ready)
-  / https://github.com/rstudio/leaflet/blob/18ec981/javascript/src/index.js#L266-L268
-  /
-  / Ideally widget authors wouldn't need to use this setTimeout() hack that
-  / leaflet uses to call Shiny methods on a staticRender(). In the long run,
-  / the logic initShiny should be broken up so that method registration happens
-  / right away, but binding happens later.
-  */
-  function maybeStaticRenderLater() {
-    if (shinyMode && has_jQuery3()) {
-      window.jQuery(window.HTMLWidgets.staticRender);
-    } else {
-      window.HTMLWidgets.staticRender();
-    }
-  }
-
+  // Wait until after the document has loaded to render the widgets.
   if (document.addEventListener) {
     document.addEventListener("DOMContentLoaded", function() {
       document.removeEventListener("DOMContentLoaded", arguments.callee, false);
-      maybeStaticRenderLater();
+      window.HTMLWidgets.staticRender();
     }, false);
   } else if (document.attachEvent) {
     document.attachEvent("onreadystatechange", function() {
       if (document.readyState === "complete") {
         document.detachEvent("onreadystatechange", arguments.callee);
-        maybeStaticRenderLater();
+        window.HTMLWidgets.staticRender();
       }
     });
   }
@@ -801,7 +737,7 @@
       if (o !== null && typeof o === "object" && part in o) {
         if (i == (l - 1)) { // if we are at the end of the line then evalulate
           if (typeof o[part] === "string")
-            o[part] = tryEval(o[part]);
+            o[part] = eval("(" + o[part] + ")");
         } else { // otherwise continue to next embedded object
           o = o[part];
         }
@@ -2719,9 +2655,6 @@ if (HTMLWidgets.shinyMode){
             if(data.options.byselection.hideColor){
               el.byselectionColor = data.options.byselection.hideColor;
             }
-            if(data.options.byselection.highlight !== undefined){
-              el.byselectionHighlight = data.options.byselection.highlight;
-            }
           }
           
           if(data.options.byselection !== undefined){
@@ -3159,10 +3092,8 @@ HTMLWidgets.widget({
 
     if(x.byselection.enabled){
       el_id.byselectionColor = x.byselection.hideColor;
-      el_id.byselectionHighlight = x.byselection.highlight;
     } else {
       el_id.byselectionColor = 'rgba(200,200,200,0.5)';
-      el_id.byselectionHighlight = false;
     }
     
     if(x.idselection.enabled){
@@ -3247,7 +3178,7 @@ HTMLWidgets.widget({
         instance.network.selectNodes([id]);
       }
       if(el_id.highlight){
-        neighbourhoodHighlight(instance.network.getSelection().nodes, "click", el_id.highlightAlgorithm, true);
+        neighbourhoodHighlight(instance.network.getSelection().nodes, "click", el_id.highlightAlgorithm);
       }else{
         if(init){
           selectNode = document.getElementById('nodeSelect'+el.id);
@@ -3824,7 +3755,7 @@ HTMLWidgets.widget({
             var r = confirm("Do you want to delete " + data.nodes.length + " node(s) and " + data.edges.length + " edges ?");
             if (r === true) {
               deleteSubGraph(data, callback);
-            } else { clearPopUp(); callback(null); }
+            }
         };
       } else if(typeof(x.options.manipulation.deleteNode) === typeof(true)){
         if(x.options.manipulation.deleteNode){
@@ -3832,7 +3763,7 @@ HTMLWidgets.widget({
               var r = confirm("Do you want to delete " + data.nodes.length + " node(s) and " + data.edges.length + " edges ?");
               if (r === true) {
                 deleteSubGraph(data, callback);
-              } else { clearPopUp(); callback(null); }
+              }
           };
         } else {
           options.manipulation.deleteNode = false;
@@ -3846,7 +3777,7 @@ HTMLWidgets.widget({
             var r = confirm("Do you want to delete " + data.edges.length + " edges ?");
             if (r === true) {
               deleteSubGraph(data, callback);
-            } else { clearPopUp(); callback(null); }
+            }
         };
       } else if(typeof(x.options.manipulation.deleteEdge) === typeof(true)){
         if(x.options.manipulation.deleteEdge){
@@ -3854,7 +3785,7 @@ HTMLWidgets.widget({
               var r = confirm("Do you want to delete " + data.edges.length + " edges ?");
               if (r === true) {
                 deleteSubGraph(data, callback);
-              } else { clearPopUp(); callback(null); }
+              }
           };
         } else {
           options.manipulation.deleteEdge = false;
@@ -4175,12 +4106,6 @@ HTMLWidgets.widget({
           edges.update(edgesHardToRead);
             
           nodes.update(updateArray);
-          
-          // select for highlight
-          if(el_id.highlight && x.nodes && el_id.byselectionHighlight){
-              neighbourhoodHighlight(connectedNodes, "click", el_id.highlightAlgorithm, false);
-              instance.network.selectNodes(connectedNodes)
-          }
         }
       }
       else if (el_id.selectActive === true) {
@@ -4196,7 +4121,7 @@ HTMLWidgets.widget({
     var is_hovered = false;
     var is_clicked = false;
     
-    function neighbourhoodHighlight(params, action_type, algorithm, reset_selectedBy) {
+    function neighbourhoodHighlight(params, action_type, algorithm) {
 
       var nodes_in_clusters = instance.network.body.modules.clustering.clusteredNodes;
       var have_cluster_nodes = false;
@@ -4610,7 +4535,7 @@ HTMLWidgets.widget({
         }
       }
       // reset selectedBy list if actived
-      if(el_id.byselection && reset_selectedBy){
+      if(el_id.byselection){
         resetList("selectedBy", el.id, 'selectedBy');
       }
     }
@@ -4648,7 +4573,7 @@ HTMLWidgets.widget({
     // shared click function (selectedNodes)
     document.getElementById("graph"+el.id).myclick = function(params){
         if(el_id.highlight && x.nodes){
-          neighbourhoodHighlight(params.nodes, "click", el_id.highlightAlgorithm, true);
+          neighbourhoodHighlight(params.nodes, "click", el_id.highlightAlgorithm);
         }else if((el_id.idselection || el_id.byselection) && x.nodes){
           onClickIDSelection(params)
         }
@@ -4657,7 +4582,7 @@ HTMLWidgets.widget({
     // Set event in relation with highlightNearest      
     instance.network.on("click", function(params){
         if(el_id.highlight && x.nodes){
-          neighbourhoodHighlight(params.nodes, "click", el_id.highlightAlgorithm, true);
+          neighbourhoodHighlight(params.nodes, "click", el_id.highlightAlgorithm);
         }else if((el_id.idselection || el_id.byselection) && x.nodes){
           onClickIDSelection(params)
         } 
@@ -4665,13 +4590,13 @@ HTMLWidgets.widget({
     
     instance.network.on("hoverNode", function(params){
       if(el_id.hoverNearest && x.nodes){
-        neighbourhoodHighlight([params.node], "hover", el_id.highlightAlgorithm, true);
+        neighbourhoodHighlight([params.node], "hover", el_id.highlightAlgorithm);
       } 
     });
 
     instance.network.on("blurNode", function(params){
       if(el_id.hoverNearest && x.nodes){
-        neighbourhoodHighlight([], "hover", el_id.highlightAlgorithm, true);
+        neighbourhoodHighlight([], "hover", el_id.highlightAlgorithm);
       }      
     });
     
@@ -4835,7 +4760,7 @@ HTMLWidgets.widget({
         // reset some parameters / data before
         if (el_id.selectActive === true | el_id.highlightActive === true) {
           //reset nodes
-          neighbourhoodHighlight([], "click", el_id.highlightAlgorithm, true);
+          neighbourhoodHighlight([], "click", el_id.highlightAlgorithm);
           if (el_id.selectActive === true){
             el_id.selectActive = false;
             resetList('selectedBy',el.id, 'selectedBy');
@@ -5190,11 +5115,11 @@ HTMLWidgets.widget({
 </head>
 <body style="background-color: white;">
 <div id="htmlwidget_container">
-<div id="htmlwidget-3f25c5040c52a45ac2ff" class="visNetwork html-widget" style="width:100%;height:500px;">
+<div id="htmlwidget-5a5b14b1834c7b04a9df" class="visNetwork html-widget" style="width:100%;height:500px;">
 
 </div>
 </div>
-<script type="application/json" data-for="htmlwidget-3f25c5040c52a45ac2ff">{"x":{"nodes":{"id":["3","4","H00002","H00004","H00007","H00017","H00020","H00022","H00027","H00035","H00036","H00038","H00041","H00046","H00047","H00051","H00056","H00062","H00063","H00070","H00073","H00074","H00080","H00081","H00082","H00084","H00086","H00088","H00089","H00093","H00094","H00097","H00102","H00106","H00107","H00108","H00110","H00115","H00116","H00118","H00122","H00127","H00131","H00133","H00134","H00135","H00138","H00140","H00141","H00143","H00147","H00148","H00153","H00159","H00161","H00163","H00166","H00169","H00170","H00171","H00172","H00173","H00175","H00178","H00179","H00181","H00183","H00184","H00186","H00188","H00189","H00190","H00193","H00198","H00199","H00201","H00211","H00214","H00220","H00227","H00228","H00231","H00234","H00235","H00237","H00241","H00243","H00244","H00246","H00250","H00255","H00256","H00261","H00262","H00263","H00266","H00270","H00274","H00282","H00291","H00292","H00293","H00297","H00302","H00307","H00313","H00314","H00320","H00323","H00324","H00326","H00332","H00338","H00340","H00355","H00358","H00365","H00368","H00372","H00378","H00388","H00389","H00398","H00408","H00419","H00423","H00425","H00430","H00434","H00435","H00444","H00448","H00452","H00454","H00471","H00472","H00476","H00483","H00490","H00494","H00504","H00515","H00516","H00534","H00536","H00537","H00554","H00555","H00587","H00606","H00608","H00612","H00617","H00618","H00628","H00630","H00644","H00647","H00659","H00664","H00686","H00736","H00778","H00792","H00801","H00814","H00855","H00856","H00914","H00915","H00988","H01084","H01096","H01107","H01109","H01122","H01136","H01140","H01173","H01183","H01198","H01265"],"color":["red","red","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange"],"shape":["square","square",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"font.size":[30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30],"x":[-0.404738280601239,-0.00797826865039009,0.448810951566219,-0.21458582416394,-0.338233848176282,-0.90571513635435,0.183023072697499,-0.342931273300008,-0.983434006236043,-0.489099673998887,0.10394380901731,-0.142004578976851,-0.389350405469307,0.39914988820832,-0.0294823117201508,0.486933453543453,0.604398719710376,-0.921891714907217,0.0685548029743017,0.126790908552928,1,0.324163560829418,-0.255376643226792,0.289948153128492,0.326850610552353,0.311296788192931,-0.241531422129701,-0.215670023583825,0.503822135352749,0.508050449240116,-0.0157093475263508,-0.933616395673297,0.866264837673416,-0.444541989754135,0.780199218512898,-0.0141857355825854,-0.434826195702472,-0.788756876338973,0.074683305294843,-0.00626104140314943,-0.766791923392353,-0.0874775852687895,0.22326883425811,-0.537413565762328,-0.342812186170261,0.303884871027096,0.0230568336237966,-0.638948257810573,-0.29138397547199,0.343582090311069,0.202317204334948,0.712999704768982,0.910461882179493,-0.583637099304543,-0.401184122855326,-0.833852482920614,-0.340898300490253,-0.499594850580025,0.663632491721179,0.951458225181435,-0.439531030183189,-0.122385034553153,0.699656235850741,-0.630489648657133,-0.210605868831889,-0.133344170185591,-0.609383150643314,-0.820373735889399,-0.875371150115639,0.00169937295884925,-0.202452195094762,-0.931886223675044,-0.301599866710704,-0.657105273759936,0.0784747171686493,0.774847822767584,0.744143604770206,-0.653876224222927,-0.826766812136412,-0.815508662390221,0.773775355927442,-0.471611264780561,0.443553013576188,-0.116647971100396,0.961326935438878,0.654856672065206,0.693652433148393,-0.00948036505192651,-0.884441348255851,0.639093833471716,-0.349362913003116,0.348299598243655,0.324928184487895,-0.681431569420799,0.477633990720931,0.80446800223977,0.53409130576028,0.716370263108622,-0.0624070416959055,0.687315432391188,-0.20816179517172,-0.715399756270788,-0.505712562724181,0.551097145113918,-0.532699040501592,0.904933167224119,-0.441422741731145,-0.522081360165333,0.855204769651747,0.929080114772644,0.0590633288360232,0.108096292399634,-0.72501972444965,0.260818691798206,-0.0962028941499506,-0.541206837249782,-0.438031168396028,0.839718604371741,-0.937790087756195,-0.511523737337075,-0.950473424829655,0.454872694160387,0.742104680865114,-0.236807015750741,0.46046906387172,0.601299263402409,0.955983865721191,-0.368241994610277,0.850159309932738,-0.822571789810987,0.830756016801022,-0.81063860621241,-0.296802403417865,-0.756402569263985,0.271641466394749,-0.238430428983266,0.982521369701334,0.132391485208435,-0.445468668769999,-0.0941485231592667,0.603022321907986,0.587554390421656,0.455378304069807,-0.3375333619805,-0.790829439064379,0.803365703915176,0.303166821927926,-0.654966836551941,-0.532576045343684,-0.110361648324299,-0.672374157941645,-1,0.16029545485629,0.165476439318995,-0.683796832253948,0.583143775585266,0.338953678374334,0.654829238833468,-0.990371578772603,0.564800927173854,-0.568045637138861,-0.109417520533919,-0.573084254701737,0.404031509782897,-0.664278704789182,-0.556269981002997,0.634785810104927,-0.549704588505426,0.507524460823721,-0.687287307091391,-0.240726104140929,0.833496158854113,-0.954888439915046,-0.313479725610566,0.480691594464232,-0.330294695888819,-0.635509182221904,-0.185488744843396,-0.798170635984854,-0.397160586550759,0.135625061972296,-0.686320241100026],"y":[-0.480804570953715,0.359960654858695,0.370435606067152,-0.28280562372062,-1,0.12195010075295,-0.0427562511547154,0.953371547732113,-0.790345993231671,0.126473132643779,0.99492764774971,0.13100349793236,-0.250608265036011,0.861085765443553,-0.160555770235697,-0.00647499793995387,0.753800817443156,-0.879839464533298,0.853634284123882,-0.252804329106701,0.407630850940818,0.152618973525277,0.222625118787823,0.893322157325403,0.268956702884213,0.702308208136948,0.893872968955821,-0.166985402819448,0.822003863969395,0.479700413347919,1,0.599575902687326,0.077738820596652,-0.953439522530732,0.646361449953635,0.666192861646119,-0.193070583730525,0.0641238007556753,-0.208407926525259,-0.307691868101535,0.347447486613329,0.75967368529068,0.984910357983928,-0.0837376018042274,0.756342919326019,-0.0463520101601446,0.923101948105481,0.762859776471249,-0.121512110647204,0.513175170714878,0.815572756018001,0.274501862535992,0.141333973677038,-0.193168872209522,0.288784218843245,-0.822350382760363,-0.0773967893393516,-0.231887383089336,-0.0273166112719696,0.550963142980842,-0.138456111120639,-0.303805302492922,0.543807337102454,-0.100817583098386,0.705928613772698,0.997236326584976,0.633259445441348,0.252942480207358,0.662140799068861,0.0890338148953895,-0.101817142228901,0.408432858445451,-0.24995079246539,-0.150935460095923,-0.295820747975439,0.0392437641112147,0.795241081478569,0.0740831908855428,0.523743373381256,0.723379601274045,-0.0352084290150216,0.800189784879714,0.654850446940306,-0.203992894121579,0.208786357589397,0.612890688660987,0.0955084259320387,-0.217256976281445,0.336469996472106,0.827686020843146,0.517256426042014,-0.146828989468854,0.790912077546578,0.561463961679851,0.216720186828641,0.49104197700876,-0.0845306529679781,0.718392277970316,-0.261748217984281,0.177220869181381,-0.223753095917184,0.204040668890793,0.4536224303192,0.13906765179804,0.221877708527583,0.637156014818605,0.938708275650292,0.556994696425518,0.244959450444205,0.357574176929733,0.770790023032022,0.567536391713866,0.678260609041849,0.404500657119773,0.843377976943546,-0.144811753458799,-0.0818901802460787,0.569192654345347,0.200290527931552,0.897147141480579,0.52913705642119,0.931973846438362,0.381969618320025,0.614035035890079,0.747533058876146,0.0369091889152129,0.47921807680361,0.854325128309436,0.421572007231263,0.443139179801358,0.318593296729559,0.148162131925173,0.402895836087965,0.785499795695074,0.60940827440091,0.813089785538998,0.290520634726217,0.188116764256918,0.70588140669427,0.544357270943002,0.369102260608352,0.271851513775752,0.0744732656674241,0.119707331465915,0.600386737173229,0.167773560372187,0.0540610212848325,0.286021139509463,0.3514905483255,0.919812765498157,0.841803922871071,0.345060891138625,0.706351158844641,0.91083190528716,0.479376755512095,0.674560943728015,0.962303257561775,0.462590286626885,0.46401665524644,0.88852233146794,0.711239006402605,-0.129826508336535,0.849241304528684,-0.0745360298097072,0.400858889798522,-0.899586810069828,-0.106793299927713,-0.998177707925057,0.572923667419575,-0.873266216025302,0.978722190545042,0.717867025868403,0.26965604982239,-0.909770356892405,-0.156562292716736,-0.177079469594087,0.144233750070195,-0.947619534717222,-0.917383210503973,0.627997337336838,0.044077245370199,-0.97065684621233],"label":["3","4","H00002","H00004","H00007","H00017","H00020","H00022","H00027","H00035","H00036","H00038","H00041","H00046","H00047","H00051","H00056","H00062","H00063","H00070","H00073","H00074","H00080","H00081","H00082","H00084","H00086","H00088","H00089","H00093","H00094","H00097","H00102","H00106","H00107","H00108","H00110","H00115","H00116","H00118","H00122","H00127","H00131","H00133","H00134","H00135","H00138","H00140","H00141","H00143","H00147","H00148","H00153","H00159","H00161","H00163","H00166","H00169","H00170","H00171","H00172","H00173","H00175","H00178","H00179","H00181","H00183","H00184","H00186","H00188","H00189","H00190","H00193","H00198","H00199","H00201","H00211","H00214","H00220","H00227","H00228","H00231","H00234","H00235","H00237","H00241","H00243","H00244","H00246","H00250","H00255","H00256","H00261","H00262","H00263","H00266","H00270","H00274","H00282","H00291","H00292","H00293","H00297","H00302","H00307","H00313","H00314","H00320","H00323","H00324","H00326","H00332","H00338","H00340","H00355","H00358","H00365","H00368","H00372","H00378","H00388","H00389","H00398","H00408","H00419","H00423","H00425","H00430","H00434","H00435","H00444","H00448","H00452","H00454","H00471","H00472","H00476","H00483","H00490","H00494","H00504","H00515","H00516","H00534","H00536","H00537","H00554","H00555","H00587","H00606","H00608","H00612","H00617","H00618","H00628","H00630","H00644","H00647","H00659","H00664","H00686","H00736","H00778","H00792","H00801","H00814","H00855","H00856","H00914","H00915","H00988","H01084","H01096","H01107","H01109","H01122","H01136","H01140","H01173","H01183","H01198","H01265"]},"edges":{"from":["H00004","H00007","H00027","H00041","H00047","H00062","H00070","H00088","H00106","H00110","H00116","H00118","H00133","H00141","H00159","H00163","H00166","H00169","H00172","H00173","H00178","H00189","H00193","H00198","H00199","H00235","H00244","H00282","H00292","H00358","H00365","H00736","H00814","H00856","H00915","H01107","H01122","H01140","H01173","H01265","H00002","H00004","H00017","H00020","H00022","H00035","H00036","H00038","H00041","H00046","H00047","H00051","H00056","H00063","H00070","H00073","H00074","H00080","H00081","H00082","H00084","H00086","H00088","H00089","H00093","H00094","H00097","H00102","H00107","H00108","H00110","H00115","H00116","H00118","H00122","H00127","H00131","H00133","H00134","H00135","H00138","H00140","H00141","H00143","H00147","H00148","H00153","H00159","H00161","H00166","H00169","H00170","H00171","H00172","H00173","H00175","H00178","H00179","H00181","H00183","H00184","H00186","H00188","H00189","H00190","H00193","H00198","H00199","H00201","H00211","H00214","H00220","H00227","H00228","H00231","H00234","H00235","H00237","H00241","H00243","H00244","H00246","H00250","H00255","H00256","H00261","H00262","H00263","H00266","H00270","H00274","H00282","H00291","H00292","H00293","H00297","H00302","H00307","H00313","H00314","H00320","H00323","H00324","H00326","H00332","H00338","H00340","H00355","H00358","H00365","H00368","H00372","H00378","H00388","H00389","H00398","H00408","H00419","H00423","H00425","H00430","H00434","H00435","H00444","H00448","H00452","H00454","H00471","H00472","H00476","H00483","H00490","H00494","H00504","H00515","H00516","H00534","H00536","H00537","H00554","H00555","H00587","H00606","H00608","H00612","H00617","H00618","H00628","H00630","H00644","H00647","H00659","H00664","H00686","H00736","H00778","H00792","H00801","H00855","H00914","H00988","H01084","H01096","H01109","H01122","H01136","H01183","H01198"],"to":[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":false},"physics":{"stabilization":false}},"groups":null,"width":"100%","height":"500px","idselection":{"enabled":true,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","igraphlayout":{"type":"square"},"highlight":{"enabled":true,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":false,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"}},"evals":[],"jsHooks":[]}</script>
-<script type="application/htmlwidget-sizing" data-for="htmlwidget-3f25c5040c52a45ac2ff">{"viewer":{"width":"100%","height":"500px","padding":15,"fill":false},"browser":{"width":"100%","height":"500px","padding":40,"fill":false}}</script>
+<script type="application/json" data-for="htmlwidget-5a5b14b1834c7b04a9df">{"x":{"nodes":{"id":["3","4","H00002","H00004","H00007","H00017","H00020","H00022","H00027","H00035","H00036","H00038","H00041","H00046","H00047","H00051","H00056","H00062","H00063","H00070","H00073","H00074","H00080","H00081","H00082","H00084","H00086","H00088","H00089","H00093","H00094","H00097","H00102","H00106","H00107","H00108","H00110","H00115","H00116","H00118","H00122","H00127","H00131","H00133","H00134","H00135","H00138","H00140","H00141","H00143","H00147","H00148","H00153","H00159","H00161","H00163","H00166","H00169","H00170","H00171","H00172","H00173","H00175","H00178","H00179","H00181","H00183","H00184","H00186","H00188","H00189","H00190","H00193","H00198","H00199","H00201","H00211","H00214","H00220","H00227","H00228","H00231","H00234","H00235","H00237","H00241","H00243","H00244","H00246","H00250","H00255","H00256","H00261","H00262","H00263","H00266","H00270","H00274","H00282","H00291","H00292","H00293","H00297","H00302","H00307","H00313","H00314","H00320","H00323","H00324","H00326","H00332","H00338","H00340","H00355","H00358","H00365","H00368","H00372","H00378","H00388","H00389","H00398","H00408","H00419","H00423","H00425","H00430","H00434","H00435","H00444","H00448","H00452","H00454","H00471","H00472","H00476","H00483","H00490","H00494","H00504","H00515","H00516","H00534","H00536","H00537","H00554","H00555","H00587","H00606","H00608","H00612","H00617","H00618","H00628","H00630","H00644","H00647","H00659","H00664","H00686","H00736","H00778","H00792","H00801","H00814","H00855","H00856","H00914","H00915","H00988","H01084","H01096","H01107","H01109","H01122","H01136","H01140","H01173","H01183","H01198","H01265"],"color":["red","red","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange","orange"],"shape":["square","square",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"font.size":[30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30],"x":[-0.488855247690857,0.367072290618891,0.148162862803084,-0.234941581827777,-0.848441055834919,0.310018810638002,0.530224301672874,0.780669228387672,-0.985254921214605,0.397875326418438,0.733730390457953,0.97998783636973,-0.176134296253489,0.303025091784183,-0.274918246280701,0.745918968276279,0.711802934975762,-0.890327360057733,0.0385929362732129,-0.226648633552603,0.455227430306002,0.163076675751241,0.978566029047024,0.624784866792842,1,0.0167690235563125,0.554701676476225,-0.160627769342964,0.904001471890592,0.158880090248551,0.0639123570645155,0.484504251149978,0.736471866146992,-0.958149731506928,0.237916281883125,0.670636634219342,-0.221364235776551,0.464520747778098,-0.166563852095571,-0.224276334688265,0.681008303419522,0.951753189021263,0.534466221495652,-0.211588420989249,0.201364932916443,0.0973363268754888,0.254514102116985,0.15763193664393,-0.0927269271475647,0.100757226747852,0.303827893162704,0.507549766363845,0.22697855984875,-0.23458153106819,0.276288756561894,-0.890576432563873,-0.180510110245035,-0.171720692403254,0.80114928483011,0.434654519684826,-0.268831307911339,-0.124008143162798,0.704417202848381,-0.286693715938853,0.165092977279837,0.316439766841512,0.860635995899137,0.84140826786723,0.362434363944087,0.641802745902782,-0.131957832406259,0.09430001216543,-0.163799442487382,-0.115762601055745,-0.244699414949784,0.883633771850235,0.605910722742442,0.844107177232182,0.909577000249935,0.174890060574882,0.429015843488944,0.849327424740188,0.762673141562865,-0.198489468934677,0.512741085903883,0.0810372508066737,0.647404149020634,-0.177777619584899,0.596226738661526,0.0634763448232887,0.256343454372569,0.340344095831355,0.375740375140724,0.578599063901175,0.700243473672523,0.779709656809016,0.866375889903632,0.804703976930057,-0.228866307707063,0.386340434332628,-0.274430873487393,0.879054164700857,0.91197607886827,0.50540586771877,0.528306256709388,0.478494009360499,0.437094251198773,0.409735545892807,0.418757280106394,0.849178920377625,0.539973964525467,0.841906099188493,0.5811375204934,0.252777068493909,0.277479463972355,-0.274331405345008,-0.126835524397937,0.351449037837044,0.155097063949674,0.452542317511367,0.375957981719371,0.950929135033171,0.196097108887895,0.89298834188242,0.50619992366395,0.742751027409942,0.660478910137213,0.543158069677471,0.137990344114466,0.0242315968889597,0.930905505893121,0.0935632055343196,-0.0676247487599045,0.98095997649824,0.637428356718353,0.779239882665187,0.0909620743187396,0.615148223769593,0.78317829678723,0.173781070491962,0.647642768148391,0.720662159332451,0.0817559511457104,0.762794429549995,0.265275073619657,0.215283975916645,0.577251651769307,0.785420929178266,0.341150081043303,0.0189374079906333,0.910967388480768,0.00902107478257586,-0.00774949111218393,-0.0775736834256352,0.594381249611646,-0.0552019781199646,0.487732396205913,0.593023280590544,0.805841708875011,0.363819275954889,0.163128926159736,-0.0864502837309891,0.708631497598922,0.637008444736191,0.998858549015824,-1,0.830017894320042,-0.981131403183681,-0.0215271335083123,-0.915253089172712,0.227466779441728,0.29634535681627,0.0533634721129002,-0.972502862052998,0.0909771605939251,-0.127413224911196,0.942936175419895,-0.905805090518725,-0.94561942226082,0.698659681081353,0.662885462103681,-0.886027035722963],"y":[-0.159538178975817,-0.0045504708611539,0.880139987183267,-0.334182525101397,-0.643129071283867,0.781567322315177,0.586460944748045,0.384281491758041,-0.129769406520915,-0.684243022817893,-0.817832926720786,0.254267114650791,0.140079290960786,0.282320501674066,0.235649255585734,-0.680736627488901,0.311751328320978,-0.544113523210416,-0.506225842845337,0.31140215209045,0.29508869240592,0.724105314138974,0.139635632389978,-0.600748103270547,-0.105290133989064,0.756985503836613,0.707965872428084,-0.241532847158783,-0.473463302410888,0.0321309705506885,-0.713960563253255,0.99273138280486,0.625561725728967,-0.493286393591822,0.648468905325833,-0.90474950575963,0.211106172130773,0.710420135983042,-0.0738722539330602,-0.0693322944187256,-0.690806596036352,-0.390177402679421,-0.56385945165845,-0.233210214174499,0.381098896557656,0.636012581429338,-0.647528359754824,-0.246554233692525,-0.250931153750053,-0.102614703204303,1,-0.212228985168992,0.796559926003709,-0.153076315932649,-0.863039340201442,0.121917981740566,0.0265064490435325,0.244377775559103,0.718652522307127,-1,-0.255105529075052,-0.432399298450696,0.036748471358117,0.0415268222702192,0.208068123487891,-0.742633829573689,-0.363681081127808,-0.646966316135025,-0.86463503622868,-0.808032916480693,-0.159519418335966,-0.59540127171292,-0.526116080570184,0.00596364508942138,-0.42615076363102,-0.568238340846031,-0.333935768851075,0.498821625417175,0.0863041751584266,-0.633429516384144,-0.525466591786352,0.1561209075111,-0.0607815641585032,-0.462950528223449,0.888976313832563,0.334789298713335,0.615492048461995,-0.367578758909485,0.334890602849729,0.876986662237958,-0.289885971038432,-0.551740770244806,-0.335124461326008,0.950492349508816,-0.316936307397448,-0.308167599719789,-0.13618087875075,-0.445027447392587,0.0776207755860554,0.809963677380879,0.14009042392268,0.3934365504342,0.265070293554316,0.447608205817192,-0.986500288334395,-0.911501899430464,-0.810739323778439,0.989989471900084,0.598408270849045,0.630660525789504,-0.833005747261345,0.00510786888544312,0.836522562210825,-0.476377567975445,0.515014766948276,-0.0481622364595323,-0.332323848716377,0.920240511272308,-0.464627108053013,0.836564783080261,0.450259289239761,0.392210735899582,0.959703787572801,-0.266558714125836,-0.407091397534363,0.822436783406449,0.191518510146244,0.147325868128128,-0.772884291650983,-0.801859947143236,-0.0396932519349869,-0.874286665091143,0.595157519114171,-0.275616193323538,-0.473375023688822,0.540178653071196,0.488464183681664,0.49438091610345,-0.562218607581688,0.536770790844959,-0.165063683882254,-0.498564754765336,-0.359025570240723,0.1527309375617,0.907909647730839,-0.788821108233812,-0.719769182832861,-0.179724431625385,0.654949879265574,0.617145598783094,0.526045996407246,0.473608890493639,-0.656677306624373,0.487389906132289,-0.0227045639034225,0.709782853746881,-0.688573690094434,-0.927062987173782,-0.743379650703405,-0.99066979463693,-0.916194171981448,-0.0983695041746923,0.734834016023957,0.758392306409895,0.0309330679266744,-0.246930448134623,0.276832089262223,0.0132102129763401,0.35173980667606,-0.0560351288789528,-0.965388960957285,-0.989980729270534,0.182380891048034,-0.359824320282592,0.772608404094419,0.110386458472401,-0.174010939389941,-0.222114224294582,0.153670545897877,0.467175269212348,0.888183113434438,-0.381657771635848],"label":["3","4","H00002","H00004","H00007","H00017","H00020","H00022","H00027","H00035","H00036","H00038","H00041","H00046","H00047","H00051","H00056","H00062","H00063","H00070","H00073","H00074","H00080","H00081","H00082","H00084","H00086","H00088","H00089","H00093","H00094","H00097","H00102","H00106","H00107","H00108","H00110","H00115","H00116","H00118","H00122","H00127","H00131","H00133","H00134","H00135","H00138","H00140","H00141","H00143","H00147","H00148","H00153","H00159","H00161","H00163","H00166","H00169","H00170","H00171","H00172","H00173","H00175","H00178","H00179","H00181","H00183","H00184","H00186","H00188","H00189","H00190","H00193","H00198","H00199","H00201","H00211","H00214","H00220","H00227","H00228","H00231","H00234","H00235","H00237","H00241","H00243","H00244","H00246","H00250","H00255","H00256","H00261","H00262","H00263","H00266","H00270","H00274","H00282","H00291","H00292","H00293","H00297","H00302","H00307","H00313","H00314","H00320","H00323","H00324","H00326","H00332","H00338","H00340","H00355","H00358","H00365","H00368","H00372","H00378","H00388","H00389","H00398","H00408","H00419","H00423","H00425","H00430","H00434","H00435","H00444","H00448","H00452","H00454","H00471","H00472","H00476","H00483","H00490","H00494","H00504","H00515","H00516","H00534","H00536","H00537","H00554","H00555","H00587","H00606","H00608","H00612","H00617","H00618","H00628","H00630","H00644","H00647","H00659","H00664","H00686","H00736","H00778","H00792","H00801","H00814","H00855","H00856","H00914","H00915","H00988","H01084","H01096","H01107","H01109","H01122","H01136","H01140","H01173","H01183","H01198","H01265"]},"edges":{"from":["H00004","H00007","H00027","H00041","H00047","H00062","H00070","H00088","H00106","H00110","H00116","H00118","H00133","H00141","H00159","H00163","H00166","H00169","H00172","H00173","H00178","H00189","H00193","H00198","H00199","H00235","H00244","H00282","H00292","H00358","H00365","H00736","H00814","H00856","H00915","H01107","H01122","H01140","H01173","H01265","H00002","H00004","H00017","H00020","H00022","H00035","H00036","H00038","H00041","H00046","H00047","H00051","H00056","H00063","H00070","H00073","H00074","H00080","H00081","H00082","H00084","H00086","H00088","H00089","H00093","H00094","H00097","H00102","H00107","H00108","H00110","H00115","H00116","H00118","H00122","H00127","H00131","H00133","H00134","H00135","H00138","H00140","H00141","H00143","H00147","H00148","H00153","H00159","H00161","H00166","H00169","H00170","H00171","H00172","H00173","H00175","H00178","H00179","H00181","H00183","H00184","H00186","H00188","H00189","H00190","H00193","H00198","H00199","H00201","H00211","H00214","H00220","H00227","H00228","H00231","H00234","H00235","H00237","H00241","H00243","H00244","H00246","H00250","H00255","H00256","H00261","H00262","H00263","H00266","H00270","H00274","H00282","H00291","H00292","H00293","H00297","H00302","H00307","H00313","H00314","H00320","H00323","H00324","H00326","H00332","H00338","H00340","H00355","H00358","H00365","H00368","H00372","H00378","H00388","H00389","H00398","H00408","H00419","H00423","H00425","H00430","H00434","H00435","H00444","H00448","H00452","H00454","H00471","H00472","H00476","H00483","H00490","H00494","H00504","H00515","H00516","H00534","H00536","H00537","H00554","H00555","H00587","H00606","H00608","H00612","H00617","H00618","H00628","H00630","H00644","H00647","H00659","H00664","H00686","H00736","H00778","H00792","H00801","H00855","H00914","H00988","H01084","H01096","H01109","H01122","H01136","H01183","H01198"],"to":[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":false},"physics":{"stabilization":false}},"groups":null,"width":"100%","height":"500px","idselection":{"enabled":true,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)"},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","igraphlayout":{"type":"square"},"highlight":{"enabled":true,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":false,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"}},"evals":[],"jsHooks":[]}</script>
+<script type="application/htmlwidget-sizing" data-for="htmlwidget-5a5b14b1834c7b04a9df">{"viewer":{"width":"100%","height":"500px","padding":15,"fill":false},"browser":{"width":"100%","height":"500px","padding":40,"fill":false}}</script>
 </body>
 </html>
