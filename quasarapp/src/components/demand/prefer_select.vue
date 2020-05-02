@@ -1,21 +1,7 @@
 <template>
-  <div class="q-pa-md doc-container  text-black bg-grey-3">
-    <div class="row-12">
-      <div class="text-center img_background">
-        <b
-          style="font-size: 28px;font-family: Microsoft JhengHei;padding-top:10px"
-        >
-          需求推薦分析
-        </b>
-        <!-- <b class="text" style="font-size: 30px;font-family: Microsoft JhengHei;"
-          >選擇想到達的城市</b
-        > -->
-      </div>
-    </div>
-    <div class="gt-xs q-pa-sm row items-center" style="height: 100px;">
-      <!-- <div class="row q-pt-md q-mb-lg"> -->
-      <div class="col-3"></div>
-      <div class="col-4">
+  <div class="q-pa-md">
+    <div class="row">
+      <div class="col">
         <q-select
           filled
           v-model="selected_p_local"
@@ -36,9 +22,7 @@
           </template>
         </q-select>
       </div>
-
-      <div class="col">
-        <!-- 按鈕 -->
+      <div class="col q-mt-md" style="margin-left:130px">
         <q-btn
           :loading="loading4"
           color="cyan-9"

@@ -1,10 +1,10 @@
 <template>
   <q-layout view="lHh LpR fFf">
-    <q-header elevated class="bg-dark text-white">
+    <q-header elevated class="bg-blue-grey-7 text-white">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="left = !left" />
 
-        <q-toolbar-title>自我規劃旅程{{ id }}</q-toolbar-title>
+        <q-toolbar-title style="font-weight:bold">{{ title }}</q-toolbar-title>
       </q-toolbar>
     </q-header>
 
@@ -73,15 +73,15 @@
             align="justify"
             narrow-indicator
           >
-            <q-tab name="mails" label="Step1 " icon:label_important />
+            <q-tab name="mails" label="Step1(您的收藏) " icon:label_important />
             <q-icon name="label_important" style="font-size: 32px;" />
-            <q-tab name="alarms" label="Step2" />
+            <q-tab name="alarms" label="Step2(景點需求分析)" />
             <q-icon name="label_important" style="font-size: 32px;" />
-            <q-tab name="movies" label="路徑規劃分析" />
+            <q-tab name="movies" label="Step3(路徑規劃分析)" />
             <q-icon name="label_important" style="font-size: 32px;" />
-            <q-tab name="advantage" label="優缺點分析" />
+            <q-tab name="advantage" label="Step4(景點優缺點分析)" />
             <q-icon name="label_important" style="font-size: 32px;" />
-            <q-tab name="aa" label="Google自動行程安排" />
+            <q-tab name="aa" label="Step6(Google自動行程安排)" />
           </q-tabs>
 
           <q-separator />
@@ -140,32 +140,51 @@
               </div>
               <!-- <p>{{ after_axios }}</p> -->
               <!-- 需求分析 select -->
+              <div class="q-pa-md " v-if="fourth == false">
+                <div class="q-pa-md doc-container  text-black bg-grey-3">
+                  <div class="row text-h4">
+                    <b> 景點需求分析</b>
+                    <demandInfo></demandInfo>
+                  </div>
 
-              <demand-select
-                v-if="fourth == false"
-                :citys="citys"
-                :cats="cats"
-                :selected_p="selected_p"
-                :selected_p_detail_item="selected_p_detail_item"
-                :selected_p_detail_item_2="selected_p_detail_item_2"
-                @changed_1="selected_1"
-                @changed_2="selected_2"
-                @changed_3="selected_3"
-                @runR="run_R"
-              ></demand-select>
-              <!-- 偏好分析 -->
-              <demand-prefer
-                v-else
-                :citys="citys"
-                :cats="cats"
-                :selected_p="selected_p"
-                :selected_p_detail_item="selected_p_detail_item"
-                :selected_p_detail_item_2="selected_p_detail_item_2"
-                @changed_1="pre_selected_1"
-                @changed_2="selected_2"
-                @changed_3="selected_3"
-                @runR="run_R"
-              ></demand-prefer>
+                  <div class="row q-pl-xl">
+                    <demand-select
+                      :citys="citys"
+                      :cats="cats"
+                      :selected_p="selected_p"
+                      :selected_p_detail_item="selected_p_detail_item"
+                      :selected_p_detail_item_2="selected_p_detail_item_2"
+                      @changed_1="selected_1"
+                      @changed_2="selected_2"
+                      @changed_3="selected_3"
+                      @runR="run_R"
+                    ></demand-select>
+                  </div>
+                </div>
+              </div>
+              <div class="q-pa-md " v-else>
+                <div class="q-pa-md doc-container  text-black bg-grey-3">
+                  <div class="row text-h4">
+                    <b> 需求推薦分析</b>
+                    <preferInfo></preferInfo>
+                  </div>
+
+                  <div class="row q-pl-xl">
+                    <!-- 偏好分析 -->
+                    <demand-prefer
+                      :citys="citys"
+                      :cats="cats"
+                      :selected_p="selected_p"
+                      :selected_p_detail_item="selected_p_detail_item"
+                      :selected_p_detail_item_2="selected_p_detail_item_2"
+                      @changed_1="pre_selected_1"
+                      @changed_2="selected_2"
+                      @changed_3="selected_3"
+                      @runR="run_R"
+                    ></demand-prefer>
+                  </div>
+                </div>
+              </div>
 
               <!-- 需求分析 R圖 -->
 
@@ -350,74 +369,10 @@
             <q-tab-panel name="movies">
               <div class="q-pa-md ">
                 <div class="q-pa-md doc-container  text-black bg-grey-3">
-                  <div class="row">
-                    <div class="text-h4 text-center">
-                      <b> 路徑規畫分析</b>
-                      <q-btn
-                        class="q-ma-md"
-                        dense
-                        icon="help"
-                        label="點我說明"
-                        color="negative"
-                        size="10px"
-                        @click="sliders = true"
-                      />
-                      <q-dialog v-model="sliders">
-                        <q-card style="width:500px" class="q-px-sm q-pb-md">
-                          <q-card-section>
-                            <div class="text-h6">
-                              <b>使用說明</b>
-                            </div>
-                          </q-card-section>
+                  <div class="row text-h4">
+                    <b> 路徑規畫分析</b>
 
-                          <q-item-label header style="color:#57a5ba">
-                            <q-icon
-                              name="assignment_turned_in"
-                              style="color:#57a5ba"
-                              size="20px"
-                            /><b>目的</b></q-item-label
-                          >
-                          <q-item dense>
-                            <q-item-section avatar> </q-item-section>
-                            <q-item-section>
-                              為您找出受歡迎的大眾路線
-                            </q-item-section>
-                          </q-item>
-
-                          <q-item-label header style="color:#57a5ba"
-                            ><q-icon
-                              name="help"
-                              style="color:#57a5ba"
-                              size="20px"
-                            /><b>使用說明</b></q-item-label
-                          >
-                          <q-item dense>
-                            <q-item-section avatar> </q-item-section>
-                            <q-item-section>
-                              <p>Step1. 選擇您所要到達的城市</p>
-                              <p>Step2. 選擇您的起點</p>
-                              <p>Step3. 按下分析鈕</p>
-                              <p>Step4. 依據起點推薦第二景點</p>
-                              <p>Step5. 依據第二景點推薦，點選第三景點</p>
-                              <p>Step6. 一鍵加入排程</p>
-                            </q-item-section>
-                          </q-item>
-                          <q-item-label header style="color:#57a5ba"
-                            ><q-icon
-                              name="multiline_chart"
-                              style="color:#57a5ba"
-                              size="20px"
-                            /><b>分析圖式說明</b></q-item-label
-                          >
-                          <q-item dense>
-                            <q-item-section avatar> </q-item-section>
-                            <q-item-section>
-                              <q-slider color="teal" :step="0" />
-                            </q-item-section>
-                          </q-item>
-                        </q-card>
-                      </q-dialog>
-                    </div>
+                    <pathInfo></pathInfo>
                   </div>
                   <div class="row q-pl-xl">
                     <path-select></path-select>
@@ -425,7 +380,19 @@
                 </div>
               </div>
               <div class="row-8">
-                <path-button-toggle></path-button-toggle>
+                <path-button-toggle
+                  ><template slot="addToSchedule">
+                    <q-btn
+                      rounded
+                      icon="add"
+                      label="加進排程"
+                      color="green-3"
+                      @click="promptToAddRouteSites()"
+                      dense
+                      size="12px"
+                      style="margin-left:30px;font-weight:bold"
+                    /> </template
+                ></path-button-toggle>
               </div>
               <div class="q-pa-none">
                 <div class="row">
@@ -448,19 +415,40 @@
               />
             </q-tab-panel>
             <q-tab-panel name="advantage">
-              <div class="text-h6">
-                Tip: 優缺點分析(請選擇您想了解該景點的評價分析)
-              </div>
-              <q-page>
-                <!-- proscons-select 區域 -->
-                <proscons-select></proscons-select>
-                <!-- end proscons select -->
+              <div class="q-pa-md ">
+                <div class="q-pa-md doc-container  text-black bg-grey-3">
+                  <div class="row text-h4">
+                    <b> 優缺點分析</b>
 
+                    <prosconsInfo></prosconsInfo>
+                  </div>
+                  <div class="row q-pl-xl">
+                    <!-- proscons-select 區域 -->
+                    <proscons-select></proscons-select>
+                    <!-- end proscons select -->
+                  </div>
+                </div>
+              </div>
+
+              <q-page>
                 <!-- 左右區域 web -->
                 <div class="q-pa-md">
                   <div class="row">
                     <div class="col-6">
-                      <proscons-data></proscons-data>
+                      <proscons-data>
+                        <template slot="addToSchedule">
+                          <q-btn
+                            rounded
+                            icon="add"
+                            label="景點加進排程"
+                            color="green-3"
+                            @click="promptToAddProsSite()"
+                            dense
+                            size="12px"
+                            style="margin-left:30px;font-weight:bold"
+                          />
+                        </template>
+                      </proscons-data>
                     </div>
                     <!-- 懶人包區域 -->
                     <div class="col-6">
@@ -511,8 +499,10 @@ export default {
       id: "",
       date: "",
       prompt: false,
+      // 排程表起始日
       startDate: "",
-      sliders: false,
+      // 排程表名稱
+      title: "",
       slider: 1,
       step: 1
     };
@@ -528,12 +518,18 @@ export default {
     demandData: () => import("components/demand/demand_data.vue"),
     demandDataDiff: () => import("components/demand/demand_data_diff.vue"),
     demandDataDiff2: () => import("components/demand/demand_data_diff2.vue"),
+    demandInfo: () => import("components/demand/demand_info.vue"),
+    preferInfo: () => import("components/demand/prefer_info.vue"),
     // 引用優缺點元件
     prosconsSelect: () => import("components/proscons/proscons_select.vue"),
     prosconsR: () => import("components/proscons/proscons_R.vue"),
     prosconsData: () => import("components/proscons/proscons_data.vue"),
+    prosconsInfo: () => import("components/proscons/proscons_info.vue"),
+
     // path
     pathSelect: () => import("components/path/path_select.vue"),
+    pathInfo: () => import("components/path/path_info.vue"),
+
     pathR: () => import("components/path/path_R.vue"),
     pathData: () => import("components/path/path_data.vue"),
     pathButtonToggle: () => import("components/path/path_button_toggle.vue")
@@ -557,8 +553,16 @@ export default {
       "after_axios",
       "txtdatas_diff"
     ]),
+    // 路徑規畫
+    ...mapGetters("path", [
+      "selected_site",
+      "selected_site_2",
+      "selected_site_3"
+    ]),
+    // 優缺點景點
+    ...mapGetters("proscons", ["run_index", "selected_site"]),
+
     // 取得vuex state變動值、優缺分析
-    ...mapGetters("proscons", ["run_index"]),
     EverydaySites: {
       get() {
         // console.log("parent from get:", this.everydaySites);
@@ -619,6 +623,99 @@ export default {
           console.log("promptToAddSite:", value, data);
           this.$store.dispatch("travel/fbAddEverySiteData", {
             site: value.site,
+            date: data,
+            scheduleId: this.id
+          });
+
+          // console.log('>>>> OK, received', data)
+        })
+        .onCancel(() => {
+          // console.log('>>>> Cancel')
+        })
+        .onDismiss(() => {
+          // console.log('I am triggered on both OK and Cancel')
+        });
+    },
+    promptToAddRouteSites() {
+      const dateList = Object.keys(this.everydaySites);
+      const item_1 = [];
+      // 日期作為下面item的物件選項(radio)
+      dateList.forEach(function(item, index, array) {
+        item_1.push({
+          label: item,
+          value: item,
+          color: "secondary"
+        });
+      });
+
+      this.$q
+        .dialog({
+          title: "選擇您想加入的日期",
+          message: "日期:",
+          options: {
+            type: "radio",
+            model: "opt1",
+            // inline: true
+            items: item_1
+          },
+          cancel: true,
+          persistent: true
+        })
+        .onOk(data => {
+          var routeSites = [
+            this.selected_site,
+            this.selected_site_2,
+            this.selected_site_3
+          ];
+          console.log(routeSites);
+
+          routeSites.forEach((item, index) => {
+            this.$store.dispatch("travel/fbAddEverySiteData", {
+              site: item,
+              date: data,
+              scheduleId: this.id
+            });
+          });
+
+          // console.log('>>>> OK, received', data)
+        })
+        .onCancel(() => {
+          // console.log('>>>> Cancel')
+        })
+        .onDismiss(() => {
+          // console.log('I am triggered on both OK and Cancel')
+        });
+    },
+    promptToAddProsSite() {
+      const dateList = Object.keys(this.everydaySites);
+      const item_1 = [];
+      // 日期作為下面item的物件選項(radio)
+      dateList.forEach(function(item, index, array) {
+        item_1.push({
+          label: item,
+          value: item,
+          color: "secondary"
+        });
+      });
+
+      this.$q
+        .dialog({
+          title: "選擇您想加入的日期",
+          message: "日期:",
+          options: {
+            type: "radio",
+            model: "opt1",
+            // inline: true
+            items: item_1
+          },
+          cancel: true,
+          persistent: true
+        })
+        .onOk(data => {
+          console.log(this.selected_site);
+
+          this.$store.dispatch("travel/fbAddEverySiteData", {
+            site: this.selected_site,
             date: data,
             scheduleId: this.id
           });
@@ -695,6 +792,9 @@ export default {
 
     var pass_startDate = this.$route.query.startDate;
     this.startDate = pass_startDate;
+
+    var pass_title = this.$route.query.title;
+    this.title = pass_title;
     // console.log(this.$route.query.pass_id);
 
     // this.fbEverySiteData(this.id);

@@ -2,7 +2,7 @@
   <!-- 折疊式優缺點R圖 -->
   <div class="q-pa-none" style="max-width: auto" v-if="isShow_R">
     <div
-      class="q-pa-lg q-ma-sm bg-teal-5"
+      class="q-pa-lg q-ma-sm bg-teal-3"
       style="color:white;font-weight: bold;font-size : 25px;font-family: Microsoft JhengHei;"
     >
       <p>優缺點分析結果</p>

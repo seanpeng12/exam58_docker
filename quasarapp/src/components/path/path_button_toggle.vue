@@ -13,13 +13,13 @@
       /> -->
     </div>
     <div class="row">
-      <div class="col-10">
+      <div class="col-8">
         <q-tabs
           v-model="tab"
           inline-label
           indicator-color="transparent"
           active-color="white"
-          class="bg-yellow text-black shadow-2"
+          class="bg-lime-5 text-black shadow-2"
         >
           <q-tab name="firstSite" icon="place" :label="selected_site" />
 
@@ -34,12 +34,14 @@
       </div>
       <div class="col q-ml-lg q-mt-sm">
         <q-btn
+          dense
           rounded
           @click="clear()"
           label="清空"
           icon="delete_forever"
           style="font-family: Microsoft JhengHei;font-weight:bold"
         />
+        <slot name="addToSchedule"></slot>
       </div>
     </div>
   </div>
@@ -92,15 +94,18 @@ export default {
   },
   watch: {
     selected_site(val) {
-      this.process(val, 0);
+      // this.process(val, 0);
+      // this.$store.commit("path/Update_Selected_Site", "請選擇");
+      this.$store.commit("path/Update_Selected_Site_2", "請選擇");
+      this.$store.commit("path/Update_Selected_Site_3", "請選擇");
       this.tab = "firstSite";
     },
     selected_site_2(val) {
-      this.process(val, 1);
+      // this.process(val, 1);
       this.tab = "secondSite";
     },
     selected_site_3(val) {
-      this.process(val, 2);
+      // this.process(val, 2);
       this.tab = "thirdSite";
     }
   }

@@ -64,7 +64,8 @@ const actions = {
         path: "/arrange-schedule?",
         query: {
           pass_id: `${pass_id}`,
-          startDate: `${payload.updates.startDate}`
+          startDate: `${payload.updates.startDate}`,
+          title: `${payload.updates.title}`
         }
       })
       .then(() => {

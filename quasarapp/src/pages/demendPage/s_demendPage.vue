@@ -5,18 +5,44 @@
       debug用
       <p>vuex：{{selected_p}} {{selected_p_detail_item}} {{selected_p_detail_item_2}}</p>
     </div>-->
-    <demand-select
-      :citys="citys"
-      :cats="cats"
-      :selected_p="selected_p"
-      :selected_p_detail_item="selected_p_detail_item"
-      :selected_p_detail_item_2="selected_p_detail_item_2"
-      @changed_1="selected_1"
-      @changed_2="selected_2"
-      @changed_3="selected_3"
-      @runR="run_R"
-    >
-    </demand-select>
+    <div class="q-pa-md doc-container">
+      <div
+        class="gt-xs q-pa-lg column items-center text-black bg-grey-3"
+        style="height: 300px;"
+      >
+        <div class="col">
+          <div class="text-center img_background">
+            <p style="font-size: 28px;font-family: Microsoft JhengHei;">
+              景點需求分析
+            </p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="text-center img_background">
+            <div>
+              <b
+                class="text"
+                style="font-size: 30px;font-family: Microsoft JhengHei;"
+                >選擇想分析的景點城市/類型</b
+              >
+              <br />
+            </div>
+          </div>
+        </div>
+        <demand-select
+          :citys="citys"
+          :cats="cats"
+          :selected_p="selected_p"
+          :selected_p_detail_item="selected_p_detail_item"
+          :selected_p_detail_item_2="selected_p_detail_item_2"
+          @changed_1="selected_1"
+          @changed_2="selected_2"
+          @changed_3="selected_3"
+          @runR="run_R"
+        >
+        </demand-select>
+      </div>
+    </div>
     <!-- end web page -->
 
     <!-- 左右區域 web -->
