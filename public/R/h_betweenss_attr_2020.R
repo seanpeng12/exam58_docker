@@ -1,15 +1,16 @@
-library('RMySQL', warn.conflicts = FALSE)
-library('visNetwork', warn.conflicts = FALSE)
-library('igraph', warn.conflicts = FALSE)
+library('RMySQL')
+library('visNetwork')
+library('igraph')
 
 connect <- dbConnect(MySQL(), 
                      db = "homestead",
                      username = "root", 
                      password = "sightseeing",
                      host = "140.136.155.116")
+dbSendQuery(connect,"SET NAMES utf8mb4")
 
+args <- commandArgs(trailingOnly = TRUE)
 
-args <- commandArgs(TRUE)
 city <- strsplit(args,"[[:space:]]")[[1]][1]
 a <- strsplit(args,"[[:space:]]")[[1]][2]
 b <- strsplit(args,"[[:space:]]")[[1]][3]
@@ -29,7 +30,7 @@ sr_sql <- paste("select r.from_id,d.name,r.to_id,a.tag
                 AND d.city_name ='", cname,"' 
                 AND (a.tag ='", tag1,"' OR a.tag ='", tag2,"')",sep="")
 
-dbSendQuery(connect,"SET NAMES big5")
+
 sn <- dbGetQuery(connect , sn_sql)
 sa <- dbGetQuery(connect ,sa_sql)
 sr <- dbGetQuery(connect ,sr_sql)
@@ -44,7 +45,7 @@ n <- merge(x, y, by.x = c("id","name","color"),
            by.y = c("id","tag","color"), all = TRUE)
 # print(n)
 nodes <- data.frame(id = c(n$id), color = c(n$color),
-                    # label = c(n$name),
+                    label = c(n$name),
                     # title = paste("<p>", n$name,"</p>"),
                     shape = c(n$shape), font.size = 30)
 edges <- data.frame(from = c(sr$from), to = c(sr$to))
@@ -54,7 +55,7 @@ ccout <- visNetwork(nodes,edges, width = "100%",height = "500px") %>%
   visOptions(highlightNearest = TRUE,
              nodesIdSelection = TRUE)
 
-visSave(ccout, file = "C://xampp/htdocs/SNA_sean/exam58/quasarapp/src/statics/h_between_relationship.html", background = "white")
+visSave(ccout, file = "/Applications/XAMPP/htdocs/exam58/quasarapp/src/statics/h_between_relationship.html",selfcontained = FALSE, background = "white")
 # dbDisconnect(connect)
 on.exit(dbDisconnect(connect))
 

@@ -37,33 +37,49 @@ class ProsCosController extends Controller
 
         // json轉array取值
         $obj = json_decode($sql);
-        $id = $obj[0]->id;
+        $id_pre = $obj[0]->id;
 
-        // $n = '"' . $name . '"';
-        $your_command_good = "Rscript R/degree.R $id";
-        $your_command_bad = "Rscript R/bad_degree.R $id";
-        $process = new Process($your_command_good);
-        $process2 = new Process($your_command_bad);
+        $id = "'" . $id_pre . "'";
 
-        $process->start();
-        $process2->start();
+        // window10
+        // $your_command_good = "Rscript R/h_degree.R $id";
+        // $your_command_bad = "Rscript R/h_bad_degree.R $id";
 
-        $process->wait();
-        $process2->wait();
+        // macOS
+        // setlocale (LC_ALL, 'zh_TW.UTF-8');
+        // header("Content-type:text/html; charset=utf-8");
+        $set_charset = 'export LANG=en_US.UTF-8;';
+        $output = shell_exec($set_charset."/usr/local/bin/Rscript R/degree.R $id");
+        $output2 = shell_exec($set_charset."/usr/local/bin/Rscript R/bad_degree.R $id");
+
+        // $your_command_good = "/usr/local/bin/Rscript R/h_degree.R $id";
+        // $your_command_bad = "/usr/local/bin/Rscript R/h_bad_degree.R $id";
+
+        // $process = new Process($your_command_good);
+        // $process2 = new Process($your_command_bad);
+
+        // $process->start();
+        // $process2->start();
+
+        // $process->wait();
+        // $process2->wait();
 
 
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
-        if (!$process2->isSuccessful()) {
-            throw new ProcessFailedException($process2);
-        }
+        // if (!$process->isSuccessful()) {
+        //     throw new ProcessFailedException($process);
+        // }
+        // if (!$process2->isSuccessful()) {
+        //     throw new ProcessFailedException($process2);
+        // }
         return response()->json(array(
             'id' => $id,
-            'debug優點' => "完成",
+            '1?' => $output,
+            '2?' => $output2,
+            'debug優點' => "完成！",
             'debug缺點' => "完成",
 
         ), 200);
+
     }
     // 景點優點
     function prosData(Request $request)
@@ -77,7 +93,7 @@ class ProsCosController extends Controller
         $id = $obj[0]->id;
 
 
-        $sql_positive = FacadesDB::select("SELECT id,segment,weight FROM segment_data WHERE site_id = '$id' AND weight >= 1 AND evaluation = 'P' ORDER BY weight DESC LIMIT 15");
+        $sql_positive = FacadesDB::select("SELECT id,segment,degree FROM segment_data WHERE site_id = '$id' AND degree >= 1 AND evaluation = 'P' ORDER BY degree DESC LIMIT 15");
 
 
 
@@ -95,7 +111,7 @@ class ProsCosController extends Controller
         $id = $obj[0]->id;
 
 
-        $sql_negative = FacadesDB::select("SELECT id,segment,weight FROM segment_data WHERE site_id = '$id' AND weight >= 1 AND evaluation = 'N' ORDER BY weight DESC LIMIT 15");
+        $sql_negative = FacadesDB::select("SELECT id,segment,degree FROM segment_data WHERE site_id = '$id' AND degree >= 1 AND evaluation = 'N' ORDER BY degree DESC LIMIT 15");
 
 
         return response()->json($sql_negative, 200);
@@ -126,31 +142,41 @@ class ProsCosController extends Controller
 
         // json轉array取值
         $obj = json_decode($sql);
-        $id = $obj[0]->id;
+        $id_pre = $obj[0]->id;
 
-        // $n = '"' . $name . '"';
-        $your_command_good = "Rscript R/h_degree.R $id";
-        $your_command_bad = "Rscript R/h_bad_degree.R $id";
-        $process = new Process($your_command_good);
-        $process2 = new Process($your_command_bad);
+        $id = "'" . $id_pre . "'";
 
-        $process->start();
-        $process2->start();
+        // window10
+        // $your_command_good = "Rscript R/h_degree.R $id";
+        // $your_command_bad = "Rscript R/h_bad_degree.R $id";
 
-        $process->wait();
-        $process2->wait();
+        // $process = new Process($your_command_good);
+        // $process2 = new Process($your_command_bad);
+
+        // $process->start();
+        // $process2->start();
+
+        // $process->wait();
+        // $process2->wait();
 
 
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
-        if (!$process2->isSuccessful()) {
-            throw new ProcessFailedException($process2);
-        }
+        // if (!$process->isSuccessful()) {
+        //     throw new ProcessFailedException($process);
+        // }
+        // if (!$process2->isSuccessful()) {
+        //     throw new ProcessFailedException($process2);
+        // }
+
+        // macOS
+        $set_charset = 'export LANG=en_US.UTF-8;';
+        $output = shell_exec($set_charset."/usr/local/bin/Rscript R/h_degree.R $id");
+        $output2 = shell_exec($set_charset."/usr/local/bin/Rscript R/h_bad_degree.R $id");
+
+        
         return response()->json(array(
             'id' => $id,
-            'debug優點' => "完成",
-            'debug缺點' => "完成",
+            'debug優點' => $output,
+            'debug缺點' => $output2,
 
         ), 200);
     }
@@ -166,7 +192,7 @@ class ProsCosController extends Controller
         $id = $obj[0]->id;
 
 
-        $sql_positive = FacadesDB::select("SELECT id,segment,weight FROM h_segment_data WHERE hotel_id = '$id' AND weight >= 1 AND evaluation = 'P' ORDER BY weight DESC LIMIT 15");
+        $sql_positive = FacadesDB::select("SELECT id,segment,degree FROM h_segment_data WHERE hotel_id = '$id' AND degree >= 1 AND evaluation = 'P' ORDER BY degree DESC LIMIT 15");
 
 
 
@@ -184,7 +210,7 @@ class ProsCosController extends Controller
         $id = $obj[0]->id;
 
 
-        $sql_negative = FacadesDB::select("SELECT id,segment,weight FROM h_segment_data WHERE hotel_id = '$id' AND weight >= 1 AND evaluation = 'N' ORDER BY weight DESC LIMIT 15");
+        $sql_negative = FacadesDB::select("SELECT id,segment,degree FROM h_segment_data WHERE hotel_id = '$id' AND degree >= 1 AND evaluation = 'N' ORDER BY degree DESC LIMIT 15");
 
 
         return response()->json($sql_negative, 200);

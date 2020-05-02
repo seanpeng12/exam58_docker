@@ -43,25 +43,31 @@ class DemandController extends Controller
         // $temp_d = "台北 游泳池 免費停車";
         $temp_d = "$name $c1 $c20";
 
-        $cc = '"' . $temp_d . '"';
+        $cc = "'" . $temp_d . "'";
 
         // 以外部指令的方式呼叫 R 進行繪圖->h_between_relationship.html
+        
+        // window10
+        // $your_command = "/usr/local/bin/Rscript R/h_betweenss_attr_2020.R $cc";
+        // $process = new Process($your_command);
+        // $process->run(); // to run Sync
 
-        $your_command = "Rscript R/h_betweenss_attr_2020.R $cc";
-        $process = new Process($your_command);
-        $process->run(); // to run Sync
+        // // executes after the command finishes
+        // if (!$process->isSuccessful()) {
+        //     throw new ProcessFailedException($process);
+        // }
+        // $result = $process->getOutput();
 
-        // executes after the command finishes
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
+        //mac
+        $set_charset = 'export LANG=en_US.UTF-8;';
+        exec($set_charset."/usr/local/bin/Rscript R/h_betweenss_attr_2020.R $cc");
 
         return response()->json(array(
             'name' => $name,
             'c1' => $c1,
             'c20' => $c20,
-            'output' => $process->getOutput(),
-            'RhtmlCheck' => 'R/betweenss_attr_2020.R "a b c"-> between_relationship.html。'
+            'output' => '$result',
+            'RhtmlCheck' => 'h_between_relationship.html。'
         ), 200);
     }
     // /h_cat 需求分析懶人包(未完成)

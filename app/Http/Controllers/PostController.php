@@ -105,22 +105,26 @@ class PostController extends Controller
         $cc = '"' . $temp_d . '"';
 
         // 以外部指令的方式呼叫 R 進行繪圖->between_relationship.html
+        // window10
+        // $your_command = "Rscript R/betweenss_attr_2020.R $cc";
+        // $process = new Process($your_command);
+        // $process->run(); // to run Sync
 
-        $your_command = "Rscript R/betweenss_attr_2020.R $cc";
-        $process = new Process($your_command);
-        $process->run(); // to run Sync
+        // // executes after the command finishes
+        // if (!$process->isSuccessful()) {
+        //     throw new ProcessFailedException($process);
+        // }
+        // $result = $process->getOutput();
 
-        // executes after the command finishes
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
-
+        //mac
+        $set_charset = 'export LANG=en_US.UTF-8;';
+        exec($set_charset."/usr/local/bin/Rscript R/betweenss_attr_2020.R $cc");
+        
         return response()->json(array(
             'name' => $name,
             'c1' => $c1,
             'c20' => $c20,
-            'output' => $process->getOutput(),
-            'RhtmlCheck' => 'R/betweenss_attr_2020.R "a b c"-> between_relationship.html。'
+            'RhtmlCheck' => 'between_relationship.html。'
         ), 200);
     }
     // 需求分析懶人包

@@ -1,17 +1,15 @@
-library('RMySQL', warn.conflicts = FALSE)
-library('visNetwork', warn.conflicts = FALSE)
-library('igraph', warn.conflicts = FALSE)
+library('RMySQL')
+library('visNetwork')
+library('igraph')
 
 connect <- dbConnect(MySQL(), 
                     db = "homestead",
                     username = "root", 
                     password = "sightseeing",
                     host = "140.136.155.116")
+dbSendQuery(connect,"SET NAMES utf8mb4")
 
-
-
-args <- commandArgs(TRUE)
-
+args <- commandArgs(trailingOnly = TRUE)
 
 city <- strsplit(args,"[[:space:]]")[[1]][1]
 a <- strsplit(args,"[[:space:]]")[[1]][2]
@@ -32,7 +30,6 @@ sr_sql <- paste("select r.from_id,d.name,r.to_id,a.tag
                 AND d.city_name ='", cname,"' 
                 AND (a.tag ='", tag1,"' OR a.tag ='", tag2,"')",sep="")
 
-dbSendQuery(connect,"SET NAMES big5")
 sn <- dbGetQuery(connect , sn_sql)
 sa <- dbGetQuery(connect ,sa_sql)
 sr <- dbGetQuery(connect ,sr_sql)
@@ -56,8 +53,7 @@ ccout <- visNetwork(nodes,edges, width = "100%",height = "500px") %>%
   visOptions(highlightNearest = TRUE,
              nodesIdSelection = TRUE)
 
-visSave(ccout, file = "C://xampp/htdocs/SNA_sean/exam58/quasarapp/src/statics/between_relationship.html", background = "white")
-
+visSave(ccout, file = "/Applications/XAMPP/htdocs/exam58/quasarapp/src/statics/between_relationship.html",selfcontained = FALSE, background = "white")
 
 # g <- graph.data.frame(edges, directed=FALSE, vertices=nodes)
 # graph <- betweenness(g, v = V(g), directed = FALSE, weights = NA)

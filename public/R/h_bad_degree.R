@@ -1,15 +1,15 @@
-library('RMySQL', warn.conflicts = FALSE)
-library('visNetwork', warn.conflicts = FALSE)
-library('igraph', warn.conflicts = FALSE)
+library('RMySQL')
+library('visNetwork')
+library('igraph')
 
 con <- dbConnect(MySQL(), 
                  db = "homestead",
                  username = "root", 
                  password = "sightseeing",
                  host = "140.136.155.116")
-dbSendQuery(con,"SET NAMES big5")
+dbSendQuery(con,"SET NAMES utf8mb4")
 
-args <- commandArgs(TRUE)
+args <- commandArgs(trailingOnly = TRUE)
 sid <- args
 
 b_sql <- paste("SELECT s.degree 
@@ -45,7 +45,7 @@ x <- data.frame(segment)
 y <- data.frame(relationship)
 fsize <- (bad$degree)
 nodes <- data.frame(id = c(x$id), color = c(x$color),
-                    # label = c(x$segment), 
+                    label = c(x$segment),
                     # title = paste("<p>", x$segment,"</p>")
                     font.size = 30, value = fsize)
 edges <- data.frame(from = c(y$from_id), to = c(y$to_id),
@@ -56,7 +56,7 @@ ccout <- visNetwork(nodes,edges, width = "100%",height = "500px") %>%
   visOptions(highlightNearest = list(enabled = T, hover = T),
              nodesIdSelection = list(enabled = TRUE))
 
-visSave(ccout, file = "C://xampp/htdocs/SNA_sean/exam58/quasarapp/src/statics/h_bad.html",selfcontained = TRUE, background = "white")
+visSave(ccout, file = "/Applications/XAMPP/htdocs/exam58/quasarapp/src/statics/h_bad.html",selfcontained = FALSE, background = "white")
 # dbDisconnect(con)
 on.exit(dbDisconnect(con))
 
