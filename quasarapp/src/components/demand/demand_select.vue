@@ -114,17 +114,31 @@
     <div class="gt-xs q-pa-lg column items-center text-black bg-grey-3">
       <div class="col">
         <!-- 按鈕 -->
+
         <q-btn
-          :loading="loading4"
+          :loading="loading1"
+          :percentage="percentage1"
           color="cyan-9"
-          @click="showLoading()"
+          @click="startComputing(1)"
           v-on:click="runR(1)"
           style="width: 150px"
         >
-          開始分析
+          開始
           <template v-slot:loading>
-            <q-spinner-hourglass class="on-left" />Loading...
+            <q-spinner-gears class="on-left" />分析中...
           </template>
+        </q-btn>
+
+        <q-btn size="10px" round color="blue-grey-8" icon="help" style="margin-left:10px">
+          <q-tooltip
+            anchor="center right"
+            self="center left"
+            :offset="[10, 10]"
+            content-class="bg-blue-grey-8"
+          >
+            依您
+            <strong>選擇的需求</strong>做分析，找出適合的景點
+          </q-tooltip>
         </q-btn>
 
         <!-- end -->
@@ -134,8 +148,8 @@
 </template>
 <script>
 import { QSpinnerFacebook } from "quasar";
-
 import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
 const stringOptions = ["台北", "桃園", "新竹", "苗栗", "台東"];
 export default {
   props: [
@@ -147,6 +161,9 @@ export default {
     "citys",
     "cats"
   ],
+  computed: {
+    ...mapGetters("demand", ["after_axios"])
+  },
   data() {
     return {
       // 選單選擇資料
@@ -156,11 +173,10 @@ export default {
       // 預設options資料
       options: stringOptions,
       isShow: false,
-      // 設定loading秒數
-      n: 2000,
-      loading4: false,
-      // 預設options資料
-      options: stringOptions
+      // 分析按鈕
+      loading1: false,
+      // 按鈕百分比
+      percentage1: 0
     };
   },
   // computed: {
@@ -194,17 +210,20 @@ export default {
   // },
   methods: {
     ...mapActions("demand", ["resetTxtdatas", "resetTxtdatas_diff"]),
-    // 計算loading時間
-    simulateProgress(number) {
-      // we set loading state
-      this[`loading${number}`] = true;
-      // simulate a delay
-      setTimeout(() => {
-        // we're done, we reset loading state
-        this[`loading${number}`] = false;
-      }, 1000);
+    startComputing(id) {
+      // 開啟loading狀態
+      this[`loading${id}`] = true;
+      this[`percentage${id}`] = 0;
+      // 設定增加速度間距
+      this[`interval${id}`] = setInterval(() => {
+        this[`percentage${id}`] += Math.floor(Math.random() * 8 + 10);
+        if (this[`percentage${id}`] >= 100) {
+          clearInterval(this[`interval${id}`]);
+          // 完成時關閉loading狀態
+          this[`loading${id}`] = false;
+        }
+      }, 700);
     },
-    // loading
 
     // ???
     onProductChange: function() {
@@ -256,6 +275,9 @@ export default {
     },
     selected_p_detail_item_local2(val) {
       this.$emit("changed_3", val);
+    },
+    after_axios(val) {
+      this[`percentage1`] = 97;
     }
   }
 };

@@ -196,10 +196,12 @@ const actions = {
         c20: state.selected_p_detail_item_2
       })
       .then(response => {
-        console.log("成功");
+        console.log("成功R");
         console.log(response.data);
         commit("FETCH_Rdata", response.data);
+
         commit("FETCH_index", 1);
+        console.log("after_axios+1");
       })
       .catch(function (response) {
         console.log(response);

@@ -6,7 +6,7 @@ con <- dbConnect(MySQL(),
                  db = "homestead",
                  username = "root", 
                  password = "sightseeing",
-                 host = "140.136.155.116")
+                 host = "127.0.0.1")
 dbSendQuery(con,"SET NAMES utf8mb4")
 
 args <- commandArgs(trailingOnly = TRUE)

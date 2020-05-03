@@ -125,7 +125,7 @@
         >
           開始
           <template v-slot:loading>
-            <q-spinner-gears class="on-left" />Computing...
+            <q-spinner-gears class="on-left" />分析中...
           </template>
         </q-btn>
 
@@ -148,6 +148,7 @@
 </template>
 <script>
 import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
 const stringOptions = ["台北", "桃園", "新竹", "苗栗", "台東"];
 export default {
   props: [
@@ -159,6 +160,9 @@ export default {
     "citys",
     "cats"
   ],
+  computed: {
+    ...mapGetters("h_demand", ["after_axios"])
+  },
   data() {
     return {
       // 選單選擇資料
@@ -168,12 +172,7 @@ export default {
       // 預設options資料
       options: stringOptions,
       isShow: false,
-      // 設定loading秒數
-      n: 2000,
-      loading4: false,
-      // 預設options資料
-      options: stringOptions,
-      // 開始按鈕2
+      // 分析按鈕
       loading1: false,
       // 按鈕百分比
       percentage1: 0
@@ -196,16 +195,7 @@ export default {
         }
       }, 700);
     },
-    // 計算loading時間
-    simulateProgress(number) {
-      // we set loading state
-      this[`loading${number}`] = true;
-      // simulate a delay
-      setTimeout(() => {
-        // we're done, we reset loading state
-        this[`loading${number}`] = false;
-      }, 1000);
-    },
+
     // ???
     onProductChange: function() {
       // reset!
@@ -249,13 +239,15 @@ export default {
       this.$emit("changed_1", val);
       this.selected_p_detail_item_local = "";
       this.selected_p_detail_item_local2 = "";
-      this[`percentage1`] = 97;
     },
     selected_p_detail_item_local(val) {
       this.$emit("changed_2", val);
     },
     selected_p_detail_item_local2(val) {
       this.$emit("changed_3", val);
+    },
+    after_axios(val) {
+      this[`percentage1`] = 97;
     }
   }
 };

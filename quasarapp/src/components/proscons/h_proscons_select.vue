@@ -28,7 +28,9 @@
               <div class="q-gutter-md row">
                 <q-select
                   filled
+                  clearable
                   v-model="selected_city_local"
+                  :rules="[ val => val.length <= 2 || '請至少輸入一個字元' ]"
                   use-input
                   hide-selected
                   fill-input
@@ -55,6 +57,7 @@
               <div class="q-gutter-md row">
                 <q-select
                   filled
+                  clearable
                   v-model="selected_site_local"
                   use-input
                   hide-selected
@@ -82,16 +85,29 @@
       <div class="col">
         <!-- 按鈕 -->
         <q-btn
-          :loading="loading4"
+          :loading="loading1"
+          :percentage="percentage1"
           color="cyan-9"
-          @click="simulateProgress(4)"
+          @click="startComputing(1)"
           v-on:click="runR()"
           style="width: 150px"
         >
-          開始分析
+          開始
           <template v-slot:loading>
-            <q-spinner-hourglass class="on-left" />Loading...
+            <q-spinner-gears class="on-left" />分析中...
           </template>
+        </q-btn>
+
+        <q-btn size="10px" round color="blue-grey-8" icon="help" style="margin-left:10px">
+          <q-tooltip
+            anchor="center right"
+            self="center left"
+            :offset="[10, 10]"
+            content-class="bg-blue-grey-8"
+          >
+            依您
+            <strong>選擇的飯店</strong>做分析，統整優點/缺點
+          </q-tooltip>
         </q-btn>
         <!-- end -->
       </div>
@@ -114,9 +130,10 @@ export default {
       // 預設options資料
       options: stringOptions,
 
-      // 設定loading秒數
-      n: 2000,
-      loading4: false
+      // 分析按鈕
+      loading1: false,
+      // 按鈕百分比
+      percentage1: 0
     };
   },
   computed: {
@@ -139,15 +156,19 @@ export default {
     ...mapActions("h_proscons", ["fetchCons"]),
     ...mapActions("h_proscons", ["fetchPros"]),
 
-    // 計算loading時間
-    simulateProgress(number) {
-      // we set loading state
-      this[`loading${number}`] = true;
-      // simulate a delay
-      setTimeout(() => {
-        // we're done, we reset loading state
-        this[`loading${number}`] = false;
-      }, 1000);
+    startComputing(id) {
+      // 開啟loading狀態
+      this[`loading${id}`] = true;
+      this[`percentage${id}`] = 0;
+      // 設定增加速度間距
+      this[`interval${id}`] = setInterval(() => {
+        this[`percentage${id}`] += Math.floor(Math.random() * 8 + 10);
+        if (this[`percentage${id}`] >= 100) {
+          clearInterval(this[`interval${id}`]);
+          // 完成時關閉loading狀態
+          this[`loading${id}`] = false;
+        }
+      }, 700);
     },
 
     runR() {
@@ -182,10 +203,15 @@ export default {
       this.$store.commit("h_proscons/Update_Selected_City", val);
       // 執行第二層ajax(vuex)
       this.fetchSites();
+      // 清空下一層
+      this.selected_site_local = "";
     },
     selected_site_local(val) {
       console.log("偵測到變動 commit site!", val);
       this.$store.commit("h_proscons/Update_Selected_Site", val);
+    },
+    data_index(val) {
+      this[`percentage1`] = 97;
     }
   },
   mounted: function() {

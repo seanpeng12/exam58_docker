@@ -196,8 +196,8 @@ export default {
       "selected_p",
       "selected_p_detail_item",
       "selected_p_detail_item_2",
-      "after_axios",
-      "runR_value"
+      "runR_value",
+      "after_axios"
     ])
 
     // selected_p_trigger: {

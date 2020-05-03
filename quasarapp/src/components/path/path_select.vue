@@ -3,7 +3,7 @@
   <!-- <div
       class="gt-xs q-pa-lg column items-center text-black bg-grey-3"
       style="height: 200px;"
-    > -->
+  >-->
   <!-- <div class="col">
         <div class="text-center img_background">
           <p style="font-size: 28px;font-family: Microsoft JhengHei;">
@@ -22,7 +22,7 @@
             <br />
           </div>
         </div>
-      </div> -->
+  </div>-->
 
   <div class="col">
     <!-- 三個下拉式選單 -->
@@ -34,6 +34,7 @@
           <div class="q-gutter-md row">
             <q-select
               filled
+              clearable
               v-model="selected_city_local"
               use-input
               hide-selected
@@ -61,6 +62,7 @@
           <div class="q-gutter-md row">
             <q-select
               filled
+              clearable
               v-model="selected_site_local"
               use-input
               hide-selected
@@ -100,7 +102,7 @@
   <!-- </div> -->
   <!-- </div> -->
   <!-- <div class="gt-xs q-pa-lg column items-center text-black bg-grey-3">
-      <div class="col"> -->
+  <div class="col">-->
   <!-- 按鈕 -->
   <!-- <q-btn
       :loading="loading4"
@@ -114,9 +116,9 @@
         <q-spinner-hourglass class="on-left" />Loading...
       </template>
     </q-btn>
-  </div> -->
+  </div>-->
   <!-- </div>
-  </div> -->
+  </div>-->
 </template>
 
 <script>
@@ -201,6 +203,8 @@ export default {
       this.$store.commit("path/Update_Selected_City", val);
       // 執行第二層ajax(vuex)
       this.fetchSites();
+      // 清除第二層值
+      this.selected_site_local = "";
     },
     selected_site_local(val) {
       console.log("偵測到變動 commit site!", val);

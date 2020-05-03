@@ -183,12 +183,14 @@ const actions = {
         c20: state.selected_p_detail_item_2
       })
       .then(response => {
-        console.log("成功");
+        console.log("成功R");
         console.log(response.data);
         commit("FETCH_Rdata", response.data);
+
         commit("FETCH_index", 1);
+        console.log("after_axios+1");
       })
-      .catch(function(response) {
+      .catch(function (response) {
         console.log(response);
       });
   },
@@ -216,11 +218,11 @@ const actions = {
           .collection("sightseeingMember")
           .doc(uid)
           .collection("我的收藏");
-        id.forEach(function(data, index, array) {
+        id.forEach(function (data, index, array) {
           checkCollectionExists
             .doc(data)
             .get()
-            .then(function(doc) {
+            .then(function (doc) {
               if (doc.exists) {
                 commit("FETCH_txtdatas", {
                   id: data,
@@ -249,7 +251,7 @@ const actions = {
                 });
               }
             })
-            .catch(function(error) {
+            .catch(function (error) {
               console.log("Error getting document:", error);
             });
         });
@@ -258,7 +260,7 @@ const actions = {
 
         // commit('FETCH_txtdatas', txtdatas);
       })
-      .catch(function(response) {
+      .catch(function (response) {
         console.log(response);
       });
   },
@@ -288,11 +290,11 @@ const actions = {
           .collection("sightseeingMember")
           .doc(uid)
           .collection("我的收藏");
-        id.forEach(function(data, index, array) {
+        id.forEach(function (data, index, array) {
           checkCollectionExists
             .doc(data)
             .get()
-            .then(function(doc) {
+            .then(function (doc) {
               if (doc.exists) {
                 commit("FETCH_txtdatas_diff", {
                   id: data,
@@ -323,12 +325,12 @@ const actions = {
                 });
               }
             })
-            .catch(function(error) {
+            .catch(function (error) {
               console.log("Error getting document:", error);
             });
         });
       })
-      .catch(function(response) {
+      .catch(function (response) {
         console.log(response);
       });
   },
