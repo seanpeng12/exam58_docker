@@ -2,6 +2,8 @@ library('RMySQL')
 library('visNetwork')
 library('igraph')
 
+Sys.setlocale(category = "LC_ALL",locale = "zh_TW.UTF-8")
+
 con <- dbConnect(MySQL(), 
                  db = "homestead",
                  username = "root", 
@@ -12,7 +14,6 @@ dbSendQuery(con,"SET NAMES utf8mb4")
 args <- commandArgs(trailingOnly = TRUE)
 sid <- args
 # sid <- 'S0102'
-
 
 g_sql <- paste("SELECT s.degree 
                 FROM segment_data s, site_data sd 

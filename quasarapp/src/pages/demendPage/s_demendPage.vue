@@ -6,25 +6,16 @@
       <p>vuex：{{selected_p}} {{selected_p_detail_item}} {{selected_p_detail_item_2}}</p>
     </div>-->
     <div class="q-pa-md doc-container">
-      <div
-        class="gt-xs q-pa-lg column items-center text-black bg-grey-3"
-        style="height: 300px;"
-      >
+      <div class="gt-xs q-pa-lg column items-center text-black bg-grey-3" style="height: 300px;">
         <div class="col">
           <div class="text-center img_background">
-            <p style="font-size: 28px;font-family: Microsoft JhengHei;">
-              景點需求分析
-            </p>
+            <p style="font-size: 28px;font-family: Microsoft JhengHei;">景點需求分析</p>
           </div>
         </div>
         <div class="col">
           <div class="text-center img_background">
             <div>
-              <b
-                class="text"
-                style="font-size: 30px;font-family: Microsoft JhengHei;"
-                >選擇想分析的景點城市/類型</b
-              >
+              <b class="text" style="font-size: 30px;font-family: Microsoft JhengHei;">選擇想分析的景點城市/類型</b>
               <br />
             </div>
           </div>
@@ -39,152 +30,168 @@
           @changed_2="selected_2"
           @changed_3="selected_3"
           @runR="run_R"
-        >
-        </demand-select>
+        ></demand-select>
       </div>
     </div>
     <!-- end web page -->
 
     <!-- 左右區域 web -->
-    <div class="q-pa-md">
-      <div class="row">
+    <div class="row q-pa-md">
+      <div class="col-md-6 q-pa-md" style="overflow:hidden;height:100%">
         <!-- iframe區域 -->
-        <div class="col">
-          <demand-r :src="src" :runR_value="runR_value"></demand-r>
-        </div>
+        <q-card
+          class="my-card text-center q-pa-lg"
+          style="height:100%;width:100%;max-height:800px;max-width:100%;"
+        >
+          <q-card-section>
+            <div class="text-h6">分析結構圖</div>
+            <div
+              class="text-subtitle2"
+            >{{selected_p}} {{selected_p_detail_item}} {{selected_p_detail_item_2}}</div>
+          </q-card-section>
+
+          <q-separator />
+
+          <q-card-section>
+            <demand-r :src="src" :runR_value="runR_value"></demand-r>
+          </q-card-section>
+        </q-card>
+      </div>
+      <div class="col-md-6 q-pa-md" style="overflow:hidden;height:100%">
         <!-- 懶人包區域 -->
-        <div class="col">
-          <div>
-            <b
-              class="text"
-              style="font-size: 30px;font-family: Microsoft JhengHei;"
-              >{{ txtinfo }}</b
-            >
-          </div>
+        <q-card
+          class="my-card bg-secondary text-white"
+          style="height:100%;width:100%;max-height:600px;max-width:100%;"
+        >
+          <q-card-section>
+            <b class="text" style="font-size: 25px;font-family: Microsoft JhengHei;">{{ txtinfo }}</b>
+          </q-card-section>
+          <q-separator dark />
+        </q-card>
+        <div></div>
 
-          <div class="q-pa-md" style="max-width: 600px">
-            <q-list bordered>
-              <q-expansion-item
-                group="somegroup"
-                icon="explore"
-                :label="
-                  selected_p_detail_item + '&&' + selected_p_detail_item_2
+        <div class="q-pt-lg" style="height:100%;width:100%;max-width:100%;">
+          <q-list bordered>
+            <q-expansion-item
+              group="somegroup"
+              icon="explore"
+              :label="
+                  selected_p_detail_item + ' ＆ ' + selected_p_detail_item_2
                 "
-                default-opened
-                header-class="text-purple"
-              >
-                <q-card>
-                  <q-card-section>
-                    <q-scroll-area style="height:200px; max-width: 600px;">
-                      <q-list>
-                        <demand-data
-                          v-for="(txtdata, key) in txtdatas"
-                          :key="key"
-                          :txtinfo="txtinfo"
-                          :txtdata="txtdata"
-                          @txtdatas_Update="txtdatas_toVuex"
-                        >
-                          <template slot="addToCollection">
-                            <q-space />
-                            <addToCollectionBtn
-                              :exists="txtdata.exists"
-                              :id="key"
-                              :city_name="txtdata.city_name"
-                              :site_name="txtdata.name"
-                              :address="txtdata.address"
-                              :comment="txtdata.comment"
-                              :rate="txtdata.rate"
-                            ></addToCollectionBtn>
-                          </template>
-                        </demand-data>
-                      </q-list>
-                    </q-scroll-area>
-                  </q-card-section>
-                </q-card>
-              </q-expansion-item>
+              default-opened
+              header-class="text-purple"
+            >
+              <q-card>
+                <q-card-section>
+                  <q-scroll-area style="height:200px;width:100%;max-width: auto;">
+                    <q-list>
+                      <demand-data
+                        v-for="(txtdata, key) in txtdatas"
+                        :key="key"
+                        :txtinfo="txtinfo"
+                        :txtdata="txtdata"
+                        @txtdatas_Update="txtdatas_toVuex"
+                      >
+                        <template slot="addToCollection">
+                          <q-space />
+                          <addToCollectionBtn
+                            :exists="txtdata.exists"
+                            :id="key"
+                            :city_name="txtdata.city_name"
+                            :site_name="txtdata.name"
+                            :address="txtdata.address"
+                            :comment="txtdata.comment"
+                            :rate="txtdata.rate"
+                          ></addToCollectionBtn>
+                        </template>
+                      </demand-data>
+                    </q-list>
+                  </q-scroll-area>
+                </q-card-section>
+              </q-card>
+            </q-expansion-item>
 
-              <q-separator />
+            <q-separator />
 
-              <q-expansion-item
-                group="somegroup"
-                icon="explore"
-                :label="selected_p_detail_item"
-                header-class="text-primary"
-              >
-                <q-card>
-                  <q-card-section>
-                    <!-- test txtdatas_diff -->
-                    <q-scroll-area style="height:200px; max-width: 600px;">
-                      <q-list>
-                        <demandDataDiff
-                          v-for="(txtdata, key) in txtdatas_diff"
-                          :key="key"
-                          :txtinfo_diff="txtinfo"
-                          :txtdata_diff="txtdata"
-                          :selected_p_detail_item="selected_p_detail_item"
-                          @txtdatas_Update="txtdatas_toVuex"
-                        >
-                          <template slot="addToCollection">
-                            <q-space />
-                            <addToCollectionBtn
-                              :exists="txtdata.exists"
-                              :id="key"
-                              :city_name="txtdata.city_name"
-                              :site_name="txtdata.name"
-                              :address="txtdata.address"
-                              :comment="txtdata.comment"
-                              :rate="txtdata.rate"
-                            ></addToCollectionBtn>
-                          </template>
-                        </demandDataDiff>
-                      </q-list>
-                    </q-scroll-area>
-                  </q-card-section>
-                </q-card>
-              </q-expansion-item>
+            <q-expansion-item
+              group="somegroup"
+              icon="explore"
+              :label="selected_p_detail_item"
+              header-class="text-primary"
+            >
+              <q-card>
+                <q-card-section>
+                  <!-- test txtdatas_diff -->
+                  <q-scroll-area style="height:200px;width:100%;max-width: auto;">
+                    <q-list>
+                      <demandDataDiff
+                        v-for="(txtdata, key) in txtdatas_diff"
+                        :key="key"
+                        :txtinfo_diff="txtinfo"
+                        :txtdata_diff="txtdata"
+                        :selected_p_detail_item="selected_p_detail_item"
+                        @txtdatas_Update="txtdatas_toVuex"
+                      >
+                        <template slot="addToCollection">
+                          <q-space />
+                          <addToCollectionBtn
+                            :exists="txtdata.exists"
+                            :id="key"
+                            :city_name="txtdata.city_name"
+                            :site_name="txtdata.name"
+                            :address="txtdata.address"
+                            :comment="txtdata.comment"
+                            :rate="txtdata.rate"
+                          ></addToCollectionBtn>
+                        </template>
+                      </demandDataDiff>
+                    </q-list>
+                  </q-scroll-area>
+                </q-card-section>
+              </q-card>
+            </q-expansion-item>
 
-              <q-separator />
+            <q-separator />
 
-              <q-expansion-item
-                group="somegroup"
-                icon="explore"
-                :label="selected_p_detail_item_2"
-                header-class="text-primary"
-              >
-                <q-card>
-                  <q-card-section>
-                    <q-scroll-area style="height:200px; max-width: 600px;">
-                      <q-list>
-                        <demandDataDiff2
-                          v-for="(txtdata, key) in txtdatas_diff"
-                          :key="key"
-                          :txtinfo_diff="txtinfo"
-                          :txtdata_diff="txtdata"
-                          :selected_p_detail_item_2="selected_p_detail_item_2"
-                          @txtdatas_Update="txtdatas_toVuex"
-                        >
-                          <template slot="addToCollection">
-                            <q-space />
-                            <addToCollectionBtn
-                              :exists="txtdata.exists"
-                              :id="key"
-                              :city_name="txtdata.city_name"
-                              :site_name="txtdata.name"
-                              :address="txtdata.address"
-                              :comment="txtdata.comment"
-                              :rate="txtdata.rate"
-                            ></addToCollectionBtn>
-                          </template>
-                        </demandDataDiff2>
-                      </q-list>
-                    </q-scroll-area>
-                  </q-card-section>
-                </q-card>
-              </q-expansion-item>
+            <q-expansion-item
+              group="somegroup"
+              icon="explore"
+              :label="selected_p_detail_item_2"
+              header-class="text-primary"
+            >
+              <q-card>
+                <q-card-section>
+                  <q-scroll-area style="height:200px;width:100%;max-width: auto;">
+                    <q-list>
+                      <demandDataDiff2
+                        v-for="(txtdata, key) in txtdatas_diff"
+                        :key="key"
+                        :txtinfo_diff="txtinfo"
+                        :txtdata_diff="txtdata"
+                        :selected_p_detail_item_2="selected_p_detail_item_2"
+                        @txtdatas_Update="txtdatas_toVuex"
+                      >
+                        <template slot="addToCollection">
+                          <q-space />
+                          <addToCollectionBtn
+                            :exists="txtdata.exists"
+                            :id="key"
+                            :city_name="txtdata.city_name"
+                            :site_name="txtdata.name"
+                            :address="txtdata.address"
+                            :comment="txtdata.comment"
+                            :rate="txtdata.rate"
+                          ></addToCollectionBtn>
+                        </template>
+                      </demandDataDiff2>
+                    </q-list>
+                  </q-scroll-area>
+                </q-card-section>
+              </q-card>
+            </q-expansion-item>
 
-              <q-separator />
-            </q-list>
-          </div>
+            <q-separator />
+          </q-list>
         </div>
       </div>
     </div>

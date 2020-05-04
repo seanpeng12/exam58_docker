@@ -5,6 +5,7 @@
       <div class="col">
         <q-select
           filled
+          clearable
           v-model="selected_p_local"
           v-on:change="onProductChange"
           use-input
@@ -26,6 +27,7 @@
       <div class="col q-ml-md">
         <q-select
           filled
+          clearable
           v-model="selected_p_detail_item_local"
           use-input
           hide-selected
@@ -33,7 +35,7 @@
           input-debounce="0"
           :options="options"
           @filter="filterFn_2"
-          hint="選擇類型"
+          hint="請選擇類型"
           style="width: 250px; padding-bottom: 32px"
         >
           <template v-slot:no-option>
@@ -46,6 +48,7 @@
       <div class="col q-ml-md">
         <q-select
           filled
+          clearable
           v-model="selected_p_detail_item_local2"
           use-input
           hide-selected
