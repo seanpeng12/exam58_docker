@@ -238,13 +238,38 @@
           theseArgs = theseArgs.concat([task.data]);
           task = task.code;
         }
-        var taskFunc = eval("(" + task + ")");
+        var taskFunc = tryEval(task);
         if (typeof(taskFunc) !== "function") {
           throw new Error("Task must be a function! Source:\n" + task);
         }
         taskFunc.apply(target, theseArgs);
       });
     }
+  }
+
+  // Attempt eval() both with and without enclosing in parentheses.
+  // Note that enclosing coerces a function declaration into
+  // an expression that eval() can parse
+  // (otherwise, a SyntaxError is thrown)
+  function tryEval(code) {
+    var result = null;
+    try {
+      result = eval(code);
+    } catch(error) {
+      if (!error instanceof SyntaxError) {
+        throw error;
+      }
+      try {
+        result = eval("(" + code + ")");
+      } catch(e) {
+        if (e instanceof SyntaxError) {
+          throw error;
+        } else {
+          throw e;
+        }
+      }
+    }
+    return result;
   }
 
   function initSizing(el) {
@@ -639,17 +664,56 @@
     invokePostRenderHandlers();
   }
 
-  // Wait until after the document has loaded to render the widgets.
+
+  function has_jQuery3() {
+    if (!window.jQuery) {
+      return false;
+    }
+    var $version = window.jQuery.fn.jquery;
+    var $major_version = parseInt($version.split(".")[0]);
+    return $major_version >= 3;
+  }
+
+  /*
+  / Shiny 1.4 bumped jQuery from 1.x to 3.x which means jQuery's
+  / on-ready handler (i.e., $(fn)) is now asyncronous (i.e., it now
+  / really means $(setTimeout(fn)).
+  / https://jquery.com/upgrade-guide/3.0/#breaking-change-document-ready-handlers-are-now-asynchronous
+  /
+  / Since Shiny uses $() to schedule initShiny, shiny>=1.4 calls initShiny
+  / one tick later than it did before, which means staticRender() is
+  / called renderValue() earlier than (advanced) widget authors might be expecting.
+  / https://github.com/rstudio/shiny/issues/2630
+  /
+  / For a concrete example, leaflet has some methods (e.g., updateBounds)
+  / which reference Shiny methods registered in initShiny (e.g., setInputValue).
+  / Since leaflet is privy to this life-cycle, it knows to use setTimeout() to
+  / delay execution of those methods (until Shiny methods are ready)
+  / https://github.com/rstudio/leaflet/blob/18ec981/javascript/src/index.js#L266-L268
+  /
+  / Ideally widget authors wouldn't need to use this setTimeout() hack that
+  / leaflet uses to call Shiny methods on a staticRender(). In the long run,
+  / the logic initShiny should be broken up so that method registration happens
+  / right away, but binding happens later.
+  */
+  function maybeStaticRenderLater() {
+    if (shinyMode && has_jQuery3()) {
+      window.jQuery(window.HTMLWidgets.staticRender);
+    } else {
+      window.HTMLWidgets.staticRender();
+    }
+  }
+
   if (document.addEventListener) {
     document.addEventListener("DOMContentLoaded", function() {
       document.removeEventListener("DOMContentLoaded", arguments.callee, false);
-      window.HTMLWidgets.staticRender();
+      maybeStaticRenderLater();
     }, false);
   } else if (document.attachEvent) {
     document.attachEvent("onreadystatechange", function() {
       if (document.readyState === "complete") {
         document.detachEvent("onreadystatechange", arguments.callee);
-        window.HTMLWidgets.staticRender();
+        maybeStaticRenderLater();
       }
     });
   }
@@ -737,7 +801,7 @@
       if (o !== null && typeof o === "object" && part in o) {
         if (i == (l - 1)) { // if we are at the end of the line then evalulate
           if (typeof o[part] === "string")
-            o[part] = eval("(" + o[part] + ")");
+            o[part] = tryEval(o[part]);
         } else { // otherwise continue to next embedded object
           o = o[part];
         }
@@ -2655,6 +2719,9 @@ if (HTMLWidgets.shinyMode){
             if(data.options.byselection.hideColor){
               el.byselectionColor = data.options.byselection.hideColor;
             }
+            if(data.options.byselection.highlight !== undefined){
+              el.byselectionHighlight = data.options.byselection.highlight;
+            }
           }
           
           if(data.options.byselection !== undefined){
@@ -3092,8 +3159,10 @@ HTMLWidgets.widget({
 
     if(x.byselection.enabled){
       el_id.byselectionColor = x.byselection.hideColor;
+      el_id.byselectionHighlight = x.byselection.highlight;
     } else {
       el_id.byselectionColor = 'rgba(200,200,200,0.5)';
+      el_id.byselectionHighlight = false;
     }
     
     if(x.idselection.enabled){
@@ -3178,7 +3247,7 @@ HTMLWidgets.widget({
         instance.network.selectNodes([id]);
       }
       if(el_id.highlight){
-        neighbourhoodHighlight(instance.network.getSelection().nodes, "click", el_id.highlightAlgorithm);
+        neighbourhoodHighlight(instance.network.getSelection().nodes, "click", el_id.highlightAlgorithm, true);
       }else{
         if(init){
           selectNode = document.getElementById('nodeSelect'+el.id);
@@ -3755,7 +3824,7 @@ HTMLWidgets.widget({
             var r = confirm("Do you want to delete " + data.nodes.length + " node(s) and " + data.edges.length + " edges ?");
             if (r === true) {
               deleteSubGraph(data, callback);
-            }
+            } else { clearPopUp(); callback(null); }
         };
       } else if(typeof(x.options.manipulation.deleteNode) === typeof(true)){
         if(x.options.manipulation.deleteNode){
@@ -3763,7 +3832,7 @@ HTMLWidgets.widget({
               var r = confirm("Do you want to delete " + data.nodes.length + " node(s) and " + data.edges.length + " edges ?");
               if (r === true) {
                 deleteSubGraph(data, callback);
-              }
+              } else { clearPopUp(); callback(null); }
           };
         } else {
           options.manipulation.deleteNode = false;
@@ -3777,7 +3846,7 @@ HTMLWidgets.widget({
             var r = confirm("Do you want to delete " + data.edges.length + " edges ?");
             if (r === true) {
               deleteSubGraph(data, callback);
-            }
+            } else { clearPopUp(); callback(null); }
         };
       } else if(typeof(x.options.manipulation.deleteEdge) === typeof(true)){
         if(x.options.manipulation.deleteEdge){
@@ -3785,7 +3854,7 @@ HTMLWidgets.widget({
               var r = confirm("Do you want to delete " + data.edges.length + " edges ?");
               if (r === true) {
                 deleteSubGraph(data, callback);
-              }
+              } else { clearPopUp(); callback(null); }
           };
         } else {
           options.manipulation.deleteEdge = false;
@@ -4106,6 +4175,12 @@ HTMLWidgets.widget({
           edges.update(edgesHardToRead);
             
           nodes.update(updateArray);
+          
+          // select for highlight
+          if(el_id.highlight && x.nodes && el_id.byselectionHighlight){
+              neighbourhoodHighlight(connectedNodes, "click", el_id.highlightAlgorithm, false);
+              instance.network.selectNodes(connectedNodes)
+          }
         }
       }
       else if (el_id.selectActive === true) {
@@ -4121,7 +4196,7 @@ HTMLWidgets.widget({
     var is_hovered = false;
     var is_clicked = false;
     
-    function neighbourhoodHighlight(params, action_type, algorithm) {
+    function neighbourhoodHighlight(params, action_type, algorithm, reset_selectedBy) {
 
       var nodes_in_clusters = instance.network.body.modules.clustering.clusteredNodes;
       var have_cluster_nodes = false;
@@ -4535,7 +4610,7 @@ HTMLWidgets.widget({
         }
       }
       // reset selectedBy list if actived
-      if(el_id.byselection){
+      if(el_id.byselection && reset_selectedBy){
         resetList("selectedBy", el.id, 'selectedBy');
       }
     }
@@ -4573,7 +4648,7 @@ HTMLWidgets.widget({
     // shared click function (selectedNodes)
     document.getElementById("graph"+el.id).myclick = function(params){
         if(el_id.highlight && x.nodes){
-          neighbourhoodHighlight(params.nodes, "click", el_id.highlightAlgorithm);
+          neighbourhoodHighlight(params.nodes, "click", el_id.highlightAlgorithm, true);
         }else if((el_id.idselection || el_id.byselection) && x.nodes){
           onClickIDSelection(params)
         }
@@ -4582,7 +4657,7 @@ HTMLWidgets.widget({
     // Set event in relation with highlightNearest      
     instance.network.on("click", function(params){
         if(el_id.highlight && x.nodes){
-          neighbourhoodHighlight(params.nodes, "click", el_id.highlightAlgorithm);
+          neighbourhoodHighlight(params.nodes, "click", el_id.highlightAlgorithm, true);
         }else if((el_id.idselection || el_id.byselection) && x.nodes){
           onClickIDSelection(params)
         } 
@@ -4590,13 +4665,13 @@ HTMLWidgets.widget({
     
     instance.network.on("hoverNode", function(params){
       if(el_id.hoverNearest && x.nodes){
-        neighbourhoodHighlight([params.node], "hover", el_id.highlightAlgorithm);
+        neighbourhoodHighlight([params.node], "hover", el_id.highlightAlgorithm, true);
       } 
     });
 
     instance.network.on("blurNode", function(params){
       if(el_id.hoverNearest && x.nodes){
-        neighbourhoodHighlight([], "hover", el_id.highlightAlgorithm);
+        neighbourhoodHighlight([], "hover", el_id.highlightAlgorithm, true);
       }      
     });
     
@@ -4760,7 +4835,7 @@ HTMLWidgets.widget({
         // reset some parameters / data before
         if (el_id.selectActive === true | el_id.highlightActive === true) {
           //reset nodes
-          neighbourhoodHighlight([], "click", el_id.highlightAlgorithm);
+          neighbourhoodHighlight([], "click", el_id.highlightAlgorithm, true);
           if (el_id.selectActive === true){
             el_id.selectActive = false;
             resetList('selectedBy',el.id, 'selectedBy');
@@ -5115,11 +5190,11 @@ HTMLWidgets.widget({
 </head>
 <body style="background-color: white;">
 <div id="htmlwidget_container">
-<div id="htmlwidget-7c7921bd7739912846b8" class="visNetwork html-widget" style="width:100%;height:500px;">
+<div id="htmlwidget-72746e9ca9c4ee130c0f" class="visNetwork html-widget" style="width:100%;height:500px;">
 
 </div>
 </div>
-<script type="application/json" data-for="htmlwidget-7c7921bd7739912846b8">{"x":{"nodes":{"id":["90","95","S0100","S0106","S0111","S0113","S0116","S0122","S0123","S0124","S0125","S0128","S0130","S0131","S0133","S0140","S0141","S0148","S0150","S0152","S0154","S0160","S0161","S0162","S0165","S0166","S0177","S0178","S0185","S0194","S0198","S0213","S0214","S0215","S0217","S0222","S0224","S0225","S0227","S0233","S0241","S0243","S0244","S0247","S0248","S0257","S0263","S0266","S0269","S0271","S0273","S0275","S0278","S0279","S0284","S0285","S0286","S0290","S0291","S0297","S0301","S0303","S0304","S0305","S0310","S0312","S0313","S0320","S0322","S0329","S0330","S0334","S0337","S0338","S0341","S0342","S0345","S0346","S0350","S0352","S0355","S0356","S0358","S0359","S0362","S0367","S0368","S0375","S0383","S0386","S0388","S0392","S04","S0400","S0403","S0404","S0406","S0407","S0411","S0412","S0413","S0414","S0417","S0418","S0419","S0425","S0430","S0433","S0440","S0451","S0455","S0460","S0462","S0468","S0472","S0483","S0487","S0489","S0490","S0497","S0498","S0503","S0504","S0514","S0519","S0521","S0522","S0524","S0537","S0538","S0542","S0544","S0551","S0556","S0574","S0587","S0589","S0607","S0613","S0618","S0625","S0629","S0654","S0667","S0672","S0683","S0686","S0692","S0693","S0696","S0699","S0705","S0706","S0714","S0723","S0735","S0740","S0745","S0746","S0755","S0758","S0760","S0761","S0769","S0770","S0774","S0776","S0778","S0783","S0785","S0789","S0802","S0803"],"group":["","","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site"],"label":["博物館","購物","袖珍博物館","國立故宮博物院","忠烈祠","台北101","京站時尚廣場","雙連市場","台北市立美術館","台北當代藝術館","NET商場","台北地下街","雙城街夜市","?森?童博物館","新光三越","MAJI 集食行樂","永樂市場","松山文創園區","饒河街觀光夜市","迪化207博物館","阿嬤家-","中山地下街","晴光市場","華山1914文化創意產業園區","台北啤酒工場","家樂福(桂林店)","台原亞洲偶戲博物館","欣欣百貨","樹火紀念紙博物館","士林觀光夜市","郭元益糕餅博物館","亞典書店","勝立生活百貨","大龍街夜市","西門站地下商城","錦安市場","順益台灣原住民博物館","燕子二手傢俱","統一時代百貨台北店","台北花博農民市集","臺北市立天文科學教育館","雙城美食一條街","京華城","國立台灣科學教育館","蝴蝶宮昆蟲博物館","廣州街觀光夜市","松江市場","台北探索館","北投溫泉博物館","忠泰美術館","?史文物陳列館","三創生活園區","四四南村眷村文物館","國立台灣博物館土銀展示館","公館商圈","北投文物館","李臨秋故居","Citylink 南港店","中山市場","國立台灣博物館","FAVtory快.食.尚","莊義芳商行","萬年商業大樓","龍山寺地下街商場","秦境","臺灣新文化運動紀念館","學藝埕","國立臺灣博物館鐵道部","莊協發商店","太平洋崇光百貨公司（敦化館）","大直美麗新廣場","Citylink 松山店","微風南山","雙連朝市","勝立生活百貨 吉林店","涼州街","昇恆昌內湖旗艦店","草山玉溪園","K Underground Mall","Breeze 南京店","翡翠博物館","孫運璿科技人文紀念館","北投市場","國立歷史博物館","長春市場","希望廣場","家樂福-","明耀百?","東三水街市場(新富市場)","台灣昆蟲館","中央研究院民族?研究所博物館","原民風味館","微風松高","Breeze 信義店","文華精品","黨史館","全聯","防災科學教育館","胡適紀念館","朋","鄭南榕紀念館","太平洋百貨天母店","長榮海事博物館","長安西路禮品街","圓山大飯店博物館","KidsAwesome奧森兒童博物館","NEO 19","台北機廠?道博物館園?","臺北紅點設計博物館","好市多 台北店","二二八紀念館","中崙市場","二二八國家記念館","高島屋","西昌街夜市","湖光市場","士東市場","古亭市場","凱達格蘭文化館","獅子林商業大樓","Urban 台北店","景美夜市","城中市場","簡單生活市集","臺北當代工藝設計分館","自來水博物館","莽葛拾遺","天母廣場","異雲書屋","國軍歷史文物館","Bluerider ART","蒙藏文化館","沙雅瑪生活藝術","西門地下街","郵政博物館","Konnect 霆達。老酒博物館","迷誠品西門店","Fubon Living Art Space","糖倉開門","僑福芳草地畫廊","國立臺灣博物館南門園區","IKEA百元商店 通化店","東門外市場","鳳甲美術館","總統副總統文物館","醫學人文博物館","南陽美食街","鴻禧美術館","國立臺灣藝術教育館","國立臺灣海洋大學校史博物館","三井記憶倉庫","Party Trick Art","揚英風美術館","南昌家具街","中國信託金融園區","美國街","錦西街","?敬路","酒泉街","Hiro Hiro Art Space","臺灣大學地質標本館","明圓軒","疊藝術","悅﹣古藝術","柯老二糕餅","西園29服飾創作基地(臺北服飾文化館)","文山公民會館","臺北愛樂暨梅哲音樂文化館","臺北市立社會教育館","Glastory Museum","穎川畫廊","海關博物館","琉園水晶博物館"],"color":["red","red","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue"],"shape":["square","square",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"font.size":[30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30],"x":[0.542860446984518,-0.525674451123513,0.635637439610195,0.588901008465642,0.928289369195369,-0.405811032550843,-0.339658377812413,-0.810894084097788,0.767221550068481,0.993055445868507,-0.518203955585811,-0.79767261294289,-0.734660762545243,0.799134975926407,-0.856135292794597,-0.942042334620726,-0.404044691866381,-0.0361922101368405,-0.468412754334059,0.717239049486972,0.530278362519788,-0.883664494982019,-0.672279286157675,0.00015008091783808,-0.275845780012692,-0.645950836651075,0.606802178637991,-0.818903673763099,0.577368885099645,-0.660925580116257,0.464042100586027,0.0157867545575123,-0.826321051594831,-0.932767996861549,-0.691501561059785,-0.932320020984155,0.926542866263456,-0.484192267132653,-0.594217813765958,-0.98663917327946,0.810464938573952,-0.997898073404802,-0.821698280705891,0.892581058076618,0.704450627741013,-0.714277888310023,-0.812299184188745,0.489688921924982,0.931871804683013,0.0363929872636719,0.768049168842853,-0.403283213880356,0.707456009674146,0.517846008710491,-0.892250842521146,0.851737819994759,0.582002170009921,-0.874989318708177,-0.834627170404376,0.999168483778199,-0.402717433330669,-0.0333169338007335,-0.38417890155423,-0.522931375544314,-0.561364544487636,0.956323523850735,-0.00597777692569634,0.73452316555909,0.648725341678585,-0.897420795850152,-0.678766261944859,-0.37835198550448,-0.716920352398114,-0.785382693337,-0.689768766196518,-0.856943289738645,-0.585830017578546,0.0644871941152383,-0.46749636508923,-0.586241131466606,1,0.647308776544849,-0.457704401073649,0.514074859619417,-0.709828812074475,-0.530415761386722,-0.523124164444445,-0.783727092373709,-0.738249141062129,0.785520706124385,0.870957121576768,0.73065963042949,-0.539391018362358,-0.879429717073225,-0.467828286950518,0.889204141997651,-0.465119565360393,0.460081709071761,0.783331186880715,0.0653206577633663,0.68194073054454,-0.3381423076863,0.669989398765141,-0.974757597167709,0.487160850667367,0.512059911322666,-0.626655107330519,0.946063979506639,0.941273067862536,-0.40947795205637,0.748894980804253,-0.859125148712146,0.560475521506574,-0.860238939172868,-0.945785299850616,-0.328799898148216,-0.612368711175304,-0.377085232229631,0.708069880995728,-0.757904835041565,-0.802460584134028,-0.91377956642304,-1,-0.751383696449632,0.735570021440256,0.55625219770666,-0.745640563389655,-0.941247580916508,0.0357935227550663,0.888753962436407,0.00419450261018905,0.881723555443353,0.0143209983976857,-0.663634730172929,0.857248562878635,0.913066703616541,-0.913198393225836,-0.00672557099628701,0.803913803658665,0.0123330722563548,0.670507995562416,-0.673638456062232,-0.674902077167545,0.0401680285607262,0.99033663915655,0.376891958288889,-0.755664823424302,0.653468433131911,0.813823880377186,0.842561214529749,0.833446703842279,0.742929081350238,0.845247274659107,-0.592058984822798,-0.996535062321341,-0.54365033256365,-0.949636385316599,-0.339266110205428,-0.284593115746402,0.0550967213399494,0.452186345277448,-0.588472524509093,0.0585080324707987,-0.590623435734436,-0.75837800901475,0.591009117724944,0.814261093193839,0.975614963621869,0.879382934230537,-0.0201385125540204,0.625562674665518,0.368845661855446,0.412408736224824],"y":[-0.224099763437352,0.197566869186008,0.483082178092976,-0.0769231764420534,-0.067765599574553,0.631888195725392,0.304912731624974,0.886850592404904,-0.511476315688596,-0.353347534879012,0.878985668163464,0.0248705366908568,-0.530515014040543,0.156684243865865,0.543361467168492,0.0533753963484043,0.434130160503622,-0.17164045811452,-0.290224509205907,0.285842823156351,-0.7549018583399,0.762426191379157,0.592178249871405,0.0446677077464346,0.48501921427179,0.980683038373469,0.13947783149672,0.352718953533886,0.425788441980489,0.856599563046582,-0.942302590029729,-0.222748104582057,0.662261729746598,0.183161445875132,0.260877429223218,-0.185725055666227,-0.674930428619818,0.596575444624081,-0.453134863223233,0.429919528158203,-0.888613796763405,0.182346795313335,0.788332014794605,-0.230985574155071,0.452889629514586,0.775826518865693,-0.44953319525206,0.0861347173708826,-0.444064347040826,-0.15634453981319,0.429576175996984,0.909150901236048,0.165757019654563,-0.880865624477202,0.430543923217888,0.277804154859135,0.272879422865469,0.0208713614378109,-0.118607406499453,-0.0894086661725981,0.774136098993701,-0.0644573685209344,-0.255039246330833,-0.534185684627623,-0.199857454916693,-0.176182378314634,-0.137978285186851,-0.285778967314508,-1,0.654968697660416,-0.24373185269902,-0.0795831472233341,0.0678336264329047,0.459917909003559,0.426495987839156,-0.230929740049556,0.581676127125771,0.107861626327954,-0.123092436249664,0.997761063358171,-0.245440890634156,-0.686344874722279,0.969320095040824,-0.39051234541852,0.972100220564623,-0.368335542061877,1,0.210497525039452,-0.308263813097526,-0.638213785948027,-0.541672204533153,-0.843113863756839,0.729634123871978,0.283533903814409,-0.47443451168798,0.101190526540608,0.792583168297624,-0.570340638974448,0.305306760681899,0.0388841617358218,-0.572123043543319,0.864126268786988,-0.903838594576129,-0.0784971814899206,0.243437145250012,0.379223782305183,0.724526047817026,0.160958148561422,-0.567064089583476,-0.399419751947317,-0.123231173140684,-0.375722843268778,-0.614273796606043,0.151194172036179,0.336306880443632,0.747010989394205,-0.327347152898641,0.114927654836271,0.0220952590562318,-0.132143787221805,-0.284776449856611,-0.293243624911316,0.29148420679878,-0.428885187114494,-0.729780482737679,-0.997382391816452,0.889270470572332,0.503526804581243,0.223168525266842,0.214337629835708,0.158738356201083,-0.788502210648557,0.10022128863724,-0.554806345631698,-0.668267030770045,-0.339017512982515,-0.0838307467595956,-0.0111553640967434,0.0185091377483584,-0.0746952896705605,-0.418559355152053,-0.0969086598465557,-0.425090277906182,-0.0042393323708082,-0.488558814962583,-0.555574892769248,0.576913873119729,0.343355859463098,-0.777098236217195,-0.138130573867618,-0.439383079273306,-0.953172886556731,0.380499926202344,0.860029446198911,0.0556713360972247,0.430543419250872,0.604202588797409,0.555524049616436,0.659432128253962,-0.0765470478247495,-0.733835012466015,-0.0172722090614603,0.170837035582162,-0.571292292563953,0.704287882480243,-0.901170964586335,-0.311883682271795,0.0400240487293375,-0.0039499895827253,-0.249556696356028,-0.795171128981861,-0.728757232790735,-0.849861519913301]},"edges":{"from":["S0100","S0106","S0111","S0123","S0124","S0131","S0148","S0152","S0154","S0162","S0177","S0185","S0198","S0213","S0224","S0241","S0247","S0248","S0266","S0269","S0271","S0273","S0278","S0279","S0285","S0286","S0297","S0303","S0312","S0313","S0320","S0322","S0346","S0355","S0356","S0359","S0386","S0388","S0392","S0404","S0407","S0411","S0412","S0413","S0417","S0419","S0425","S0433","S0440","S0455","S0462","S0490","S0519","S0521","S0537","S0538","S0542","S0544","S0551","S0574","S0587","S0607","S0613","S0618","S0625","S0667","S0672","S0683","S0692","S0693","S0696","S0699","S0705","S0706","S0755","S0758","S0761","S0774","S0776","S0778","S0783","S0785","S0789","S0802","S0803","S0106","S0359","S0113","S0116","S0122","S0125","S0128","S0130","S0133","S0140","S0141","S0148","S0150","S0160","S0161","S0162","S0165","S0166","S0178","S0194","S0213","S0214","S0215","S0217","S0222","S0225","S0227","S0233","S0243","S0244","S0257","S0263","S0271","S0275","S0284","S0290","S0291","S0301","S0303","S0304","S0305","S0310","S0313","S0329","S0330","S0334","S0337","S0338","S0341","S0342","S0345","S0346","S0350","S0352","S0358","S0362","S0367","S0368","S0375","S0383","S0400","S0403","S0406","S0412","S0414","S0418","S0430","S04","S0451","S0460","S0468","S0472","S0483","S0487","S0489","S0497","S0498","S0503","S0504","S0514","S0522","S0524","S0537","S0542","S0551","S0556","S0589","S0607","S0618","S0629","S0654","S0667","S0686","S0714","S0723","S0735","S0740","S0745","S0746","S0755","S0760","S0761","S0769","S0770","S0785"],"to":[90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":false},"physics":{"stabilization":false}},"groups":["","site"],"width":"100%","height":"500px","idselection":{"enabled":true,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)"},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","igraphlayout":{"type":"square"},"highlight":{"enabled":true,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":false,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"}},"evals":[],"jsHooks":[]}</script>
-<script type="application/htmlwidget-sizing" data-for="htmlwidget-7c7921bd7739912846b8">{"viewer":{"width":"100%","height":"500px","padding":15,"fill":false},"browser":{"width":"100%","height":"500px","padding":40,"fill":false}}</script>
+<script type="application/json" data-for="htmlwidget-72746e9ca9c4ee130c0f">{"x":{"nodes":{"id":["1","5","S0004","S0008","S0010","S0011","S0012","S0015","S0017","S0019","S0030","S0031","S0038","S0039","S0041","S0043","S0045","S0048","S0050","S0056","S0057","S0093","S0097","S0098"],"group":["景點與地標","景點與地標","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site","site"],"label":["景點和地標","景觀徒步區","獅球嶺砲台","和平島公園","白米甕砲台","外木山濱海風景區","基隆海洋廣場","基隆港","大武崙砲台","仙洞巖","基隆城隍廟","中元祭祀文物館","槓子寮砲台","碧砂漁港","八斗子漁港","七堵杜鵑花堤道","二沙灣砲台","海門天險","基隆十二生肖橋","天后宮","正安宮","八斗子海豹\岩","築港殉職紀念碑","月眉山靈泉寺"],"color":["red","red","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue","lightblue"],"shape":["square","square",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"font.size":[30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30],"x":[-0.193205804602002,0.720990910479697,0.215904756179599,-0.38283285859265,0.637158535770537,1,-0.730571196799523,-0.34536336578092,-0.183384502923699,-0.435962785009474,-0.616307071161196,0.00427505052288235,-0.614716663107832,0.53141171116394,0.293863084051886,-0.905393149544979,-1,0.359912894141756,-0.699261712885435,0.5018258712776,0.00957098286296243,-0.0633060485302487,0.270030502021463,-0.888595721731084],"y":[-0.295392639220836,1,-0.560350423771133,0.420898803820113,-0.338311224463209,0.793843988429456,-0.170891745893117,-1,-0.731332980432346,0.111963479392105,-0.515547305326509,0.0850500672098786,-0.850626018428916,-0.638337481598483,-0.865075639989058,0.0525632034807297,-0.321564222405761,-0.22352274083765,0.28528253702229,0.0240183783059484,-0.991552408199124,0.400863375873099,0.252458328443232,-0.649800903716616]},"edges":{"from":["S0004","S0008","S0010","S0012","S0015","S0017","S0019","S0030","S0031","S0038","S0039","S0041","S0043","S0045","S0048","S0050","S0056","S0057","S0093","S0097","S0098","S0011"],"to":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":false},"physics":{"stabilization":false}},"groups":["景點與地標","site"],"width":"100%","height":"500px","idselection":{"enabled":true,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","igraphlayout":{"type":"square"},"highlight":{"enabled":true,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":false,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"}},"evals":[],"jsHooks":[]}</script>
+<script type="application/htmlwidget-sizing" data-for="htmlwidget-72746e9ca9c4ee130c0f">{"viewer":{"width":"100%","height":"500px","padding":15,"fill":false},"browser":{"width":"100%","height":"500px","padding":40,"fill":false}}</script>
 </body>
 </html>

@@ -26,18 +26,10 @@
             </div>
           </q-card-section>
 
-          <q-card-section class="q-pt-none"
-            >請先儲存再跳回上一頁，以確保資料不會遺失</q-card-section
-          >
+          <q-card-section class="q-pt-none">請先儲存再跳回上一頁，以確保資料不會遺失</q-card-section>
 
           <q-card-actions align="right">
-            <q-btn
-              flat
-              label="前往上一頁"
-              color="primary"
-              @click="lastReloadPage()"
-              v-close-popup
-            />
+            <q-btn flat label="前往上一頁" color="primary" @click="lastReloadPage()" v-close-popup />
             <q-btn flat label="取消" color="primary" v-close-popup />
           </q-card-actions>
         </q-card>
@@ -142,10 +134,10 @@
               </div>
               <!-- <p>{{ after_axios }}</p> -->
               <!-- 需求分析 select -->
-              <div class="q-pa-md " v-if="fourth == false">
-                <div class="q-pa-md doc-container  text-black bg-grey-3">
+              <div class="q-pa-md" v-if="fourth == false">
+                <div class="q-pa-md doc-container text-black bg-grey-3">
                   <div class="row text-h4">
-                    <b> 景點需求分析</b>
+                    <b>景點需求分析</b>
                     <demandInfo></demandInfo>
                   </div>
 
@@ -164,10 +156,10 @@
                   </div>
                 </div>
               </div>
-              <div class="q-pa-md " v-else>
-                <div class="q-pa-md doc-container  text-black bg-grey-3">
+              <div class="q-pa-md" v-else>
+                <div class="q-pa-md doc-container text-black bg-grey-3">
                   <div class="row text-h4">
-                    <b> 需求推薦分析</b>
+                    <b>需求推薦分析</b>
                     <preferInfo></preferInfo>
                   </div>
 
@@ -202,9 +194,7 @@
                     <p
                       class="text"
                       style="font-size: 30px;font-family: Microsoft JhengHei;"
-                    >
-                      {{ txtinfo }}
-                    </p>
+                    >{{ txtinfo }}</p>
 
                     <q-list bordered>
                       <q-expansion-item
@@ -220,9 +210,7 @@
                       >
                         <q-card>
                           <q-card-section>
-                            <q-scroll-area
-                              style="height:200px; max-width: 600px;"
-                            >
+                            <q-scroll-area style="height:200px; max-width: 600px;">
                               <q-list>
                                 <demand-data
                                   v-for="(txtdata, key) in txtdatas"
@@ -266,9 +254,7 @@
                         <q-card>
                           <q-card-section>
                             <!-- test txtdatas_diff -->
-                            <q-scroll-area
-                              style="height:200px; max-width: 600px;"
-                            >
+                            <q-scroll-area style="height:200px; max-width: 600px;">
                               <q-list>
                                 <demandDataDiff
                                   v-for="(txtdata, key) in txtdatas_diff"
@@ -314,9 +300,7 @@
                       >
                         <q-card>
                           <q-card-section>
-                            <q-scroll-area
-                              style="height:200px; max-width: 600px;"
-                            >
+                            <q-scroll-area style="height:200px; max-width: 600px;">
                               <q-list>
                                 <demandDataDiff2
                                   v-for="(txtdata, key) in txtdatas_diff"
@@ -369,10 +353,10 @@
             </q-tab-panel>
 
             <q-tab-panel name="movies">
-              <div class="q-pa-md ">
-                <div class="q-pa-md doc-container  text-black bg-grey-3">
+              <div class="q-pa-md">
+                <div class="q-pa-md doc-container text-black bg-grey-3">
                   <div class="row text-h4">
-                    <b> 路徑規畫分析</b>
+                    <b>路徑規畫分析</b>
 
                     <pathInfo></pathInfo>
                   </div>
@@ -382,8 +366,8 @@
                 </div>
               </div>
               <div class="row-8">
-                <path-button-toggle
-                  ><template slot="addToSchedule">
+                <path-button-toggle>
+                  <template slot="addToSchedule">
                     <q-btn
                       rounded
                       icon="add"
@@ -393,8 +377,9 @@
                       dense
                       size="12px"
                       style="margin-left:30px;font-weight:bold"
-                    /> </template
-                ></path-button-toggle>
+                    />
+                  </template>
+                </path-button-toggle>
               </div>
               <div class="q-pa-none">
                 <div class="row">
@@ -417,10 +402,10 @@
               />
             </q-tab-panel>
             <q-tab-panel name="advantage">
-              <div class="q-pa-md ">
-                <div class="q-pa-md doc-container  text-black bg-grey-3">
+              <div class="q-pa-md">
+                <div class="q-pa-md doc-container text-black bg-grey-3">
                   <div class="row text-h4">
-                    <b> 優缺點分析</b>
+                    <b>優缺點分析</b>
 
                     <prosconsInfo></prosconsInfo>
                   </div>
@@ -472,10 +457,10 @@
             </q-tab-panel>
             <!-- 飯店優缺點分析 -->
             <q-tab-panel name="h_advantage">
-              <div class="q-pa-md ">
-                <div class="q-pa-md doc-container  text-black bg-grey-3">
+              <div class="q-pa-md">
+                <div class="q-pa-md doc-container text-black bg-grey-3">
                   <div class="row text-h4">
-                    <b> 飯店優缺點分析</b>
+                    <b>飯店優缺點分析</b>
 
                     <prosconsInfo></prosconsInfo>
                   </div>
@@ -492,7 +477,7 @@
                 <div class="q-pa-md">
                   <div class="row">
                     <div class="col-6">
-                      <prosconsData>
+                      <hotelProsconsData>
                         <template slot="addToSchedule">
                           <q-btn
                             rounded
@@ -505,7 +490,7 @@
                             style="margin-left:30px;font-weight:bold"
                           />
                         </template>
-                      </prosconsData>
+                      </hotelProsconsData>
                     </div>
                     <!-- 懶人包區域 -->
                     <div class="col-6">

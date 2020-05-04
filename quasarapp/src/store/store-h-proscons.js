@@ -1,4 +1,6 @@
-import axios, { axiosInstance } from "boot/axios";
+import axios, {
+  axiosInstance
+} from "boot/axios";
 import Vue from "vue";
 
 const state = {
@@ -37,6 +39,7 @@ const mutations = {
     return (state.selected_city = value);
   },
   Update_Selected_Site(state, value) {
+    console.log("hpros:", value)
     return (state.selected_site = value);
   },
   Update_Run_Index(state, value) {
@@ -59,7 +62,9 @@ const mutations = {
   }
 };
 const actions = {
-  fetchCitys({ commit }) {
+  fetchCitys({
+    commit
+  }) {
     axiosInstance
       .get("http://127.0.0.1/api/proscons_hotel_data_City")
       .then(res => {
@@ -71,7 +76,9 @@ const actions = {
       });
   },
 
-  fetchSites({ commit }) {
+  fetchSites({
+    commit
+  }) {
     axiosInstance
       .post("http://127.0.0.1/api/h_sitesByCity", {
         city_name: state.selected_city
@@ -85,7 +92,10 @@ const actions = {
       });
   },
 
-  fetchProsConsR({ commit, dispatch }) {
+  fetchProsConsR({
+    commit,
+    dispatch
+  }) {
     axiosInstance
       .post("http://127.0.0.1/api/h_proscons", {
         name: state.selected_site
@@ -100,7 +110,9 @@ const actions = {
       });
   },
 
-  fetchPros({ commit }) {
+  fetchPros({
+    commit
+  }) {
     axiosInstance
       .post("http://127.0.0.1/api/h_prosData", {
         name: state.selected_site
@@ -114,7 +126,9 @@ const actions = {
       });
   },
 
-  fetchCons({ commit }) {
+  fetchCons({
+    commit
+  }) {
     axiosInstance
       .post("http://127.0.0.1/api/h_consData", {
         name: state.selected_site
