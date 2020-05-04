@@ -50,11 +50,15 @@ const mutations = {
   },
   setDragGroup(state, { value, key }) {
     state.everydaySites[key].site = value;
+  },
+  resetEveryDaySites(state) {
+    state.everydaySites = {};
   }
 };
 const actions = {
   updateSchedule({ commit, dispatch }, payload) {
-    commit("updateSchedule", payload);
+    // commit("updateSchedule", payload);
+    commit("resetEveryDaySites");
     const uid = firebaseAuth.currentUser.uid;
 
     // 傳id給arrange-schedule
@@ -69,9 +73,8 @@ const actions = {
         }
       })
       .then(() => {
-        this.$router.go(0);
+        // this.$router.go(0);
       });
-    // dispatch("fbEverySiteData", pass_id);
   },
   updateDragSite({ commit }, payload) {
     // console.log("updateDragSite", payload);

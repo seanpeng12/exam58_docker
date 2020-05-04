@@ -12,7 +12,7 @@
             <p
               style="font-size: 26px;font-weight:bold;font-family: Microsoft JhengHei;"
             >
-              {{ selected_site }}的優點
+              {{ prosConsSelected_site }}的優點
               <slot name="addToSchedule"></slot>
             </p>
             <div>
@@ -37,7 +37,7 @@
             <p
               style="font-size: 26px;font-weight:bold;font-family: Microsoft JhengHei;"
             >
-              {{ selected_site }}的缺點
+              {{ prosConsSelected_site }}的缺點
             </p>
             <div>
               <div>
@@ -76,7 +76,7 @@ export default {
       "data_index",
       "prosData",
       "consData",
-      "selected_site"
+      "prosConsSelected_site"
     ])
   },
   methods: {},

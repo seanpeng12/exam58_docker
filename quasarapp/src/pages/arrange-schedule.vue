@@ -81,6 +81,8 @@
             <q-icon name="label_important" style="font-size: 32px;" />
             <q-tab name="advantage" label="Step4(景點優缺點分析)" />
             <q-icon name="label_important" style="font-size: 32px;" />
+            <q-tab name="h_advantage" label="Step5(飯店優缺點分析)" />
+            <q-icon name="label_important" style="font-size: 32px;" />
             <q-tab name="aa" label="Step6(Google自動行程安排)" />
           </q-tabs>
 
@@ -113,7 +115,7 @@
                       @click="promptToAddSite({ id: id, site: item.site_name })"
                       dense
                       size="12px"
-                      style="margin-left:30px"
+                      style="margin-left:45px"
                     />
                   </template>
                 </LCard>
@@ -468,6 +470,61 @@
                 style="margin:8px"
               />
             </q-tab-panel>
+            <!-- 飯店優缺點分析 -->
+            <q-tab-panel name="h_advantage">
+              <div class="q-pa-md ">
+                <div class="q-pa-md doc-container  text-black bg-grey-3">
+                  <div class="row text-h4">
+                    <b> 飯店優缺點分析</b>
+
+                    <prosconsInfo></prosconsInfo>
+                  </div>
+                  <div class="row q-pl-xl">
+                    <!-- proscons-select 區域 -->
+                    <hotelProsconsSelect></hotelProsconsSelect>
+                    <!-- end proscons select -->
+                  </div>
+                </div>
+              </div>
+
+              <q-page>
+                <!-- 左右區域 web -->
+                <div class="q-pa-md">
+                  <div class="row">
+                    <div class="col-6">
+                      <prosconsData>
+                        <template slot="addToSchedule">
+                          <q-btn
+                            rounded
+                            icon="add"
+                            label="飯店加進排程"
+                            color="green-3"
+                            @click="promptToAddHotelProsSite()"
+                            dense
+                            size="12px"
+                            style="margin-left:30px;font-weight:bold"
+                          />
+                        </template>
+                      </prosconsData>
+                    </div>
+                    <!-- 懶人包區域 -->
+                    <div class="col-6">
+                      <hotelProsconsR></hotelProsconsR>
+                    </div>
+                  </div>
+                </div>
+                <!-- end -->
+              </q-page>
+
+              <q-btn
+                dense
+                label="前往下一步"
+                class="row absolute-bottom-right"
+                color="secondary"
+                size="20px"
+                style="margin:8px"
+              />
+            </q-tab-panel>
             <q-tab-panel name="aa">
               <div class="text-h4">Tip: Google替您規劃最短路徑的景點順序</div>
 
@@ -520,11 +577,16 @@ export default {
     demandDataDiff2: () => import("components/demand/demand_data_diff2.vue"),
     demandInfo: () => import("components/demand/demand_info.vue"),
     preferInfo: () => import("components/demand/prefer_info.vue"),
-    // 引用優缺點元件
+    // 引用景點優缺點元件
     prosconsSelect: () => import("components/proscons/proscons_select.vue"),
     prosconsR: () => import("components/proscons/proscons_R.vue"),
     prosconsData: () => import("components/proscons/proscons_data.vue"),
     prosconsInfo: () => import("components/proscons/proscons_info.vue"),
+    // 引用飯店優缺點元件
+    hotelProsconsSelect: () =>
+      import("components/proscons/h_proscons_select.vue"),
+    hotelProsconsR: () => import("components/proscons/h_proscons_R.vue"),
+    hotelProsconsData: () => import("components/proscons/h_proscons_data.vue"),
 
     // path
     pathSelect: () => import("components/path/path_select.vue"),
@@ -561,7 +623,7 @@ export default {
     ]),
     // 優缺點景點
     ...mapGetters("proscons", ["run_index", "prosConsSelected_site"]),
-
+    ...mapGetters("h_proscons", ["h_prosConsselected_site"]),
     // 取得vuex state變動值、優缺分析
     EverydaySites: {
       get() {
@@ -717,6 +779,49 @@ export default {
 
           this.$store.dispatch("travel/fbAddEverySiteData", {
             site: this.prosConsSelected_site,
+            date: data,
+            scheduleId: this.id
+          });
+
+          // console.log('>>>> OK, received', data)
+        })
+        .onCancel(() => {
+          // console.log('>>>> Cancel')
+        })
+        .onDismiss(() => {
+          // console.log('I am triggered on both OK and Cancel')
+        });
+    },
+    promptToAddHotelProsSite() {
+      const dateList = Object.keys(this.everydaySites);
+      const item_1 = [];
+      // 日期作為下面item的物件選項(radio)
+      dateList.forEach(function(item, index, array) {
+        item_1.push({
+          label: item,
+          value: item,
+          color: "secondary"
+        });
+      });
+
+      this.$q
+        .dialog({
+          title: "選擇您想加入的日期",
+          message: "日期:",
+          options: {
+            type: "radio",
+            model: "opt1",
+            // inline: true
+            items: item_1
+          },
+          cancel: true,
+          persistent: true
+        })
+        .onOk(data => {
+          console.log(this.h_prosConsselected_site);
+
+          this.$store.dispatch("travel/fbAddEverySiteData", {
+            site: this.h_prosConsselected_site,
             date: data,
             scheduleId: this.id
           });
