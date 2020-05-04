@@ -86,7 +86,7 @@
       <div class="col q-pa-md" style="margin-top:8px">
         <q-btn
           :loading="loading4"
-          color="cyan-9"
+          color="teal-7"
           @click="simulateProgress(4)"
           v-on:click="runR()"
           style="width: 150px"
@@ -200,6 +200,7 @@ export default {
   watch: {
     selected_city_local(val) {
       console.log("偵測到變動 commit city!", val);
+
       this.$store.commit("path/Update_Selected_City", val);
       // 執行第二層ajax(vuex)
       this.fetchSites();

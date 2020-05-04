@@ -1,5 +1,5 @@
 <template>
-  <q-card class="my-card" style="width:220px;">
+  <q-card class="my-card" style="width:250px;">
     <q-img src="https://tw.bring-you.info/imgs/2017/08/Seine-3.jpg" />
 
     <q-card-section>

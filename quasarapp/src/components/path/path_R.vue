@@ -2,7 +2,7 @@
   <!-- 折疊式優缺點R圖 -->
   <div class="q-pa-sm" style="max-width: auto" v-if="isShow_R">
     <div
-      class="q-pa-md q-ma-sm bg-teal-8"
+      class="q-pa-md q-ma-sm bg-teal-3"
       style="color:white;font-weight: bold;font-size : 25px;font-family: Microsoft JhengHei;"
     >
       <p>路徑分析圖</p>

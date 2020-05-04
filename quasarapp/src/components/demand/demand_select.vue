@@ -1,120 +1,72 @@
 <template>
-  <div class="q-pa-md doc-container">
-    <div class="gt-xs q-pa-lg column items-center text-black bg-grey-3" style="height: 200px;">
+  <!-- 三個下拉式選單 -->
+  <div class="q-pa-md">
+    <div class="row">
       <div class="col">
-        <div class="text-center img_background">
-          <p style="font-size: 28px;font-family: Microsoft JhengHei;">景點需求分析</p>
-        </div>
+        <q-select
+          filled
+          v-model="selected_p_local"
+          v-on:change="onProductChange"
+          use-input
+          hide-selected
+          fill-input
+          input-debounce="0"
+          :options="options"
+          @filter="filterFn"
+          hint="選擇城市"
+          style="width: 250px; padding-bottom: 32px"
+        >
+          <template v-slot:no-option>
+            <q-item>
+              <q-item-section class="text-grey">沒有結果</q-item-section>
+            </q-item>
+          </template>
+        </q-select>
       </div>
-      <div class="col">
-        <div class="text-center img_background">
-          <div>
-            <b class="text" style="font-size: 30px;font-family: Microsoft JhengHei;">選擇想分析的景點城市/類型</b>
-            <br />
-
-            <!-- 以下測試 -->
-            <!-- <p>{{Object.values(citys).map(city => city.city_name)}}</p>
-              <div v-for="city in citys" :key="city.index">{{k[city.index] = city.city_name}}</div>
-            <p>{{k}}</p>-->
-          </div>
-        </div>
+      <div class="col q-ml-md">
+        <q-select
+          filled
+          v-model="selected_p_detail_item_local"
+          use-input
+          hide-selected
+          fill-input
+          input-debounce="0"
+          :options="options"
+          @filter="filterFn_2"
+          hint="選擇類型"
+          style="width: 250px; padding-bottom: 32px"
+        >
+          <template v-slot:no-option>
+            <q-item>
+              <q-item-section class="text-grey">沒有結果</q-item-section>
+            </q-item>
+          </template>
+        </q-select>
       </div>
-
-      <div class="col">
-        <!-- 三個下拉式選單 -->
-        <div class="row">
-          <div class="col">
-            <!-- 下拉式選單 -->
-
-            <div class="q-pa-md">
-              <div class="q-gutter-md row">
-                <q-select
-                  filled
-                  clearable
-                  v-model="selected_p_local"
-                  v-on:change="onProductChange"
-                  use-input
-                  hide-selected
-                  fill-input
-                  input-debounce="0"
-                  :options="options"
-                  @filter="filterFn"
-                  hint="選擇城市"
-                  style="width: 250px; padding-bottom: 32px"
-                >
-                  <template v-slot:no-option>
-                    <q-item>
-                      <q-item-section class="text-grey">沒有結果</q-item-section>
-                    </q-item>
-                  </template>
-                </q-select>
-              </div>
-            </div>
-            <!--  -->
-          </div>
-          <div class="col">
-            <!-- 下拉式選單 -->
-
-            <div class="q-pa-md">
-              <div class="q-gutter-md row">
-                <q-select
-                  filled
-                  clearable
-                  v-model="selected_p_detail_item_local"
-                  use-input
-                  hide-selected
-                  fill-input
-                  input-debounce="0"
-                  :options="options"
-                  @filter="filterFn_2"
-                  hint="選擇類型"
-                  style="width: 250px; padding-bottom: 32px"
-                >
-                  <template v-slot:no-option>
-                    <q-item>
-                      <q-item-section class="text-grey">沒有結果</q-item-section>
-                    </q-item>
-                  </template>
-                </q-select>
-              </div>
-            </div>
-            <!--  -->
-          </div>
-          <div class="col">
-            <!-- 下拉式選單 -->
-
-            <div class="q-pa-md">
-              <div class="q-gutter-md row">
-                <q-select
-                  filled
-                  clearable
-                  v-model="selected_p_detail_item_local2"
-                  use-input
-                  hide-selected
-                  fill-input
-                  input-debounce="0"
-                  :options="options"
-                  @filter="filterFn_3"
-                  hint="請選擇類型"
-                  style="width: 250px; padding-bottom: 32px"
-                >
-                  <template v-slot:no-option>
-                    <q-item>
-                      <q-item-section class="text-grey">沒有結果</q-item-section>
-                    </q-item>
-                  </template>
-                </q-select>
-              </div>
-            </div>
-            <!--  -->
-          </div>
-        </div>
+      <div class="col q-ml-md">
+        <q-select
+          filled
+          v-model="selected_p_detail_item_local2"
+          use-input
+          hide-selected
+          fill-input
+          input-debounce="0"
+          :options="options"
+          @filter="filterFn_3"
+          hint="請選擇類型"
+          style="width: 250px; padding-bottom: 32px"
+        >
+          <template v-slot:no-option>
+            <q-item>
+              <q-item-section class="text-grey">沒有結果</q-item-section>
+            </q-item>
+          </template>
+        </q-select>
       </div>
     </div>
-    <div class="gt-xs q-pa-lg column items-center text-black bg-grey-3">
-      <div class="col">
-        <!-- 按鈕 -->
-
+    <div class="row q-mt-sm">
+      <div class="col"></div>
+      <div class="col" style="margin-left: 95px">
         <q-btn
           :loading="loading1"
           :percentage="percentage1"
@@ -128,21 +80,9 @@
             <q-spinner-gears class="on-left" />分析中...
           </template>
         </q-btn>
-
-        <q-btn size="10px" round color="blue-grey-8" icon="help" style="margin-left:10px">
-          <q-tooltip
-            anchor="center right"
-            self="center left"
-            :offset="[10, 10]"
-            content-class="bg-blue-grey-8"
-          >
-            依您
-            <strong>選擇的需求</strong>做分析，找出適合的景點
-          </q-tooltip>
-        </q-btn>
-
-        <!-- end -->
       </div>
+
+      <div class="col"></div>
     </div>
   </div>
 </template>
@@ -282,4 +222,3 @@ export default {
   }
 };
 </script>
-

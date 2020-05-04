@@ -25,7 +25,12 @@
       </q-carousel-slide>
     </q-carousel>
     <div class="row" style="background-color:#a9c9c6">
-      <p class="q-ma-md text-h5 text-white" style="font-weight: bold; font-family:NSimSun;">您可使用快速搜尋，找到您收藏的景點或旅館資訊</p>
+      <p
+        class="q-ma-md text-h5 text-white"
+        style="font-weight: bold; font-family:NSimSun;"
+      >
+        您可使用快速搜尋，找到您收藏的景點或旅館資訊
+      </p>
     </div>
     <div class="row" style="margin-left :auto;margin-right :auto">
       <LCard
@@ -33,7 +38,7 @@
         :key="key"
         :collection="item"
         :index="key"
-        style="margin-right: 8px; "
+        style="margin-right: 4px; "
       >
         <template slot="deleteCollection">
           <q-btn
@@ -45,7 +50,7 @@
             size="10px"
             color="red"
             @click="promptToDelete(key)"
-            style="font-family: NSimSun; margin-left:40px"
+            style="font-family: NSimSun; margin-left:60px"
           />
         </template>
       </LCard>

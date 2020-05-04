@@ -6,14 +6,16 @@
       <div class="col">
         <div class="img_background">
           <div>
-            <p
-              style="font-size: 26px;font-weight:bold;font-family: Microsoft JhengHei;"
-            >{{selected_site}}的優點</p>
+            <p style="font-size: 26px;font-weight:bold;font-family: Microsoft JhengHei;">
+              {{ h_prosConsselected_site }}的優點
+              <slot name="addToSchedule"></slot>
+            </p>
+
             <div>
               <div>
                 <q-chip square v-for="a in prosData.data" :key="a.id">
                   <q-avatar icon="bookmark" color="green" text-color="white" />
-                  {{a.segment}}
+                  {{ a.segment }}
                 </q-chip>
               </div>
             </div>
@@ -27,12 +29,12 @@
           <div>
             <p
               style="font-size: 26px;font-weight:bold;font-family: Microsoft JhengHei;"
-            >{{selected_site}}的缺點</p>
+            >{{ h_prosConsselected_site }}的缺點</p>
             <div>
               <div>
                 <q-chip square v-for="a in consData.data" :key="a.id">
                   <q-avatar icon="bookmark" color="red" text-color="white" />
-                  {{a.segment}}
+                  {{ a.segment }}
                 </q-chip>
               </div>
             </div>
@@ -65,7 +67,7 @@ export default {
       "data_index",
       "prosData",
       "consData",
-      "selected_site"
+      "h_prosConsselected_site"
     ])
   },
   methods: {},
