@@ -9,12 +9,20 @@
 <body>
     <p>
         <?php
+        parse_str(implode('&', array_slice($argv, 1)), $_GET);
+        if( empty($argv[1])){
+            print "尚未傳入參數：請輸入正確指令：";
+            exit;
+        }else{
+            print "運算中。。。";
+        }
+            
         set_time_limit(0);
-        $DBNAME = "test";
+        $DBNAME = "homestead";
         $DBUSER = "root";
         $DBPASSWD = "sightseeing";
-        $DBHOST = "140.136.155.116";
-
+        $DBHOST = "127.0.0.1";
+    
         $link = mysqli_connect($DBHOST, $DBUSER, $DBPASSWD);
         if (empty($link)) {
             echo mysqli_error($link);
@@ -28,8 +36,12 @@
         mysqli_query($link, "SET NAMES 'utf8'");
 
         # 輸入條件
-        $cname = "新北";
-        $sitename = "十分老街";
+        # $cname = "嘉義縣";
+        # $sitename = "阿里山神木群";
+            
+        $cname = $_GET['city'];
+        $sitename = $_GET['site'];
+            
         # 幾層
         $times = 2;
 
@@ -44,8 +56,8 @@
         $nlist = array();
         $no = array();
         $node = array();
-        # array_push($node, ["sid", "near_site", "city_name", "level"]); #mac
-        array_push($node, ["sid", "level"]); #windows
+        array_push($node, ["sid", "near_site", "city_name", "level", "color"]); #mac
+        # array_push($node, ["sid", "level", "color"]); #windows
 
 
         # 找sitename的id
@@ -53,7 +65,6 @@
         if ($s = $link->query($s_sql)) {
             while ($fieldinfo = $s->fetch_object()) {
                 $sid = $fieldinfo->sid;
-                # echo $sid . "<br>";
 
                 array_push($list, $sid);
                 array_push($aid, $sid);
@@ -71,9 +82,7 @@
                             $from_id = $row["from_id"];
                             $to_id = $row["to_id"];
                             $d_edge = $row["d_edge"] * 10;
-                            # echo $from_id. "<br>";
-                            # echo "to_id: ". $to_id. "<br>";
-                            # echo $d_edge. "<br>";
+
 
                             # 製成edge表
                             $count = ($i + 1);
@@ -91,6 +100,7 @@
                                 array_push($aedge, $d_edge);
                                 array_push($alevel, $group);
                             }
+
                             if (!in_array($to_id, $nlist)) {
                                 array_push($nlist, $to_id);
                             }
@@ -128,15 +138,12 @@
                     }
 
                     if (sizeof($ed) > 0) {
-                        # echo max($ed). "<br>";
-                        # print_r($ed);
 
                         $maxedge = max($ed);
                         $find = array_search($maxedge, $ed);
                         $newid = $bid[$find];
                         $newlevel = $lev[$find];
-                        # echo "<br>". $newid. "<br>";
-                        # echo $newlevel. "<br>";
+
                         if (!in_array([$newid, $newlevel], $no) and $newid != $sid) {
                             array_push($no, [$newid, $newlevel]);
                         }
@@ -144,12 +151,9 @@
                     $bid = array();
                     $ed = array();
                     $lev = array();
-                    # echo "<br>";
                 }
-                # echo sizeof($no). "<br>";
 
                 foreach ($no as $test) {
-                    # echo "to_id: ". $test[0]. ", 層: ". $test[1]. "<br>";
                     $level = $test[1];
                     $site_sql = "SELECT DISTINCT sid, near_site, city_name FROM comment_relationship WHERE sid = '$test[0]'";
                     $site = mysqli_query($link, $site_sql);
@@ -158,20 +162,22 @@
                         $nid = $row2["sid"];
                         $near_site = $row2["near_site"];
                         $city_name = $row2["city_name"];
-                        # echo $near_site. "<br>";
-                        # echo $level. "<br>";
 
-                        # array_push($node, [$nid, $near_site, $city_name, $level]); #mac
-                        array_push($node, [$nid, $level]); #windows
+                        if (strcmp($level, '起始點') == 0) {
+                            $color = "#ffcc33";
+                            array_push($node, [$nid, $near_site, $city_name, $level, $color]); #mac
+                            # array_push($node, [$nid, $level, $color]); #windows
+                        } elseif (strcmp($level, '第 1 層') == 0) {
+                            $color = "#699c4c";
+                            array_push($node, [$nid, $near_site, $city_name, $level, $color]); #mac
+                            # array_push($node, [$nid, $level, $color]); #windows
+                        } elseif (strcmp($level, '第 2 層') == 0) {
+                            $color = "#0066cc";
+                            array_push($node, [$nid, $near_site, $city_name, $level, $color]); #mac
+                            # array_push($node, [$nid, $level, $color]); #windows
+                        }
                     }
                 }
-
-
-                # print_r($node);
-                # print_r($no);
-                # echo sizeof($node);
-
-
                 #輸出
                 $nfp = fopen('path_node.csv', 'w');
                 foreach ($node as $nofield) {
@@ -191,79 +197,9 @@
 
                 mysqli_close($link);
             }
-            # $s -> free_result();
         }
         ?>
     </p>
-
-    <!--
-	<table  border="1">
-
-		<tr>
-
-		<td>from_id</td>
-
-		<td>to_id</td>
-
-		<td>d_edge</td>
-
-		</tr>
-
-		<?php
-        while ($row = mysqli_fetch_array($rela, MYSQLI_ASSOC)) {
-            #echo $row["sid"];
-        ?>
-
-		<tr>
-
-			<td><?php echo $row["from_id"];   ?></td>
-
-			<td><?php echo $row["to_id"];   ?></td>
-
-			<td><?php echo $row["d_edge"]; ?></td>
-
-		</tr>
-
-		#<?php }
-        #	}
-        # $s -> free_result();
-        #}
-
-        #
-            ?>
-
-	</table>
-
-
-	$sec_fields=mysqli_num_fields($sec); // 取得欄位數
-	$sec_records=mysqli_num_rows($sec);  // 取得記錄數
-
-		$sn_sql = "select distinct sid, near_site, city_name from comment_relationship where city_name ='$cname'";
-		$sr_sql = "SELECT DISTINCT p.from_id, p.to_id, p.d_edge FROM path_relationship p, comment_relationship r1, comment_relationship r2
-					WHERE (p.from_id = r1.sid AND p.to_id = r2.sid)
-					AND (r1.city_name = '$cname' AND r2.city_name = '$cname'";
-
-		$sn = mysqli_query($link, $sn_sql);
-		$sr = mysqli_query($link, $sr_sql);
-
-
-
-		$arr = array([1,"1"], [2,"2"], [3,"3"], [4,"4"]);
-		foreach ($arr as &$value) {
-			$value[0] = $value[0] * 2;
-			$value[1] = "我超棒";
-		}
-		unset($value);
-
-		if ($test[1] < $ta[$j][1]){
-			$test[1] = $ta[$j][1];
-			$test[2] = $ta[$j][2];
-			echo "to_id: ". $test[0]. ", d_dege: ". $test[1]. ", ".  $test[2]. "<br>";
-			#array_push($ta, [$test[0], $test[1], $test[2]]);
-		}
-
-
--->
 
 </body>
 

@@ -85,11 +85,12 @@
       </div>
       <div class="col q-pa-md" style="margin-top:8px">
         <q-btn
-          :loading="loading4"
-          color="teal-7"
-          @click="simulateProgress(4)"
+          :loading="loading1"
+          :percentage="percentage1"
+          color="cyan-9"
+          @click="startComputing(1)"
           v-on:click="runR()"
-          style="width: 150px"
+          style="width: 200px"
         >
           選擇你的起始點
           <template v-slot:loading>
@@ -137,9 +138,10 @@ export default {
       // 預設options資料
       options: stringOptions,
 
-      // 設定loading秒數
-      n: 2000,
-      loading4: false
+      // 分析按鈕
+      loading1: false,
+      // 按鈕百分比
+      percentage1: 0
     };
   },
   computed: {
@@ -150,6 +152,7 @@ export default {
       "selected_city",
       "selected_site",
       "selected_site_2",
+      "start_index",
       "run_index",
       "data_index"
     ])
@@ -159,25 +162,33 @@ export default {
     // 由此找vuex所需method
     ...mapActions("path", ["fetchCitys"]),
     ...mapActions("path", ["fetchSites"]),
-    ...mapActions("path", ["fetchProsConsR"]),
+    ...mapActions("path", ["fetchPathR"]),
     ...mapActions("path", ["fetchPath"]),
 
     // 計算loading時間
-    simulateProgress(number) {
-      // we set loading state
-      this[`loading${number}`] = true;
-      // simulate a delay
-      setTimeout(() => {
-        // we're done, we reset loading state
-        this[`loading${number}`] = false;
-      }, 1000);
+    startComputing(id) {
+      // 開啟loading狀態
+      this[`loading${id}`] = true;
+      this[`percentage${id}`] = 0;
+      // 設定增加速度間距
+      this[`interval${id}`] = setInterval(() => {
+        this[`percentage${id}`] += Math.floor(Math.random() * 8 + 5);
+        if (this[`percentage${id}`] >= 100) {
+          clearInterval(this[`interval${id}`]);
+          // 完成時關閉loading狀態
+          this[`loading${id}`] = false;
+        }
+      }, 2100);
     },
 
     runR() {
-      this.fetchProsConsR();
+      // start_index +1
+      this.$store.commit("path/Update_Start_Index", 1);
+      // run path.R
+      this.fetchPathR();
       // 取第一層懶人包
       this.fetchPath();
-      console.log("觸發 fetchProsConsR");
+      console.log("觸發 fetchPathR");
     },
     // 第一層過濾清單
     filterFn(val, update, abort) {
@@ -210,6 +221,9 @@ export default {
     selected_site_local(val) {
       console.log("偵測到變動 commit site!", val);
       this.$store.commit("path/Update_Selected_Site", val);
+    },
+    run_index(val) {
+      this[`percentage1`] = 97;
     }
   },
   mounted: function() {

@@ -32,12 +32,7 @@
 
                 <q-separator />
 
-                <q-tab-panels
-                  class="text-dark"
-                  v-model="tab"
-                  style="max-height: 500px;"
-                  animated
-                >
+                <q-tab-panels class="text-dark" v-model="tab" style="max-height: 500px;" animated>
                   <q-tab-panel name="mails">
                     <iframe
                       style="height: 1500px"
@@ -49,6 +44,18 @@
                     ></iframe>
                   </q-tab-panel>
                 </q-tab-panels>
+
+                <!-- loading 插件 -->
+                <transition name="fade">
+                  <loading
+                    v-if="isLoading"
+                    :active.sync="isLoading"
+                    :can-cancel="false"
+                    :on-cancel="onCancel"
+                    :is-full-page="fullPage"
+                  ></loading>
+                </transition>
+                <!--  -->
               </q-card>
             </div>
           </div>
@@ -62,6 +69,10 @@
 <script>
 import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
+// Import component
+import Loading from "vue-loading-overlay";
+// Import stylesheet
+import "vue-loading-overlay/dist/vue-loading.css";
 
 export default {
   data() {
@@ -69,32 +80,45 @@ export default {
       tab: "mails",
       // dropdownitem
       expanded: true,
-      isShow_R: true
+      isShow_R: true,
+
+      //vue-loading-overley套件
+      isLoading: false,
+      fullPage: false
     };
+  },
+  components: {
+    Loading
   },
   computed: {
     // 取得vuex state變動偵測值
-    ...mapGetters("path", ["run_index", "data_index"]),
+    ...mapGetters("path", ["start_index", "run_index", "data_index"]),
     // src_good src_bad
     ...mapGetters("path", ["src_path"])
   },
   methods: {
     // 由此找vuex所需method
-    ...mapActions("path", ["fetchProsConsR"]),
     changeSrc() {
       // 重新整理myframe_good
       this.$refs.myFrame_good.contentWindow.location.reload();
-      console.log("change重整畫面成功!");
+      console.log("change重整畫面成功!更新data_index");
 
       this.$store.commit("path/Update_Data_Index", 1);
     }
   },
   watch: {
+    start_index(val) {
+      this.isLoading = true;
+      this.$store.commit("path/Update_src_path", "about:blank");
+    },
     run_index(val) {
       this.changeSrc();
       console.log("R組件偵測到Run_Index改變：執行changeSrc", val);
+      this.$store.commit("path/Update_src_path", "./statics/path.html");
+      this.isLoading = false;
     }
-  }
+  },
+  mounted: function() {}
 };
 </script>
 
@@ -105,5 +129,12 @@ export default {
 }
 .de {
   padding-bottom: 50px;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>

@@ -18,6 +18,7 @@
     "moment": "^2.24.0",
     "quasar": "^1.0.0",
     "vue-i18n": "^8.0.0",
+    "vue-loading-overlay": "^3.3.2",
     "vue2-google-maps": "^0.10.7",
     "vuefire": "^2.2.2",
     "vuex-map-fields": "^1.4.0"
@@ -33,7 +34,7 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^6.1.2",
-    "node-sass": "^4.13.1",
+    "node-sass": "^4.14.1",
     "sass-loader": "^8.0.2",
     "vuedraggable": "^2.23.2"
   },

@@ -2,10 +2,7 @@
   <!-- 懶人包 -->
   <div class="q-pa-sm doc-container" v-if="isShow_data">
     <!-- 標題 -->
-    <div
-      class="gt-xs q-pa-lg q-ma-sm column text-black bg-blue-grey-1"
-      style="height:400px;"
-    >
+    <div class="gt-xs q-pa-lg q-ma-sm column text-black bg-blue-grey-1" style="height:400px;">
       <div class="col">
         <div class="img_background">
           <div>
@@ -30,9 +27,7 @@
                           style="color: #004991;font-family: Microsoft JhengHei;font-weight:bold"
                           icon-right="arrow_forward_ios"
                         ></q-btn>
-                        <span class="text-caption">
-                          有 {{ a.weight }} 人選擇這裡
-                        </span>
+                        <span class="text-caption">有 {{ a.weight }} 人選擇這裡</span>
                       </div>
                     </q-scroll-area>
                   </q-card-section>
@@ -50,8 +45,8 @@
                 style="font-weight:bold;"
               >
                 <q-card>
-                  <q-card-section
-                    ><q-scroll-area style="height: 210px; max-width: auto;">
+                  <q-card-section>
+                    <q-scroll-area style="height: 210px; max-width: auto;">
                       <div v-for="b in pathData_2.data" :key="b.id">
                         <q-btn
                           flat
@@ -60,9 +55,7 @@
                           style="color: #181858;font-family: Microsoft JhengHei;font-weight:bold"
                           icon-right="arrow_forward_ios"
                         />
-                        <span class="text-caption">
-                          有 {{ b.weight }} 人選擇這裡</span
-                        >
+                        <span class="text-caption">有 {{ b.weight }} 人選擇這裡</span>
                       </div>
                     </q-scroll-area>
                   </q-card-section>
@@ -75,7 +68,7 @@
             <!-- <p style="font-size: 26px;font-family: Microsoft JhengHei;">
               去過<span style="font-weight:bold">{{ selected_site }}</span
               >的人會去:
-            </p> -->
+            </p>-->
             <div>
               <!-- <q-scroll-area style="height: 250px; max-width: auto;">
                 <div v-for="a in pathData.data" :key="a.id">
@@ -88,7 +81,7 @@
                   />
                   有 {{ a.weight }} 人選擇這裡
                 </div>
-              </q-scroll-area> -->
+              </q-scroll-area>-->
             </div>
           </div>
         </div>
@@ -142,7 +135,7 @@ export default {
   },
   watch: {
     data_index(val) {
-      console.log("偵測到data_index改變：取得val", val);
+      console.log("(測試)偵測到data_index改變：取得val", val);
     },
     selected_site(val) {
       this.expanded1 = true;
