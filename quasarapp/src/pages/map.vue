@@ -55,7 +55,7 @@
 
 <script>
 export default {
-  name: "Restaurants",
+  name: "map",
   data() {
     return {
       map: null,

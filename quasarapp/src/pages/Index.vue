@@ -1,5 +1,6 @@
 <template>
-  <div class="q-pa-md layout-font">
+  <div class="q-pa-md layout-font bg-grey-3">
+    <!-- carousel-->
     <q-carousel
       v-model="slide"
       transition-prev="slide-right"
@@ -10,11 +11,12 @@
       control-color="primary"
       padding
       height="500px"
-      class="bg-white-1"
+      class="bg-grey-3"
     >
       <q-carousel-slide :name="1" class="row no-wrap">
         <div
-          class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap"
+          class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap bg-grey-3"
+          style="background-color:#"
         >
           <div class="col" style="height: 500px;">
             <div class="col" style="margin-top:65px">
@@ -25,31 +27,39 @@
                   style="max-height: 400px;"
                 ></q-img>
               </div>
-              <!-- <h2 class="q-mt-xl q-ml-xl absolute-top h2">
-                來去旅行
-              </h2>-->
-              <!-- <div align="center">
-                <q-img
-                  width="70%"
-                  src="~assets/logo_0.png"
-                  style="max-height: 400px;"
-                ></q-img>
-              </div> -->
             </div>
           </div>
           <div class="col" style="margin-top:65px">
-            <div class="col" style="margin-left: 80spx;">
-              <h5 class="q-mt-none q-ml-xl">
-                <br />這是一套幫助您在規劃旅程時，
-                <br />可以節省您許多時間的系統。 <br />幫您蒐集網路的資料，
-                <br />分析出您所期望的旅遊景點，
-                <br />以及透過一連串設計好的流程 ， <br />幫您快速排好旅程表。
-              </h5>
+            <div
+              class="col"
+              style="margin-left: 80spx;font-family: Microsoft JhengHei;"
+            >
+              <h4 class="q-mt-none q-ml-xl text-black">
+                <br />SIGHTSEEING。<br />一個輕鬆規劃旅程
+                <br />節省您大量時間爬文的網站 <br />透過分析
+                <br />給你想要的旅遊景點 <br />並輕鬆排好你的旅程<br />
+              </h4>
             </div>
           </div>
         </div>
       </q-carousel-slide>
     </q-carousel>
+    <!-- carousel end -->
+    <div class="q-pa-md row" style="min-height:200px;">
+      <div class="col-4 bg-grey-1 text-center">
+        <q-img
+          src="https://images.unsplash.com/photo-1525770041010-2a1233dd8152?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1868&q=80"
+          :ratio="1"
+        />
+      </div>
+      <div
+        class="col-8 bg-grey-2 text-center text-h5"
+        style="font-family: Microsoft JhengHei;"
+      >
+        需求分析
+      </div>
+    </div>
+    <!-- 游標 -->
     <q-page-scroller
       reverse
       position="top-right"
@@ -58,7 +68,8 @@
     >
       <q-btn fab icon="keyboard_arrow_down" color="dark" />
     </q-page-scroller>
-
+    <!-- end -->
+    <!-- card -->
     <div class="row" style="margin-left: 40px;">
       <q-card
         class="my-card"
@@ -109,6 +120,7 @@
         </q-slide-transition>
       </q-card>
     </div>
+    <!-- card end -->
   </div>
 </template>
 
