@@ -5,7 +5,7 @@
       debug用
       <p>vuex：{{selected_p}} {{selected_p_detail_item}} {{selected_p_detail_item_2}}</p>
     </div>-->
-    <div class="q-pa-md doc-container">
+    <div class="q-pl-lg q-pr-lg q-pt-lg doc-container">
       <div class="gt-xs q-pa-lg column items-center text-black bg-grey-3" style="height: 300px;">
         <div class="col">
           <div class="text-center img_background">
@@ -36,18 +36,16 @@
     <!-- end web page -->
 
     <!-- 左右區域 web -->
-    <div class="row q-pa-md">
+    <div class="row q-pa-sm">
       <div class="col-md-6 q-pa-md" style="overflow:hidden;height:100%">
         <!-- iframe區域 -->
         <q-card
-          class="my-card text-center q-pa-lg"
+          class="my-card text-center q-pa-sm"
           style="height:100%;width:100%;max-height:800px;max-width:100%;"
         >
           <q-card-section>
-            <div class="text-h6">分析結構圖</div>
-            <div
-              class="text-subtitle2"
-            >{{selected_p}} {{selected_p_detail_item}} {{selected_p_detail_item_2}}</div>
+            <div class="text-h6">需求分析圖</div>
+            <div class="text-subtitle2">{{r_title_1}} {{r_title_2}} {{r_title_3}}</div>
           </q-card-section>
 
           <q-separator />
@@ -63,9 +61,12 @@
           class="my-card bg-secondary text-white"
           style="height:100%;width:100%;max-height:600px;max-width:100%;"
         >
-          <q-card-section>
-            <b class="text" style="font-size: 25px;font-family: Microsoft JhengHei;">{{ txtinfo }}</b>
-          </q-card-section>
+          <transition name="fade" mode="out-in">
+            <q-card-section>
+              <b class="text" style="font-size: 25px;font-family: Microsoft JhengHei;">{{ txtinfo }}</b>
+            </q-card-section>
+          </transition>
+
           <q-separator dark />
         </q-card>
         <div></div>
@@ -240,8 +241,15 @@ export default {
   },
   data() {
     return {
+      // 暫存R_title
+      r_title_1: "",
+      r_title_2: "",
+      r_title_3: "",
+
       // 給加入最愛使用
-      loading4: false
+      loading4: false,
+      //是否顯示Ｒ圖上方標題
+      R_title: false
     };
   },
 
@@ -269,18 +277,40 @@ export default {
       console.log("收到emit!");
       this.$store.commit("demand/update_selected_p", value);
       this.fetchCats();
+      // 更改為初始值
+      if (value == "") {
+        this.$store.commit("demand/update_txtinfo", "請先選擇城市與需求");
+      } else {
+        this.$store.commit(
+          "demand/update_txtinfo",
+          "選擇兩種類別後，按開始以進行分析"
+        );
+      }
     },
     // from emit local then set vuex
     selected_2(value) {
       this.$store.commit("demand/update_selected_p_detail_item", value);
+      // 更改為初始值
+      this.$store.commit(
+        "demand/update_txtinfo",
+        "選擇兩種類別後，按開始以進行分析"
+      );
     },
     // from emit local then set vuex
     selected_3(value) {
       this.$store.commit("demand/update_selected_p_detail_item_2", value);
+      // 更改為初始值
+      this.$store.commit(
+        "demand/update_txtinfo",
+        "選擇兩種類別後，按開始以進行分析"
+      );
     },
     // 傳送runR引數至vuex
     run_R(value) {
-      console.log("runRRRRRRRRRRRRRRR");
+      (this.r_title_1 = this.selected_p),
+        (this.r_title_2 = this.selected_p_detail_item),
+        (this.r_title_3 = this.selected_p_detail_item_2),
+        console.log("runR~demand");
       this.$store.commit("demand/update_runR_value", value);
       this.$store.commit("demand/update_txtinfo", "載入中...");
       // 更改為loading
@@ -318,6 +348,14 @@ export default {
 </script>
 
 <style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
 .frameStyle {
   width: 100%;
   height: 500px;

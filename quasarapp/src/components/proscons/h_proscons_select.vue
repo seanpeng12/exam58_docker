@@ -105,6 +105,7 @@ export default {
       "sites",
       "selected_city",
       "h_prosConsselected_site",
+      "start_index",
       "run_index",
       "data_index"
     ])
@@ -134,6 +135,9 @@ export default {
     },
 
     runR() {
+      // start_index 開始
+      this.$store.commit("h_proscons/Update_Start_Index", 1);
+      console.log("start_index+1");
       // R
       this.fetchProsConsR();
       // 懶人包

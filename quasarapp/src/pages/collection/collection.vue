@@ -1,25 +1,17 @@
 <template>
   <div>
-    <q-carousel
-      v-model="slide"
-      color="white"
-      infinite
-      arrows
-      autoplay
-      height="400px"
-    >
+    <q-carousel v-model="slide" color="white" infinite arrows autoplay height="400px">
       <q-carousel-slide
         :name="1"
         img-src="https://global-uploads.webflow.com/576fd5a8f192527e50a4b95c/5bfe550d9464455edc331bee_Thaproban%20Beach%20House-min.jpg"
       >
         <div class="absolute-center custom-caption">
-          <div class="text-h2" style="font-weight: bold;font-family:NSimSun">
-            我的口袋名單
-          </div>
-          <div class="text-h5" style="font-weight: bold; font-family:cursive">
-            My Collection
-          </div>
-          <br /><br /><br /><br />
+          <div class="text-h2" style="font-weight: bold;font-family:NSimSun">我的口袋名單</div>
+          <div class="text-h5" style="font-weight: bold; font-family:cursive">My Collection</div>
+          <br />
+          <br />
+          <br />
+          <br />
           <search />
         </div>
       </q-carousel-slide>
@@ -28,11 +20,10 @@
       <p
         class="q-ma-md text-h5 text-white"
         style="font-weight: bold; font-family:NSimSun;"
-      >
-        您可使用快速搜尋，找到您收藏的景點或旅館資訊
-      </p>
+      >您可使用快速搜尋，找到您收藏的景點或旅館資訊</p>
     </div>
     <div class="row" style="margin-left :auto;margin-right :auto">
+      <!--  -->
       <LCard
         v-for="(item, key) in collections"
         :key="key"
@@ -54,6 +45,7 @@
           />
         </template>
       </LCard>
+      <!--  -->
     </div>
   </div>
 </template>
@@ -98,12 +90,12 @@ export default {
   text-align: center;
   padding: 12px;
   color: white;
-  font-weight :bold
+  font-weight: bold;
+}
 
-  }
-  .my-card {
-    width: 80%;
-    max-width: 300px
-    margin: 20px
-  }
+.my-card {
+  width: 80%;
+  max-width: 300px;
+  margin: 20px;
+}
 </style>

@@ -71,6 +71,7 @@
             <q-spinner-gears class="on-left" />分析中...
           </template>
         </q-btn>
+        <slot name="addToCollection"></slot>
 
         <q-btn size="10px" round color="blue-grey-8" icon="help" style="margin-left:10px">
           <q-tooltip
@@ -117,6 +118,7 @@ export default {
       "sites",
       "selected_city",
       "selected_site",
+      "start_index",
       "run_index",
       "data_index"
     ])
@@ -146,6 +148,9 @@ export default {
     },
 
     runR() {
+      // start_index 開始
+      this.$store.commit("proscons/Update_Start_Index", 1);
+      console.log("start_index+1");
       // R
       this.fetchProsConsR();
       // 懶人包

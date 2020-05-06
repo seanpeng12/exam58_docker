@@ -22,19 +22,14 @@
                   align="justify"
                   narrow-indicator
                 >
-                  <q-tab name="mails" label="優點" style="font-weight:bold" />
-                  <q-tab name="alarms" label="缺點" style="font-weight:bold" />
+                  <q-tab name="pros" label="優點" style="font-weight:bold" />
+                  <q-tab name="cons" label="缺點" style="font-weight:bold" />
                 </q-tabs>
 
                 <q-separator />
 
-                <q-tab-panels
-                  class="text-dark"
-                  v-model="tab"
-                  style="max-height: 500px;"
-                  animated
-                >
-                  <q-tab-panel name="mails">
+                <q-tab-panels class="text-dark" v-model="tab" style="max-height: 500px;" animated>
+                  <q-tab-panel name="pros">
                     <iframe
                       style="height: 1500px"
                       frameborder="0"
@@ -45,7 +40,7 @@
                     ></iframe>
                   </q-tab-panel>
 
-                  <q-tab-panel name="alarms">
+                  <q-tab-panel name="cons">
                     <iframe
                       style="height: 1500px"
                       frameborder="0"
@@ -77,7 +72,7 @@
         <b>拖曳畫面以檢視，滾輪可放大</b>
       </div>
 
-    </q-expansion-item> -->
+    </q-expansion-item>-->
   </div>
 </template>
 <script>
@@ -87,7 +82,7 @@ import { mapActions } from "vuex";
 export default {
   data() {
     return {
-      tab: "mails",
+      tab: "pros",
       // dropdownitem
       expanded: true,
       isShow_R: true
@@ -95,7 +90,7 @@ export default {
   },
   computed: {
     // 取得vuex state變動偵測值
-    ...mapGetters("h_proscons", ["run_index", "data_index"]),
+    ...mapGetters("h_proscons", ["start_index", "run_index", "data_index"]),
     // src_good src_bad
     ...mapGetters("h_proscons", ["src_good", "src_bad"])
   },
@@ -105,12 +100,15 @@ export default {
     changeSrc() {
       // 重新整理myframe_good
       this.$refs.myFrame_good.contentWindow.location.reload();
-      console.log("change重整畫面成功!");
+      console.log("change重整畫面成功!data_index+1");
 
       this.$store.commit("h_proscons/Update_Data_Index", 1);
     }
   },
   watch: {
+    start_index(val) {
+      this.tab = "pros";
+    },
     run_index(val) {
       this.changeSrc();
       console.log("R組件偵測到Run_Index改變：執行changeSrc", val);

@@ -51,6 +51,7 @@ Route::group(['middleware' => ['CORS']], function () {
     Route::post('/cat', 'PostController@bothCatagory');
     // 景點需求分析---取(聯集-交集)景點
     Route::post('/cat_diff', 'PostController@diffCatagory');
+    
 
 
 
@@ -94,6 +95,8 @@ Route::group(['middleware' => ['CORS']], function () {
     Route::post('/prosData', 'ProsCosController@prosData');
     // 缺點懶人包
     Route::post('/consData', 'ProsCosController@consData');
+    // 景點加入最愛
+    Route::post('/proconsAddToCollection', 'ProsCosController@proconsAddToCollection');
 
     // 飯店
     // 第一層選單(取得所有城市名稱-第一層選單)
@@ -106,6 +109,9 @@ Route::group(['middleware' => ['CORS']], function () {
     Route::post('/h_prosData', 'ProsCosController@h_prosData');
     // 缺點懶人包
     Route::post('/h_consData', 'ProsCosController@h_consData');
+    // 飯店加入最愛
+    Route::post('/h_proconsAddToCollection', 'ProsCosController@h_proconsAddToCollection');
+    
 });
 
 // 路徑分析

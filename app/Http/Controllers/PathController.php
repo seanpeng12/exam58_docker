@@ -35,7 +35,7 @@ class PathController extends Controller
         // 取得photo_reference
         $result_1 = $result->candidates[0]->photos[0]->photo_reference;
 
-        $img = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" . $result_1 . "&key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A";
+        $img = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=900&maxheight=600&photoreference=" . $result_1 . "&key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A";
         return response()->json($img, 200);
     }
     //路徑分析前置csv檔案，run path.php

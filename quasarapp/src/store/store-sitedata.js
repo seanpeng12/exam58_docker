@@ -2,7 +2,7 @@ import axios, { axiosInstance } from 'boot/axios'
 
 const state = {
   // 測試(cardview.vue)
-  posts:[],
+  posts: [],
   post: {
     id: "",
     name: "",
@@ -16,47 +16,47 @@ const state = {
     shape: ""
   },
   // 測試
-  sitedata:{
-    'ID1':{
-      name:"go to sleep",
+  sitedata: {
+    'ID1': {
+      name: "go to sleep",
       completed: false,
-      time:"19:33"
+      time: "19:33"
     },
-    'ID2':{
-      name:"go to wake",
+    'ID2': {
+      name: "go to wake",
       completed: false,
-      time:"19:30"
+      time: "19:30"
     }
   },
 
 }
 const mutations = {
-  updateTask(state,payload) {
-    console.log('payload from mutation:',payload);
-    Object.assign(state.sitedata[payload.id],payload.updates)
+  updateTask(state, payload) {
+    console.log('payload from mutation:', payload);
+    Object.assign(state.sitedata[payload.id], payload.updates)
   },
-  FETCH_posts(state, posts){
+  FETCH_posts(state, posts) {
     return state.posts = posts
   },
 
 
 }
 const actions = {
-  updateTask({ commit },payload){
+  updateTask({ commit }, payload) {
     // console.log('updateTask action');
     // console.log('payload: ',payload);
-    commit('updateTask',payload)
+    commit('updateTask', payload)
   },
 
-  fetchPosts({commit}) {
-    axiosInstance.get('http://127.0.0.1:80/api/site_data')
-        .then(res => {
-            commit('FETCH_posts', res.data);
-            console.log("vuex-觸發site_data值");
+  fetchPosts({ commit }) {
+    axiosInstance.get('http://140.136.155.116/api/site_data')
+      .then(res => {
+        commit('FETCH_posts', res.data);
+        console.log("vuex-觸發site_data值");
 
-        }).catch(err => {
+      }).catch(err => {
         console.log(err);
-    })
+      })
   },
 
 
@@ -70,7 +70,7 @@ const getters = {
   posts: (state) => {
     return state.posts;
   },
-  post: (state) =>{
+  post: (state) => {
     return state.post;
   },
 
@@ -78,7 +78,7 @@ const getters = {
 }
 
 export default {
-  namespaced :true,
+  namespaced: true,
   state,
   mutations,
   actions,

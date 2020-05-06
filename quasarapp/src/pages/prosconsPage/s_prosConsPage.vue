@@ -1,15 +1,10 @@
 <template>
   <q-page>
     <div class="q-pa-md doc-container">
-      <div
-        class="gt-xs q-pa-lg  column items-center text-black bg-grey-3"
-        style="height:300px;"
-      >
+      <div class="gt-xs q-pa-lg column items-center text-black bg-grey-3" style="height:300px;">
         <div class="col">
           <div class="text-center img_background">
-            <p style="font-size: 28px;font-family: Microsoft JhengHei;">
-              景點優缺點分析
-            </p>
+            <p style="font-size: 28px;font-family: Microsoft JhengHei;">景點優缺點分析</p>
           </div>
         </div>
         <div class="col">
@@ -18,14 +13,18 @@
               <b
                 class="text"
                 style="font-size: 20px;font-family: Microsoft JhengHei;"
-                >從網站評論資訊，幫您分析景點是否適合您</b
-              >
+              >從網站評論資訊，幫您分析景點是否適合您</b>
               <br />
             </div>
           </div>
         </div>
         <!-- proscons-select 區域 -->
-        <proscons-select></proscons-select>
+        <proscons-select>
+          <template slot="addToCollection">
+            <q-btn @click="
+            addToCollection(prosConsSelected_site)"></q-btn>
+          </template>
+        </proscons-select>
         <!-- end proscons select -->
       </div>
     </div>
@@ -62,9 +61,15 @@ export default {
   },
   computed: {
     // 取得vuex state變動值
-    ...mapGetters("proscons", ["run_index"])
+    ...mapGetters("proscons", ["run_index", "prosConsSelected_site"])
   },
   methods: {
+    ...mapActions("collections", ["fbAddtoCollection", "fbAddToPrefer"]),
+    addToCollection(value) {
+      console.log(value);
+
+      this.fbAddtoCollection(value);
+    },
     changeSrc() {
       document
         .getElementById("myFrame_good")

@@ -22,14 +22,14 @@
                   align="justify"
                   narrow-indicator
                 >
-                  <q-tab name="mails" label="優點" style="font-weight:bold" />
-                  <q-tab name="alarms" label="缺點" style="font-weight:bold" />
+                  <q-tab name="pros" label="優點" style="font-weight:bold" />
+                  <q-tab name="cons" label="缺點" style="font-weight:bold" />
                 </q-tabs>
 
                 <q-separator />
 
                 <q-tab-panels class="text-dark" v-model="tab" style="max-height: 500px;" animated>
-                  <q-tab-panel name="mails">
+                  <q-tab-panel name="pros">
                     <iframe
                       style="height: 1500px"
                       frameborder="0"
@@ -40,7 +40,7 @@
                     ></iframe>
                   </q-tab-panel>
 
-                  <q-tab-panel name="alarms">
+                  <q-tab-panel name="cons">
                     <iframe
                       style="height: 1500px"
                       frameborder="0"
@@ -82,7 +82,7 @@ import { mapActions } from "vuex";
 export default {
   data() {
     return {
-      tab: "mails",
+      tab: "pros",
       // dropdownitem
       expanded: true,
       isShow_R: true
@@ -90,7 +90,7 @@ export default {
   },
   computed: {
     // 取得vuex state變動偵測值
-    ...mapGetters("proscons", ["run_index", "data_index"]),
+    ...mapGetters("proscons", ["start_index", "run_index", "data_index"]),
     // src_good src_bad
     ...mapGetters("proscons", ["src_good", "src_bad"])
   },
@@ -106,6 +106,9 @@ export default {
     }
   },
   watch: {
+    start_index(val) {
+      this.tab = "pros";
+    },
     run_index(val) {
       this.changeSrc();
       console.log("R組件偵測到Run_Index改變：執行changeSrc", val);

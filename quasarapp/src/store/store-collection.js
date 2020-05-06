@@ -9,7 +9,8 @@ const state = {
   expend: false,
   collections: {},
   search: "",
-  watch: {}
+  watch: {},
+  src: "",
 };
 const mutations = {
   addCollection(state, payload) {
@@ -45,7 +46,7 @@ const actions = {
       });
     });
   },
-  fbAddtoCollection({}, value) {
+  fbAddtoCollection({ }, value) {
     const uid = firebaseAuth.currentUser.uid;
     const collectionId = value.id;
     const addToCollection = fstore
@@ -54,21 +55,73 @@ const actions = {
       .collection("我的收藏")
       .doc(collectionId);
 
-    addToCollection
-      .set({
-        site_name: value.site_name,
-        id: value.id,
-        city: value.city_name,
-        address: value.address,
-        comment: value.comment,
-        rate: value.rate
+    // 取src
+    axiosInstance
+      .post("http://140.136.155.116/api/getGoogleImg", {
+        name: value.site_name
       })
-      .then(function() {
-        console.log("Document successfully written!");
+      .then(res => {
+        addToCollection
+          .set({
+            site_name: value.site_name,
+            id: value.id,
+            city: value.city_name,
+            address: value.address,
+            comment: value.comment,
+            rate: value.rate,
+            src: res.data
+          })
+          .then(function () {
+            console.log("Document successfully written!");
+          })
+          .catch(function (error) {
+            console.error("Error writing document: ", error);
+          });
+
       })
-      .catch(function(error) {
-        console.error("Error writing document: ", error);
+      .catch(err => {
+        console.log(err);
       });
+
+
+  },
+  proconsAddToCollection({ }, site_name) {
+    const uid = firebaseAuth.currentUser.uid;
+    const collectionId = value.id;
+    const addToCollection = fstore
+      .collection("sightseeingMember")
+      .doc(uid)
+      .collection("我的收藏")
+      .doc(collectionId);
+
+    // 取src
+    axiosInstance
+      .post("http://140.136.155.116/api/getGoogleImg", {
+        name: value.site_name
+      })
+      .then(res => {
+        addToCollection
+          .set({
+            site_name: value.site_name,
+            id: value.id,
+            city: value.city_name,
+            address: value.address,
+            comment: value.comment,
+            rate: value.rate,
+            src: res.data
+          })
+          .then(function () {
+            console.log("Document successfully written!");
+          })
+          .catch(function (error) {
+            console.error("Error writing document: ", error);
+          });
+
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
   },
   fbDeleteCollection({ commit }, id) {
     const uid = firebaseAuth.currentUser.uid;
@@ -79,17 +132,18 @@ const actions = {
       .doc(id);
     deleteData
       .delete()
-      .then(function() {
+      .then(function () {
         console.log("Document successfully deleted!");
         commit("deleteCollection", id);
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.error("Error removing document: ", error);
       });
   },
+  // 加入偏好（含axios）
   fbAddToPrefer({ commit }, id) {
     axiosInstance
-      .post("http://127.0.0.1/api/preferTag", {
+      .post("http://140.136.155.116/api/preferTag", {
         site_id: id
       })
       .then(res => {
@@ -102,11 +156,11 @@ const actions = {
           .collection("偏好分析");
         const increment = firestore.FieldValue.increment(1);
 
-        site_id.forEach(function(data, index) {
+        site_id.forEach(function (data, index) {
           addToPrefer
             .doc(data)
             .get()
-            .then(function(doc) {
+            .then(function (doc) {
               if (doc.exists) {
                 addToPrefer.doc(data).update({
                   time: increment
@@ -117,7 +171,7 @@ const actions = {
                 });
               }
             })
-            .catch(function(error) {
+            .catch(function (error) {
               console.log("Error getting document:", error);
             });
         });
@@ -137,7 +191,7 @@ const getters = {
   collectionsFiltered: state => {
     let collectionsFiltered = {};
     if (state.search) {
-      Object.keys(state.collections).forEach(function(key) {
+      Object.keys(state.collections).forEach(function (key) {
         let collection = state.collections[key],
           collectionNameLowerCase = collection.site_name.toLowerCase(),
           collectionCityLowerCase = collection.city.toLowerCase(),
@@ -156,7 +210,7 @@ const getters = {
   collections: (state, getters) => {
     let collectionsFiltered = getters.collectionsFiltered;
     let collections = {};
-    Object.keys(collectionsFiltered).forEach(function(key) {
+    Object.keys(collectionsFiltered).forEach(function (key) {
       let collection = collectionsFiltered[key];
 
       collections[key] = collection;

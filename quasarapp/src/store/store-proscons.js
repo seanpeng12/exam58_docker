@@ -13,6 +13,8 @@ const state = {
   // 選單景點資料(axios用)
   sites: [],
 
+  // 按下確定開始執行
+  start_index: 0,
   // R執行完呼叫重新整理用
   run_index: 0,
   // R執行完呼叫懶人包用
@@ -39,6 +41,9 @@ const mutations = {
   Update_Selected_Site(state, value) {
     return (state.selected_site = value);
   },
+  Update_Start_Index(state, value) {
+    return (state.start_index += value);
+  },
   Update_Run_Index(state, value) {
     return (state.run_index += value);
   },
@@ -61,7 +66,7 @@ const mutations = {
 const actions = {
   fetchCitys({ commit }) {
     axiosInstance
-      .get("http://127.0.0.1/api/proscons_site_data_City")
+      .get("http://140.136.155.116/api/proscons_site_data_City")
       .then(res => {
         commit("FETCH_Citys", res.data);
         console.log("vuex-get 城市");
@@ -73,7 +78,7 @@ const actions = {
 
   fetchSites({ commit }) {
     axiosInstance
-      .post("http://127.0.0.1/api/sitesByCity", {
+      .post("http://140.136.155.116/api/sitesByCity", {
         city_name: state.selected_city
       })
       .then(res => {
@@ -85,9 +90,9 @@ const actions = {
       });
   },
 
-  fetchProsConsR({ commit, dispatch }) {
+  fetchProsConsR({ commit }) {
     axiosInstance
-      .post("http://127.0.0.1/api/proscons", {
+      .post("http://140.136.155.116/api/proscons", {
         name: state.selected_site
       })
       .then(res => {
@@ -102,7 +107,7 @@ const actions = {
 
   fetchPros({ commit }) {
     axiosInstance
-      .post("http://127.0.0.1/api/prosData", {
+      .post("http://140.136.155.116/api/prosData", {
         name: state.selected_site
       })
       .then(res => {
@@ -116,7 +121,7 @@ const actions = {
 
   fetchCons({ commit }) {
     axiosInstance
-      .post("http://127.0.0.1/api/consData", {
+      .post("http://140.136.155.116/api/consData", {
         name: state.selected_site
       })
       .then(res => {
@@ -145,6 +150,9 @@ const getters = {
   },
   selected_city_local: state => {
     return state.selected_city_local;
+  },
+  start_index: state => {
+    return state.start_index;
   },
   run_index: state => {
     return state.run_index;

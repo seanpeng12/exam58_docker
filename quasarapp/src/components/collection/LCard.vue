@@ -1,12 +1,10 @@
 <template>
   <q-card class="my-card" style="width:250px;">
-    <q-img src="https://tw.bring-you.info/imgs/2017/08/Seine-3.jpg" />
+    <q-img :src="collection.src" />
 
     <q-card-section>
       <div class="row no-wrap items-center">
-        <div class="col text-h7 ellipsis">
-          {{ collection.site_name }}
-        </div>
+        <div class="col text-h7 ellipsis">{{ collection.site_name }}</div>
       </div>
 
       <div class="row text-caption text-grey q-mt-sm">
@@ -18,22 +16,11 @@
         <div
           class="col-2"
           style=" color:orange; font-size:14px; margin-left:5px"
-        >
-          {{ collection.rate }}
-        </div>
-        <div class="col-4" style="margin-left:2px">
-          {{ collection.comment }}則評價
-        </div>
+        >{{ collection.rate }}</div>
+        <div class="col-4" style="margin-left:2px">{{ collection.comment }}則評價</div>
         <div class="col-3" style="margin-left:20px">
           <q-space />
-          <q-btn
-            label="詳細地址"
-            color="secondary"
-            @click="open('top')"
-            dense
-            outlined
-            size="10px"
-          />
+          <q-btn label="詳細地址" color="secondary" @click="open('top')" dense outlined size="10px" />
         </div>
         <!-- </div> -->
         <!-- dialog -->
@@ -45,7 +32,6 @@
               <div>
                 <div class="text-weight-bold">
                   <q-icon name="place" color="orange-5" size="20px" />
-
                   地址: {{ collection.address }}
                 </div>
               </div>
@@ -57,11 +43,8 @@
     </q-card-section>
 
     <q-card-section class="q-pt-none">
-      <div
-        class="col-auto text-secondary text-caption q-pt-md row no-wrap items-center"
-      >
+      <div class="col-auto text-secondary text-caption q-pt-md row no-wrap items-center">
         <q-icon name="place" />
-
         台灣，{{ collection.city }}
         <slot name="addToSchedule"></slot>
         <slot name="deleteCollection"></slot>
@@ -75,13 +58,16 @@
   <!-- </div> -->
 </template>
 <script>
+// import axios from "axios";
+
 export default {
   props: ["collection", "index"],
   data() {
     return {
       stars: 3.5,
       dialog: false,
-      position: "top"
+      position: "top",
+      src: "https://tw.bring-you.info/imgs/2017/08/Seine-3.jpg"
     };
   },
   methods: {
@@ -90,5 +76,18 @@ export default {
       this.dialog = true;
     }
   }
+  // updated() {
+  //   axios
+  //     .post("http://140.136.155.116/api/getGoogleImg", {
+  //       name: collection.site_name
+  //     })
+  //     .then(res => {
+  //       this.src = res.data;
+  //       console.log("取得google照片");
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // }
 };
 </script>

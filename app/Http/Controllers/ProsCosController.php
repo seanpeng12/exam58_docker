@@ -117,6 +117,22 @@ class ProsCosController extends Controller
         return response()->json($sql_negative, 200);
     }
 
+    // 景點加入最愛
+    function proconsAddToCollection(Request $request)
+    {
+        $name = $request->input('name');
+
+        $sql = Site_data::select('id')->where('name', '=', $name)->get();
+
+        // json轉array取值
+        $obj = json_decode($sql);
+        $id = $obj[0]->id;
+
+        $data = FacadesDB::select("SELECT DISTINCT site_data.id,site_data.name,site_data.city_name,site_data.address,site_data.type,site_data.comment,site_data.rate,site_data.href FROM site_data WHERE site_data.id = '$id'");
+
+        return response()->json($data, 200);
+    }
+
 
     // 飯店
 
@@ -214,5 +230,21 @@ class ProsCosController extends Controller
 
 
         return response()->json($sql_negative, 200);
+    }
+
+    // 景點加入最愛
+    function h_proconsAddToCollection(Request $request)
+    {
+        $name = $request->input('name');
+
+        $sql = Hotel_data::select('id')->where('name', '=', $name)->get();
+
+        // json轉array取值
+        $obj = json_decode($sql);
+        $id = $obj[0]->id;
+
+        $data = FacadesDB::select("SELECT DISTINCT hotel_data.id,hotel_data.name,hotel_data.city_name,hotel_data.address,hotel_data.type,hotel_data.comment,hotel_data.rate,hotel_data.href FROM hotel_data WHERE hotel_data.id = '$id'");
+
+        return response()->json($data, 200);
     }
 }
