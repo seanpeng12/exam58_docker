@@ -80,7 +80,7 @@ const mutations = {
 const actions = {
   fetchCitys({ commit }) {
     axiosInstance
-      .get("http://140.136.155.116/api/site_dataCity")
+      .get("http://127.0.0.1/api/site_dataCity")
       .then(res => {
         commit("FETCH_Citys", res.data);
         console.log("vuex-get 城市");
@@ -92,7 +92,7 @@ const actions = {
 
   fetchSites({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/sitesByCity", {
+      .post("http://127.0.0.1/api/sitesByCity", {
         city_name: state.selected_city
       })
       .then(res => {
@@ -106,7 +106,7 @@ const actions = {
 
   fetchPathR({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/runPath", {
+      .post("http://127.0.0.1/api/runPath", {
         city: state.selected_city,
         site: state.selected_site
       })
@@ -122,7 +122,7 @@ const actions = {
   //
   fetchPath({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/PathData", {
+      .post("http://127.0.0.1/api/PathData", {
         name: state.selected_site
       })
       .then(res => {
@@ -136,7 +136,7 @@ const actions = {
   //
   fetchPath_2({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/PathData", {
+      .post("http://127.0.0.1/api/PathData", {
         name: state.selected_site_2
       })
       .then(res => {

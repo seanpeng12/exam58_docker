@@ -101,7 +101,7 @@ const mutations = {
 const actions = {
   fetchCitys({ commit }) {
     axiosInstance
-      .get("http://140.136.155.116/api/site_dataCity")
+      .get("http://127.0.0.1/api/site_dataCity")
       .then(res => {
         commit("FETCH_citys", res.data);
         console.log("vuex-觸發city值");
@@ -115,7 +115,7 @@ const actions = {
 
   fetchCats({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/site_dataCat", {
+      .post("http://127.0.0.1/api/site_dataCat", {
         name: state.selected_p
       })
       .then(res => {
@@ -177,7 +177,7 @@ const actions = {
   // ajax跑R圖
   upload_axios({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/runR_twoC", {
+      .post("http://127.0.0.1/api/runR_twoC", {
         name: state.selected_p,
         c1: state.selected_p_detail_item,
         c20: state.selected_p_detail_item_2
@@ -197,7 +197,7 @@ const actions = {
   // ajax取懶人包資料
   upload_axios_2({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/cat", {
+      .post("http://127.0.0.1/api/cat", {
         name: state.selected_p,
         c1: state.selected_p_detail_item,
         c20: state.selected_p_detail_item_2
@@ -267,7 +267,7 @@ const actions = {
   // 取差集diff
   upload_axios_2_diff({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/cat_diff", {
+      .post("http://127.0.0.1/api/cat_diff", {
         name: state.selected_p,
         c1: state.selected_p_detail_item,
         c20: state.selected_p_detail_item_2

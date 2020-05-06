@@ -57,7 +57,7 @@ const actions = {
 
     // 取src
     axiosInstance
-      .post("http://140.136.155.116/api/getGoogleImg", {
+      .post("http://127.0.0.1/api/getGoogleImg", {
         name: value.site_name
       })
       .then(res => {
@@ -86,41 +86,85 @@ const actions = {
 
   },
   proconsAddToCollection({ }, site_name) {
+
     const uid = firebaseAuth.currentUser.uid;
-    const collectionId = value.id;
-    const addToCollection = fstore
-      .collection("sightseeingMember")
-      .doc(uid)
-      .collection("我的收藏")
-      .doc(collectionId);
+    // const collectionId = datas.data.id;
+    // const addToCollection 
 
-    // 取src
     axiosInstance
-      .post("http://140.136.155.116/api/getGoogleImg", {
-        name: value.site_name
-      })
-      .then(res => {
-        addToCollection
-          .set({
-            site_name: value.site_name,
-            id: value.id,
-            city: value.city_name,
-            address: value.address,
-            comment: value.comment,
-            rate: value.rate,
-            src: res.data
-          })
-          .then(function () {
-            console.log("Document successfully written!");
-          })
-          .catch(function (error) {
-            console.error("Error writing document: ", error);
-          });
+      .post("http://127.0.0.1/api/getGoogleImg", {
+        name: site_name
+      }).then(res => {
+        axiosInstance
+          .post("http://127.0.0.1/api/proconsAddToCollection", {
+            name: site_name
+          }).then(datas => {
+            fstore
+              .collection("sightseeingMember")
+              .doc(uid)
+              .collection("我的收藏")
+              .doc(datas.data[0].id)
+              .set({
+                site_name: datas.data[0].name,
+                id: datas.data[0].id,
+                city: datas.data[0].city_name,
+                address: datas.data[0].address,
+                comment: datas.data[0].comment,
+                rate: datas.data[0].rate,
+                src: res.data
+              })
+              .then(function () {
+                console.log("Document successfully written!");
+              })
+              .catch(function (error) {
+                console.error("Error writing document: ", error);
+              });
 
+
+          })
       })
-      .catch(err => {
-        console.log(err);
-      });
+    // 取src
+
+
+  },
+  h_proconsAddToCollection({ }, hotel_name) {
+
+    const uid = firebaseAuth.currentUser.uid;
+    // const collectionId = datas.data.id;
+    // const addToCollection 
+
+    axiosInstance
+      .post("http://127.0.0.1/api/getGoogleImg", {
+        name: hotel_name
+      }).then(res => {
+        axiosInstance
+          .post("http://127.0.0.1/api/h_proconsAddToCollection", {
+            name: hotel_name
+          }).then(datas => {
+            fstore
+              .collection("sightseeingMember")
+              .doc(uid)
+              .collection("我的飯店收藏")
+              .doc(datas.data[0].id)
+              .set({
+                site_name: datas.data[0].name,
+                id: datas.data[0].id,
+                city: datas.data[0].city_name,
+                address: datas.data[0].address,
+                comment: datas.data[0].comment,
+                rate: datas.data[0].rate,
+                src: res.data
+              })
+              .then(function () {
+                console.log("Document successfully written!");
+              })
+              .catch(function (error) {
+                console.error("Error writing document: ", error);
+              });
+
+
+          })
+      })
 
   },
   fbDeleteCollection({ commit }, id) {
@@ -143,7 +187,7 @@ const actions = {
   // 加入偏好（含axios）
   fbAddToPrefer({ commit }, id) {
     axiosInstance
-      .post("http://140.136.155.116/api/preferTag", {
+      .post("http://127.0.0.1/api/preferTag", {
         site_id: id
       })
       .then(res => {

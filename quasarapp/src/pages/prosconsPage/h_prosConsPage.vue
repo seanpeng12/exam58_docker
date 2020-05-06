@@ -1,31 +1,43 @@
 <template>
   <q-page>
     <div class="q-pa-md doc-container">
-      <div
-        class="gt-xs q-pa-lg  column items-center text-black bg-grey-3"
-        style="height:300px;"
-      >
-        <div class="col">
-          <div class="text-center img_background">
-            <p style="font-size: 28px;font-family: Microsoft JhengHei;">
-              飯店優缺點分析
-            </p>
+      <div class="gt-xs q-pa-lg items-center text-black bg-grey-3" style="height:300px;">
+        <div class="row">
+          <div class="col-1"></div>
+          <div class="col">
+            <div class="text-center img_background q-ml-none">
+              <p style="font-size: 28px;font-family: Microsoft JhengHei;">飯店優缺點分析</p>
+            </div>
           </div>
         </div>
-        <div class="col">
-          <div class="text-center img_background">
-            <div>
-              <b
-                class="text"
-                style="font-size: 20px;font-family: Microsoft JhengHei;"
-                >從網站評論資訊，幫您分析飯店是否符合您的需求</b
-              >
-              <br />
+        <div class="row">
+          <div class="col-1"></div>
+          <div class="col">
+            <div class="text-center img_background">
+              <div>
+                <b
+                  class="text"
+                  style="font-size: 20px;font-family: Microsoft JhengHei;"
+                >從網站評論資訊，幫您分析飯店是否符合您的需求</b>
+                <br />
+              </div>
             </div>
           </div>
         </div>
         <!-- proscons-select 區域 -->
-        <proscons-select></proscons-select>
+        <div class="row-6">
+          <proscons-select>
+            <template slot="addToCollection">
+              <q-btn
+                @click="
+            addToCollection(h_prosConsselected_site)"
+                dense
+                label="加入收藏"
+                color="warning"
+              ></q-btn>
+            </template>
+          </proscons-select>
+        </div>
         <!-- end proscons select -->
       </div>
     </div>
@@ -63,9 +75,13 @@ export default {
   },
   computed: {
     // 取得vuex state變動值
-    ...mapGetters("h_proscons", ["run_index"])
+    ...mapGetters("h_proscons", ["run_index", "h_prosConsselected_site"])
   },
   methods: {
+    ...mapActions("collections", ["h_proconsAddToCollection"]),
+    addToCollection(value) {
+      this.h_proconsAddToCollection(value);
+    },
     changeSrc() {
       document
         .getElementById("myFrame_good")

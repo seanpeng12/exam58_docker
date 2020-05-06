@@ -21,8 +21,14 @@
         <!-- proscons-select 區域 -->
         <proscons-select>
           <template slot="addToCollection">
-            <q-btn @click="
-            addToCollection(prosConsSelected_site)"></q-btn>
+            <q-btn
+              class="q-ml-md"
+              @click="
+            addToCollection(prosConsSelected_site)"
+              dense
+              label="加入收藏"
+              color="warning"
+            ></q-btn>
           </template>
         </proscons-select>
         <!-- end proscons select -->
@@ -64,11 +70,15 @@ export default {
     ...mapGetters("proscons", ["run_index", "prosConsSelected_site"])
   },
   methods: {
-    ...mapActions("collections", ["fbAddtoCollection", "fbAddToPrefer"]),
+    ...mapActions("collections", [
+      "fbAddtoCollection",
+      "fbAddToPrefer",
+      "proconsAddToCollection"
+    ]),
     addToCollection(value) {
       console.log(value);
 
-      this.fbAddtoCollection(value);
+      this.proconsAddToCollection(value);
     },
     changeSrc() {
       document

@@ -110,7 +110,7 @@ const actions = {
     commit
   }) {
     axiosInstance
-      .get("http://140.136.155.116/api/h_site_dataCity")
+      .get("http://127.0.0.1/api/h_site_dataCity")
       .then(res => {
         commit("FETCH_citys", res.data);
         console.log("vuex-觸發city值");
@@ -126,7 +126,7 @@ const actions = {
     commit
   }) {
     axiosInstance
-      .post("http://140.136.155.116/api/h_site_dataCat", {
+      .post("http://127.0.0.1/api/h_site_dataCat", {
         name: state.selected_p
       })
       .then(res => {
@@ -190,7 +190,7 @@ const actions = {
     commit
   }) {
     axiosInstance
-      .post("http://140.136.155.116/api/h_runR_twoC", {
+      .post("http://127.0.0.1/api/h_runR_twoC", {
         name: state.selected_p,
         c1: state.selected_p_detail_item,
         c20: state.selected_p_detail_item_2
@@ -212,7 +212,7 @@ const actions = {
     commit
   }) {
     axiosInstance
-      .post("http://140.136.155.116/api/h_cat", {
+      .post("http://127.0.0.1/api/h_cat", {
         name: state.selected_p,
         c1: state.selected_p_detail_item,
         c20: state.selected_p_detail_item_2
@@ -284,7 +284,7 @@ const actions = {
     commit
   }) {
     axiosInstance
-      .post("http://140.136.155.116/api/h_cat_diff", {
+      .post("http://127.0.0.1/api/h_cat_diff", {
         name: state.selected_p,
         c1: state.selected_p_detail_item,
         c20: state.selected_p_detail_item_2
