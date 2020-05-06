@@ -5,8 +5,8 @@ library('igraph', warn.conflicts = FALSE)
 connect <- dbConnect(MySQL(), 
                     db = "homestead",
                     username = "root", 
-                    password = "sightseeing",
-                    host = "140.136.155.116")
+                    password = "",
+                    host = "localhost")
 
 
 

@@ -492,7 +492,7 @@
                 <div class="q-pa-md">
                   <div class="row">
                     <div class="col-6">
-                      <prosconsData>
+                      <hotelProsconsData>
                         <template slot="addToSchedule">
                           <q-btn
                             rounded
@@ -505,7 +505,7 @@
                             style="margin-left:30px;font-weight:bold"
                           />
                         </template>
-                      </prosconsData>
+                      </hotelProsconsData>
                     </div>
                     <!-- 懶人包區域 -->
                     <div class="col-6">

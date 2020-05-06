@@ -5,8 +5,8 @@ library('igraph', warn.conflicts = FALSE)
 con <- dbConnect(MySQL(), 
                  db = "homestead",
                  username = "root", 
-                 password = "sightseeing",
-                 host = "140.136.155.116")
+                 password = "",
+                 host = "localhost")
 dbSendQuery(con,"SET NAMES big5")
 
 args <- commandArgs(TRUE)

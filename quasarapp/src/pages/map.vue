@@ -7,7 +7,7 @@
           <!--營運地區 nav-->
         </ul>
         <!--地圖呈現在此-->
-        <div class="google-map" id="map" ref="mymap"></div>
+        <div class="google-map" id="map" ref="bmap"></div>
       </div>
       <div class="col q-px-lg">
         <q-form @submit="prompt()" class="q-gutter-md">
@@ -48,6 +48,7 @@
           <div class="row" id="directions-panel"></div>
           <q-btn label="Submit" type="submit" color="red" />
         </q-form>
+        <q-btn label="test" @click="addMarkerWithTimeout()"></q-btn>
       </div>
     </div></div
 ></template>
@@ -66,20 +67,15 @@ export default {
       start: "",
       waypoint: [],
       end: "",
-      originOptions: ["Halifax, NS", "Boston, MA", "New York, NY", "Miami, FL"],
+      originOptions: ["台灣大學, 台灣", "輔仁大學, 台灣", "七星山, 台灣"],
       waypointOptions: [
-        "Montreal, QBC",
-        "Toronto, ONT",
-        "Chicago",
-        "Winnipeg",
-        "Fargo"
+        "陽明山",
+        "忘憂谷, 台灣",
+        "文化大學",
+        "桃源谷",
+        "夢幻湖"
       ],
-      endOptions: [
-        "Vancouver, BC",
-        "Seattle, WA",
-        "San Francisco, CA",
-        "Los Angeles, CA"
-      ],
+      endOptions: ["潮境公園, 台灣", "大武崙砲台"],
       streetViewControl: {
         type: Boolean,
         default: true
@@ -102,6 +98,7 @@ export default {
   mounted() {
     //網頁載入就會讓地圖載入
     this.initMap();
+    // this.setMarker();
   },
   compute: {},
   methods: {
@@ -109,15 +106,30 @@ export default {
     initMap() {
       var directionsService = new google.maps.DirectionsService();
       var directionsRenderer = new google.maps.DirectionsRenderer();
-      this.map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: this.lat, lng: this.lng },
-        zoom: 15,
+
+      this.map = new google.maps.Map(this.$refs.bmap, {
+        center: { lat: 23.5, lng: 121 },
+        zoom: 8,
         maxZoom: 20,
         minZoom: 3
       });
-      directionsRenderer.setMap(this.map);
-      console.log(directionsRenderer.setMap(this.map));
+
+      directionsService.route(
+        {
+          origin: { lat: 61, lng: 13 },
+          destination: { lat: 62, lng: 15 },
+          travelMode: "DRIVING"
+        },
+        function(response, status) {
+          if (status === "OK") {
+            directionsRenderer.setDirections(response);
+          } else {
+            console.log("Directions request failed due to " + status);
+          }
+        }
+      );
     },
+
     //按下去會觸動路線計算
     prompt() {
       var directionsService = new google.maps.DirectionsService();
@@ -133,7 +145,7 @@ export default {
           stopover: true
         });
       });
-
+      let _this = this;
       directionsService.route(
         {
           origin: this.start,
@@ -145,8 +157,41 @@ export default {
         (response, status) => {
           if (status === "OK") {
             var map = this.map;
-            console.log(map);
-            directionsRenderer.setDirections(response); //我猜這裏是讓他回傳路線的資訊地方，並重新渲染地圖(呈現路線圖的樣子)
+            console.log("response: ", response);
+            console.log(
+              "response.routes[0].legs.length :",
+              response.routes[0].legs.length
+            );
+            for (var i = 0; i < response.routes[0].legs.length; i++) {
+              if (i != response.routes[0].legs.length - 1) {
+                this.setMarker(
+                  String.fromCharCode((i + 97).toString()),
+                  response.routes[0].legs[i].start_address,
+                  response.routes[0].legs[i].start_location.lat(name),
+                  response.routes[0].legs[i].start_location.lng(name)
+                );
+              } else {
+                console.log(i);
+                //start
+                this.setMarker(
+                  String.fromCharCode((i + 97).toString()),
+                  response.routes[0].legs[i].start_address,
+                  response.routes[0].legs[i].start_location.lat(name),
+                  response.routes[0].legs[i].start_location.lng(name)
+                );
+
+                //end
+                this.setMarker(
+                  String.fromCharCode((i + 98).toString()),
+                  response.routes[0].legs[i].end_address,
+                  response.routes[0].legs[i].end_location.lat(name),
+                  response.routes[0].legs[i].end_location.lng(name)
+                );
+              }
+            }
+
+            //directionsRenderer.setDirections(response);
+            //我猜這裏是讓他回傳路線的資訊地方，並重新渲染地圖(呈現路線圖的樣子)
 
             //這裡是他文字路線的顯示(成功)
             var route = response.routes[0];
@@ -167,6 +212,30 @@ export default {
           }
         }
       );
+    },
+    setMarker(order, address, lat, lng) {
+      // 建立一個新地標
+      const marker = new google.maps.Marker({
+        // 設定地標的座標
+        position: { lat: parseFloat(lat), lng: parseFloat(lng) },
+        // 設定地標要放在哪一個地圖
+        label: order.toUpperCase(),
+        map: this.map
+      });
+      const infowindow = new google.maps.InfoWindow({
+        // 設定想要顯示的內容
+        content: `
+
+            ${address}
+
+        `,
+        // 設定訊息視窗最大寬度
+        maxWidth: 200
+      });
+      marker.addListener("click", () => {
+        // 指定在哪個地圖和地標上開啟訊息視窗
+        infowindow.open(this.map, marker);
+      });
     }
   }
 };
@@ -213,7 +282,7 @@ body {
 #directions-panel {
   margin-top: 10px;
   background-color: #ffee77;
-  padding: 10px;
+  padding: 5px;
   overflow: scroll;
   height: 174px;
 }

@@ -77,7 +77,7 @@ class ProsCosController extends Controller
         $id = $obj[0]->id;
 
 
-        $sql_positive = FacadesDB::select("SELECT id,segment,weight FROM segment_data WHERE site_id = '$id' AND weight >= 1 AND evaluation = 'P' ORDER BY weight DESC LIMIT 15");
+        $sql_positive = FacadesDB::select("SELECT id,segment,degree FROM segment_data WHERE site_id = '$id' AND degree >= 1 AND evaluation = 'P' ORDER BY degree DESC LIMIT 15");
 
 
 
@@ -95,7 +95,7 @@ class ProsCosController extends Controller
         $id = $obj[0]->id;
 
 
-        $sql_negative = FacadesDB::select("SELECT id,segment,weight FROM segment_data WHERE site_id = '$id' AND weight >= 1 AND evaluation = 'N' ORDER BY weight DESC LIMIT 15");
+        $sql_negative = FacadesDB::select("SELECT id,segment,degree FROM segment_data WHERE site_id = '$id' AND degree >= 1 AND evaluation = 'N' ORDER BY degree DESC LIMIT 15");
 
 
         return response()->json($sql_negative, 200);

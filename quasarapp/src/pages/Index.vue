@@ -12,9 +12,7 @@
       height="500px"
       class="bg-white-1"
     >
-
       <q-carousel-slide :name="1" class="row no-wrap">
-
         <div
           class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap"
         >
@@ -88,6 +86,7 @@
             flat
             color="primary"
             label="進入分析"
+            :to="func.link"
             style="font-weight: bold;"
           />
           <q-space />
@@ -139,6 +138,8 @@ export default {
           illustrate:
             "只要選擇兩個想去的景點的類型，您即可找出符合A類型及B類型的景點",
           img: require("assets/idea.png"),
+          link: "/arrange-schedule",
+
           expanded: false
         },
 
@@ -148,6 +149,8 @@ export default {
           illustrate:
             "只要輸入您想了解的景點名稱，景點優缺點馬上一目瞭然，不必再花大量時間爬文。",
           img: require("assets/plus.png"),
+          link: "/arrange-schedule",
+
           expanded: false
         },
         {
@@ -156,6 +159,8 @@ export default {
           illustrate:
             "只要輸入一個想去的景點作為起點，就可以找到受大眾歡迎的路線",
           img: require("assets/road.png"),
+          link: "/arrange-schedule",
+
           expanded: false
         },
         {
@@ -163,6 +168,7 @@ export default {
           tip: "想要來一趟旅程的你",
           illustrate: "集合我們所有的分析功能，讓您一步一步的規畫屬於您的旅程",
           img: require("assets/vacation.png"),
+          link: "/mySchedule",
           expanded: false
         }
       ],

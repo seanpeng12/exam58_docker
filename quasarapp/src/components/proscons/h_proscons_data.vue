@@ -13,6 +13,7 @@
               style="font-size: 26px;font-weight:bold;font-family: Microsoft JhengHei;"
             >
               {{ h_prosConsselected_site }}的優點
+              <slot name="addToSchedule"></slot>
             </p>
             <div>
               <div>
