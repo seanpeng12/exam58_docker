@@ -10,7 +10,21 @@
 
     <q-drawer show-if-above v-model="left" side="left" bordered :width="260">
       <!-- 往上一頁 -->
-      <q-btn
+      <q-icon class="q-mt-xs q-ml-md" color="#cccccc" name="help" size="26px">
+        <q-tooltip
+          anchor="top middle"
+          content-class="q-pa-md bg-amber-2 text-black shadow-4"
+          content-style="font-size: 14px"
+          transition-show="fade"
+          transition-hide="fade"
+          :offset="[10, 10]"
+        >
+          <span style="font-family:Microsoft JhengHei;">
+            您可以搭配我們的分析步驟，把喜愛的景點飯店加入排程
+          </span>
+        </q-tooltip>
+      </q-icon>
+      <!-- <q-btn
         icon="keyboard_backspace"
         color="white"
         class="text-black"
@@ -33,7 +47,7 @@
             <q-btn flat label="取消" color="primary" v-close-popup />
           </q-card-actions>
         </q-card>
-      </q-dialog>
+      </q-dialog> -->
 
       <!-- 往上一頁結束 -->
 
@@ -419,7 +433,7 @@
 
               <q-page>
                 <!-- 左右區域 web -->
-                <div class="q-pa-md">
+                <div class="q-pa-md ">
                   <div class="row">
                     <div class="col-6">
                       <proscons-data>
@@ -511,9 +525,24 @@
               />
             </q-tab-panel>
             <q-tab-panel name="aa">
-              <div class="text-h4">Tip: Google替您規劃最短路徑的景點順序</div>
+              <div class="text-h4">
+                GoogleMap找出最短路線
+                <q-icon color="red" name="report_problem" size="20px" />
+                <span class="text-subtitle2" style="color:red">
+                  起點與終點為固定順序
+                </span>
+              </div>
 
-              <img src="~assets/map.jpg" />
+              <googleMap>
+                <!-- <template slot="chooseForArrange">
+                  <q-btn
+                    label="選擇想安排的日期"
+                    glossy
+                    color="amber"
+                    @click="chooseForArrange()"
+                  ></q-btn></template
+              > -->
+              </googleMap>
             </q-tab-panel>
           </q-tab-panels>
         </q-card>
@@ -579,7 +608,9 @@ export default {
 
     pathR: () => import("components/path/path_R.vue"),
     pathData: () => import("components/path/path_data.vue"),
-    pathButtonToggle: () => import("components/path/path_button_toggle.vue")
+    pathButtonToggle: () => import("components/path/path_button_toggle.vue"),
+    //map
+    googleMap: () => import("components/map/googleMap.vue")
   },
   computed: {
     ...mapGetters("travel", ["everydaySites"]),
@@ -875,6 +906,50 @@ export default {
     txtdatas_toVuex(value) {
       this.$store.commit("demand/update_txtdatas", value);
     }
+    //Step6 googlemp選擇想分析的日期
+    // chooseForArrange() {
+    //   const dateList = Object.keys(this.everydaySites);
+    //   const item_1 = [];
+    //   // 日期作為下面item的物件選項(radio)
+    //   dateList.forEach(function(item, index, array) {
+    //     item_1.push({
+    //       label: item,
+    //       value: item,
+    //       color: "secondary"
+    //     });
+    //   });
+
+    //   this.$q
+    //     .dialog({
+    //       title: "選擇您想加入的日期",
+    //       message: "日期:",
+    //       options: {
+    //         type: "radio",
+    //         model: "opt1",
+    //         // inline: true
+    //         items: item_1
+    //       },
+    //       cancel: true,
+    //       persistent: true
+    //     })
+    //     .onOk(data => {
+    //       console.log(this.h_prosConsselected_site);
+
+    //       this.$store.dispatch("travel/fbAddEverySiteData", {
+    //         site: this.h_prosConsselected_site,
+    //         date: data,
+    //         scheduleId: this.id
+    //       });
+
+    //       // console.log('>>>> OK, received', data)
+    //     })
+    //     .onCancel(() => {
+    //       // console.log('>>>> Cancel')
+    //     })
+    //     .onDismiss(() => {
+    //       // console.log('I am triggered on both OK and Cancel')
+    //     });
+    // }
   },
   created() {
     // 旅程表ID
