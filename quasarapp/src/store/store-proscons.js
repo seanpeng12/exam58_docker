@@ -66,7 +66,7 @@ const mutations = {
 const actions = {
   fetchCitys({ commit }) {
     axiosInstance
-      .get("http://127.0.0.1/api/proscons_site_data_City")
+      .get("http://140.136.155.116/api/proscons_site_data_City")
       .then(res => {
         commit("FETCH_Citys", res.data);
         console.log("vuex-get 城市");
@@ -78,7 +78,7 @@ const actions = {
 
   fetchSites({ commit }) {
     axiosInstance
-      .post("http://127.0.0.1/api/sitesByCity", {
+      .post("http://140.136.155.116/api/sitesByCity", {
         city_name: state.selected_city
       })
       .then(res => {
@@ -92,7 +92,7 @@ const actions = {
 
   fetchProsConsR({ commit }) {
     axiosInstance
-      .post("http://127.0.0.1/api/proscons", {
+      .post("http://140.136.155.116/api/proscons", {
         name: state.selected_site
       })
       .then(res => {
@@ -107,7 +107,7 @@ const actions = {
 
   fetchPros({ commit }) {
     axiosInstance
-      .post("http://127.0.0.1/api/prosData", {
+      .post("http://140.136.155.116/api/prosData", {
         name: state.selected_site
       })
       .then(res => {
@@ -121,7 +121,7 @@ const actions = {
 
   fetchCons({ commit }) {
     axiosInstance
-      .post("http://127.0.0.1/api/consData", {
+      .post("http://140.136.155.116/api/consData", {
         name: state.selected_site
       })
       .then(res => {
@@ -147,9 +147,6 @@ const getters = {
   },
   prosConsSelected_site: state => {
     return state.selected_site;
-  },
-  selected_city_local: state => {
-    return state.selected_city_local;
   },
   start_index: state => {
     return state.start_index;

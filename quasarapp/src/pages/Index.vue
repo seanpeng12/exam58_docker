@@ -23,7 +23,7 @@
             </div>
           </div>
           <div class="col" style="margin-top:65px">
-            <div class="col" style="margin-left: 80spx;font-family: Microsoft JhengHei;">
+            <div class="col" style="margin-left: 80spx;font-family:NSimSun;">
               <h4 class="q-mt-none q-ml-xl text-black">
                 <br />SIGHTSEEING。
                 <br />一個輕鬆規劃旅程
@@ -39,6 +39,7 @@
       </q-carousel-slide>
     </q-carousel>
     <!-- carousel end -->
+    <!-- 需求分析 -->
     <div class="q-pa-md row" style="min-height:200px;">
       <div class="col-7 bg-grey-3 text-center text-h5">
         <div class="container" style="position: relative;color: black;">
@@ -74,7 +75,10 @@
         </div>
       </div>
       <div class="col-5 bg-grey-3 text-center">
-        <div class="container" style="position: relative;text-align: center;color: white;">
+        <div
+          class="container"
+          style="position: relative;text-align: center;color: white;max-width:650px"
+        >
           <img
             src="https://images.unsplash.com/photo-1525770041010-2a1233dd8152?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1868&q=80"
             alt="Snow"
@@ -97,13 +101,14 @@
         </div>
       </div>
     </div>
+    <!-- 需求分析 end -->
     <!-- 游標 -->
     <q-page-scroller reverse position="top-right" :scroll-offset="20" :offset="[18, 18]">
       <q-btn fab icon="keyboard_arrow_down" color="dark" />
     </q-page-scroller>
     <!-- end -->
     <!-- card -->
-    <div class="row" style="margin-left: 40px;">
+    <div class="row relative-position" style="margin-left: 40px;">
       <q-card
         class="my-card"
         style="margin: 20px; width: 250px;"

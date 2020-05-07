@@ -57,7 +57,7 @@ const actions = {
 
     // 取src
     axiosInstance
-      .post("http://127.0.0.1/api/getGoogleImg", {
+      .post("http://140.136.155.116/api/getGoogleImg", {
         name: value.site_name
       })
       .then(res => {
@@ -92,11 +92,11 @@ const actions = {
     // const addToCollection 
 
     axiosInstance
-      .post("http://127.0.0.1/api/getGoogleImg", {
+      .post("http://140.136.155.116/api/getGoogleImg", {
         name: site_name
       }).then(res => {
         axiosInstance
-          .post("http://127.0.0.1/api/proconsAddToCollection", {
+          .post("http://140.136.155.116/api/proconsAddToCollection", {
             name: site_name
           }).then(datas => {
             fstore
@@ -134,11 +134,11 @@ const actions = {
     // const addToCollection 
 
     axiosInstance
-      .post("http://127.0.0.1/api/getGoogleImg", {
+      .post("http://140.136.155.116/api/getGoogleImg", {
         name: hotel_name
       }).then(res => {
         axiosInstance
-          .post("http://127.0.0.1/api/h_proconsAddToCollection", {
+          .post("http://140.136.155.116/api/h_proconsAddToCollection", {
             name: hotel_name
           }).then(datas => {
             fstore
@@ -187,7 +187,7 @@ const actions = {
   // 加入偏好（含axios）
   fbAddToPrefer({ commit }, id) {
     axiosInstance
-      .post("http://127.0.0.1/api/preferTag", {
+      .post("http://140.136.155.116/api/preferTag", {
         site_id: id
       })
       .then(res => {

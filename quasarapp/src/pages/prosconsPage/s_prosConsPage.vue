@@ -22,13 +22,19 @@
         <proscons-select>
           <template slot="addToCollection">
             <q-btn
+              :loading="loading2"
               class="q-ml-md"
               @click="
-            addToCollection(prosConsSelected_site)"
+            addToCollection(prosConsSelected_site),simulateProgress(2)"
               dense
               label="加入收藏"
               color="warning"
-            ></q-btn>
+              style="width:80px"
+            >
+              <template v-slot:loading>
+                <q-icon name="check"></q-icon>已加入
+              </template>
+            </q-btn>
           </template>
         </proscons-select>
         <!-- end proscons select -->
@@ -63,7 +69,9 @@ export default {
     prosconsData: () => import("components/proscons/proscons_data.vue")
   },
   data() {
-    return {};
+    return {
+      loading2: false
+    };
   },
   computed: {
     // 取得vuex state變動值
@@ -90,9 +98,22 @@ export default {
         .getElementById("myFrame_bad")
         .contentWindow.location.reload(true);
       document.getElementById("myFrame_bad").src = "./statics/bad.html";
+    },
+    simulateProgress(number) {
+      // we set loading state
+      this[`loading${number}`] = true;
+      // simulate a delay
+      // setTimeout(() => {
+      //   // we're done, we reset loading state
+      //   this[`loading${number}`] = false;
+      // }, 300);
     }
   },
-  watch: {}
+  watch: {
+    prosConsSelected_site(val) {
+      this.loading2 = false;
+    }
+  }
 };
 </script>
 

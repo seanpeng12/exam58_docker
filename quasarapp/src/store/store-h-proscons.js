@@ -71,7 +71,7 @@ const actions = {
     commit
   }) {
     axiosInstance
-      .get("http://127.0.0.1/api/proscons_hotel_data_City")
+      .get("http://140.136.155.116/api/proscons_hotel_data_City")
       .then(res => {
         commit("FETCH_Citys", res.data);
         console.log("vuex-get 城市");
@@ -85,7 +85,7 @@ const actions = {
     commit
   }) {
     axiosInstance
-      .post("http://127.0.0.1/api/h_sitesByCity", {
+      .post("http://140.136.155.116/api/h_sitesByCity", {
         city_name: state.selected_city
       })
       .then(res => {
@@ -102,7 +102,7 @@ const actions = {
     dispatch
   }) {
     axiosInstance
-      .post("http://127.0.0.1/api/h_proscons", {
+      .post("http://140.136.155.116/api/h_proscons", {
         name: state.selected_site
       })
       .then(res => {
@@ -119,7 +119,7 @@ const actions = {
     commit
   }) {
     axiosInstance
-      .post("http://127.0.0.1/api/h_prosData", {
+      .post("http://140.136.155.116/api/h_prosData", {
         name: state.selected_site
       })
       .then(res => {
@@ -135,7 +135,7 @@ const actions = {
     commit
   }) {
     axiosInstance
-      .post("http://127.0.0.1/api/h_consData", {
+      .post("http://140.136.155.116/api/h_consData", {
         name: state.selected_site
       })
       .then(res => {
