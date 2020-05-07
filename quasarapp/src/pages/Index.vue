@@ -10,34 +10,28 @@
       animated
       control-color="primary"
       padding
-      height="500px"
+      height="700px"
       class="bg-grey-3"
     >
       <q-carousel-slide :name="1" class="row no-wrap">
-        <div
-          class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap bg-grey-3"
-          style="background-color:#"
-        >
+        <div class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap bg-grey-3">
           <div class="col" style="height: 500px;">
             <div class="col" style="margin-top:65px">
               <div align="center">
-                <q-img
-                  width="70%"
-                  src="~assets/logo_0.png"
-                  style="max-height: 400px;"
-                ></q-img>
+                <q-img width="70%" src="~assets/logo_0.png" style="max-height: 400px;"></q-img>
               </div>
             </div>
           </div>
           <div class="col" style="margin-top:65px">
-            <div
-              class="col"
-              style="margin-left: 80spx;font-family: Microsoft JhengHei;"
-            >
+            <div class="col" style="margin-left: 80spx;font-family: Microsoft JhengHei;">
               <h4 class="q-mt-none q-ml-xl text-black">
-                <br />SIGHTSEEING。<br />一個輕鬆規劃旅程
-                <br />節省您大量時間爬文的網站 <br />透過分析
-                <br />給你想要的旅遊景點 <br />並輕鬆排好你的旅程<br />
+                <br />SIGHTSEEING。
+                <br />一個輕鬆規劃旅程
+                <br />節省您大量時間爬文的網站
+                <br />透過分析
+                <br />給你想要的旅遊景點
+                <br />並輕鬆排好你的旅程
+                <br />
               </h4>
             </div>
           </div>
@@ -46,26 +40,65 @@
     </q-carousel>
     <!-- carousel end -->
     <div class="q-pa-md row" style="min-height:200px;">
-      <div class="col-4 bg-grey-1 text-center">
-        <q-img
-          src="https://images.unsplash.com/photo-1525770041010-2a1233dd8152?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1868&q=80"
-          :ratio="1"
-        />
+      <div class="col-7 bg-grey-3 text-center text-h5">
+        <div class="container" style="position: relative;color: black;">
+          <div
+            style="position: absolute;
+            left:66px;
+            top:150px;
+            font-size:50px;
+            font-family:NSimSun;"
+          >
+            <b>給拿不定主意的你</b>
+          </div>
+          <div
+            style="position: absolute;
+            text-align: left;
+            left:66px;
+            top:250px;
+            font-size:28px;
+            font-family:Microsoft JhengHei;"
+          >
+            <p>僅需選擇兩個想去的景點的類型</p>
+          </div>
+          <div
+            style="position: absolute;
+            text-align: left;
+            left:66px;
+            top:300px;
+            font-size:28px;
+            font-family:Microsoft JhengHei;"
+          >
+            <p>快速找出符合兩種類型的景點</p>
+          </div>
+        </div>
       </div>
-      <div
-        class="col-8 bg-grey-2 text-center text-h5"
-        style="font-family: Microsoft JhengHei;"
-      >
-        需求分析
+      <div class="col-5 bg-grey-3 text-center">
+        <div class="container" style="position: relative;text-align: center;color: white;">
+          <img
+            src="https://images.unsplash.com/photo-1525770041010-2a1233dd8152?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1868&q=80"
+            alt="Snow"
+            style="width:100%;height:600px;border-radius: 2%;"
+          />
+          <div
+            style="position: absolute;
+            bottom: 100px;
+            right: 50px;
+            font-size:48px;
+            font-family:Microsoft YaHei;"
+          >需求分析</div>
+          <div
+            style="position: absolute;
+            bottom: 36px;
+            right: 50px;
+            font-size:36px;
+            font-family:Georgia;"
+          >Demand Analysis</div>
+        </div>
       </div>
     </div>
     <!-- 游標 -->
-    <q-page-scroller
-      reverse
-      position="top-right"
-      :scroll-offset="20"
-      :offset="[18, 18]"
-    >
+    <q-page-scroller reverse position="top-right" :scroll-offset="20" :offset="[18, 18]">
       <q-btn fab icon="keyboard_arrow_down" color="dark" />
     </q-page-scroller>
     <!-- end -->
@@ -80,10 +113,7 @@
         :key="func.name"
       >
         <!-- <q-responsive :ratio="4 / 3" class="col"> -->
-        <q-img
-          v-bind:src="func.img"
-          style="height:140px; width:140px; margin: 60px"
-        ></q-img>
+        <q-img v-bind:src="func.img" style="height:140px; width:140px; margin: 60px"></q-img>
         <!-- </q-responsive> -->
         <!-- <q-img src="~assets/comment.jpg" /> -->
         <q-card-section>
@@ -93,13 +123,7 @@
         </q-card-section>
         <q-card-actions>
           <!-- <q-btn flat color="dark" label="Share" /> -->
-          <q-btn
-            flat
-            color="primary"
-            label="進入分析"
-            :to="func.link"
-            style="font-weight: bold;"
-          />
+          <q-btn flat color="primary" label="進入分析" :to="func.link" style="font-weight: bold;" />
           <q-space />
           <q-btn
             color="grey"
@@ -113,9 +137,11 @@
         <q-slide-transition>
           <div v-show="func.expanded">
             <q-separator />
-            <q-card-section class="text-subitle2">{{
+            <q-card-section class="text-subitle2">
+              {{
               func.illustrate
-            }}</q-card-section>
+              }}
+            </q-card-section>
           </div>
         </q-slide-transition>
       </q-card>
