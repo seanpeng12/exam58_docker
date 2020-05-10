@@ -1,106 +1,167 @@
 <template>
-  <div class="q-pa-md layout-font bg-grey-3">
-    <!-- carousel-->
+  <div class="q-pa-md layout-font bg-white">
+    <q-option-group v-model="navPos" :options="bottom" inline class="q-mb-md" />
     <q-carousel
-      v-model="slide"
-      transition-prev="slide-right"
-      transition-next="slide-left"
-      swipeable
-      autoplay
+      arrows
       animated
-      control-color="primary"
+      v-model="slide"
+      infinite
+      height="670px"
+      transition-prev="jump-right"
+      transition-next="jump-left"
+      swipeable
+      control-color="white"
+      prev-icon="arrow_left"
+      next-icon="arrow_right"
+      navigation-icon="radio_button_checked"
+      navigation
       padding
-      height="700px"
-      class="bg-grey-3"
+      class="bg-grey-3 text-white shadow-1 rounded-borders"
     >
-      <q-carousel-slide :name="1" class="row no-wrap">
-        <div class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap bg-grey-3">
-          <div class="col" style="height: 500px;">
-            <div class="col" style="margin-top:65px">
+      <q-carousel-slide name="1" img-src="~assets/index_1.jpg">
+        <div
+          class="row justify-start items-center no-wrap bg-grey-3"
+          style="text-align:center;width:auto;padding:0px;margin:120px;"
+        >
+          <div class="col-5">
+            <div class="col">
               <div align="center">
-                <q-img width="70%" src="~assets/logo_0.png" style="max-height: 400px;"></q-img>
+                <q-img width="100%" src="~assets/logo_0.png"></q-img>
               </div>
             </div>
           </div>
-          <div class="col" style="margin-top:65px">
-            <div class="col" style="margin-left: 80spx;font-family:NSimSun;">
-              <h4 class="q-mt-none q-ml-xl text-black">
-                <br />SIGHTSEEING。
+          <div class="col-7">
+            <div class="col" style="font-family:NSimSun;text-align:left">
+              <h4
+                class="text-black"
+                style="font-size:30px;line-height:45px;font-weight:bold;margin-bottom:70px;margin-top:70px"
+              >
+                SIGHTSEEING。
                 <br />一個輕鬆規劃旅程
                 <br />節省您大量時間爬文的網站
-                <br />透過分析
+                <br />透過資料分析
                 <br />給你想要的旅遊景點
                 <br />並輕鬆排好你的旅程
-                <br />
               </h4>
             </div>
           </div>
         </div>
       </q-carousel-slide>
-    </q-carousel>
-    <!-- carousel end -->
-    <!-- 需求分析 -->
-    <div class="q-pa-md row" style="min-height:200px;">
-      <div class="col-7 bg-grey-3 text-center text-h5">
-        <div class="container" style="position: relative;color: black;">
-          <div
-            style="position: absolute;
+      <q-carousel-slide name="2" img-src>
+        <!-- 需求分析 -->
+        <div class="q-pa-md row">
+          <div class="col-7 bg-grey-3 text-center text-h5">
+            <div class="container" style="position: relative;color: black;">
+              <div
+                style="position: absolute;
             left:66px;
             top:150px;
             font-size:50px;
             font-family:NSimSun;"
-          >
-            <b>給拿不定主意的你</b>
-          </div>
-          <div
-            style="position: absolute;
+              >
+                <b>給拿不定主意的你</b>
+              </div>
+              <div
+                style="position: absolute;
             text-align: left;
             left:66px;
             top:250px;
             font-size:28px;
             font-family:Microsoft JhengHei;"
-          >
-            <p>僅需選擇兩個想去的景點的類型</p>
-          </div>
-          <div
-            style="position: absolute;
+              >
+                <p>僅需選擇兩個想去的景點的類型</p>
+              </div>
+              <div
+                style="position: absolute;
             text-align: left;
             left:66px;
             top:300px;
             font-size:28px;
             font-family:Microsoft JhengHei;"
-          >
-            <p>快速找出符合兩種類型的景點</p>
+              >
+                <p>快速找出符合兩種類型的景點</p>
+              </div>
+              <div
+                style="position: absolute;
+            text-align: left;
+            left:66px;
+            top:350px;
+            font-size:28px;
+            font-family:Microsoft JhengHei;"
+              >
+                <q-btn
+                  class="q-pl-md"
+                  size="20px"
+                  color="blue"
+                  icon-right="keyboard_arrow_right"
+                  label="景點"
+                  style="font-family:NSimSun;"
+                />&nbsp;
+                <q-btn
+                  class="q-pl-md"
+                  size="20px"
+                  color="blue"
+                  icon-right="keyboard_arrow_right"
+                  label="飯店"
+                  style="font-family:NSimSun;"
+                />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="col-5 bg-grey-3 text-center">
-        <div
-          class="container"
-          style="position: relative;text-align: center;color: white;max-width:650px"
-        >
-          <img
-            src="https://images.unsplash.com/photo-1525770041010-2a1233dd8152?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1868&q=80"
-            alt="Snow"
-            style="width:100%;height:600px;border-radius: 2%;"
-          />
-          <div
-            style="position: absolute;
+          <div class="col-5 bg-grey-3 text-center">
+            <div
+              class="container"
+              style="position: relative;text-align: center;color: white;max-width:650px"
+            >
+              <img
+                src="~assets/index_demand.jpeg"
+                alt="Snow"
+                style="max-width:600px;width:100%;height:70ex;border-radius: 2%;"
+              />
+              <div
+                style="position: absolute;
             bottom: 100px;
             right: 50px;
             font-size:48px;
             font-family:Microsoft YaHei;"
-          >需求分析</div>
-          <div
-            style="position: absolute;
+              >需求分析</div>
+              <div
+                style="position: absolute;
             bottom: 36px;
             right: 50px;
             font-size:36px;
             font-family:Georgia;"
-          >Demand Analysis</div>
+              >Demand Analysis</div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+        <!-- 需求分析 end -->
+      </q-carousel-slide>
+
+      <q-carousel-slide name="3" img-src="~assets/index_2.jpg">
+        <div class="row item-center" style="text-align: center;color:white;">
+          <div>
+            <q-img width="70%" style="height:auto;"></q-img>
+          </div>
+        </div>
+
+        <h2>Pros and Cons</h2>
+        <div>
+          <div class="content">
+            <div
+              class="text-h4"
+              style="font-family:NSimSun;background-color: rgba(0, 0, 0, 0.3);padding:40px;"
+            >
+              <div class="rol text-h2">不想踩雷的你</div>
+              <div>
+                <br />使用我們的優缺點分析功能
+                <br />輸入景點或飯店名稱，優點與缺點一目瞭然
+              </div>
+            </div>
+          </div>
+        </div>
+      </q-carousel-slide>
+    </q-carousel>
     <!-- 需求分析 end -->
     <!-- 游標 -->
     <q-page-scroller reverse position="top-right" :scroll-offset="20" :offset="[18, 18]">
@@ -159,20 +220,12 @@
 // 824 (it's in pixels always)
 import { mapgetters } from "vuex";
 export default {
-  // computed: {
-  //   funcs() {
-  //     return this.$store.getters("funcs", [funcs]);
-  //   },
-  //   name: "PageIndex",
-  //   slide: "style",
-  //   expend: false
-  // }
-
   data() {
     return {
+      slide: "3",
+      autoplay: true,
+      navPos: "bottom",
       name: "PageIndex",
-      slide: 1,
-      // expanded: false,
 
       funcs: [
         {
@@ -237,4 +290,19 @@ export default {
 .h2 {
   color: yellowgreen;
 }
+h2 {
+  text-align: center;
+}
+
+.content {
+  width: 700px;
+  height: 180px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+}
 </style>
+

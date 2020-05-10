@@ -52,6 +52,17 @@
 
           <q-card-section>
             <demand-r :src="src" :runR_value="runR_value"></demand-r>
+            <!-- loading 插件 -->
+            <transition name="fade">
+              <loading
+                v-if="isLoading"
+                :active.sync="isLoading"
+                :can-cancel="false"
+                :on-cancel="onCancel"
+                :is-full-page="fullPage"
+              ></loading>
+            </transition>
+            <!--  -->
           </q-card-section>
         </q-card>
       </div>
@@ -208,10 +219,15 @@
 <script>
 import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
+// Import component
+import Loading from "vue-loading-overlay";
+// Import stylesheet
+import "vue-loading-overlay/dist/vue-loading.css";
 
 export default {
   name: "vueFrame",
   components: {
+    Loading,
     demandSelect: () => import("components/demand/demand_select.vue"),
     demandR: () => import("components/demand/demand_R.vue"),
     demandData: () => import("components/demand/demand_data.vue"),
@@ -248,8 +264,9 @@ export default {
 
       // 給加入最愛使用
       loading4: false,
-      //是否顯示Ｒ圖上方標題
-      R_title: false
+      //vue-loading-overley套件
+      isLoading: false,
+      fullPage: false
     };
   },
 
@@ -262,10 +279,11 @@ export default {
     ...mapActions("demand", ["upload_axios_2", "upload_axios_2_diff"]),
 
     changeSrc() {
-      document.getElementById("myFrame").contentWindow.location.reload(true);
-      document.getElementById("myFrame").src =
-        "./statics/between_relationship.html";
-      // this.src = "./statics/between_relationship.html";
+      // document.getElementById("myFrame").contentWindow.location.reload(true);
+      // document.getElementById("myFrame").src =
+      //   "./statics/between_relationship.html";
+      this.isLoading = false;
+      this.src = "./statics/between_relationship.html";
       this.$store.commit(
         "demand/update_txtinfo",
         "分析完成! 已列出所有符合兩類別景點，請點選加入最愛："
@@ -307,14 +325,16 @@ export default {
     },
     // 傳送runR引數至vuex
     run_R(value) {
-      (this.r_title_1 = this.selected_p),
-        (this.r_title_2 = this.selected_p_detail_item),
-        (this.r_title_3 = this.selected_p_detail_item_2),
-        console.log("runR~demand");
+      this.r_title_1 = this.selected_p;
+      this.r_title_2 = this.selected_p_detail_item;
+      this.r_title_3 = this.selected_p_detail_item_2;
+      console.log("runR~demand");
       this.$store.commit("demand/update_runR_value", value);
       this.$store.commit("demand/update_txtinfo", "載入中...");
+
       // 更改為loading
-      document.getElementById("myFrame").src = "./statics/images/loader.gif";
+      this.isLoading = true;
+      // document.getElementById("myFrame").src = "./statics/images/loader.gif";
       // vuex 跑R
       this.upload_axios();
     },

@@ -1,6 +1,6 @@
 <template>
-  <div class="q-pa-md doc-container">
-    <div class="gt-xs q-pa-lg column items-center text-black bg-grey-3" style="height: 200px;">
+  <div class="q-pl-lg q-pr-lg q-pt-lg doc-container">
+    <div class="gt-xs q-pa-lg column items-center text-black bg-grey-3" style="height: 300px;">
       <div class="col">
         <div class="text-center img_background">
           <p style="font-size: 28px;font-family: Microsoft JhengHei;">飯店需求分析</p>
@@ -11,11 +11,6 @@
           <div>
             <b class="text" style="font-size: 30px;font-family: Microsoft JhengHei;">選擇想分析的景點城市/類型</b>
             <br />
-
-            <!-- 以下測試 -->
-            <!-- <p>{{Object.values(citys).map(city => city.city_name)}}</p>
-              <div v-for="city in citys" :key="city.index">{{k[city.index] = city.city_name}}</div>
-            <p>{{k}}</p>-->
           </div>
         </div>
       </div>
