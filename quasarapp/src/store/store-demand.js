@@ -96,7 +96,10 @@ const mutations = {
   },
   update_txtinfo(state, value) {
     return (state.txtinfo = value);
-  }
+  },
+  update_src(state, value) {
+    return (state.src = value);
+  },
 };
 const actions = {
   fetchCitys({ commit }) {
@@ -190,7 +193,7 @@ const actions = {
         commit("FETCH_index", 1);
         console.log("after_axios+1");
       })
-      .catch(function(response) {
+      .catch(function (response) {
         console.log(response);
       });
   },
@@ -220,46 +223,51 @@ const actions = {
               .collection("sightseeingMember")
               .doc(uid)
               .collection("我的收藏");
-            id.forEach(function(data, index, array) {
+            id.forEach(function (data, index, array) {
               checkCollectionExists
                 .doc(data)
                 .get()
-                .then(function(doc) {
-                  if (doc.exists) {
-                    commit("FETCH_txtdatas", {
-                      id: data,
-                      txtdata: {
-                        name: name[index],
-                        city_name: city_name[index],
-                        address: address[index],
-                        comment: comment[index],
-                        rate: rate[index],
-                        type: type[index],
-                        exists: true
-                      }
-                    });
+                .then(function (doc) {
+                  if (index === id.length - 1) {
+                    console.log("最後一筆");
                   } else {
-                    commit("FETCH_txtdatas", {
-                      id: data,
-                      txtdata: {
-                        name: name[index],
-                        city_name: city_name[index],
-                        address: address[index],
-                        comment: comment[index],
-                        rate: rate[index],
-                        type: type[index],
-                        exists: false
-                      }
-                    });
+                    if (doc.exists) {
+                      commit("FETCH_txtdatas", {
+                        id: data,
+                        txtdata: {
+                          name: name[index],
+                          city_name: city_name[index],
+                          address: address[index],
+                          comment: comment[index],
+                          rate: rate[index],
+                          type: type[index],
+                          exists: true
+                        }
+                      });
+                    } else {
+                      commit("FETCH_txtdatas", {
+                        id: data,
+                        txtdata: {
+                          name: name[index],
+                          city_name: city_name[index],
+                          address: address[index],
+                          comment: comment[index],
+                          rate: rate[index],
+                          type: type[index],
+                          exists: false
+                        }
+                      });
+                    }
                   }
+
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                   console.log("Error getting document:", error);
                 });
-            });
+            })
           } else {
             console.log("no");
-            id.forEach(function(data, index, array) {
+            id.forEach(function (data, index, array) {
               commit("FETCH_txtdatas", {
                 id: data,
                 txtdata: {
@@ -279,7 +287,7 @@ const actions = {
 
         // commit('FETCH_txtdatas', txtdatas);
       })
-      .catch(function(response) {
+      .catch(function (response) {
         console.log(response);
       });
   },
@@ -311,11 +319,11 @@ const actions = {
               .collection("sightseeingMember")
               .doc(uid)
               .collection("我的收藏");
-            id.forEach(function(data, index, array) {
+            id.forEach(function (data, index, array) {
               checkCollectionExists
                 .doc(data)
                 .get()
-                .then(function(doc) {
+                .then(function (doc) {
                   // 判斷資料是否存在資料庫
                   if (doc.exists) {
                     commit("FETCH_txtdatas_diff", {
@@ -347,14 +355,14 @@ const actions = {
                     });
                   }
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                   console.log("Error getting document:", error);
                 });
             });
           }
           // 未登入，不判斷資料是否存在資料庫
           else {
-            id.forEach(function(data, index, array) {
+            id.forEach(function (data, index, array) {
               commit("FETCH_txtdatas_diff", {
                 id: data,
                 txtdata_diff: {
@@ -372,7 +380,7 @@ const actions = {
         });
       })
 
-      .catch(function(response) {
+      .catch(function (response) {
         console.log(response);
       });
   },

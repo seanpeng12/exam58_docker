@@ -38,6 +38,17 @@
                       class="frameStyle"
                       ref="myFrame_good"
                     ></iframe>
+
+                    <!-- loading 插件 -->
+                    <transition name="fade">
+                      <loading
+                        v-if="isLoading"
+                        :active.sync="isLoading"
+                        :can-cancel="false"
+                        :is-full-page="fullPage"
+                      ></loading>
+                    </transition>
+                    <!--  -->
                   </q-tab-panel>
 
                   <q-tab-panel name="cons">
@@ -48,6 +59,17 @@
                       :src="src_bad"
                       class="frameStyle"
                     ></iframe>
+
+                    <!-- loading 插件 -->
+                    <transition name="fade">
+                      <loading
+                        v-if="isLoading"
+                        :active.sync="isLoading"
+                        :can-cancel="false"
+                        :is-full-page="fullPage"
+                      ></loading>
+                    </transition>
+                    <!--  -->
                   </q-tab-panel>
                 </q-tab-panels>
               </q-card>
@@ -79,14 +101,25 @@
 import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
 
+// Import component
+import Loading from "vue-loading-overlay";
+// Import stylesheet
+import "vue-loading-overlay/dist/vue-loading.css";
+
 export default {
   data() {
     return {
       tab: "pros",
       // dropdownitem
       expanded: true,
-      isShow_R: true
+      isShow_R: true,
+      //vue-loading-overley套件
+      isLoading: false,
+      fullPage: false
     };
+  },
+  components: {
+    Loading
   },
   computed: {
     // 取得vuex state變動偵測值
@@ -102,12 +135,19 @@ export default {
       this.$refs.myFrame_good.contentWindow.location.reload();
       console.log("change重整畫面成功!data_index+1");
 
+      this.$store.commit("h_proscons/Update_Good_Src", "./statics/h_good.html");
+      this.$store.commit("h_proscons/Update_Bad_Src", "./statics/h_bad.html");
+      this.isLoading = false;
+
       this.$store.commit("h_proscons/Update_Data_Index", 1);
     }
   },
   watch: {
     start_index(val) {
       this.tab = "pros";
+      this.isLoading = true;
+      this.$store.commit("h_proscons/Update_Good_Src", "about:blank");
+      this.$store.commit("h_proscons/Update_Bad_Src", "about:blank");
     },
     run_index(val) {
       this.changeSrc();
@@ -118,6 +158,14 @@ export default {
 </script>
 
 <style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
 .frameStyle {
   width: 100%;
   height: 500px;

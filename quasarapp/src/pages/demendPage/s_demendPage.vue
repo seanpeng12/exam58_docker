@@ -58,7 +58,6 @@
                 v-if="isLoading"
                 :active.sync="isLoading"
                 :can-cancel="false"
-                :on-cancel="onCancel"
                 :is-full-page="fullPage"
               ></loading>
             </transition>
@@ -265,7 +264,6 @@ export default {
 
       // 給加入最愛使用
       loading4: false,
-      onCancel: false,
       //vue-loading-overley套件
       isLoading: false,
       fullPage: false
@@ -276,7 +274,6 @@ export default {
     // 由此找vuex所需method
     ...mapActions("demand", ["fetchCitys"]),
     ...mapActions("demand", ["fetchCats"]),
-    ...mapActions("demand", ["changeSrc"]),
     ...mapActions("demand", ["upload_axios"]),
     ...mapActions("demand", ["upload_axios_2", "upload_axios_2_diff"]),
 
@@ -285,7 +282,10 @@ export default {
       // document.getElementById("myFrame").src =
       //   "./statics/between_relationship.html";
       this.isLoading = false;
-      this.src = "~statics/between_relationship.html";
+      this.$store.commit(
+        "demand/update_src",
+        "./statics/between_relationship.html"
+      );
       this.$store.commit(
         "demand/update_txtinfo",
         "分析完成! 已列出所有符合兩類別景點，請點選加入最愛："
@@ -336,6 +336,8 @@ export default {
 
       // 更改為loading
       this.isLoading = true;
+      this.$store.commit("demand/update_src", "about:blank");
+
       // document.getElementById("myFrame").src = "./statics/images/loader.gif";
       // vuex 跑R
       this.upload_axios();
@@ -372,7 +374,7 @@ export default {
 <style>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity 2s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;

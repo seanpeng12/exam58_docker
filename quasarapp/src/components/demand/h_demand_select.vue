@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md">
+  <div class="q-pa-md vertical-middleß">
     <div class="row">
       <div class="col-2"></div>
       <div class="q-gt-xs">

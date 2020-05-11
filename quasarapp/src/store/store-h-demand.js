@@ -96,7 +96,10 @@ const mutations = {
   },
   update_txtinfo(state, value) {
     return (state.txtinfo = value);
-  }
+  },
+  update_src(state, value) {
+    return (state.src = value);
+  },
 };
 const actions = {
   fetchCitys({ commit }) {
@@ -190,7 +193,7 @@ const actions = {
         commit("FETCH_index", 1);
         console.log("after_axios+1");
       })
-      .catch(function(response) {
+      .catch(function (response) {
         console.log(response);
       });
   },
@@ -220,11 +223,11 @@ const actions = {
               .collection("sightseeingMember")
               .doc(uid)
               .collection("我的收藏");
-            id.forEach(function(data, index, array) {
+            id.forEach(function (data, index, array) {
               checkCollectionExists
                 .doc(data)
                 .get()
-                .then(function(doc) {
+                .then(function (doc) {
                   if (doc.exists) {
                     commit("FETCH_txtdatas", {
                       id: data,
@@ -253,12 +256,12 @@ const actions = {
                     });
                   }
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                   console.log("Error getting document:", error);
                 });
             });
           } else {
-            id.forEach(function(data, index, array) {
+            id.forEach(function (data, index, array) {
               commit("FETCH_txtdatas", {
                 id: data,
                 txtdata: {
@@ -274,7 +277,7 @@ const actions = {
           }
         });
       })
-      .catch(function(response) {
+      .catch(function (response) {
         console.log(response);
       });
   },
@@ -306,11 +309,11 @@ const actions = {
               .collection("sightseeingMember")
               .doc(uid)
               .collection("我的收藏");
-            id.forEach(function(data, index, array) {
+            id.forEach(function (data, index, array) {
               checkCollectionExists
                 .doc(data)
                 .get()
-                .then(function(doc) {
+                .then(function (doc) {
                   if (doc.exists) {
                     commit("FETCH_txtdatas_diff", {
                       id: data,
@@ -341,12 +344,12 @@ const actions = {
                     });
                   }
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                   console.log("Error getting document:", error);
                 });
             });
           } else {
-            id.forEach(function(data, index, array) {
+            id.forEach(function (data, index, array) {
               commit("FETCH_txtdatas_diff", {
                 id: data,
                 txtdata_diff: {
@@ -363,7 +366,7 @@ const actions = {
           }
         });
       })
-      .catch(function(response) {
+      .catch(function (response) {
         console.log(response);
       });
   },
