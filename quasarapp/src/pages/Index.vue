@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md layout-font bg-white">
-    <q-option-group v-model="navPos" :options="bottom" inline class="q-mb-md" />
+    <q-option-group v-model="navPos" :autoplay="autoplay" :options="bottom" inline class="q-mb-md" />
     <q-carousel
       arrows
       animated
@@ -222,7 +222,7 @@ import { mapgetters } from "vuex";
 export default {
   data() {
     return {
-      slide: "3",
+      slide: "1",
       autoplay: true,
       navPos: "bottom",
       name: "PageIndex",

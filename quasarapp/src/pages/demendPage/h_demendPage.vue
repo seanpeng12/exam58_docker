@@ -242,9 +242,9 @@ export default {
 
     changeSrc() {
       document.getElementById("myFrame").contentWindow.location.reload(true);
-      document.getElementById("myFrame").src =
-        "./statics/h_between_relationship.html";
-      // this.src = "./statics/between_relationship.html";
+      // document.getElementById("myFrame").src =
+      //   "./statics/h_between_relationship.html";
+      this.src = "~statics/between_relationship.html";
       this.$store.commit(
         "h_demand/update_txtinfo",
         "分析完成! 已列出所有符合兩類別景點，請點選加入最愛："

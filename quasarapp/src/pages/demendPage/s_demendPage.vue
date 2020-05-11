@@ -264,6 +264,7 @@ export default {
 
       // 給加入最愛使用
       loading4: false,
+      onCancel: false,
       //vue-loading-overley套件
       isLoading: false,
       fullPage: false
@@ -279,11 +280,11 @@ export default {
     ...mapActions("demand", ["upload_axios_2", "upload_axios_2_diff"]),
 
     changeSrc() {
-      // document.getElementById("myFrame").contentWindow.location.reload(true);
+      document.getElementById("myFrame").contentWindow.location.reload(true);
       // document.getElementById("myFrame").src =
       //   "./statics/between_relationship.html";
       this.isLoading = false;
-      this.src = "./statics/between_relationship.html";
+      this.src = "~statics/between_relationship.html";
       this.$store.commit(
         "demand/update_txtinfo",
         "分析完成! 已列出所有符合兩類別景點，請點選加入最愛："
