@@ -1,35 +1,33 @@
 <template>
   <div class="text-black">
-    <q-btn
-      push
-      dense
-      round
-      color="light-blue-9"
-      icon="add"
-      @click="addDay()"
-      label=""
-      class="absolute-top-right"
-      size="10px"
-      style="margin-right:6px;margin-top:5px"
-    />
-    <q-btn
-      push
-      round
-      dense
-      color="light-blue-9"
-      icon="remove"
-      @click="deleteDay"
-      label=""
-      class="absolute-top"
-      style="margin-left:195px;margin-top:5px"
-      size="10px"
-    />
-    <q-breadcrumbs-el
-      label="天數"
-      icon="touch_app"
-      style="width:70px;margin-left:130px;margin-top:8px"
-      class="absolute-top text-primary"
-    />
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col">
+        <q-btn
+          push
+          dense
+          round
+          color="light-blue-9"
+          icon="add"
+          @click="addDay()"
+          class="absolute-top-right q-mr-sm q-mt-sm q-mb-xs"
+          size="10px"
+        />
+      </div>
+      <div class="col">
+        <q-btn
+          push
+          round
+          dense
+          color="light-blue-9"
+          icon="remove"
+          @click="deleteDay()"
+          class="absolute-top-right q-mr-xl q-mt-sm q-mb-xs"
+          style=""
+          size="10px"
+        />
+      </div>
+    </div>
 
     <div class="col-4">
       <q-chip

@@ -5,12 +5,27 @@
         <q-btn dense flat round icon="menu" @click="left = !left" />
 
         <q-toolbar-title style="font-weight:bold">{{ title }}</q-toolbar-title>
+        <q-item class="gt-xs" exact clickable to="/">
+          <q-item-section>
+            <q-item-label class>首頁</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item class="gt-xs" exact clickable to="/mySchedule">
+          <q-item-section>
+            <q-item-label class>我的旅程表</q-item-label>
+          </q-item-section>
+        </q-item>
       </q-toolbar>
     </q-header>
 
     <q-drawer show-if-above v-model="left" side="left" bordered :width="260">
       <!-- 往上一頁 -->
-      <q-icon class="q-mt-xs q-ml-md" color="#cccccc" name="help" size="26px">
+      <q-icon
+        class="q-mt-none q-mb-xs q-ml-md"
+        color="#cccccc"
+        name="help"
+        size="26px"
+      >
         <q-tooltip
           anchor="top middle"
           content-class="q-pa-md bg-amber-2 text-black shadow-4"
@@ -24,15 +39,23 @@
           </span>
         </q-tooltip>
       </q-icon>
+      <q-breadcrumbs-el
+        label="天數"
+        icon="touch_app"
+        style="width:70px;margin-left:80px;magin-right:50px"
+        size="18px"
+        class="absolute-middle text-primary q-mt-sm "
+      />
       <!-- <q-btn
         icon="keyboard_backspace"
         color="white"
         class="text-black"
+        label="我的旅程表"
         flat
         @click="darkDialog = true"
-      />
+      /> -->
 
-      <q-dialog v-model="darkDialog">
+      <!-- <q-dialog v-model="darkDialog">
         <q-card>
           <q-card-section>
             <div class="text-h4 font-color: warn">
@@ -98,13 +121,20 @@
               <!-- <q-banner class="bg-primary text-white">
                 <div class="text-h6 row"></div>
               </q-banner>-->
-              <div class="col-5" style="max-width: 300px">
-                <search />
+              <div class="row q-pa-md doc-container text-black bg-grey-3">
+                <q-tabs v-model="step1Tab" class="text-black">
+                  <q-tab name="site" icon="local_car_wash" label="景點收藏" />
+                  <q-tab name="hotel" icon="hot_tub" label="飯店收藏" />
+                </q-tabs>
+                <q-space />
+                <div class="col-5 q-pa-md" style="max-width: 300px">
+                  <search />
+                </div>
               </div>
               <!-- <div>透過需求分析</div>
               <div>自行搜尋</div>-->
 
-              <div class="row">
+              <div class="row q-mt-md" v-if="step1Tab == 'site'">
                 <LCard
                   v-for="(item, index, key) in collections"
                   :key="key"
@@ -125,6 +155,27 @@
                     />
                   </template>
                 </LCard>
+              </div>
+              <div class="row q-mt-md" v-else>
+                <hCard
+                  v-for="(item, key) in h_collections"
+                  :key="key"
+                  :h_collection="item"
+                  :index="key"
+                  style="margin-right: 4px;"
+                >
+                  <template slot="addToSchedule">
+                    <q-btn
+                      icon-right="add"
+                      label="加進排程"
+                      color="warning"
+                      @click="promptToAddSite({ id: id, site: item.site_name })"
+                      dense
+                      size="12px"
+                      style="margin-left:45px"
+                    />
+                  </template>
+                </hCard>
               </div>
               <q-btn
                 dense
@@ -208,7 +259,9 @@
                     <p
                       class="text"
                       style="font-size: 30px;font-family: Microsoft JhengHei;"
-                    >{{ txtinfo }}</p>
+                    >
+                      {{ txtinfo }}
+                    </p>
 
                     <q-list bordered>
                       <q-expansion-item
@@ -224,7 +277,9 @@
                       >
                         <q-card>
                           <q-card-section>
-                            <q-scroll-area style="height:200px; max-width: 600px;">
+                            <q-scroll-area
+                              style="height:200px; max-width: 600px;"
+                            >
                               <q-list>
                                 <demand-data
                                   v-for="(txtdata, key) in txtdatas"
@@ -268,7 +323,9 @@
                         <q-card>
                           <q-card-section>
                             <!-- test txtdatas_diff -->
-                            <q-scroll-area style="height:200px; max-width: 600px;">
+                            <q-scroll-area
+                              style="height:200px; max-width: 600px;"
+                            >
                               <q-list>
                                 <demandDataDiff
                                   v-for="(txtdata, key) in txtdatas_diff"
@@ -314,7 +371,9 @@
                       >
                         <q-card>
                           <q-card-section>
-                            <q-scroll-area style="height:200px; max-width: 600px;">
+                            <q-scroll-area
+                              style="height:200px; max-width: 600px;"
+                            >
                               <q-list>
                                 <demandDataDiff2
                                   v-for="(txtdata, key) in txtdatas_diff"
@@ -471,14 +530,14 @@
             </q-tab-panel>
             <!-- 飯店優缺點分析 -->
             <q-tab-panel name="h_advantage">
-              <div class="q-pa-md">
+              <div class=" q-pa-md">
                 <div class="q-pa-md doc-container text-black bg-grey-3">
                   <div class="row text-h4">
                     <b>飯店優缺點分析</b>
 
                     <prosconsInfo></prosconsInfo>
                   </div>
-                  <div class="row q-pl-xl">
+                  <div class="row-12 q-pl-xl">
                     <!-- proscons-select 區域 -->
                     <hotelProsconsSelect></hotelProsconsSelect>
                     <!-- end proscons select -->
@@ -575,12 +634,14 @@ export default {
       // 排程表名稱
       title: "",
       slider: 1,
-      step: 1
+      step: 1,
+      step1Tab: "site"
     };
   },
   components: {
     draggableC: () => import("components/drag/draggableC.vue"),
     LCard: () => import("components/collection/LCard.vue"),
+    hCard: () => import("components/collection/h_card.vue"),
     search: () => import("components/search.vue"),
     // 引用需求元件
     demandSelect: () => import("components/demand/demand_select.vue"),
@@ -614,7 +675,7 @@ export default {
   },
   computed: {
     ...mapGetters("travel", ["everydaySites"]),
-    ...mapGetters("collections", ["collections"]),
+    ...mapGetters("collections", ["collections", "h_collections"]),
     ...mapState("collections", ["search"]),
     ...mapGetters("prefers", ["firstPrefer"]),
     // demand

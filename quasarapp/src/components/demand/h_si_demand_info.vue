@@ -1,7 +1,6 @@
 <template>
-  <div>
+  <div class="">
     <q-btn
-      class="q-ma-md"
       dense
       icon="help"
       label="點我說明"
@@ -27,7 +26,7 @@
         <q-item dense>
           <q-item-section avatar> </q-item-section>
           <q-item-section>
-            為您找出你喜愛類型的景點
+            為您找出符合您理想需求的理想飯店
           </q-item-section>
         </q-item>
 
@@ -39,12 +38,12 @@
         <q-item dense>
           <q-item-section avatar> </q-item-section>
           <q-item-section>
-            <p>Step1. 選擇您所要到達的城市</p>
-            <p>Step2. 選擇兩種你有興趣的類型</p>
+            <p>Step1. 選擇您所要停留的城市</p>
+            <p>Step2. 選擇兩種你理想飯店應有的需求</p>
             <p>Step3. 按下分析鈕</p>
             <p>Step4. 左下為分析圖</p>
-            <p>Step5. 右下為分析圖裡的景點</p>
-            <p>Step6. 喜歡的話，一鍵加入排程</p>
+            <p>Step5. 右下為符合您需求的飯店</p>
+            <p>Step6. 喜歡的話，一鍵加入您的飯店收藏</p>
           </q-item-section>
         </q-item>
         <q-item-label header style="color:#57a5ba"
@@ -57,16 +56,16 @@
           <q-item-section>
             <div class="row">
               <div class="col">
-                <q-icon name="fas fa-circle" color="primary"
+                <q-icon name="fas fa-circle" color="orange"
                   ><span style="color:black; margin-left:10px">
-                    表示景點</span
+                    表示飯店</span
                   ></q-icon
                 >
               </div>
               <div class="col">
                 <q-icon name="fas fa-square" color="red-6" style="margin:5px"
                   ><span style="color:black;margin-left:10px">
-                    表示景點類型</span
+                    表示飯店擁有的特點</span
                   ></q-icon
                 >
               </div>
@@ -77,17 +76,17 @@
                 >1.
                 <q-icon
                   name="fas fa-circle"
-                  color="primary"
+                  color="orange"
                   class="q-mx-xs"
-                />(景點)與<q-icon
+                />(飯店)與<q-icon
                   name="fas fa-square"
                   color="red-6"
                   class="q-mx-xs"
-                />(景點類型) 連成線，表示該景點的類型屬於<q-icon
+                />(飯店特點) 連成線，表示該飯店擁有的特點為<q-icon
                   name="fas fa-square"
                   color="red-6"
                   class="q-mx-xs"
-                />(類型)</span
+                />(特點)</span
               >
               <br />
             </div>
@@ -95,13 +94,13 @@
               <span style=""
                 >2. 如果<q-icon
                   name="fas fa-circle"
-                  color="primary"
+                  color="orange"
                   class="q-mx-xs"
-                />(景點) 與兩個<q-icon
+                />(飯店) 與兩個<q-icon
                   name="fas fa-square"
                   color="red-6"
                   class="q-mx-xs"
-                />(類型) 相連，表示該景點同時擁有2種類型</span
+                />(特點) 相連，表示該飯店同時擁有兩種特點</span
               >
             </div>
           </q-item-section>

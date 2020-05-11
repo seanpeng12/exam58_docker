@@ -1,10 +1,10 @@
 <template>
   <q-card class="my-card" style="width:250px;">
-    <q-img style="height:150px" :src="collection.src" />
+    <q-img style="height:150px" :src="h_collection.src" />
 
     <q-card-section>
       <div class="row no-wrap items-center">
-        <div class="col text-h7 ellipsis">{{ collection.site_name }}</div>
+        <div class="col text-h7 ellipsis">{{ h_collection.site_name }}</div>
       </div>
 
       <div class="row text-caption text-grey q-mt-sm">
@@ -17,10 +17,10 @@
           class="col-2"
           style=" color:orange; font-size:14px; margin-left:5px"
         >
-          {{ collection.rate }}
+          {{ h_collection.rate }}
         </div>
         <div class="col-4" style="margin-left:2px">
-          {{ collection.comment }}則評價
+          {{ h_collection.comment }}則評價
         </div>
         <div class="col-3" style="margin-left:20px">
           <q-space />
@@ -36,14 +36,14 @@
         <!-- </div> -->
         <!-- dialog -->
         <q-dialog v-model="dialog">
-          <q-card style="width: 350px">
+          <q-card style="width: 400px">
             <q-linear-progress :value="16" color="blue-2" />
 
             <q-card-section class="row items-center no-wrap">
               <div>
                 <div class="text-weight-bold">
                   <q-icon name="place" color="orange-5" size="20px" />
-                  地址: {{ collection.address }}
+                  地址: {{ h_collection.address }}
                 </div>
               </div>
             </q-card-section>
@@ -58,7 +58,7 @@
         class="col-auto text-secondary text-caption q-pt-md row no-wrap items-center"
       >
         <q-icon name="place" />
-        台灣，{{ collection.city }}
+        台灣，{{ h_collection.city }}
         <slot name="addToSchedule"></slot>
         <slot name="deleteCollection"></slot>
       </div>
@@ -74,10 +74,11 @@
 // import axios from "axios";
 
 export default {
-  props: ["collection", "index"],
+  props: ["h_collection", "index"],
   data() {
     return {
       stars: 3.5,
+
       dialog: false,
       position: "top",
       src: "https://tw.bring-you.info/imgs/2017/08/Seine-3.jpg"
@@ -99,8 +100,3 @@ export default {
   // }
 };
 </script>
-<style lang="sass" scoped>
-.my-card
-  width: 100%
-  max-width: 250px
-</style>

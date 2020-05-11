@@ -1,6 +1,6 @@
 <template>
   <q-btn
-    v-if="exists == false"
+    v-if="txtdata.exists == false"
     :loading="loading2"
     color="warning"
     icon-right="add"
@@ -33,9 +33,19 @@
     @click="progress = false"
     label="已在收藏列表"
   />
+  <!-- <q-btn
+    dense
+    size="10px"
+    style="margin-right:20px;padding:2px"
+    v-else
+    :disable="!progress"
+    color="red-7"
+    @click="progress = false"
+    label="未登入"
+  /> -->
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   props: [
     "id",
@@ -45,7 +55,8 @@ export default {
     "comment",
     "rate",
     "site_name",
-    "exists"
+    "exists",
+    "txtdata"
   ],
   data() {
     return {
@@ -65,14 +76,15 @@ export default {
       // }, 300);
     },
     addToCollection(value) {
-      console.log(value);
-
       this.fbAddtoCollection(value);
     },
     addToPrefer(id) {
       this.fbAddToPrefer(id);
       console.log(id);
     }
+  },
+  computed: {
+    ...mapGetters("auth", ["loggedIn"])
   }
 };
 </script>

@@ -45,7 +45,7 @@
         >
           <q-card-section>
             <div class="text-h6">需求分析圖</div>
-            <div class="text-subtitle2">{{r_title_1}} {{r_title_2}} {{r_title_3}}</div>
+            <div class="text-subtitle2">{{ r_title_1 }} {{ r_title_2 }} {{ r_title_3 }}</div>
           </q-card-section>
 
           <q-separator />
@@ -88,8 +88,8 @@
               group="somegroup"
               icon="explore"
               :label="
-                  selected_p_detail_item + ' ＆ ' + selected_p_detail_item_2
-                "
+                selected_p_detail_item + ' ＆ ' + selected_p_detail_item_2
+              "
               default-opened
               header-class="text-purple"
             >
@@ -104,10 +104,10 @@
                         :txtdata="txtdata"
                         @txtdatas_Update="txtdatas_toVuex"
                       >
-                        <template slot="addToCollection">
+                        <template slot="addToCollection" v-if="loggedIn == true">
                           <q-space />
                           <addToCollectionBtn
-                            :exists="txtdata.exists"
+                            :txtdata="txtdata"
                             :id="key"
                             :city_name="txtdata.city_name"
                             :site_name="txtdata.name"
@@ -144,10 +144,10 @@
                         :selected_p_detail_item="selected_p_detail_item"
                         @txtdatas_Update="txtdatas_toVuex"
                       >
-                        <template slot="addToCollection">
+                        <template slot="addToCollection" v-if="loggedIn == true">
                           <q-space />
                           <addToCollectionBtn
-                            :exists="txtdata.exists"
+                            :txtdata="txtdata"
                             :id="key"
                             :city_name="txtdata.city_name"
                             :site_name="txtdata.name"
@@ -183,10 +183,10 @@
                         :selected_p_detail_item_2="selected_p_detail_item_2"
                         @txtdatas_Update="txtdatas_toVuex"
                       >
-                        <template slot="addToCollection">
+                        <template slot="addToCollection" v-if="loggedIn == true">
                           <q-space />
                           <addToCollectionBtn
-                            :exists="txtdata.exists"
+                            :txtdata="txtdata"
                             :id="key"
                             :city_name="txtdata.city_name"
                             :site_name="txtdata.name"
@@ -218,7 +218,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { mapActions } from "vuex";
+import { mapActions, mapStates } from "vuex";
 // Import component
 import Loading from "vue-loading-overlay";
 // Import stylesheet
@@ -253,7 +253,8 @@ export default {
       "selected_p_detail_item_2",
       "after_axios",
       "runR_value"
-    ])
+    ]),
+    ...mapGetters("auth", ["loggedIn"])
   },
   data() {
     return {

@@ -73,36 +73,35 @@
             </div>
             <br />
             <div class="row">
-              1.
-              <span style="margin-left:10px"
-                ><q-icon
+              <span style=""
+                >1.
+                <q-icon
                   name="fas fa-circle"
                   color="primary"
-                  class="q-mx-xs"/>與<q-icon
-                  name="fas fa-square"
-                  color="red-6"
-                  class="q-mx-xs"/>
-                連成線，表示該景點的類型屬於<q-icon
+                  class="q-mx-xs"
+                />(景點)與<q-icon
                   name="fas fa-square"
                   color="red-6"
                   class="q-mx-xs"
-              /></span>
+                />(景點類型) 連成線，表示該景點的類型屬於<q-icon
+                  name="fas fa-square"
+                  color="red-6"
+                  class="q-mx-xs"
+                />(類型)</span
+              >
               <br />
             </div>
             <div class="row">
-              2.
-              <span style="margin-left:10px"
-                >如果<q-icon
+              <span style=""
+                >2. 如果<q-icon
                   name="fas fa-circle"
                   color="primary"
                   class="q-mx-xs"
-                />
-                與兩個<q-icon
+                />(景點) 與兩個<q-icon
                   name="fas fa-square"
                   color="red-6"
                   class="q-mx-xs"
-                />
-                相連，表示該景點同時擁有2種類型</span
+                />(類型) 相連，表示該景點同時擁有2種類型</span
               >
             </div>
           </q-item-section>

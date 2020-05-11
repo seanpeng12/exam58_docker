@@ -9,31 +9,33 @@ Loginregister<template>
       align="justify"
       narrow-indicator
     >
-      <q-tab name="Login" label="Login" />
-      <q-tab name="Register" label="Register" />
+      <q-tab name="登入" label="登入" />
+      <q-tab name="註冊" label="註冊" />
     </q-tabs>
 
     <q-separator />
 
     <q-tab-panels v-model="tab" animated>
-      <q-tab-panel name="Login">
+      <q-tab-panel name="登入">
         <Loginregister :tab="tab" />
       </q-tab-panel>
 
-      <q-tab-panel name="Register"> <Loginregister :tab="tab" /> </q-tab-panel>
+      <q-tab-panel name="註冊"> <Loginregister :tab="tab" /> </q-tab-panel>
     </q-tab-panels>
   </q-card>
 </template>
 <script>
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
-      tab: "Login"
+      tab: "登入"
     };
   },
   components: {
     Loginregister: () => import("components/Auth/Login-register.vue")
-  }
+  },
+  methods: {}
 };
 </script>
 <style>
