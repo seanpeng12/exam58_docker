@@ -72,7 +72,7 @@
         </template>
       </q-btn>
       <slot name="addToCollection"></slot>
-
+      <!-- 
       <q-btn
         size="10px"
         round
@@ -89,7 +89,7 @@
           依您
           <strong>選擇的景點</strong>做分析，統整優點/缺點
         </q-tooltip>
-      </q-btn>
+      </q-btn> -->
       <!-- end -->
     </div>
   </div>

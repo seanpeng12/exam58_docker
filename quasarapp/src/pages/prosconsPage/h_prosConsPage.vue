@@ -1,50 +1,64 @@
 <template>
   <q-page>
     <div class="q-pa-md doc-container">
-      <div class="gt-xs q-pa-lg items-center text-black bg-grey-3" style="height:250px;">
+      <div
+        class="gt-xs q-pa-lg items-center text-black bg-grey-3"
+        style="height:250px;"
+      >
         <div class="row">
-          <div class="col-5"></div>
+          <div class="col"></div>
 
-          <div class="col-2 q-mt-none">
-            <p style="font-size: 28px;font-family: Microsoft JhengHei;">飯店優缺點分析</p>
+          <div class="col-12 col-md-auto">
+            <p style="font-size: 28px;font-family: Microsoft JhengHei;">
+              飯店優缺點分析
+            </p>
           </div>
+
           <div class="col q-mt-sm q-ml-sm">
             <hSiProsConsInfo></hSiProsConsInfo>
           </div>
         </div>
 
         <div class="row">
-          <div class="col-4"></div>
+          <div class="col"></div>
 
-          <div class="col">
+          <div class="col-12 col-md-auto">
             <div>
               <b
                 class="text"
                 style="font-size: 20px;font-family: Microsoft JhengHei;"
-              >從網站評論資訊，幫您分析飯店是否符合您的需求</b>
+                >從網站評論資訊，幫您分析飯店是否符合您的需求</b
+              >
               <br />
             </div>
           </div>
+          <div class="col"></div>
         </div>
 
         <!-- proscons-select 區域 -->
-        <div class="row-6">
-          <proscons-select>
-            <template slot="addToCollection">
-              <q-btn
-                :loading="loading2"
-                @click="simulateProgress(2),
-            addToCollection(h_prosConsselected_site)"
-                label="加入收藏"
-                color="warning"
-                style="width:100px"
-              >
-                <template v-slot:loading>
-                  <q-icon name="check"></q-icon>已加入
-                </template>
-              </q-btn>
-            </template>
-          </proscons-select>
+        <div class="row">
+          <div class="col"></div>
+          <div class="col-12 col-md-auto">
+            <proscons-select>
+              <template slot="addToCollection">
+                <q-btn
+                  :loading="loading2"
+                  @click="
+                    simulateProgress(2),
+                      addToCollection(h_prosConsselected_site)
+                  "
+                  label="加入收藏"
+                  color="warning"
+                  style="width:100px"
+                >
+                  <template v-slot:loading>
+                    <q-icon name="check"></q-icon>已加入
+                  </template>
+                </q-btn>
+              </template>
+            </proscons-select>
+          </div>
+          <div class="col"></div>
         </div>
 
         <!-- end proscons select -->
