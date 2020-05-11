@@ -1,38 +1,57 @@
 <template>
   <q-page>
-    <!-- web page 區域 -->
-    <!-- <div>
-      debug用
-      <p>vuex：{{selected_p}} {{selected_p_detail_item}} {{selected_p_detail_item_2}}</p>
-    </div>-->
-    <div class="q-pl-lg q-pr-lg q-pt-lg doc-container">
-      <div class="gt-xs q-pa-lg column items-center text-black bg-grey-3" style="height: 300px;">
-        <div class="col">
-          <div class="text-center img_background">
-            <p style="font-size: 28px;font-family: Microsoft JhengHei;">景點需求分析</p>
+    <div class="q-pa-md" style="align-items: center">
+      <div
+        class="q-gt-xs q-pa-lg items-center text-black bg-grey-3"
+        style="height: 300px;"
+      >
+        <div class="row" style="">
+          <div class="col"></div>
+          <div class="col-12 col-md-auto">
+            <p style="font-size: 28px;font-family: Microsoft JhengHei;">
+              景點需求分析
+            </p>
           </div>
+
+          <div class="col q-mt-sm q-ml-sm"><sSiDemandInfo></sSiDemandInfo></div>
         </div>
-        <div class="col">
-          <div class="text-center img_background">
+
+        <div class="row">
+          <div class="col"></div>
+
+          <div class="col-md-auto">
             <div>
-              <b class="text" style="font-size: 30px;font-family: Microsoft JhengHei;">選擇想分析的景點城市/類型</b>
+              <b
+                class="text"
+                style="font-size: 30px;font-family: Microsoft JhengHei;"
+                >選擇想分析的景點城市/類型</b
+              >
               <br />
             </div>
           </div>
+          <div class="col"></div>
         </div>
-        <demand-select
-          :citys="citys"
-          :cats="cats"
-          :selected_p="selected_p"
-          :selected_p_detail_item="selected_p_detail_item"
-          :selected_p_detail_item_2="selected_p_detail_item_2"
-          @changed_1="selected_1"
-          @changed_2="selected_2"
-          @changed_3="selected_3"
-          @runR="run_R"
-        ></demand-select>
+        <div class="row">
+          <div class="col"></div>
+          <div class="col-12 col-md-auto">
+            <demand-select
+              :citys="citys"
+              :cats="cats"
+              :selected_p="selected_p"
+              :selected_p_detail_item="selected_p_detail_item"
+              :selected_p_detail_item_2="selected_p_detail_item_2"
+              @changed_1="selected_1"
+              @changed_2="selected_2"
+              @changed_3="selected_3"
+              @runR="run_R"
+            ></demand-select>
+          </div>
+          <div class="col"></div>
+        </div>
       </div>
     </div>
+    <!--  -->
+
     <!-- end web page -->
 
     <!-- 左右區域 web -->
@@ -45,7 +64,9 @@
         >
           <q-card-section>
             <div class="text-h6">需求分析圖</div>
-            <div class="text-subtitle2">{{ r_title_1 }} {{ r_title_2 }} {{ r_title_3 }}</div>
+            <div class="text-subtitle2">
+              {{ r_title_1 }} {{ r_title_2 }} {{ r_title_3 }}
+            </div>
           </q-card-section>
 
           <q-separator />
@@ -74,7 +95,11 @@
         >
           <transition name="fade" mode="out-in">
             <q-card-section>
-              <b class="text" style="font-size: 25px;font-family: Microsoft JhengHei;">{{ txtinfo }}</b>
+              <b
+                class="text"
+                style="font-size: 25px;font-family: Microsoft JhengHei;"
+                >{{ txtinfo }}</b
+              >
             </q-card-section>
           </transition>
 
@@ -95,7 +120,9 @@
             >
               <q-card>
                 <q-card-section>
-                  <q-scroll-area style="height:200px;width:100%;max-width: auto;">
+                  <q-scroll-area
+                    style="height:200px;width:100%;max-width: auto;"
+                  >
                     <q-list>
                       <demand-data
                         v-for="(txtdata, key) in txtdatas"
@@ -104,7 +131,10 @@
                         :txtdata="txtdata"
                         @txtdatas_Update="txtdatas_toVuex"
                       >
-                        <template slot="addToCollection" v-if="loggedIn == true">
+                        <template
+                          slot="addToCollection"
+                          v-if="loggedIn == true"
+                        >
                           <q-space />
                           <addToCollectionBtn
                             :txtdata="txtdata"
@@ -134,7 +164,9 @@
               <q-card>
                 <q-card-section>
                   <!-- test txtdatas_diff -->
-                  <q-scroll-area style="height:200px;width:100%;max-width: auto;">
+                  <q-scroll-area
+                    style="height:200px;width:100%;max-width: auto;"
+                  >
                     <q-list>
                       <demandDataDiff
                         v-for="(txtdata, key) in txtdatas_diff"
@@ -144,7 +176,10 @@
                         :selected_p_detail_item="selected_p_detail_item"
                         @txtdatas_Update="txtdatas_toVuex"
                       >
-                        <template slot="addToCollection" v-if="loggedIn == true">
+                        <template
+                          slot="addToCollection"
+                          v-if="loggedIn == true"
+                        >
                           <q-space />
                           <addToCollectionBtn
                             :txtdata="txtdata"
@@ -173,7 +208,9 @@
             >
               <q-card>
                 <q-card-section>
-                  <q-scroll-area style="height:200px;width:100%;max-width: auto;">
+                  <q-scroll-area
+                    style="height:200px;width:100%;max-width: auto;"
+                  >
                     <q-list>
                       <demandDataDiff2
                         v-for="(txtdata, key) in txtdatas_diff"
@@ -183,7 +220,10 @@
                         :selected_p_detail_item_2="selected_p_detail_item_2"
                         @txtdatas_Update="txtdatas_toVuex"
                       >
-                        <template slot="addToCollection" v-if="loggedIn == true">
+                        <template
+                          slot="addToCollection"
+                          v-if="loggedIn == true"
+                        >
                           <q-space />
                           <addToCollectionBtn
                             :txtdata="txtdata"
@@ -233,6 +273,7 @@ export default {
     demandData: () => import("components/demand/demand_data.vue"),
     demandDataDiff: () => import("components/demand/demand_data_diff.vue"),
     demandDataDiff2: () => import("components/demand/demand_data_diff2.vue"),
+    sSiDemandInfo: () => import("components/demand/s_si_demand_info.vue"),
 
     addToCollectionBtn: () => import("components/demand/addToCollectionBtn.vue")
   },

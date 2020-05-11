@@ -1,25 +1,25 @@
 <template>
   <q-page>
-    <div class="q-pa-md ">
+    <div class="q-pa-md" style="align-items: center">
       <div
         class="q-gt-xs q-pa-lg items-center text-black bg-grey-3"
         style="height: 300px;"
       >
-        <div class="row">
-          <div class="col-5"></div>
-          <div class="col-2">
+        <div class="row" style="">
+          <div class="col"></div>
+          <div class="col-12 col-md-auto">
             <p style="font-size: 28px;font-family: Microsoft JhengHei;">
               飯店需求分析
             </p>
           </div>
 
-          <div class="col q-mt-sm"><hSiDemandInfo></hSiDemandInfo></div>
+          <div class="col q-mt-sm q-ml-sm"><hSiDemandInfo></hSiDemandInfo></div>
         </div>
 
         <div class="row">
-          <div class="col-4"></div>
+          <div class="col"></div>
 
-          <div class="col">
+          <div class="col-md-auto">
             <div>
               <b
                 class="text"
@@ -29,20 +29,25 @@
               <br />
             </div>
           </div>
+          <div class="col"></div>
         </div>
-        <div class="row-12">
-          <demand-select
-            :citys="citys"
-            :cats="cats"
-            :selected_p="selected_p"
-            :selected_p_detail_item="selected_p_detail_item"
-            :selected_p_detail_item_2="selected_p_detail_item_2"
-            @changed_1="selected_1"
-            @changed_2="selected_2"
-            @changed_3="selected_3"
-            @runR="run_R"
-          >
-          </demand-select>
+        <div class="row">
+          <div class="col"></div>
+          <div class="col-12 col-md-auto">
+            <demand-select
+              :citys="citys"
+              :cats="cats"
+              :selected_p="selected_p"
+              :selected_p_detail_item="selected_p_detail_item"
+              :selected_p_detail_item_2="selected_p_detail_item_2"
+              @changed_1="selected_1"
+              @changed_2="selected_2"
+              @changed_3="selected_3"
+              @runR="run_R"
+            >
+            </demand-select>
+          </div>
+          <div class="col"></div>
         </div>
       </div>
     </div>

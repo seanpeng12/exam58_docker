@@ -1,6 +1,6 @@
 <template>
   <!-- 三個下拉式選單 -->
-  <div class="row" style="margin-left:200px">
+  <div class="row">
     <div class="q-gutter-xs">
       <!-- 下拉式選單 -->
       <div class="q-pa-md">
