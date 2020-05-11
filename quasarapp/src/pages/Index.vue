@@ -1,9 +1,10 @@
 <template>
   <div class="q-pa-md layout-font bg-white">
-    <q-option-group v-model="navPos" :autoplay="autoplay" :options="bottom" inline class="q-mb-md" />
+    <q-option-group v-model="navPos" inline class="q-mb-md" />
     <q-carousel
       arrows
       animated
+      autoplay
       v-model="slide"
       infinite
       height="670px"
@@ -223,7 +224,6 @@ export default {
   data() {
     return {
       slide: "1",
-      autoplay: true,
       navPos: "bottom",
       name: "PageIndex",
 
@@ -267,12 +267,7 @@ export default {
           link: "/mySchedule",
           expanded: false
         }
-      ],
-      watch: {
-        vertical(val) {
-          this.navPos = val === true ? "right" : "bottom";
-        }
-      }
+      ]
     };
   }
 };
