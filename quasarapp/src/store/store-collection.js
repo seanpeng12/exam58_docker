@@ -113,6 +113,42 @@ const actions = {
         console.log(err);
       });
   },
+  h_fbAddtoCollection({}, value) {
+    const uid = firebaseAuth.currentUser.uid;
+    const collectionId = value.id;
+    const addToCollection = fstore
+      .collection("sightseeingMember")
+      .doc(uid)
+      .collection("我的飯店收藏")
+      .doc(collectionId);
+
+    // 取src
+    axiosInstance
+      .post("http://140.136.155.116/api/getGoogleImg", {
+        name: value.site_name
+      })
+      .then(res => {
+        addToCollection
+          .set({
+            site_name: value.site_name,
+            id: value.id,
+            city: value.city_name,
+            address: value.address,
+            comment: value.comment,
+            rate: value.rate,
+            src: res.data
+          })
+          .then(function() {
+            console.log("Document successfully written!");
+          })
+          .catch(function(error) {
+            console.error("Error writing document: ", error);
+          });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  },
   proconsAddToCollection({}, site_name) {
     const uid = firebaseAuth.currentUser.uid;
     // const collectionId = datas.data.id;

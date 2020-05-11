@@ -42,12 +42,26 @@
         :label="tab"
         type="submit"
       />
+      <div class="col">
+        <q-linear-progress size="25px" value="1" class="q-mt-md" color="grey">
+          <div class="absolute-full flex flex-center">
+            <q-badge
+              color="white"
+              text-color="accent"
+              label="or"
+              style="font-weight:bold"
+            />
+          </div>
+        </q-linear-progress>
+      </div>
+
       <q-btn
+        class="q-mt-md"
         @click="loginWithGoogle"
         color="negative"
         icon-right="account_circle"
         :label="'以Google帳號' + tab"
-        style="margin-left: 100px;"
+        style="position: fix; bottom:0px; left:270px"
       />
     </div>
   </form>

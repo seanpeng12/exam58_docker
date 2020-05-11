@@ -85,7 +85,8 @@ module.exports = function(ctx) {
         "QChip",
         "QStepper",
         "QStep",
-        "QStepperNavigation"
+        "QStepperNavigation",
+        "QLinearProgress"
       ],
       directives: ["GoBack", "ClosePopup", "Mutation"],
 

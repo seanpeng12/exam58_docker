@@ -43,7 +43,7 @@
             <p>Step3. 按下分析鈕</p>
             <p>Step4. 左下為分析圖</p>
             <p>Step5. 右下為符合您需求的飯店</p>
-            <p>Step6. 喜歡的話，一鍵加入您的飯店收藏</p>
+            <p>Step6. 喜歡的話，一鍵加入您的飯店收藏(登入才能使用)</p>
           </q-item-section>
         </q-item>
         <q-item-label header style="color:#57a5ba"
