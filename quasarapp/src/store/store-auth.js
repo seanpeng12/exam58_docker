@@ -2,11 +2,16 @@ import { LocalStorage } from "quasar";
 import { firebaseAuth, google_provider } from "boot/firebase";
 import { showErrorMessage } from "src/functions/function-show-error-message";
 const state = {
-  loggedIn: false
+  loggedIn: false,
+  userDetail: {}
 };
 const mutations = {
   setLoggedIn(state, value) {
     state.loggedIn = value;
+  },
+  getUserDetail(state, value) {
+    state.userDetail = value;
+    console.log("state.userDetail", state.userDetail);
   }
 };
 const actions = {
@@ -23,9 +28,7 @@ const actions = {
   loginUser({}, payload) {
     firebaseAuth
       .signInWithEmailAndPassword(payload.email, payload.password)
-      .then(response => {
-        console.log("response : ", response);
-      })
+      .then(response => {})
       .catch(error => {
         showErrorMessage(error.message);
       });
@@ -40,12 +43,17 @@ const actions = {
   },
   logoutUser() {
     firebaseAuth.signOut();
-    this.$router.push("/");
+    this.$router.push("/").then(() => {
+      this.$router.go(0);
+    });
   },
 
   handleAuthStateChange({ commit, dispatch }, scheduleId) {
     firebaseAuth.onAuthStateChanged(user => {
       if (user) {
+        const name = firebaseAuth.currentUser.displayName;
+        commit("getUserDetail", name);
+        console.log("name : ", name);
         commit("setLoggedIn", true);
         LocalStorage.set("loggedIn", true);
         // this.$router.push("/").catch((err) => {});
@@ -55,6 +63,9 @@ const actions = {
         });
 
         dispatch("collections/fbReadData", null, {
+          root: true
+        });
+        dispatch("collections/h_fbReadData", null, {
           root: true
         });
         dispatch("travel/fbEverySiteData", scheduleId, {
@@ -72,6 +83,12 @@ const actions = {
 const getters = {
   funcs: state => {
     return state.funcs;
+  },
+  userDetails: state => {
+    return state.userDetail;
+  },
+  loggedIn: state => {
+    return state.loggedIn;
   }
 };
 export default {

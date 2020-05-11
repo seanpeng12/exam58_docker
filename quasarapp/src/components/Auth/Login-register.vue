@@ -38,9 +38,16 @@
       <q-space />
       <q-btn
         color="amber"
-        style="position: fix; bottom:0px; left:330px"
+        style="position: fix; bottom:0px; left:400px"
         :label="tab"
         type="submit"
+      />
+      <q-btn
+        @click="loginWithGoogle"
+        color="negative"
+        icon-right="account_circle"
+        :label="'以Google帳號' + tab"
+        style="margin-left: 100px;"
       />
     </div>
   </form>
@@ -60,7 +67,8 @@ export default {
   },
 
   methods: {
-    ...mapActions("auth", ["registerUser", "loginUser"]),
+    ...mapActions("auth", ["registerUser", "loginUser", "loginWithGoogle"]),
+
     isValidEmailAddress(email) {
       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(String(email).toLowerCase());

@@ -1,13 +1,6 @@
-import axios, {
-  axiosInstance
-} from "boot/axios";
+import axios, { axiosInstance } from "boot/axios";
 import Vue from "vue";
-import {
-  fstore,
-  firebaseAuth,
-  firebaseApp,
-  firestore
-} from "boot/firebase";
+import { fstore, firebaseAuth, firebaseApp, firestore } from "boot/firebase";
 
 const state = {
   namespaced: true,
@@ -106,9 +99,7 @@ const mutations = {
   }
 };
 const actions = {
-  fetchCitys({
-    commit
-  }) {
+  fetchCitys({ commit }) {
     axiosInstance
       .get("http://127.0.0.1/api/h_site_dataCity")
       .then(res => {
@@ -122,9 +113,7 @@ const actions = {
       });
   },
 
-  fetchCats({
-    commit
-  }) {
+  fetchCats({ commit }) {
     axiosInstance
       .post("http://127.0.0.1/api/h_site_dataCat", {
         name: state.selected_p
@@ -186,9 +175,7 @@ const actions = {
   //   //   });
   // },
   // ajax跑R圖
-  upload_axios({
-    commit
-  }) {
+  upload_axios({ commit }) {
     axiosInstance
       .post("http://127.0.0.1/api/h_runR_twoC", {
         name: state.selected_p,
@@ -203,14 +190,12 @@ const actions = {
         commit("FETCH_index", 1);
         console.log("after_axios+1");
       })
-      .catch(function (response) {
+      .catch(function(response) {
         console.log(response);
       });
   },
   // ajax取懶人包資料
-  upload_axios_2({
-    commit
-  }) {
+  upload_axios_2({ commit }) {
     axiosInstance
       .post("http://127.0.0.1/api/h_cat", {
         name: state.selected_p,
@@ -227,62 +212,74 @@ const actions = {
         const comment = response.data.map(item => item.comment);
         const rate = response.data.map(item => item.rate);
         const type = response.data.map(item => item.type);
-
-        const uid = firebaseAuth.currentUser.uid;
-        const checkCollectionExists = fstore
-          .collection("sightseeingMember")
-          .doc(uid)
-          .collection("我的收藏");
-        id.forEach(function (data, index, array) {
-          checkCollectionExists
-            .doc(data)
-            .get()
-            .then(function (doc) {
-              if (doc.exists) {
-                commit("FETCH_txtdatas", {
-                  id: data,
-                  txtdata: {
-                    name: name[index],
-                    city_name: city_name[index],
-                    address: address[index],
-                    comment: comment[index],
-                    rate: rate[index],
-                    type: type[index],
-                    exists: true
+        firebaseAuth.onAuthStateChanged(user => {
+          // 如果登入，判斷是否收入收藏
+          if (user) {
+            const uid = firebaseAuth.currentUser.uid;
+            const checkCollectionExists = fstore
+              .collection("sightseeingMember")
+              .doc(uid)
+              .collection("我的收藏");
+            id.forEach(function(data, index, array) {
+              checkCollectionExists
+                .doc(data)
+                .get()
+                .then(function(doc) {
+                  if (doc.exists) {
+                    commit("FETCH_txtdatas", {
+                      id: data,
+                      txtdata: {
+                        name: name[index],
+                        city_name: city_name[index],
+                        address: address[index],
+                        comment: comment[index],
+                        rate: rate[index],
+                        type: type[index],
+                        exists: true
+                      }
+                    });
+                  } else {
+                    commit("FETCH_txtdatas", {
+                      id: data,
+                      txtdata: {
+                        name: name[index],
+                        city_name: city_name[index],
+                        address: address[index],
+                        comment: comment[index],
+                        rate: rate[index],
+                        type: type[index],
+                        exists: false
+                      }
+                    });
                   }
+                })
+                .catch(function(error) {
+                  console.log("Error getting document:", error);
                 });
-              } else {
-                commit("FETCH_txtdatas", {
-                  id: data,
-                  txtdata: {
-                    name: name[index],
-                    city_name: city_name[index],
-                    address: address[index],
-                    comment: comment[index],
-                    rate: rate[index],
-                    type: type[index],
-                    exists: false
-                  }
-                });
-              }
-            })
-            .catch(function (error) {
-              console.log("Error getting document:", error);
             });
+          } else {
+            id.forEach(function(data, index, array) {
+              commit("FETCH_txtdatas", {
+                id: data,
+                txtdata: {
+                  name: name[index],
+                  city_name: city_name[index],
+                  address: address[index],
+                  comment: comment[index],
+                  rate: rate[index],
+                  type: type[index]
+                }
+              });
+            });
+          }
         });
-
-        // console.log("txtdatas from actions", txtdatas);
-
-        // commit('FETCH_txtdatas', txtdatas);
       })
-      .catch(function (response) {
+      .catch(function(response) {
         console.log(response);
       });
   },
   // 取差集diff
-  upload_axios_2_diff({
-    commit
-  }) {
+  upload_axios_2_diff({ commit }) {
     axiosInstance
       .post("http://127.0.0.1/api/h_cat_diff", {
         name: state.selected_p,
@@ -301,59 +298,76 @@ const actions = {
 
         const type = response.data.map(item => item.type);
         const tag = response.data.map(item => item.tag);
-
-        const uid = firebaseAuth.currentUser.uid;
-        const checkCollectionExists = fstore
-          .collection("sightseeingMember")
-          .doc(uid)
-          .collection("我的收藏");
-        id.forEach(function (data, index, array) {
-          checkCollectionExists
-            .doc(data)
-            .get()
-            .then(function (doc) {
-              if (doc.exists) {
-                commit("FETCH_txtdatas_diff", {
-                  id: data,
-                  txtdata_diff: {
-                    name: name[index],
-                    city_name: city_name[index],
-                    address: address[index],
-                    comment: comment[index],
-                    rate: rate[index],
-                    type: type[index],
-                    tag: tag[index],
-                    exists: true
+        firebaseAuth.onAuthStateChanged(user => {
+          // 如果登入，判斷是否收入收藏
+          if (user) {
+            const uid = firebaseAuth.currentUser.uid;
+            const checkCollectionExists = fstore
+              .collection("sightseeingMember")
+              .doc(uid)
+              .collection("我的收藏");
+            id.forEach(function(data, index, array) {
+              checkCollectionExists
+                .doc(data)
+                .get()
+                .then(function(doc) {
+                  if (doc.exists) {
+                    commit("FETCH_txtdatas_diff", {
+                      id: data,
+                      txtdata_diff: {
+                        name: name[index],
+                        city_name: city_name[index],
+                        address: address[index],
+                        comment: comment[index],
+                        rate: rate[index],
+                        type: type[index],
+                        tag: tag[index],
+                        exists: true
+                      }
+                    });
+                  } else {
+                    commit("FETCH_txtdatas_diff", {
+                      id: data,
+                      txtdata_diff: {
+                        name: name[index],
+                        city_name: city_name[index],
+                        address: address[index],
+                        comment: comment[index],
+                        rate: rate[index],
+                        type: type[index],
+                        tag: tag[index],
+                        exists: false
+                      }
+                    });
                   }
+                })
+                .catch(function(error) {
+                  console.log("Error getting document:", error);
                 });
-              } else {
-                commit("FETCH_txtdatas_diff", {
-                  id: data,
-                  txtdata_diff: {
-                    name: name[index],
-                    city_name: city_name[index],
-                    address: address[index],
-                    comment: comment[index],
-                    rate: rate[index],
-                    type: type[index],
-                    tag: tag[index],
-                    exists: false
-                  }
-                });
-              }
-            })
-            .catch(function (error) {
-              console.log("Error getting document:", error);
             });
+          } else {
+            id.forEach(function(data, index, array) {
+              commit("FETCH_txtdatas_diff", {
+                id: data,
+                txtdata_diff: {
+                  name: name[index],
+                  city_name: city_name[index],
+                  address: address[index],
+                  comment: comment[index],
+                  rate: rate[index],
+                  type: type[index],
+                  tag: tag[index]
+                }
+              });
+            });
+          }
         });
       })
-      .catch(function (response) {
+      .catch(function(response) {
         console.log(response);
       });
   },
-  resetTxtdatas({
-    commit
-  }) {
+  resetTxtdatas({ commit }) {
     commit("resetTxtdatas");
     commit("resetTxtdatas_diff");
   }

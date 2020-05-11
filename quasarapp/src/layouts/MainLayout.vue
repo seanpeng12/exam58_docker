@@ -2,35 +2,122 @@
   <q-layout view="hHh lpR fFf">
     <q-header class="bg-blue-grey-7 text-white" elevated>
       <q-toolbar>
-        <q-toolbar-title class="title" style="font-family:Verdana, Geneva, sans-serif;">SightSeeing</q-toolbar-title>
+        <q-btn
+          class="title"
+          to="/"
+          flat
+          style="font-family:Papyrus,Verdana, Geneva, sans-serif;font-size:18px;font-weight:bold"
+          >SightSeeing</q-btn
+        >
+        <q-space />
         <!-- gt-xs view -->
-        <q-item class="gt-xs" exact clickable to="/">
+        <q-chip
+          v-if="loggedIn"
+          color="blue-grey-7"
+          flat
+          text-color="white"
+          icon="face"
+        >
+          {{ userDetail }}您好
+        </q-chip>
+        <!-- <q-item class="gt-xs" exact clickable to="/">
           <q-item-section>
             <q-item-label class>首頁</q-item-label>
           </q-item-section>
-        </q-item>
+        </q-item> -->
+
         <!-- <q-item class="gt-xs" exact clickable to="/arrange-schedule" v-if="loggedIn">
           <q-item-section>
             <q-item-label class>建立旅程表</q-item-label>
           </q-item-section>
         </q-item> -->
-        <div class="gt-xs">
+        <div class="gt-xs" style="font-family: NSimSun;font-weight:bold">
+          <q-btn-dropdown flat label="景點分析">
+            <q-item
+              clickable
+              v-close-popup
+              @click="onItemClick"
+              to="/site_demend"
+            >
+              <q-item-section>
+                <q-item-label>
+                  景點GO-
+                  <b>需求分析</b>
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              v-close-popup
+              @click="onItemClick"
+              to="/site_ProsCons"
+            >
+              <q-item-section>
+                <q-item-label>
+                  景點GO-
+                  <b>優缺點分析</b>
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              v-close-popup
+              @click="onItemClick"
+              to="/site_Path"
+            >
+              <q-item-section>
+                <q-item-label>
+                  景點GO-
+                  <b>路徑分析</b>
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-btn-dropdown>
+          <q-btn-dropdown flat label="飯店分析">
+            <q-item
+              clickable
+              v-close-popup
+              @click="onItemClick"
+              to="/hotel_demend"
+            >
+              <q-item-section>
+                <q-item-label>
+                  飯店GO-
+                  <b>需求分析</b>
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              v-close-popup
+              @click="onItemClick"
+              to="/hotel_ProsCons"
+            >
+              <q-item-section>
+                <q-item-label>
+                  飯店GO-
+                  <b>優缺點分析</b>
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-btn-dropdown>
           <q-btn
+            class="q-pa-none"
             v-if="!loggedIn"
             to="/PageAuth"
             color="amber"
             icon-right="account_circle"
-            label="Email註冊與登入"
+            style="font-family: NSimSun;font-weight:bold"
+            label="登入/註冊"
           />
-          <q-btn
+          <!-- <q-btn
             v-if="!loggedIn"
             @click="loginWithGoogle"
             color="negative"
             icon-right="account_circle"
             label="Google帳號登入"
             style="margin-left: 20px;"
-          />
-
+          /> -->
           <q-btn-dropdown v-if="loggedIn" flat label="會員功能">
             <q-list>
               <q-item
@@ -54,104 +141,16 @@
                   <q-item-label>我的旅程表</q-item-label>
                 </q-item-section>
               </q-item>
-
-              <q-item
-                clickable
-                v-close-popup
-                @click="onItemClick"
-                to="/site_demend"
-              >
-                <q-item-section>
-                  <q-item-label>
-                    景點GO-
-                    <b>需求分析</b>
-                  </q-item-label>
-                </q-item-section>
-              </q-item>
-              <q-item
-                clickable
-                v-close-popup
-                @click="onItemClick"
-                to="/hotel_demend"
-              >
-                <q-item-section>
-                  <q-item-label>
-                    飯店GO-
-                    <b>需求分析</b>
-                  </q-item-label>
-                </q-item-section>
-              </q-item>
-
-              <q-item
-                clickable
-                v-close-popup
-                @click="onItemClick"
-                to="/site_ProsCons"
-              >
-                <q-item-section>
-                  <q-item-label>
-                    景點GO-
-                    <b>優缺點分析</b>
-                  </q-item-label>
-                </q-item-section>
-              </q-item>
-              <q-item
-                clickable
-                v-close-popup
-                @click="onItemClick"
-                to="/hotel_ProsCons"
-              >
-                <q-item-section>
-                  <q-item-label>
-                    飯店GO-
-                    <b>優缺點分析</b>
-                  </q-item-label>
-                </q-item-section>
-              </q-item>
-
-              <q-item
-                clickable
-                v-close-popup
-                @click="onItemClick"
-                to="/site_Path"
-              >
-                <q-item-section>
-                  <q-item-label>
-                    景點GO-
-                    <b>路徑分析</b>
-                  </q-item-label>
-                </q-item-section>
-              </q-item>
-
-
-              <!-- <q-item
-                clickable
-                v-close-popup
-                @click="onItemClick"
-                to="/AjaxTest"
-              >
-                <q-item-section>
-                  <q-item-label>
-                    測試ajax+axios傳值
-                  </q-item-label>
-                </q-item-section>
-              </q-item> -->
-
-              <!-- <q-item
-                clickable
-                v-close-popup
-                @click="onItemClick"
-                to="/CardTest"
-              >
-                <q-item-section>
-                  <q-item-label>
-                    測試vuex
-                  </q-item-label>
-                </q-item-section>
-              </q-item> -->
-
             </q-list>
           </q-btn-dropdown>
+          <!-- <q-btn
+            v-if="loggedIn"
+            flat
+            color="white"
+            icon-right=""
+            :label="userDetail + '您好'"
+          /> -->
+
           <q-btn
             v-if="loggedIn"
             flat
@@ -218,7 +217,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapGetter } from "vuex";
 const menuList = [
   {
     icon: "home",
@@ -269,11 +268,11 @@ export default {
     };
   },
   computed: {
-    ...mapState("auth", ["loggedIn"])
+    ...mapState("auth", ["loggedIn"]),
+    ...mapState("auth", ["userDetail"])
   },
   methods: {
     ...mapActions("auth", ["logoutUser"]),
-    ...mapActions("auth", ["loginWithGoogle"]),
     onItemClick() {}
   }
 };

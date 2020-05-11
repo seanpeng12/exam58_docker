@@ -1,93 +1,99 @@
 <template>
-  <div class="col">
-    <!-- 三個下拉式選單 -->
-    <div class="row">
-      <div class="col">
-        <!-- 下拉式選單 -->
+  <!-- <div class="col"> -->
+  <!-- 三個下拉式選單 -->
+  <div class="row">
+    <div class="col">
+      <!-- 下拉式選單 -->
 
-        <div class="q-pa-md">
-          <div class="q-gutter-md row">
-            <q-select
-              filled
-              v-model="selected_city_local"
-              use-input
-              hide-selected
-              fill-input
-              input-debounce="0"
-              :options="options"
-              @filter="filterFn"
-              hint="選擇城市"
-              style="width: 250px; padding-bottom: 32px"
-            >
-              <template v-slot:no-option>
-                <q-item>
-                  <q-item-section class="text-grey">沒有結果</q-item-section>
-                </q-item>
-              </template>
-            </q-select>
-          </div>
-        </div>
-        <!--  -->
-      </div>
-      <div class="col">
-        <!-- 下拉式選單 -->
-
-        <div class="q-pa-md">
-          <div class="q-gutter-md row">
-            <q-select
-              filled
-              v-model="selected_site_local"
-              use-input
-              hide-selected
-              fill-input
-              input-debounce="0"
-              :options="options"
-              @filter="filterFn_2"
-              hint="選擇景點"
-              style="width: 250px; padding-bottom: 32px"
-            >
-              <template v-slot:no-option>
-                <q-item>
-                  <q-item-section class="text-grey">沒有結果</q-item-section>
-                </q-item>
-              </template>
-            </q-select>
-          </div>
-        </div>
-        <!--  -->
-      </div>
-      <div class="col q-pa-md" style="margin-top:8px">
-        <!-- 按鈕 -->
-        <q-btn
-          :loading="loading1"
-          :percentage="percentage1"
-          color="cyan-9"
-          @click="startComputing(1)"
-          v-on:click="runR()"
-          style="width: 150px"
-        >
-          開始
-          <template v-slot:loading>
-            <q-spinner-gears class="on-left" />分析中...
-          </template>
-        </q-btn>
-        <slot name="addToCollection"></slot>
-
-        <q-btn size="10px" round color="blue-grey-8" icon="help" style="margin-left:10px">
-          <q-tooltip
-            anchor="center right"
-            self="center left"
-            :offset="[10, 10]"
-            content-class="bg-blue-grey-8"
+      <div class="q-pa-md">
+        <div class="q-gutter-md row">
+          <q-select
+            filled
+            v-model="selected_city_local"
+            use-input
+            hide-selected
+            fill-input
+            input-debounce="0"
+            :options="options"
+            @filter="filterFn"
+            hint="選擇城市"
+            style="width: 250px; padding-bottom: 32px"
           >
-            依您
-            <strong>選擇的景點</strong>做分析，統整優點/缺點
-          </q-tooltip>
-        </q-btn>
-        <!-- end -->
+            <template v-slot:no-option>
+              <q-item>
+                <q-item-section class="text-grey">沒有結果</q-item-section>
+              </q-item>
+            </template>
+          </q-select>
+        </div>
       </div>
+      <!--  -->
+    </div>
+    <div class="col">
+      <!-- 下拉式選單 -->
+
+      <div class="q-pa-md">
+        <div class="q-gutter-md row">
+          <q-select
+            filled
+            v-model="selected_site_local"
+            use-input
+            hide-selected
+            fill-input
+            input-debounce="0"
+            :options="options"
+            @filter="filterFn_2"
+            hint="選擇景點"
+            style="width: 250px; padding-bottom: 32px"
+          >
+            <template v-slot:no-option>
+              <q-item>
+                <q-item-section class="text-grey">沒有結果</q-item-section>
+              </q-item>
+            </template>
+          </q-select>
+        </div>
+      </div>
+      <!--  -->
+    </div>
+    <div class="col q-pa-md" style="margin-top:8px">
+      <!-- 按鈕 -->
+      <q-btn
+        :loading="loading1"
+        :percentage="percentage1"
+        color="cyan-9"
+        @click="startComputing(1)"
+        v-on:click="runR()"
+        style="width: 150px"
+      >
+        開始
+        <template v-slot:loading>
+          <q-spinner-gears class="on-left" />分析中...
+        </template>
+      </q-btn>
+      <slot name="addToCollection"></slot>
+
+      <q-btn
+        size="10px"
+        round
+        color="blue-grey-8"
+        icon="help"
+        style="margin-left:10px"
+      >
+        <q-tooltip
+          anchor="center right"
+          self="center left"
+          :offset="[10, 10]"
+          content-class="bg-blue-grey-8"
+        >
+          依您
+          <strong>選擇的景點</strong>做分析，統整優點/缺點
+        </q-tooltip>
+      </q-btn>
+      <!-- end -->
     </div>
   </div>
+  <!-- </div> -->
 </template>
 
 <script>

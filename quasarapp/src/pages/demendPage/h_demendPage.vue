@@ -1,21 +1,53 @@
 <template>
   <q-page>
-    <!-- web page 區域 -->
-    <!-- <div>
-      debug用
-      <p>vuex：{{selected_p}} {{selected_p_detail_item}} {{selected_p_detail_item_2}}</p>
-    </div>-->
-    <demand-select
-      :citys="citys"
-      :cats="cats"
-      :selected_p="selected_p"
-      :selected_p_detail_item="selected_p_detail_item"
-      :selected_p_detail_item_2="selected_p_detail_item_2"
-      @changed_1="selected_1"
-      @changed_2="selected_2"
-      @changed_3="selected_3"
-      @runR="run_R"
-    ></demand-select>
+    <div class="q-pa-md ">
+      <div
+        class="q-gt-xs q-pa-lg items-center text-black bg-grey-3"
+        style="height: 300px;"
+      >
+        <div class="row">
+          <div class="col-5"></div>
+          <div class="col-2">
+            <p style="font-size: 28px;font-family: Microsoft JhengHei;">
+              飯店需求分析
+            </p>
+          </div>
+
+          <div class="col q-mt-sm"><hSiDemandInfo></hSiDemandInfo></div>
+        </div>
+
+        <div class="row">
+          <div class="col-4"></div>
+
+          <div class="col">
+            <div>
+              <b
+                class="text"
+                style="font-size: 30px;font-family: Microsoft JhengHei;"
+                >選擇想分析飯店的城市/類型</b
+              >
+              <br />
+            </div>
+          </div>
+        </div>
+        <div class="row-12">
+          <demand-select
+            :citys="citys"
+            :cats="cats"
+            :selected_p="selected_p"
+            :selected_p_detail_item="selected_p_detail_item"
+            :selected_p_detail_item_2="selected_p_detail_item_2"
+            @changed_1="selected_1"
+            @changed_2="selected_2"
+            @changed_3="selected_3"
+            @runR="run_R"
+          >
+          </demand-select>
+        </div>
+      </div>
+    </div>
+    <!--  -->
+
     <!-- end web page -->
 
     <!-- 左右區域 web -->
@@ -28,7 +60,11 @@
         <!-- 懶人包區域 -->
         <div class="col">
           <div>
-            <b class="text" style="font-size: 30px;font-family: Microsoft JhengHei;">{{ txtinfo }}</b>
+            <b
+              class="text"
+              style="font-size: 30px;font-family: Microsoft JhengHei;"
+              >{{ txtinfo }}</b
+            >
           </div>
 
           <div class="q-pa-md" style="max-width: 600px">
@@ -53,10 +89,13 @@
                           :txtdata="txtdata"
                           @txtdatas_Update="txtdatas_toVuex"
                         >
-                          <template slot="addToCollection">
+                          <template
+                            slot="addToCollection"
+                            v-if="loggedIn == true"
+                          >
                             <q-space />
                             <addToCollectionBtn
-                              :exists="txtdata.exists"
+                              :txtdata="txtdata"
                               :id="key"
                               :city_name="txtdata.city_name"
                               :site_name="txtdata.name"
@@ -93,10 +132,13 @@
                           :selected_p_detail_item="selected_p_detail_item"
                           @txtdatas_Update="txtdatas_toVuex"
                         >
-                          <template slot="addToCollection">
+                          <template
+                            slot="addToCollection"
+                            v-if="loggedIn == true"
+                          >
                             <q-space />
                             <addToCollectionBtn
-                              :exists="txtdata.exists"
+                              :txtdata="txtdata"
                               :id="key"
                               :city_name="txtdata.city_name"
                               :site_name="txtdata.name"
@@ -132,10 +174,13 @@
                           :selected_p_detail_item_2="selected_p_detail_item_2"
                           @txtdatas_Update="txtdatas_toVuex"
                         >
-                          <template slot="addToCollection">
+                          <template
+                            slot="addToCollection"
+                            v-if="loggedIn == true"
+                          >
                             <q-space />
                             <addToCollectionBtn
-                              :exists="txtdata.exists"
+                              :txtdata="txtdata"
                               :id="key"
                               :city_name="txtdata.city_name"
                               :site_name="txtdata.name"
@@ -179,7 +224,9 @@ export default {
     demandDataDiff: () => import("components/demand/demand_data_diff.vue"),
     demandDataDiff2: () => import("components/demand/demand_data_diff2.vue"),
 
-    addToCollectionBtn: () => import("components/demand/addToCollectionBtn.vue")
+    addToCollectionBtn: () =>
+      import("components/demand/addToCollectionBtn.vue"),
+    hSiDemandInfo: () => import("components/demand/h_si_demand_info.vue")
   },
   computed: {
     // 取得vuex state值
@@ -198,7 +245,8 @@ export default {
       "selected_p_detail_item_2",
       "runR_value",
       "after_axios"
-    ])
+    ]),
+    ...mapGetters("auth", ["loggedIn"])
 
     // selected_p_trigger: {
     //   get: function() {

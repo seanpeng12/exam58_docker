@@ -8,9 +8,10 @@ const state = {
   slide: "style",
   expend: false,
   collections: {},
+  h_collections: {},
   search: "",
   watch: {},
-  src: "",
+  src: ""
 };
 const mutations = {
   addCollection(state, payload) {
@@ -19,14 +20,24 @@ const mutations = {
 
     // state.sightseeingMembers = payload;
   },
+  h_addCollection(state, payload) {
+    Vue.set(state.h_collections, payload.id, payload.collection);
+    console.log("h_addCollection: ", state.h_collections);
+
+    // state.sightseeingMembers = payload;
+  },
   deleteCollection(state, id) {
     Vue.delete(state.collections, id);
+  },
+  h_deleteCollection(state, id) {
+    Vue.delete(state.h_collections, id);
   },
   setSearch(state, value) {
     state.search = value;
   }
 };
 const actions = {
+  // 讀景點收藏的資料
   fbReadData({ commit }) {
     const uid = firebaseAuth.currentUser.uid;
     console.log("fbReadData", uid);
@@ -46,7 +57,27 @@ const actions = {
       });
     });
   },
-  fbAddtoCollection({ }, value) {
+  // 讀飯店收藏的資料
+  h_fbReadData({ commit }) {
+    const uid = firebaseAuth.currentUser.uid;
+    console.log("fbReadData", uid);
+    const userCollection = fstore
+      .collection("sightseeingMember")
+      .doc(uid)
+      .collection("我的飯店收藏");
+
+    userCollection.onSnapshot(Snapshot => {
+      Snapshot.forEach(doc => {
+        // console.log(doc.data());
+
+        commit("h_addCollection", {
+          id: doc.id,
+          collection: doc.data()
+        });
+      });
+    });
+  },
+  fbAddtoCollection({}, value) {
     const uid = firebaseAuth.currentUser.uid;
     const collectionId = value.id;
     const addToCollection = fstore
@@ -71,34 +102,32 @@ const actions = {
             rate: value.rate,
             src: res.data
           })
-          .then(function () {
+          .then(function() {
             console.log("Document successfully written!");
           })
-          .catch(function (error) {
+          .catch(function(error) {
             console.error("Error writing document: ", error);
           });
-
       })
       .catch(err => {
         console.log(err);
       });
-
-
   },
-  proconsAddToCollection({ }, site_name) {
-
+  proconsAddToCollection({}, site_name) {
     const uid = firebaseAuth.currentUser.uid;
     // const collectionId = datas.data.id;
-    // const addToCollection 
+    // const addToCollection
 
     axiosInstance
       .post("http://127.0.0.1/api/getGoogleImg", {
         name: site_name
-      }).then(res => {
+      })
+      .then(res => {
         axiosInstance
           .post("http://127.0.0.1/api/proconsAddToCollection", {
             name: site_name
-          }).then(datas => {
+          })
+          .then(datas => {
             fstore
               .collection("sightseeingMember")
               .doc(uid)
@@ -113,34 +142,31 @@ const actions = {
                 rate: datas.data[0].rate,
                 src: res.data
               })
-              .then(function () {
+              .then(function() {
                 console.log("Document successfully written!");
               })
-              .catch(function (error) {
+              .catch(function(error) {
                 console.error("Error writing document: ", error);
               });
-
-
-          })
-      })
+          });
+      });
     // 取src
-
-
   },
-  h_proconsAddToCollection({ }, hotel_name) {
-
+  h_proconsAddToCollection({}, hotel_name) {
     const uid = firebaseAuth.currentUser.uid;
     // const collectionId = datas.data.id;
-    // const addToCollection 
+    // const addToCollection
 
     axiosInstance
       .post("http://127.0.0.1/api/getGoogleImg", {
         name: hotel_name
-      }).then(res => {
+      })
+      .then(res => {
         axiosInstance
           .post("http://127.0.0.1/api/h_proconsAddToCollection", {
             name: hotel_name
-          }).then(datas => {
+          })
+          .then(datas => {
             fstore
               .collection("sightseeingMember")
               .doc(uid)
@@ -155,17 +181,14 @@ const actions = {
                 rate: datas.data[0].rate,
                 src: res.data
               })
-              .then(function () {
+              .then(function() {
                 console.log("Document successfully written!");
               })
-              .catch(function (error) {
+              .catch(function(error) {
                 console.error("Error writing document: ", error);
               });
-
-
-          })
-      })
-
+          });
+      });
   },
   fbDeleteCollection({ commit }, id) {
     const uid = firebaseAuth.currentUser.uid;
@@ -176,11 +199,28 @@ const actions = {
       .doc(id);
     deleteData
       .delete()
-      .then(function () {
+      .then(function() {
         console.log("Document successfully deleted!");
         commit("deleteCollection", id);
       })
-      .catch(function (error) {
+      .catch(function(error) {
+        console.error("Error removing document: ", error);
+      });
+  },
+  h_fbDeleteCollection({ commit }, id) {
+    const uid = firebaseAuth.currentUser.uid;
+    const deleteData = fstore
+      .collection("sightseeingMember")
+      .doc(uid)
+      .collection("我的飯店收藏")
+      .doc(id);
+    deleteData
+      .delete()
+      .then(function() {
+        console.log("Document successfully deleted!");
+        commit("h_deleteCollection", id);
+      })
+      .catch(function(error) {
         console.error("Error removing document: ", error);
       });
   },
@@ -200,11 +240,11 @@ const actions = {
           .collection("偏好分析");
         const increment = firestore.FieldValue.increment(1);
 
-        site_id.forEach(function (data, index) {
+        site_id.forEach(function(data, index) {
           addToPrefer
             .doc(data)
             .get()
-            .then(function (doc) {
+            .then(function(doc) {
               if (doc.exists) {
                 addToPrefer.doc(data).update({
                   time: increment
@@ -215,7 +255,7 @@ const actions = {
                 });
               }
             })
-            .catch(function (error) {
+            .catch(function(error) {
               console.log("Error getting document:", error);
             });
         });
@@ -229,13 +269,40 @@ const actions = {
   }
 };
 const getters = {
-  // collections: state => {
-  //   return state.collections;
-  // }
+  h_collections: (state, getters) => {
+    let h_collectionsFiltered = getters.h_collectionsFiltered;
+    let h_collections = {};
+    Object.keys(h_collectionsFiltered).forEach(function(key) {
+      let h_collection = h_collectionsFiltered[key];
+
+      h_collections[key] = h_collection;
+    });
+    return h_collections;
+    //
+  },
+  h_collectionsFiltered: state => {
+    let collectionsFiltered = {};
+    if (state.search) {
+      Object.keys(state.h_collections).forEach(function(key) {
+        let h_collection = state.h_collections[key],
+          collectionNameLowerCase = h_collection.site_name.toLowerCase(),
+          collectionCityLowerCase = h_collection.city.toLowerCase(),
+          searchcollection = state.search.toLowerCase();
+        if (
+          collectionNameLowerCase.includes(searchcollection) ||
+          collectionCityLowerCase.includes(searchcollection)
+        ) {
+          collectionsFiltered[key] = h_collection;
+        }
+      });
+      return collectionsFiltered;
+    }
+    return state.h_collections;
+  },
   collectionsFiltered: state => {
     let collectionsFiltered = {};
     if (state.search) {
-      Object.keys(state.collections).forEach(function (key) {
+      Object.keys(state.collections).forEach(function(key) {
         let collection = state.collections[key],
           collectionNameLowerCase = collection.site_name.toLowerCase(),
           collectionCityLowerCase = collection.city.toLowerCase(),
@@ -254,7 +321,7 @@ const getters = {
   collections: (state, getters) => {
     let collectionsFiltered = getters.collectionsFiltered;
     let collections = {};
-    Object.keys(collectionsFiltered).forEach(function (key) {
+    Object.keys(collectionsFiltered).forEach(function(key) {
       let collection = collectionsFiltered[key];
 
       collections[key] = collection;

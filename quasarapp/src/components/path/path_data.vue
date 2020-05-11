@@ -2,7 +2,10 @@
   <!-- 懶人包 -->
   <div class="q-pa-sm doc-container" v-if="isShow_data">
     <!-- 標題 -->
-    <div class="gt-xs q-pa-lg q-ma-sm column text-black bg-blue-grey-1" style="height:400px;">
+    <div
+      class="gt-xs q-pa-lg q-ma-sm column text-black bg-blue-grey-1"
+      style="height:400px;"
+    >
       <div class="col">
         <div class="img_background">
           <div>
@@ -13,7 +16,7 @@
                 group="somegroup"
                 icon="directions_run"
                 :label="'去過<' + selected_site + '>還會去:'"
-                header-class="text-teal-8"
+                header-class="text-blue-grey-10"
                 style="font-weight:bold;"
               >
                 <q-card>
@@ -24,10 +27,12 @@
                           flat
                           @click="second_request(a.name)"
                           :label="a.name"
-                          style="color: #004991;font-family: Microsoft JhengHei;font-weight:bold"
+                          style="color:  #699c4c;font-family: Microsoft JhengHei;font-weight:bold"
                           icon-right="arrow_forward_ios"
                         ></q-btn>
-                        <span class="text-caption">有 {{ a.weight }} 人選擇這裡</span>
+                        <span class="text-caption"
+                          >有 {{ a.weight }} 人選擇這裡</span
+                        >
                       </div>
                     </q-scroll-area>
                   </q-card-section>
@@ -41,7 +46,7 @@
                 group="somegroup"
                 icon="directions_run"
                 :label="'去過<' + selected_site_2 + '>還會去:'"
-                header-class="text-teal-8"
+                header-class="text-blue-grey-10"
                 style="font-weight:bold;"
               >
                 <q-card>
@@ -52,10 +57,12 @@
                           flat
                           @click="third_request(b.name)"
                           :label="b.name"
-                          style="color: #181858;font-family: Microsoft JhengHei;font-weight:bold"
+                          style="color: #0062c4;font-family: Microsoft JhengHei;font-weight:bold"
                           icon-right="arrow_forward_ios"
                         />
-                        <span class="text-caption">有 {{ b.weight }} 人選擇這裡</span>
+                        <span class="text-caption"
+                          >有 {{ b.weight }} 人選擇這裡</span
+                        >
                       </div>
                     </q-scroll-area>
                   </q-card-section>
