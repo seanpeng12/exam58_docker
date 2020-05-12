@@ -6,6 +6,7 @@
       animated
       v-model="slide"
       infinite
+      autoplay
       height="670px"
       transition-prev="jump-right"
       transition-next="jump-left"
@@ -132,6 +133,34 @@
           <div class="col-6 bg-grey-3 text-h5">
             <div style="color: black;padding-top:150px;padding-bottom:150px;padding-left:50px">
               <div style="font-size:50px;font-family:NSimSun;height:auto;line-height:50px;">
+                <b>不想踩雷的你</b>
+              </div>
+              <div style="padding-top:50px;font-size:28px; font-family:Microsoft JhengHei;">
+                <p>
+                  使用我們的優缺點分析功能
+                  輸入景點或飯店名稱，優點與缺點一目瞭然
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 bg-grey-3 text-center">
+            <div class="container" style="position: relative;text-align: center;color: white;">
+              <img
+                src="https://calmack.com/wp-content/uploads/2019/11/pros-and-cons-career-in-court-reporting-denver-co.png"
+                alt="Snow"
+                style="max-width:600px;width:auto;height:70ex;border-radius: 2%;"
+              />
+            </div>
+          </div>
+        </div>
+        <!-- 需求分析 end -->
+      </q-carousel-slide>
+      <q-carousel-slide name="4" img-src>
+        <!-- 需求分析 -->
+        <div class="q-pa-md row">
+          <div class="col-6 bg-grey-3 text-h5">
+            <div style="color: black;padding-top:150px;padding-bottom:150px;padding-left:50px">
+              <div style="font-size:50px;font-family:NSimSun;height:auto;line-height:50px;">
                 <b>想要找尋受歡迎路線的你</b>
               </div>
               <div style="padding-top:50px;font-size:28px; font-family:Microsoft JhengHei;">
@@ -151,7 +180,7 @@
         </div>
         <!-- 需求分析 end -->
       </q-carousel-slide>
-      <q-carousel-slide name="4" img-src="~assets/index_2.jpg">
+      <q-carousel-slide name="5" img-src="~assets/index_2.jpg">
         <h2>Pros and Cons</h2>
         <div>
           <div class="content">
@@ -204,7 +233,7 @@
             style="font-weight: bold;"
           />
           <q-btn
-            v-if="func.name == '需求功能'"
+            v-if="func.name == '需求分析功能'"
             flat
             color="primary"
             :label="func.enterTxt2"
@@ -239,7 +268,7 @@ export default {
 
       funcs: [
         {
-          name: "需求功能",
+          name: "需求分析功能",
           tip: "給拿不定主意的你",
           illustrate:
             "只要選擇兩個想去的景點的類型，您即可找出符合A類型及B類型的景點",
