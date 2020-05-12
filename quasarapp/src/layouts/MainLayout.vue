@@ -6,9 +6,8 @@
           class="title"
           to="/"
           flat
-          style="font-family:Papyrus,Verdana, Geneva, sans-serif;font-size:18px;font-weight:bold"
-          >SightSeeing</q-btn
-        >
+          style="font-family:Trebuchet MS,Papyrus,Verdana, Geneva, sans-serif;font-size:22px;font-weight:bold"
+        >SightSeeing</q-btn>
         <q-space />
         <!-- gt-xs view -->
         <q-chip
@@ -17,28 +16,21 @@
           flat
           text-color="white"
           icon="face"
-        >
-          {{ userDetail }}您好
-        </q-chip>
+        >{{ userDetail }}您好</q-chip>
         <!-- <q-item class="gt-xs" exact clickable to="/">
           <q-item-section>
             <q-item-label class>首頁</q-item-label>
           </q-item-section>
-        </q-item> -->
+        </q-item>-->
 
         <!-- <q-item class="gt-xs" exact clickable to="/arrange-schedule" v-if="loggedIn">
           <q-item-section>
             <q-item-label class>建立旅程表</q-item-label>
           </q-item-section>
-        </q-item> -->
+        </q-item>-->
         <div class="gt-xs" style="font-family: NSimSun;font-weight:bold">
           <q-btn-dropdown flat label="景點分析">
-            <q-item
-              clickable
-              v-close-popup
-              @click="onItemClick"
-              to="/site_demend"
-            >
+            <q-item clickable v-close-popup @click="onItemClick" to="/site_demend">
               <q-item-section>
                 <q-item-label>
                   景點GO-
@@ -46,12 +38,7 @@
                 </q-item-label>
               </q-item-section>
             </q-item>
-            <q-item
-              clickable
-              v-close-popup
-              @click="onItemClick"
-              to="/site_ProsCons"
-            >
+            <q-item clickable v-close-popup @click="onItemClick" to="/site_ProsCons">
               <q-item-section>
                 <q-item-label>
                   景點GO-
@@ -59,12 +46,7 @@
                 </q-item-label>
               </q-item-section>
             </q-item>
-            <q-item
-              clickable
-              v-close-popup
-              @click="onItemClick"
-              to="/site_Path"
-            >
+            <q-item clickable v-close-popup @click="onItemClick" to="/site_Path">
               <q-item-section>
                 <q-item-label>
                   景點GO-
@@ -74,12 +56,7 @@
             </q-item>
           </q-btn-dropdown>
           <q-btn-dropdown flat label="飯店分析">
-            <q-item
-              clickable
-              v-close-popup
-              @click="onItemClick"
-              to="/hotel_demend"
-            >
+            <q-item clickable v-close-popup @click="onItemClick" to="/hotel_demend">
               <q-item-section>
                 <q-item-label>
                   飯店GO-
@@ -87,12 +64,7 @@
                 </q-item-label>
               </q-item-section>
             </q-item>
-            <q-item
-              clickable
-              v-close-popup
-              @click="onItemClick"
-              to="/hotel_ProsCons"
-            >
+            <q-item clickable v-close-popup @click="onItemClick" to="/hotel_ProsCons">
               <q-item-section>
                 <q-item-label>
                   飯店GO-
@@ -117,26 +89,16 @@
             icon-right="account_circle"
             label="Google帳號登入"
             style="margin-left: 20px;"
-          /> -->
+          />-->
           <q-btn-dropdown v-if="loggedIn" flat label="會員功能">
             <q-list>
-              <q-item
-                clickable
-                v-close-popup
-                @click="onItemClick"
-                to="/collection"
-              >
+              <q-item clickable v-close-popup @click="onItemClick" to="/collection">
                 <q-item-section>
                   <q-item-label>我的收藏景點</q-item-label>
                 </q-item-section>
               </q-item>
 
-              <q-item
-                clickable
-                v-close-popup
-                @click="onItemClick"
-                to="/mySchedule"
-              >
+              <q-item clickable v-close-popup @click="onItemClick" to="/mySchedule">
                 <q-item-section>
                   <q-item-label>我的旅程表</q-item-label>
                 </q-item-section>
@@ -149,7 +111,7 @@
             color="white"
             icon-right=""
             :label="userDetail + '您好'"
-          /> -->
+          />-->
 
           <q-btn
             v-if="loggedIn"

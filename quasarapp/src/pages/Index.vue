@@ -4,7 +4,6 @@
     <q-carousel
       arrows
       animated
-      autoplay
       v-model="slide"
       infinite
       height="670px"
@@ -21,7 +20,7 @@
     >
       <q-carousel-slide name="1" img-src="~assets/index_1.jpg">
         <div
-          class="row justify-start items-center no-wrap bg-grey-3"
+          class="row justify-start items-center rounded-borders no-wrap bg-grey-3"
           style="text-align:center;width:auto;padding:0px;margin:120px;"
         >
           <div class="col-5">
@@ -33,16 +32,27 @@
           </div>
           <div class="col-7">
             <div class="col" style="font-family:NSimSun;text-align:left">
+              <!-- <h4
+                class="text-black"
+                style="font-size:30px;line-height:45px;margin-bottom:70px;margin-top:70px"
+              >
+                <b>
+                  <br />懶人的福音!
+                  <br />不用再花大量時間爬文
+                  <br />
+                </b>
+                <span style="font-family:Trebuchet MS;">SIGHTSEEING</span>
+                <b>
+                  幫你發現專屬於你的景點
+                  <br />規劃旅程一次搞定
+                </b>
+              </h4>-->
               <h4
                 class="text-black"
-                style="font-size:30px;line-height:45px;font-weight:bold;margin-bottom:70px;margin-top:70px"
+                style="font-weight:bold;font-size:30px;line-height:45px;margin:70px"
               >
-                SIGHTSEEING。
-                <br />一個輕鬆規劃旅程
-                <br />節省您大量時間爬文的網站
-                <br />透過資料分析
-                <br />給你想要的旅遊景點
-                <br />並輕鬆排好你的旅程
+                sightseeing是一個可以節省你大量爬文時間的旅程規劃網站。
+                <br />透過系統分析資料，讓你輕鬆的找到想要的旅遊景點或飯店並讓你安排屬於自己的旅程
               </h4>
             </div>
           </div>
@@ -51,42 +61,22 @@
       <q-carousel-slide name="2" img-src>
         <!-- 需求分析 -->
         <div class="q-pa-md row">
-          <div class="col-7 bg-grey-3 text-center text-h5">
-            <div class="container" style="position: relative;color: black;">
-              <div
-                style="position: absolute;
-            left:66px;
-            top:150px;
-            font-size:50px;
-            font-family:NSimSun;"
-              >
+          <div class="col-6 bg-grey-3 text-h5">
+            <div style="color: black;padding:150px;">
+              <div style="font-size:50px;font-family:NSimSun;height:auto;line-height:50px;">
                 <b>給拿不定主意的你</b>
               </div>
-              <div
-                style="position: absolute;
-            text-align: left;
-            left:66px;
-            top:250px;
-            font-size:28px;
-            font-family:Microsoft JhengHei;"
-              >
-                <p>僅需選擇兩個想去的景點的類型</p>
+              <div style="padding-top:50px;font-size:28px; font-family:Microsoft JhengHei;">
+                <p>還在為找不到想去的景點煩惱？</p>
+                <p>選擇喜歡的類型</p>
+                <p>符合的景點報你知!</p>
               </div>
-              <div
-                style="position: absolute;
+
+              <!-- <div
+                style="
             text-align: left;
             left:66px;
-            top:300px;
-            font-size:28px;
-            font-family:Microsoft JhengHei;"
-              >
-                <p>快速找出符合兩種類型的景點</p>
-              </div>
-              <div
-                style="position: absolute;
-            text-align: left;
-            left:66px;
-            top:350px;
+            top:400px;
             font-size:28px;
             font-family:Microsoft JhengHei;"
               >
@@ -106,14 +96,11 @@
                   label="飯店"
                   style="font-family:NSimSun;"
                 />
-              </div>
+              </div>-->
             </div>
           </div>
-          <div class="col-5 bg-grey-3 text-center">
-            <div
-              class="container"
-              style="position: relative;text-align: center;color: white;max-width:650px"
-            >
+          <div class="col-6 bg-grey-3 text-center">
+            <div class="container" style="position: relative;text-align: center;color: white;">
               <img
                 src="~assets/index_demand.jpeg"
                 alt="Snow"
@@ -122,14 +109,14 @@
               <div
                 style="position: absolute;
             bottom: 100px;
-            right: 50px;
+            right: 100px;
             font-size:48px;
             font-family:Microsoft YaHei;"
               >需求分析</div>
               <div
                 style="position: absolute;
             bottom: 36px;
-            right: 50px;
+            right: 100px;
             font-size:36px;
             font-family:Georgia;"
               >Demand Analysis</div>
@@ -139,13 +126,32 @@
         <!-- 需求分析 end -->
       </q-carousel-slide>
 
-      <q-carousel-slide name="3" img-src="~assets/index_2.jpg">
-        <div class="row item-center" style="text-align: center;color:white;">
-          <div>
-            <q-img width="70%" style="height:auto;"></q-img>
+      <q-carousel-slide name="3" img-src>
+        <!-- 需求分析 -->
+        <div class="q-pa-md row">
+          <div class="col-6 bg-grey-3 text-h5">
+            <div style="color: black;padding-top:150px;padding-bottom:150px;padding-left:50px">
+              <div style="font-size:50px;font-family:NSimSun;height:auto;line-height:50px;">
+                <b>想要找尋受歡迎路線的你</b>
+              </div>
+              <div style="padding-top:50px;font-size:28px; font-family:Microsoft JhengHei;">
+                <p>只要輸入一個想去的景點作為起點，就可以找到受大眾歡迎的路線</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 bg-grey-3 text-center">
+            <div class="container" style="position: relative;text-align: center;color: white;">
+              <img
+                src="~assets/path.png"
+                alt="Snow"
+                style="max-width:600px;width:auto;height:70ex;border-radius: 2%;"
+              />
+            </div>
           </div>
         </div>
-
+        <!-- 需求分析 end -->
+      </q-carousel-slide>
+      <q-carousel-slide name="4" img-src="~assets/index_2.jpg">
         <h2>Pros and Cons</h2>
         <div>
           <div class="content">
@@ -223,7 +229,7 @@ import { mapgetters } from "vuex";
 export default {
   data() {
     return {
-      slide: "1",
+      slide: "2",
       navPos: "bottom",
       name: "PageIndex",
 
