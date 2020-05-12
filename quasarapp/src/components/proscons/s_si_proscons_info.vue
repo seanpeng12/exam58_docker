@@ -44,7 +44,7 @@
             <p>Step3. 按下分析鈕</p>
             <p>Step4.左下為景點的優缺點綜合評論</p>
             <p>Step5. 右下為分析圖</p>
-            <p>Step6. 喜歡的話，一鍵加入您的景點收藏</p>
+            <p>Step6. 喜歡的話，一鍵加入您的景點收藏(登入才能使用)</p>
           </q-item-section>
         </q-item>
         <q-item-label header style="color:#57a5ba"

@@ -196,27 +196,31 @@
         </q-card-section>
         <q-card-actions>
           <!-- <q-btn flat color="dark" label="Share" /> -->
-          <q-btn flat color="primary" label="進入分析" :to="func.link" style="font-weight: bold;" />
-          <q-space />
           <q-btn
-            color="grey"
-            round
             flat
-            dense
-            :icon="func.expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
-            @click="func.expanded = !func.expanded"
+            color="primary"
+            :label="func.enterTxt"
+            :to="func.link"
+            style="font-weight: bold;"
           />
+          <q-btn
+            v-if="func.name == '需求功能'"
+            flat
+            color="primary"
+            :label="func.enterTxt2"
+            to="/hotel_demend"
+            style="font-weight: bold;"
+          />
+          <q-btn
+            v-if="func.name == '優缺點分析功能'"
+            flat
+            color="primary"
+            :label="func.enterTxt2"
+            to="/hotel_ProsCons"
+            style="font-weight: bold;"
+          />
+          <q-space />
         </q-card-actions>
-        <q-slide-transition>
-          <div v-show="func.expanded">
-            <q-separator />
-            <q-card-section class="text-subitle2">
-              {{
-              func.illustrate
-              }}
-            </q-card-section>
-          </div>
-        </q-slide-transition>
       </q-card>
     </div>
     <!-- card end -->
@@ -240,19 +244,21 @@ export default {
           illustrate:
             "只要選擇兩個想去的景點的類型，您即可找出符合A類型及B類型的景點",
           img: require("assets/idea.png"),
-          link: "/arrange-schedule",
-
+          link: "/site_demend",
+          enterTxt: "進入景點分析",
+          enterTxt2: "進入飯店分析",
           expanded: false
         },
 
         {
-          name: "景點優缺點分析功能",
+          name: "優缺點分析功能",
           tip: "不想踩雷的你",
           illustrate:
             "只要輸入您想了解的景點名稱，景點優缺點馬上一目瞭然，不必再花大量時間爬文。",
           img: require("assets/plus.png"),
-          link: "/arrange-schedule",
-
+          link: "/site_ProsCons",
+          enterTxt: "進入景點分析",
+          enterTxt2: "進入飯店分析",
           expanded: false
         },
         {
@@ -261,7 +267,8 @@ export default {
           illustrate:
             "只要輸入一個想去的景點作為起點，就可以找到受大眾歡迎的路線",
           img: require("assets/road.png"),
-          link: "/arrange-schedule",
+          link: "/site_Path",
+          enterTxt: "進入分析",
 
           expanded: false
         },
@@ -271,6 +278,8 @@ export default {
           illustrate: "集合我們所有的分析功能，讓您一步一步的規畫屬於您的旅程",
           img: require("assets/vacation.png"),
           link: "/mySchedule",
+          enterTxt: "進入排程",
+
           expanded: false
         }
       ]
@@ -306,4 +315,3 @@ h2 {
   margin: auto;
 }
 </style>
-
