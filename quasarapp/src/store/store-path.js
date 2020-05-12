@@ -1,4 +1,6 @@
-import axios, { axiosInstance } from "boot/axios";
+import axios, {
+  axiosInstance
+} from "boot/axios";
 
 const state = {
   namespaced: true,
@@ -25,7 +27,7 @@ const state = {
   data_index: 0,
 
   // r 圖產生位置
-  src_path: "./statics/path.html",
+  src_path: "http://140.136.155.116:8080/statics/path.html",
 
   // 路徑點懶人包
   pathData: [],
@@ -78,7 +80,9 @@ const mutations = {
   }
 };
 const actions = {
-  fetchCitys({ commit }) {
+  fetchCitys({
+    commit
+  }) {
     axiosInstance
       .get("http://140.136.155.116/api/site_dataCity")
       .then(res => {
@@ -90,7 +94,9 @@ const actions = {
       });
   },
 
-  fetchSites({ commit }) {
+  fetchSites({
+    commit
+  }) {
     axiosInstance
       .post("http://140.136.155.116/api/sitesByCity", {
         city_name: state.selected_city
@@ -104,7 +110,9 @@ const actions = {
       });
   },
 
-  fetchPathR({ commit }) {
+  fetchPathR({
+    commit
+  }) {
     axiosInstance
       .post("http://140.136.155.116/api/runPath", {
         city: state.selected_city,
@@ -120,7 +128,9 @@ const actions = {
       });
   },
   //
-  fetchPath({ commit }) {
+  fetchPath({
+    commit
+  }) {
     axiosInstance
       .post("http://140.136.155.116/api/PathData", {
         name: state.selected_site
@@ -134,7 +144,9 @@ const actions = {
       });
   },
   //
-  fetchPath_2({ commit }) {
+  fetchPath_2({
+    commit
+  }) {
     axiosInstance
       .post("http://140.136.155.116/api/PathData", {
         name: state.selected_site_2

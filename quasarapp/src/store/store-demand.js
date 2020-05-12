@@ -1,6 +1,13 @@
-import axios, { axiosInstance } from "boot/axios";
+import axios, {
+  axiosInstance
+} from "boot/axios";
 import Vue from "vue";
-import { fstore, firebaseAuth, firebaseApp, firestore } from "boot/firebase";
+import {
+  fstore,
+  firebaseAuth,
+  firebaseApp,
+  firestore
+} from "boot/firebase";
 
 const state = {
   namespaced: true,
@@ -28,7 +35,8 @@ const state = {
   txtinfo: "請先選擇城市與需求",
 
   //src iframe
-  src: "./statics/between_relationship.html",
+  // src: "./statics/between_relationship.html",
+  src: "http://140.136.155.116:8080/statics/between_relationship.html",
   // R
   Rdata: {},
   // 用以偵測是否按下按鈕(累積)
@@ -102,7 +110,9 @@ const mutations = {
   },
 };
 const actions = {
-  fetchCitys({ commit }) {
+  fetchCitys({
+    commit
+  }) {
     axiosInstance
       .get("http://140.136.155.116/api/site_dataCity")
       .then(res => {
@@ -116,7 +126,9 @@ const actions = {
       });
   },
 
-  fetchCats({ commit }) {
+  fetchCats({
+    commit
+  }) {
     axiosInstance
       .post("http://140.136.155.116/api/site_dataCat", {
         name: state.selected_p
@@ -178,7 +190,9 @@ const actions = {
   //   //   });
   // },
   // ajax跑R圖
-  upload_axios({ commit }) {
+  upload_axios({
+    commit
+  }) {
     axiosInstance
       .post("http://140.136.155.116/api/runR_twoC", {
         name: state.selected_p,
@@ -198,7 +212,9 @@ const actions = {
       });
   },
   // ajax取懶人包資料
-  upload_axios_2({ commit }) {
+  upload_axios_2({
+    commit
+  }) {
     axiosInstance
       .post("http://140.136.155.116/api/cat", {
         name: state.selected_p,
@@ -292,7 +308,9 @@ const actions = {
       });
   },
   // 取差集diff
-  upload_axios_2_diff({ commit }) {
+  upload_axios_2_diff({
+    commit
+  }) {
     axiosInstance
       .post("http://140.136.155.116/api/cat_diff", {
         name: state.selected_p,
@@ -384,7 +402,9 @@ const actions = {
         console.log(response);
       });
   },
-  resetTxtdatas({ commit }) {
+  resetTxtdatas({
+    commit
+  }) {
     commit("resetTxtdatas");
     commit("resetTxtdatas_diff");
   }

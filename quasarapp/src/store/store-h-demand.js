@@ -1,6 +1,13 @@
-import axios, { axiosInstance } from "boot/axios";
+import axios, {
+  axiosInstance
+} from "boot/axios";
 import Vue from "vue";
-import { fstore, firebaseAuth, firebaseApp, firestore } from "boot/firebase";
+import {
+  fstore,
+  firebaseAuth,
+  firebaseApp,
+  firestore
+} from "boot/firebase";
 
 const state = {
   namespaced: true,
@@ -28,7 +35,8 @@ const state = {
   txtinfo: "請先選擇城市與需求",
 
   //src iframe
-  src: "./statics/h_between_relationship.html",
+  // src: "./statics/h_between_relationship.html",
+  src: "http://140.136.155.116:8080/statics/h_between_relationship.html",
   // R
   Rdata: {},
   // 用以偵測是否按下按鈕(累積)
@@ -102,7 +110,9 @@ const mutations = {
   }
 };
 const actions = {
-  fetchCitys({ commit }) {
+  fetchCitys({
+    commit
+  }) {
     axiosInstance
       .get("http://140.136.155.116/api/h_site_dataCity")
       .then(res => {
@@ -116,7 +126,9 @@ const actions = {
       });
   },
 
-  fetchCats({ commit }) {
+  fetchCats({
+    commit
+  }) {
     axiosInstance
       .post("http://140.136.155.116/api/h_site_dataCat", {
         name: state.selected_p
@@ -178,7 +190,9 @@ const actions = {
   //   //   });
   // },
   // ajax跑R圖
-  upload_axios({ commit }) {
+  upload_axios({
+    commit
+  }) {
     axiosInstance
       .post("http://140.136.155.116/api/h_runR_twoC", {
         name: state.selected_p,
@@ -193,12 +207,14 @@ const actions = {
         commit("FETCH_index", 1);
         console.log("after_axios+1");
       })
-      .catch(function(response) {
+      .catch(function (response) {
         console.log(response);
       });
   },
   // ajax取懶人包資料
-  upload_axios_2({ commit }) {
+  upload_axios_2({
+    commit
+  }) {
     axiosInstance
       .post("http://140.136.155.116/api/h_cat", {
         name: state.selected_p,
@@ -223,11 +239,11 @@ const actions = {
               .collection("sightseeingMember")
               .doc(uid)
               .collection("我的飯店收藏");
-            id.forEach(function(data, index, array) {
+            id.forEach(function (data, index, array) {
               checkCollectionExists
                 .doc(data)
                 .get()
-                .then(function(doc) {
+                .then(function (doc) {
                   if (doc.exists) {
                     commit("FETCH_txtdatas", {
                       id: data,
@@ -256,12 +272,12 @@ const actions = {
                     });
                   }
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                   console.log("Error getting document:", error);
                 });
             });
           } else {
-            id.forEach(function(data, index, array) {
+            id.forEach(function (data, index, array) {
               commit("FETCH_txtdatas", {
                 id: data,
                 txtdata: {
@@ -277,12 +293,14 @@ const actions = {
           }
         });
       })
-      .catch(function(response) {
+      .catch(function (response) {
         console.log(response);
       });
   },
   // 取差集diff
-  upload_axios_2_diff({ commit }) {
+  upload_axios_2_diff({
+    commit
+  }) {
     axiosInstance
       .post("http://140.136.155.116/api/h_cat_diff", {
         name: state.selected_p,
@@ -309,11 +327,11 @@ const actions = {
               .collection("sightseeingMember")
               .doc(uid)
               .collection("我的飯店收藏");
-            id.forEach(function(data, index, array) {
+            id.forEach(function (data, index, array) {
               checkCollectionExists
                 .doc(data)
                 .get()
-                .then(function(doc) {
+                .then(function (doc) {
                   if (doc.exists) {
                     console.log("doc.exists", name[index], doc.exists);
 
@@ -348,12 +366,12 @@ const actions = {
                     });
                   }
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                   console.log("Error getting document:", error);
                 });
             });
           } else {
-            id.forEach(function(data, index, array) {
+            id.forEach(function (data, index, array) {
               commit("FETCH_txtdatas_diff", {
                 id: data,
                 txtdata_diff: {
@@ -370,11 +388,13 @@ const actions = {
           }
         });
       })
-      .catch(function(response) {
+      .catch(function (response) {
         console.log(response);
       });
   },
-  resetTxtdatas({ commit }) {
+  resetTxtdatas({
+    commit
+  }) {
     commit("resetTxtdatas");
     commit("resetTxtdatas_diff");
   }

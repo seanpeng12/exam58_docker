@@ -1,4 +1,6 @@
-import axios, { axiosInstance } from "boot/axios";
+import axios, {
+  axiosInstance
+} from "boot/axios";
 import Vue from "vue";
 
 const state = {
@@ -21,8 +23,8 @@ const state = {
   data_index: 0,
 
   // r 圖產生位置
-  src_good: "./statics/good.html",
-  src_bad: "./statics/bad.html",
+  src_good: "http://140.136.155.116:8080/statics/good.html",
+  src_bad: "http://140.136.155.116:8080/statics/bad.html",
 
   // 優缺點懶人包
   prosData: [],
@@ -64,7 +66,9 @@ const mutations = {
   }
 };
 const actions = {
-  fetchCitys({ commit }) {
+  fetchCitys({
+    commit
+  }) {
     axiosInstance
       .get("http://140.136.155.116/api/proscons_site_data_City")
       .then(res => {
@@ -76,7 +80,9 @@ const actions = {
       });
   },
 
-  fetchSites({ commit }) {
+  fetchSites({
+    commit
+  }) {
     axiosInstance
       .post("http://140.136.155.116/api/sitesByCity", {
         city_name: state.selected_city
@@ -90,7 +96,9 @@ const actions = {
       });
   },
 
-  fetchProsConsR({ commit }) {
+  fetchProsConsR({
+    commit
+  }) {
     axiosInstance
       .post("http://140.136.155.116/api/proscons", {
         name: state.selected_site
@@ -105,7 +113,9 @@ const actions = {
       });
   },
 
-  fetchPros({ commit }) {
+  fetchPros({
+    commit
+  }) {
     axiosInstance
       .post("http://140.136.155.116/api/prosData", {
         name: state.selected_site
@@ -119,7 +129,9 @@ const actions = {
       });
   },
 
-  fetchCons({ commit }) {
+  fetchCons({
+    commit
+  }) {
     axiosInstance
       .post("http://140.136.155.116/api/consData", {
         name: state.selected_site

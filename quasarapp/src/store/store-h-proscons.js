@@ -23,8 +23,8 @@ const state = {
   data_index: 0,
 
   // r 圖產生位置
-  src_good: "./statics/h_good.html",
-  src_bad: "./statics/h_bad.html",
+  src_good: "http://140.136.155.116:8080/statics/h_good.html",
+  src_bad: "http://140.136.155.116:8080/statics/h_bad.html",
 
   // 優缺點懶人包
   prosData: [],

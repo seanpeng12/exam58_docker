@@ -135,8 +135,14 @@ export default {
       this.$refs.myFrame_good.contentWindow.location.reload();
       console.log("change重整畫面成功!data_index+1");
 
-      this.$store.commit("h_proscons/Update_Good_Src", "./statics/h_good.html");
-      this.$store.commit("h_proscons/Update_Bad_Src", "./statics/h_bad.html");
+      this.$store.commit(
+        "h_proscons/Update_Good_Src",
+        "http://140.136.155.116:8080/statics/h_good.html"
+      );
+      this.$store.commit(
+        "h_proscons/Update_Bad_Src",
+        "http://140.136.155.116:8080/statics/h_bad.html"
+      );
       this.isLoading = false;
 
       this.$store.commit("h_proscons/Update_Data_Index", 1);
