@@ -59,7 +59,7 @@
         :loading="loading1"
         :percentage="percentage1"
         color="cyan-9"
-        @click="startComputing(1)"
+        @click="startComputing(1), showAddColletionFilter()"
         v-on:click="runR()"
         style="width:150px; margin-right:10px"
       >
@@ -68,7 +68,25 @@
           <q-spinner-gears class="on-left" />分析中...
         </template>
       </q-btn>
-      <slot name="addToCollection"></slot>
+      <slot
+        name="addToCollection"
+        v-if="
+          loggedIn == true &&
+            showAddToCollection == true &&
+            checkCollectionExist.exists == false
+        "
+      ></slot>
+      <q-btn
+        v-else-if="
+          loggedIn == true &&
+            showAddToCollection == true &&
+            checkCollectionExist.exists == true
+        "
+        :disable="!progress"
+        color="red-7"
+        @click="progress = false"
+        label="已在收藏列表"
+      ></q-btn>
     </div>
   </div>
 </template>
@@ -91,7 +109,9 @@ export default {
       // 分析按鈕
       loading1: false,
       // 按鈕百分比
-      percentage1: 0
+      percentage1: 0,
+      showAddToCollection: false,
+      progress: false
     };
   },
   computed: {
@@ -103,8 +123,10 @@ export default {
       "h_prosConsselected_site",
       "start_index",
       "run_index",
-      "data_index"
-    ])
+      "data_index",
+      "checkCollectionExist"
+    ]),
+    ...mapGetters("auth", ["loggedIn"])
   },
 
   methods: {
@@ -113,7 +135,7 @@ export default {
     ...mapActions("h_proscons", ["fetchSites"]),
     ...mapActions("h_proscons", ["fetchProsConsR"]),
     ...mapActions("h_proscons", ["fetchCons"]),
-    ...mapActions("h_proscons", ["fetchPros"]),
+    ...mapActions("h_proscons", ["fetchPros", "siteExistsCollection"]),
 
     startComputing(id) {
       // 開啟loading狀態
@@ -139,6 +161,23 @@ export default {
       // 懶人包
       this.fetchCons();
       this.fetchPros();
+    },
+
+    showAddColletionFilter() {
+      // 顯示收藏鈕開關
+      this.$store
+        .dispatch("h_proscons/siteExistsCollection", this.selected_site_local)
+        .then(() => {
+          console.log("test:", this.checkCollectionExist.exists);
+
+          setTimeout(() => {
+            this.showAddToCollection = true;
+          }, 2000);
+        })
+        .then(() => {
+          // console.log(this.showAddToCollection);
+        });
+
       console.log("觸發 fetchProsConsR及優缺懶人包，run_index+1");
     },
     // 第一層過濾清單
@@ -167,10 +206,20 @@ export default {
       this.fetchSites();
       // 清空下一層
       this.selected_site_local = "";
+      // 顯示收藏鈕開關
+
+      this.showAddToCollection = false;
     },
     selected_site_local(val) {
       console.log("偵測到變動 commit site!", val);
       this.$store.commit("h_proscons/Update_Selected_Site", val);
+      // 顯示收藏鈕開關
+
+      this.showAddToCollection = false;
+      // this.$store.dispatch(
+      //   "h_proscons/siteExistsCollection",
+      //   this.selected_site_local
+      // );
     },
     data_index(val) {
       this[`percentage1`] = 97;

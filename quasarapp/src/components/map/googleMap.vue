@@ -71,11 +71,12 @@
             <q-btn class="col" label="Submit" type="submit" color="red" />
           </div>
           <!-- <slot name="chooseForArrange"></slot> -->
-          <q-btn label="test" @click="deleteMarkers()"></q-btn>
+          <!-- <q-btn label="test" @click="deleteMarkers()"></q-btn> -->
         </q-form>
       </div>
-    </div></div
-></template>
+    </div>
+  </div></template
+>
 
 <script>
 import { mapGetters } from "vuex";
@@ -85,8 +86,8 @@ export default {
     return {
       map: null,
       // 預設經緯度在信義區附近
-      lat: 41.85,
-      lng: -87.65,
+      lat: 23.7,
+      lng: 121,
       chooseDate: "",
       accepted: [],
       start: "",
@@ -131,13 +132,13 @@ export default {
       var directionsRenderer = new google.maps.DirectionsRenderer();
 
       this.map = new google.maps.Map(this.$refs.bmap, {
-        center: { lat: 23.7, lng: 121 },
-        zoom: 7.9,
+        center: { lat: this.lat, lng: this.lng },
+        zoom: 8.3,
         maxZoom: 20,
         minZoom: 3
       });
 
-      directionsService.route(
+      /* directionsService.route(
         {
           origin: { lat: 61, lng: 13 },
           destination: { lat: 62, lng: 15 },
@@ -150,7 +151,7 @@ export default {
             console.log("Directions request failed due to " + status);
           }
         }
-      );
+      );*/
     },
     chooseForArrange() {
       this.endOptions = [];
@@ -209,7 +210,7 @@ export default {
     prompt() {
       var directionsService = new google.maps.DirectionsService();
       var directionsRenderer = new google.maps.DirectionsRenderer();
-      this.initMap();
+
       this.calculateAndDisplayRoute(directionsService, directionsRenderer);
     },
 
@@ -234,6 +235,9 @@ export default {
           if (status === "OK") {
             var map = this.map;
             console.log(response);
+            (this.lat = response.routes[0].legs[0].start_location.lat(name)),
+              (this.lng = response.routes[0].legs[0].start_location.lng(name));
+            this.initMap();
 
             for (var i = 0; i < response.routes[0].legs.length; i++) {
               if (i != response.routes[0].legs.length - 1) {
@@ -263,21 +267,32 @@ export default {
               }
             }
 
-            //directionsRenderer.setDirections(response);
-            //我猜這裏是讓他回傳路線的資訊地方，並重新渲染地圖(呈現路線圖的樣子)
-
             //這裡是他文字路線的顯示(成功)
             var route = response.routes[0];
             var summaryPanel = document.getElementById("directions-panel");
             summaryPanel.innerHTML = "";
-            // For each route, display summary information.
-            for (var i = 0; i < route.legs.length; i++) {
-              var routeSegment = i + 1;
-              summaryPanel.innerHTML += "<b>路徑: " + routeSegment + "</b><br>";
-              summaryPanel.innerHTML += route.legs[i].start_address + " → ";
-              summaryPanel.innerHTML += route.legs[i].end_address + "<br>總共";
-              summaryPanel.innerHTML +=
-                route.legs[i].distance.text + "<br><br>";
+
+            for (var i = 0; i < response.routes[0].legs.length; i++) {
+              if (i != response.routes[0].legs.length - 1) {
+                summaryPanel.innerHTML +=
+                  String.fromCharCode((i + 97).toString()).toUpperCase() +
+                  ": " +
+                  response.routes[0].legs[i].start_address +
+                  "<br />" +
+                  "↓" +
+                  "<br />";
+              } else {
+                summaryPanel.innerHTML +=
+                  String.fromCharCode((i + 97).toString()).toUpperCase() +
+                  ": " +
+                  response.routes[0].legs[i].start_address +
+                  "<br />" +
+                  "↓" +
+                  "<br />" +
+                  String.fromCharCode((i + 98).toString()).toUpperCase() +
+                  ": " +
+                  response.routes[0].legs[i].end_address;
+              }
             }
           } else {
             window.alert("Directions request failed due to " + status);
@@ -353,6 +368,29 @@ export default {
       marker.addListener("click", () => {
         // 指定在哪個地圖和地標上開啟訊息視窗
         infowindow.open(this.map, marker);
+      });
+    }
+  },
+  watch: {
+    start: function(val) {
+      // console.log("start:", this.originOptions);
+      this.waypointOptions = this.waypointOptions.filter(item => {
+        return item != this.start;
+      });
+      this.endOptions = this.endOptions.filter(item => {
+        return item != this.start;
+      });
+      //console.log("this.item_1:", this.waypointOptions);
+    },
+    waypoint: function(val) {
+      console.log("waypoint:", this.waypoint);
+
+      this.waypoint.forEach((item, index) => {
+        this.endOptions = this.endOptions.filter(a => {
+          console.log(a);
+          return a != item;
+        });
+        console.log("this.item_1:", this.endOptions);
       });
     }
   }

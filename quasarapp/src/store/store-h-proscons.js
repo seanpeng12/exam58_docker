@@ -1,7 +1,6 @@
-import axios, {
-  axiosInstance
-} from "boot/axios";
+import axios, { axiosInstance } from "boot/axios";
 import Vue from "vue";
+import { fstore, firebaseAuth, firebaseApp, firestore } from "boot/firebase";
 
 const state = {
   namespaced: true,
@@ -28,7 +27,9 @@ const state = {
 
   // 優缺點懶人包
   prosData: [],
-  consData: []
+  consData: [],
+  // 景點是否在
+  checkCollectionExists: {}
 };
 const mutations = {
   FETCH_Citys(state, value) {
@@ -41,7 +42,7 @@ const mutations = {
     return (state.selected_city = value);
   },
   Update_Selected_Site(state, value) {
-    console.log("hpros:", value)
+    console.log("hpros:", value);
     return (state.selected_site = value);
   },
   Update_Start_Index(state, value) {
@@ -64,12 +65,18 @@ const mutations = {
   },
   Update_ConsData(state, value) {
     return (state.consData = value);
+  },
+  // 檢查飯店是否在收藏
+  checkCollectionExists(state, value) {
+    state.checkCollectionExists = value;
+    console.log(
+      "checkCollectionExists from mutation:",
+      state.checkCollectionExists
+    );
   }
 };
 const actions = {
-  fetchCitys({
-    commit
-  }) {
+  fetchCitys({ commit }) {
     axiosInstance
       .get("http://140.136.155.116/api/proscons_hotel_data_City")
       .then(res => {
@@ -81,9 +88,7 @@ const actions = {
       });
   },
 
-  fetchSites({
-    commit
-  }) {
+  fetchSites({ commit }) {
     axiosInstance
       .post("http://140.136.155.116/api/h_sitesByCity", {
         city_name: state.selected_city
@@ -97,10 +102,7 @@ const actions = {
       });
   },
 
-  fetchProsConsR({
-    commit,
-    dispatch
-  }) {
+  fetchProsConsR({ commit, dispatch }) {
     axiosInstance
       .post("http://140.136.155.116/api/h_proscons", {
         name: state.selected_site
@@ -115,9 +117,7 @@ const actions = {
       });
   },
 
-  fetchPros({
-    commit
-  }) {
+  fetchPros({ commit }) {
     axiosInstance
       .post("http://140.136.155.116/api/h_prosData", {
         name: state.selected_site
@@ -131,9 +131,7 @@ const actions = {
       });
   },
 
-  fetchCons({
-    commit
-  }) {
+  fetchCons({ commit }) {
     axiosInstance
       .post("http://140.136.155.116/api/h_consData", {
         name: state.selected_site
@@ -145,6 +143,37 @@ const actions = {
       .catch(err => {
         console.log(err);
       });
+  },
+  siteExistsCollection({ commit }, site_name) {
+    const uid = firebaseAuth.currentUser.uid;
+    const checkCollectionExists = fstore
+      .collection("sightseeingMember")
+      .doc(uid)
+      .collection("我的飯店收藏");
+
+    axiosInstance
+      .post("http://140.136.155.116/api/h_proconsAddToCollection", {
+        name: site_name
+      })
+      .then(datas => {
+        console.log("取優缺id測試:", datas.data[0].id);
+
+        checkCollectionExists
+          .doc(datas.data[0].id)
+          .get()
+          .then(function(doc) {
+            if (doc.exists) {
+              console.log("存在");
+
+              commit("checkCollectionExists", { exists: true });
+            } else {
+              console.log("不存在");
+
+              commit("checkCollectionExists", { exists: false });
+            }
+          });
+      });
+    //
   }
 };
 
@@ -185,6 +214,9 @@ const getters = {
   },
   consData: state => {
     return state.consData;
+  },
+  checkCollectionExist: state => {
+    return state.checkCollectionExists;
   }
 };
 

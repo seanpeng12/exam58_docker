@@ -64,10 +64,14 @@
         <div class="q-pa-md row">
           <div class="col-6 bg-grey-3 text-h5">
             <div style="color: black;padding:150px;">
-              <div style="font-size:50px;font-family:NSimSun;height:auto;line-height:50px;">
+              <div
+                style="font-size:50px;font-family:NSimSun;height:auto;line-height:50px;"
+              >
                 <b>給拿不定主意的你</b>
               </div>
-              <div style="padding-top:50px;font-size:28px; font-family:Microsoft JhengHei;">
+              <div
+                style="padding-top:50px;font-size:28px; font-family:Microsoft JhengHei;"
+              >
                 <p>還在為找不到想去的景點煩惱？</p>
                 <p>選擇喜歡的類型</p>
                 <p>符合的景點報你知!</p>
@@ -101,7 +105,10 @@
             </div>
           </div>
           <div class="col-6 bg-grey-3 text-center">
-            <div class="container" style="position: relative;text-align: center;color: white;">
+            <div
+              class="container"
+              style="position: relative;text-align: center;color: white;"
+            >
               <img
                 src="~assets/index_demand.jpeg"
                 alt="Snow"
@@ -113,14 +120,18 @@
             right: 100px;
             font-size:48px;
             font-family:Microsoft YaHei;"
-              >需求分析</div>
+              >
+                需求分析
+              </div>
               <div
                 style="position: absolute;
             bottom: 36px;
             right: 100px;
             font-size:36px;
             font-family:Georgia;"
-              >Demand Analysis</div>
+              >
+                Demand Analysis
+              </div>
             </div>
           </div>
         </div>
@@ -131,11 +142,17 @@
         <!-- 需求分析 -->
         <div class="q-pa-md row">
           <div class="col-6 bg-grey-3 text-h5">
-            <div style="color: black;padding-top:150px;padding-bottom:150px;padding-left:50px">
-              <div style="font-size:50px;font-family:NSimSun;height:auto;line-height:50px;">
+            <div
+              style="color: black;padding-top:150px;padding-bottom:150px;padding-left:50px"
+            >
+              <div
+                style="font-size:50px;font-family:NSimSun;height:auto;line-height:50px;"
+              >
                 <b>不想踩雷的你</b>
               </div>
-              <div style="padding-top:50px;font-size:28px; font-family:Microsoft JhengHei;">
+              <div
+                style="padding-top:50px;font-size:28px; font-family:Microsoft JhengHei;"
+              >
                 <p>
                   使用我們的優缺點分析功能
                   輸入景點或飯店名稱，優點與缺點一目瞭然
@@ -144,7 +161,10 @@
             </div>
           </div>
           <div class="col-6 bg-grey-3 text-center">
-            <div class="container" style="position: relative;text-align: center;color: white;">
+            <div
+              class="container"
+              style="position: relative;text-align: center;color: white;"
+            >
               <img
                 src="https://calmack.com/wp-content/uploads/2019/11/pros-and-cons-career-in-court-reporting-denver-co.png"
                 alt="Snow"
@@ -159,17 +179,28 @@
         <!-- 需求分析 -->
         <div class="q-pa-md row">
           <div class="col-6 bg-grey-3 text-h5">
-            <div style="color: black;padding-top:150px;padding-bottom:150px;padding-left:50px">
-              <div style="font-size:50px;font-family:NSimSun;height:auto;line-height:50px;">
+            <div
+              style="color: black;padding-top:150px;padding-bottom:150px;padding-left:50px"
+            >
+              <div
+                style="font-size:50px;font-family:NSimSun;height:auto;line-height:50px;"
+              >
                 <b>想要找尋受歡迎路線的你</b>
               </div>
-              <div style="padding-top:50px;font-size:28px; font-family:Microsoft JhengHei;">
-                <p>只要輸入一個想去的景點作為起點，就可以找到受大眾歡迎的路線</p>
+              <div
+                style="padding-top:50px;font-size:28px; font-family:Microsoft JhengHei;"
+              >
+                <p>
+                  只要輸入一個想去的景點作為起點，就可以找到受大眾歡迎的路線
+                </p>
               </div>
             </div>
           </div>
           <div class="col-6 bg-grey-3 text-center">
-            <div class="container" style="position: relative;text-align: center;color: white;">
+            <div
+              class="container"
+              style="position: relative;text-align: center;color: white;"
+            >
               <img
                 src="~assets/path.png"
                 alt="Snow"
@@ -200,7 +231,12 @@
     </q-carousel>
     <!-- 需求分析 end -->
     <!-- 游標 -->
-    <q-page-scroller reverse position="top-right" :scroll-offset="20" :offset="[18, 18]">
+    <q-page-scroller
+      reverse
+      position="top-right"
+      :scroll-offset="20"
+      :offset="[18, 18]"
+    >
       <q-btn fab icon="keyboard_arrow_down" color="dark" />
     </q-page-scroller>
     <!-- end -->
@@ -215,7 +251,10 @@
         :key="func.name"
       >
         <!-- <q-responsive :ratio="4 / 3" class="col"> -->
-        <q-img v-bind:src="func.img" style="height:140px; width:140px; margin: 60px"></q-img>
+        <q-img
+          v-bind:src="func.img"
+          style="height:140px; width:140px; margin: 60px"
+        ></q-img>
         <!-- </q-responsive> -->
         <!-- <q-img src="~assets/comment.jpg" /> -->
         <q-card-section>
@@ -248,7 +287,43 @@
             to="/hotel_ProsCons"
             style="font-weight: bold;"
           />
+
           <q-space />
+        </q-card-actions>
+      </q-card>
+      <!--  -->
+      <q-card class="my-card" style="margin: 20px; width: 250px;" flat bordered>
+        <q-img
+          src="~assets/vacation.png"
+          style="height:140px; width:140px; margin: 60px"
+        ></q-img>
+
+        <q-card-section>
+          <div class="text-overline text-orange-9">
+            想要來一趟旅程的你
+          </div>
+          <div class="text-h5 q-mt-sm q-mb-xs">安排一趟旅程</div>
+          <div class="text-caption text-grey"></div>
+        </q-card-section>
+        <q-card-actions>
+          <!-- <q-btn flat color="dark" label="Share" /> -->
+          <q-btn
+            v-if="loggedIn == true"
+            flat
+            color="primary"
+            label="進入分析"
+            to="mySchedule"
+            style="font-weight: bold;"
+          />
+          <q-chip
+            v-else
+            class="q-pa-sm"
+            dense
+            text-color="white"
+            icon="announcement"
+            label="登入後即可使用"
+            color="red"
+          />
         </q-card-actions>
       </q-card>
     </div>
@@ -258,7 +333,7 @@
 
 <script>
 // 824 (it's in pixels always)
-import { mapgetters } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -300,19 +375,22 @@ export default {
           enterTxt: "進入分析",
 
           expanded: false
-        },
-        {
-          name: "安排一趟旅程",
-          tip: "想要來一趟旅程的你",
-          illustrate: "集合我們所有的分析功能，讓您一步一步的規畫屬於您的旅程",
-          img: require("assets/vacation.png"),
-          link: "/mySchedule",
-          enterTxt: "進入排程",
-
-          expanded: false
         }
+        // {
+        //   name: "安排一趟旅程",
+        //   tip: "想要來一趟旅程的你",
+        //   illustrate: "集合我們所有的分析功能，讓您一步一步的規畫屬於您的旅程",
+        //   img: require("assets/vacation.png"),
+        //   link: "/mySchedule",
+        //   enterTxt: "進入排程",
+
+        //   expanded: false
+        // }
       ]
     };
+  },
+  computed: {
+    ...mapGetters("auth", ["loggedIn"])
   }
 };
 </script>

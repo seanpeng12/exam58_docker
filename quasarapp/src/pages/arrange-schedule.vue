@@ -20,12 +20,7 @@
 
     <q-drawer show-if-above v-model="left" side="left" bordered :width="260">
       <!-- 往上一頁 -->
-      <q-icon
-        class="q-mt-none q-mb-xs q-ml-md"
-        color="#cccccc"
-        name="help"
-        size="26px"
-      >
+      <q-icon class="q-mt-none q-mb-xs q-ml-md" color="#cccccc" name="help" size="26px">
         <q-tooltip
           anchor="top middle"
           content-class="q-pa-md bg-amber-2 text-black shadow-4"
@@ -34,9 +29,7 @@
           transition-hide="fade"
           :offset="[10, 10]"
         >
-          <span style="font-family:Microsoft JhengHei;">
-            您可以搭配我們的分析步驟，把喜愛的景點飯店加入排程
-          </span>
+          <span style="font-family:Microsoft JhengHei;">您可以搭配我們的分析步驟，把喜愛的景點飯店加入排程</span>
         </q-tooltip>
       </q-icon>
       <q-breadcrumbs-el
@@ -44,7 +37,7 @@
         icon="touch_app"
         style="width:70px;margin-left:80px;magin-right:50px"
         size="18px"
-        class="absolute-middle text-primary q-mt-sm "
+        class="absolute-middle text-primary q-mt-sm"
       />
       <!-- <q-btn
         icon="keyboard_backspace"
@@ -53,7 +46,7 @@
         label="我的旅程表"
         flat
         @click="darkDialog = true"
-      /> -->
+      />-->
 
       <!-- <q-dialog v-model="darkDialog">
         <q-card>
@@ -70,7 +63,7 @@
             <q-btn flat label="取消" color="primary" v-close-popup />
           </q-card-actions>
         </q-card>
-      </q-dialog> -->
+      </q-dialog>-->
 
       <!-- 往上一頁結束 -->
 
@@ -177,13 +170,6 @@
                   </template>
                 </hCard>
               </div>
-              <q-btn
-                dense
-                label="前往下一步"
-                class="row absolute-bottom-right"
-                color="secondary"
-                style="max-width: 300px"
-              />
             </q-tab-panel>
 
             <q-tab-panel name="alarms">
@@ -259,9 +245,7 @@
                     <p
                       class="text"
                       style="font-size: 30px;font-family: Microsoft JhengHei;"
-                    >
-                      {{ txtinfo }}
-                    </p>
+                    >{{ txtinfo }}</p>
 
                     <q-list bordered>
                       <q-expansion-item
@@ -277,9 +261,7 @@
                       >
                         <q-card>
                           <q-card-section>
-                            <q-scroll-area
-                              style="height:200px; max-width: 600px;"
-                            >
+                            <q-scroll-area style="height:200px; max-width: 600px;">
                               <q-list>
                                 <demand-data
                                   v-for="(txtdata, key) in txtdatas"
@@ -323,9 +305,7 @@
                         <q-card>
                           <q-card-section>
                             <!-- test txtdatas_diff -->
-                            <q-scroll-area
-                              style="height:200px; max-width: 600px;"
-                            >
+                            <q-scroll-area style="height:200px; max-width: 600px;">
                               <q-list>
                                 <demandDataDiff
                                   v-for="(txtdata, key) in txtdatas_diff"
@@ -371,9 +351,7 @@
                       >
                         <q-card>
                           <q-card-section>
-                            <q-scroll-area
-                              style="height:200px; max-width: 600px;"
-                            >
+                            <q-scroll-area style="height:200px; max-width: 600px;">
                               <q-list>
                                 <demandDataDiff2
                                   v-for="(txtdata, key) in txtdatas_diff"
@@ -415,14 +393,6 @@
                 </div>
               </div>
               <!-- END -->
-              <q-btn
-                dense
-                label="前往下一步"
-                class="row absolute-bottom-right"
-                color="secondary"
-                size="20px"
-                style="margin:8px"
-              />
             </q-tab-panel>
 
             <q-tab-panel name="movies">
@@ -445,7 +415,7 @@
                       rounded
                       icon="add"
                       label="加進排程"
-                      color="green-3"
+                      color="warning"
                       @click="promptToAddRouteSites()"
                       dense
                       size="12px"
@@ -465,14 +435,6 @@
                   </div>
                 </div>
               </div>
-              <q-btn
-                dense
-                label="前往下一步"
-                class="row absolute-bottom-right"
-                color="secondary"
-                size="20px"
-                style="margin:8px"
-              />
             </q-tab-panel>
             <q-tab-panel name="advantage">
               <div class="q-pa-md">
@@ -492,7 +454,7 @@
 
               <q-page>
                 <!-- 左右區域 web -->
-                <div class="q-pa-md ">
+                <div class="q-pa-md">
                   <div class="row">
                     <div class="col-6">
                       <proscons-data>
@@ -501,7 +463,7 @@
                             rounded
                             icon="add"
                             label="景點加進排程"
-                            color="green-3"
+                            color="warning"
                             @click="promptToAddProsSite()"
                             dense
                             size="12px"
@@ -518,19 +480,10 @@
                 </div>
                 <!-- end -->
               </q-page>
-
-              <q-btn
-                dense
-                label="前往下一步"
-                class="row absolute-bottom-right"
-                color="secondary"
-                size="20px"
-                style="margin:8px"
-              />
             </q-tab-panel>
             <!-- 飯店優缺點分析 -->
             <q-tab-panel name="h_advantage">
-              <div class=" q-pa-md">
+              <div class="q-pa-md">
                 <div class="q-pa-md doc-container text-black bg-grey-3">
                   <div class="row text-h4">
                     <b>飯店優缺點分析</b>
@@ -556,7 +509,7 @@
                             rounded
                             icon="add"
                             label="飯店加進排程"
-                            color="green-3"
+                            color="warning"
                             @click="promptToAddHotelProsSite()"
                             dense
                             size="12px"
@@ -573,23 +526,12 @@
                 </div>
                 <!-- end -->
               </q-page>
-
-              <q-btn
-                dense
-                label="前往下一步"
-                class="row absolute-bottom-right"
-                color="secondary"
-                size="20px"
-                style="margin:8px"
-              />
             </q-tab-panel>
             <q-tab-panel name="aa">
               <div class="text-h4">
                 GoogleMap找出最短路線
                 <q-icon color="red" name="report_problem" size="20px" />
-                <span class="text-subtitle2" style="color:red">
-                  起點與終點為固定順序
-                </span>
+                <span class="text-subtitle2" style="color:red">起點與終點為固定順序</span>
               </div>
 
               <googleMap>
@@ -600,7 +542,7 @@
                     color="amber"
                     @click="chooseForArrange()"
                   ></q-btn></template
-              > -->
+                >-->
               </googleMap>
             </q-tab-panel>
           </q-tab-panels>
@@ -916,7 +858,7 @@ export default {
     changeSrc() {
       document.getElementById("myFrame").contentWindow.location.reload(true);
       document.getElementById("myFrame").src =
-        "./statics/between_relationship.html";
+        "http://140.136.155.116:8080/statics/between_relationship.html";
       // this.src = "./statics/between_relationship.html";
       this.$store.commit(
         "demand/update_txtinfo",
