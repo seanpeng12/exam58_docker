@@ -9,6 +9,12 @@
             <p style="font-size: 26px;font-weight:bold;font-family: Microsoft JhengHei;">
               {{ prosConsSelected_site }}的優點
               <slot name="addToSchedule"></slot>
+              <q-chip>
+                <q-avatar color="green-8" text-color="white" size="15px"></q-avatar>
+                <span style="font-size: 15px;">
+                  <b>顏色越深，好評中提及該關鍵字的人數越多</b>
+                </span>
+              </q-chip>
             </p>
             <div>
               <q-scroll-area
@@ -16,27 +22,27 @@
               >
                 <q-chip size="md" v-for="a in prosData.data" :key="a.id">
                   <div v-if="a.degree >= 30">
-                    <q-avatar color="green-8" text-color="white">{{ a.degree}}</q-avatar>
+                    <q-avatar icon="thumb_up_alt" color="green-8" text-color="white"></q-avatar>
                     <b>{{ a.segment }}</b>
                   </div>
                   <div v-else-if="a.degree < 30 && a.degree >= 20">
-                    <q-avatar color="green-7" text-color="white">{{ a.degree}}</q-avatar>
+                    <q-avatar icon="thumb_up_alt" color="green-7" text-color="white"></q-avatar>
                     <b>{{ a.segment }}</b>
                   </div>
                   <div v-else-if="a.degree < 20 && a.degree >= 10">
-                    <q-avatar color="green-6" text-color="white">{{ a.degree}}</q-avatar>
+                    <q-avatar icon="thumb_up_alt" color="green-6" text-color="white"></q-avatar>
                     <b>{{ a.segment }}</b>
                   </div>
                   <div v-else-if="a.degree < 10 && a.degree >= 5">
-                    <q-avatar color="green-5" text-color="white">{{ a.degree}}</q-avatar>
+                    <q-avatar icon="thumb_up_alt" color="green-5" text-color="white"></q-avatar>
                     {{ a.segment }}
                   </div>
                   <div v-else-if="a.degree < 5 && a.degree > 1">
-                    <q-avatar color="green-4" text-color="white">{{ a.degree}}</q-avatar>
+                    <q-avatar icon="thumb_up_alt" color="green-4" text-color="white"></q-avatar>
                     {{ a.segment }}
                   </div>
                   <div v-else-if="a.degree === 1">
-                    <q-avatar color="green-3" text-color="white">{{ a.degree}}</q-avatar>
+                    <q-avatar icon="thumb_up_alt" color="green-3" text-color="white"></q-avatar>
                     {{ a.segment }}
                   </div>
                 </q-chip>
@@ -50,36 +56,42 @@
       <div class="col">
         <div class="img_background">
           <div>
-            <p
-              style="font-size: 26px;font-weight:bold;font-family: Microsoft JhengHei;"
-            >{{ prosConsSelected_site }}的缺點</p>
+            <p style="font-size: 26px;font-weight:bold;font-family: Microsoft JhengHei;">
+              {{ prosConsSelected_site }}的缺點
+              <q-chip>
+                <q-avatar color="red-8" text-color="white" size="15px"></q-avatar>
+                <span style="font-size: 15px;">
+                  <b>顏色越深，負評中提及該關鍵字的人數越多</b>
+                </span>
+              </q-chip>
+            </p>
             <div>
               <q-scroll-area
                 style="height: 210px; max-width: auto;font-family: Microsoft JhengHei;"
               >
                 <q-chip size="md" v-for="a in consData.data" :key="a.id">
                   <div v-if="a.degree >= 30">
-                    <q-avatar color="red-8" text-color="white">{{ a.degree}}</q-avatar>
+                    <q-avatar icon="thumb_down_alt" color="red-8" text-color="white"></q-avatar>
                     <b>{{ a.segment }}</b>
                   </div>
                   <div v-else-if="a.degree < 30 && a.degree >= 20">
-                    <q-avatar color="red-7" text-color="white">{{ a.degree}}</q-avatar>
+                    <q-avatar icon="thumb_down_alt" color="red-7" text-color="white"></q-avatar>
                     <b>{{ a.segment }}</b>
                   </div>
                   <div v-else-if="a.degree < 20 && a.degree >= 10">
-                    <q-avatar color="red-6" text-color="white">{{ a.degree}}</q-avatar>
+                    <q-avatar icon="thumb_down_alt" color="red-6" text-color="white"></q-avatar>
                     <b>{{ a.segment }}</b>
                   </div>
                   <div v-else-if="a.degree < 10 && a.degree >= 5">
-                    <q-avatar color="red-5" text-color="white">{{ a.degree}}</q-avatar>
+                    <q-avatar icon="thumb_down_alt" color="red-5" text-color="white"></q-avatar>
                     {{ a.segment }}
                   </div>
                   <div v-else-if="a.degree < 5 && a.degree > 1">
-                    <q-avatar color="red-4" text-color="white">{{ a.degree}}</q-avatar>
+                    <q-avatar icon="thumb_down_alt" color="red-4" text-color="white"></q-avatar>
                     {{ a.segment }}
                   </div>
                   <div v-else-if="a.degree === 1">
-                    <q-avatar color="red-3" text-color="white">{{ a.degree}}</q-avatar>
+                    <q-avatar icon="thumb_down_alt" color="red-3" text-color="white"></q-avatar>
                     {{ a.segment }}
                   </div>
                 </q-chip>

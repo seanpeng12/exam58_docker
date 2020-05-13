@@ -1,17 +1,12 @@
 <template>
   <q-page>
     <div class="q-pa-md doc-container">
-      <div
-        class="gt-xs q-pa-lg items-center text-black bg-grey-3"
-        style="height:250px;"
-      >
+      <div class="gt-xs q-pa-lg items-center text-black bg-grey-3" style="height:250px;">
         <div class="row">
           <div class="col"></div>
 
           <div class="col-12 col-md-auto">
-            <p style="font-size: 28px;font-family: Microsoft JhengHei;">
-              飯店優缺點分析
-            </p>
+            <p style="font-size: 28px;font-family: Microsoft JhengHei;">飯店優缺點分析</p>
           </div>
 
           <div class="col q-mt-sm q-ml-sm">
@@ -27,8 +22,7 @@
               <b
                 class="text"
                 style="font-size: 20px;font-family: Microsoft JhengHei;"
-                >從網站評論資訊，幫您分析飯店是否符合您的需求</b
-              >
+              >從網站評論資訊，幫您分析飯店是否符合您的需求</b>
               <br />
             </div>
           </div>
@@ -66,15 +60,32 @@
     </div>
 
     <!-- 左右區域 web -->
-    <div class="q-pa-md">
-      <div class="row">
-        <div class="col-6">
-          <proscons-data></proscons-data>
+    <div v-if="isShow">
+      <div class="q-pa-md">
+        <div class="row">
+          <div class="col-6">
+            <proscons-data></proscons-data>
+          </div>
+          <!-- 懶人包區域 -->
+          <div class="col-6">
+            <proscons-r></proscons-r>
+          </div>
         </div>
-        <!-- 懶人包區域 -->
-        <div class="col-6">
-          <proscons-r></proscons-r>
-        </div>
+      </div>
+    </div>
+    <!-- 介紹頁面 -->
+    <div v-else class="row" style="font-family: Microsoft JhengHei;">
+      <div
+        class="col q-ma-md text-center text-h4 text-white"
+        style="padding:150px; background-size: cover;background-position: center;background-repeat: no-repeat;background-image: url('https://images.unsplash.com/photo-1557683311-eac922347aa1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1315&q=80');"
+      >
+        <p>
+          請先選擇
+          <b>城市</b>
+
+          <br />
+          <b>再選擇你喜歡的飯店</b>，按開始以進行分析
+        </p>
       </div>
     </div>
     <!-- end -->
@@ -95,11 +106,21 @@ export default {
     hSiProsConsInfo: () => import("components/proscons/h_si_proscons_info.vue")
   },
   data() {
-    return { loading2: false };
+    return {
+      loading2: false,
+      //顯示下方頁面
+      isShow: false
+    };
   },
   computed: {
     // 取得vuex state變動值
-    ...mapGetters("h_proscons", ["run_index", "h_prosConsselected_site"])
+    ...mapGetters("h_proscons", [
+      "selected_city",
+      "h_prosConsselected_site",
+      "start_index",
+      "run_index",
+      "h_prosConsselected_site"
+    ])
   },
   methods: {
     ...mapActions("collections", ["h_proconsAddToCollection"]),
@@ -128,9 +149,15 @@ export default {
     }
   },
   watch: {
+    start_index(val) {
+      this.isShow = true;
+    },
     h_prosConsselected_site(val) {
-      console.log("watchTest");
       this.loading2 = false;
+      this.isShow = false;
+    },
+    selected_city(val) {
+      this.isShow = false;
     }
   }
 };

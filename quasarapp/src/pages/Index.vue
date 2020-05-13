@@ -180,7 +180,7 @@
         </div>
         <!-- 需求分析 end -->
       </q-carousel-slide>
-      <q-carousel-slide name="5" img-src="~assets/index_2.jpg">
+      <!-- <q-carousel-slide name="5" img-src="~assets/index_2.jpg">
         <h2>Pros and Cons</h2>
         <div>
           <div class="content">
@@ -196,7 +196,7 @@
             </div>
           </div>
         </div>
-      </q-carousel-slide>
+      </q-carousel-slide>-->
     </q-carousel>
     <!-- 需求分析 end -->
     <!-- 游標 -->

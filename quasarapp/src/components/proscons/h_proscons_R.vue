@@ -132,7 +132,11 @@ export default {
     ...mapActions("h_proscons", ["fetchGoodR", "fetchBadR"]),
     changeSrc() {
       // 重新整理myframe_good
-      this.$refs.myFrame_good.contentWindow.location.reload();
+      // document
+      //   .getElementById("myFrame_good")
+      //   .contentWindow.location.reload(true);
+
+      // this.$refs.myFrame_good.contentWindow.location.reload();
       console.log("change重整畫面成功!data_index+1");
 
       this.$store.commit(
@@ -166,7 +170,7 @@ export default {
 <style>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 1s;
+  transition: opacity 3s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;

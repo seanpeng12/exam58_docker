@@ -92,7 +92,7 @@
           v-on:click="runR()"
           style="width: 200px"
         >
-          選擇你的起始點
+          開始
           <template v-slot:loading>
             <q-spinner-hourglass class="on-left" />Loading...
           </template>

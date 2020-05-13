@@ -42,7 +42,11 @@ const state = {
   // 用以偵測是否按下按鈕(累積)
   runR_value: 0,
   //用以判斷跑完R(累積)
-  after_axios: 0
+  after_axios: 0,
+
+  // v-show
+  txtdatas_ok: false,
+  txtdatas_diff_ok: false,
 };
 const mutations = {
   FETCH_citys(state, citys) {
@@ -107,7 +111,13 @@ const mutations = {
   },
   update_src(state, value) {
     return (state.src = value);
-  }
+  },
+  update_txtdatas_ok(state, value) {
+    return (state.txtdatas_ok = value);
+  },
+  update_txtdatas_diff_ok(state, value) {
+    return (state.txtdatas_diff_ok = value);
+  },
 };
 const actions = {
   fetchCitys({
@@ -244,33 +254,39 @@ const actions = {
                 .doc(data)
                 .get()
                 .then(function (doc) {
-                  if (doc.exists) {
-                    commit("FETCH_txtdatas", {
-                      id: data,
-                      txtdata: {
-                        name: name[index],
-                        city_name: city_name[index],
-                        address: address[index],
-                        comment: comment[index],
-                        rate: rate[index],
-                        type: type[index],
-                        exists: true
-                      }
-                    });
+                  if (index === id.length - 1) {
+                    commit("update_txtdatas_ok", true);
+                    console.log("hotel:txtdatas最後一筆");
                   } else {
-                    commit("FETCH_txtdatas", {
-                      id: data,
-                      txtdata: {
-                        name: name[index],
-                        city_name: city_name[index],
-                        address: address[index],
-                        comment: comment[index],
-                        rate: rate[index],
-                        type: type[index],
-                        exists: false
-                      }
-                    });
-                  }
+                    if (doc.exists) {
+                      commit("FETCH_txtdatas", {
+                        id: data,
+                        txtdata: {
+                          name: name[index],
+                          city_name: city_name[index],
+                          address: address[index],
+                          comment: comment[index],
+                          rate: rate[index],
+                          type: type[index],
+                          exists: true
+                        }
+                      });
+                    } else {
+                      commit("FETCH_txtdatas", {
+                        id: data,
+                        txtdata: {
+                          name: name[index],
+                          city_name: city_name[index],
+                          address: address[index],
+                          comment: comment[index],
+                          rate: rate[index],
+                          type: type[index],
+                          exists: false
+                        }
+                      });
+                    }
+                  };
+
                 })
                 .catch(function (error) {
                   console.log("Error getting document:", error);
@@ -308,7 +324,6 @@ const actions = {
         c20: state.selected_p_detail_item_2
       })
       .then(response => {
-        console.log("成功取diff");
         // console.log(response.data);
         const id = response.data.map(item => item.id);
         const name = response.data.map(item => item.name);
@@ -322,6 +337,7 @@ const actions = {
         firebaseAuth.onAuthStateChanged(user => {
           // 如果登入，判斷是否收入收藏
           if (user) {
+            console.log("hotel:成功取diff");
             const uid = firebaseAuth.currentUser.uid;
             const checkCollectionExists = fstore
               .collection("sightseeingMember")
@@ -332,44 +348,50 @@ const actions = {
                 .doc(data)
                 .get()
                 .then(function (doc) {
-                  if (doc.exists) {
-                    console.log("doc.exists", name[index], doc.exists);
-
-                    commit("FETCH_txtdatas_diff", {
-                      id: data,
-                      txtdata_diff: {
-                        name: name[index],
-                        city_name: city_name[index],
-                        address: address[index],
-                        comment: comment[index],
-                        rate: rate[index],
-                        type: type[index],
-                        tag: tag[index],
-                        exists: true
-                      }
-                    });
+                  if (index === id.length - 1) {
+                    commit("update_txtdatas_diff_ok", true);
+                    console.log("hotel:txtdatas_diff最後一筆");
                   } else {
-                    console.log("doc.exists", name[index], doc.exists);
+                    if (doc.exists) {
+                      // console.log("doc.exists", name[index], doc.exists);
+                      commit("FETCH_txtdatas_diff", {
+                        id: data,
+                        txtdata_diff: {
+                          name: name[index],
+                          city_name: city_name[index],
+                          address: address[index],
+                          comment: comment[index],
+                          rate: rate[index],
+                          type: type[index],
+                          tag: tag[index],
+                          exists: true
+                        }
+                      });
+                    } else {
+                      // console.log("doc.exists", name[index], doc.exists);
 
-                    commit("FETCH_txtdatas_diff", {
-                      id: data,
-                      txtdata_diff: {
-                        name: name[index],
-                        city_name: city_name[index],
-                        address: address[index],
-                        comment: comment[index],
-                        rate: rate[index],
-                        type: type[index],
-                        tag: tag[index],
-                        exists: false
-                      }
-                    });
-                  }
+                      commit("FETCH_txtdatas_diff", {
+                        id: data,
+                        txtdata_diff: {
+                          name: name[index],
+                          city_name: city_name[index],
+                          address: address[index],
+                          comment: comment[index],
+                          rate: rate[index],
+                          type: type[index],
+                          tag: tag[index],
+                          exists: false
+                        }
+                      });
+                    }
+                  };
+
                 })
                 .catch(function (error) {
                   console.log("Error getting document:", error);
                 });
             });
+            // 未登入，不判斷資料是否存在資料庫
           } else {
             id.forEach(function (data, index, array) {
               commit("FETCH_txtdatas_diff", {
@@ -442,7 +464,14 @@ const getters = {
   },
   txtinfo: state => {
     return state.txtinfo;
-  }
+  },
+  txtdatas_ok: state => {
+    return state.txtdatas_ok;
+  },
+  txtdatas_diff_ok: state => {
+    return state.txtdatas_diff_ok;
+  },
+
 };
 
 export default {

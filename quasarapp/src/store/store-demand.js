@@ -42,7 +42,13 @@ const state = {
   // 用以偵測是否按下按鈕(累積)
   runR_value: 0,
   //用以判斷跑完R(累積)
-  after_axios: 0
+  after_axios: 0,
+
+  // v-show
+  txtdatas_ok: false,
+  txtdatas_diff_ok: false,
+
+
 };
 const mutations = {
   FETCH_citys(state, citys) {
@@ -57,7 +63,7 @@ const mutations = {
   FETCH_txtdatas(state, res) {
     Vue.set(state.txtdatas, res.id, res.txtdata);
 
-    console.log("FETCH_txtdatas from mutation:", state.txtdatas);
+    // console.log("FETCH_txtdatas from mutation:", state.txtdatas);
 
     // return state.txtdatas = res
   },
@@ -108,6 +114,13 @@ const mutations = {
   update_src(state, value) {
     return (state.src = value);
   },
+  update_txtdatas_ok(state, value) {
+    return (state.txtdatas_ok = value);
+  },
+  update_txtdatas_diff_ok(state, value) {
+    return (state.txtdatas_diff_ok = value);
+  },
+
 };
 const actions = {
   fetchCitys({
@@ -245,7 +258,8 @@ const actions = {
                 .get()
                 .then(function (doc) {
                   if (index === id.length - 1) {
-                    console.log("最後一筆");
+                    commit("update_txtdatas_ok", true);
+                    console.log("site:txtdatas最後一筆");
                   } else {
                     if (doc.exists) {
                       commit("FETCH_txtdatas", {
@@ -282,7 +296,7 @@ const actions = {
                 });
             })
           } else {
-            console.log("no");
+            // console.log("no");
             id.forEach(function (data, index, array) {
               commit("FETCH_txtdatas", {
                 id: data,
@@ -330,7 +344,7 @@ const actions = {
         firebaseAuth.onAuthStateChanged(user => {
           // 如果登入，判斷是否收入收藏
           if (user) {
-            console.log("成功取diff");
+            console.log("site:成功取diff");
             // console.log(response.data);
             const uid = firebaseAuth.currentUser.uid;
             const checkCollectionExists = fstore
@@ -342,36 +356,41 @@ const actions = {
                 .doc(data)
                 .get()
                 .then(function (doc) {
-                  // 判斷資料是否存在資料庫
-                  if (doc.exists) {
-                    commit("FETCH_txtdatas_diff", {
-                      id: data,
-                      txtdata_diff: {
-                        name: name[index],
-                        city_name: city_name[index],
-                        address: address[index],
-                        comment: comment[index],
-                        rate: rate[index],
-                        type: type[index],
-                        tag: tag[index],
-                        exists: true
-                      }
-                    });
-                  } else {
-                    commit("FETCH_txtdatas_diff", {
-                      id: data,
-                      txtdata_diff: {
-                        name: name[index],
-                        city_name: city_name[index],
-                        address: address[index],
-                        comment: comment[index],
-                        rate: rate[index],
-                        type: type[index],
-                        tag: tag[index],
-                        exists: false
-                      }
-                    });
-                  }
+                  if (index === id.length - 1) {
+                    commit("update_txtdatas_diff_ok", true);
+                    console.log("txtdatas_diff最後一筆");
+                  } else { // 判斷資料是否存在資料庫
+                    if (doc.exists) {
+                      commit("FETCH_txtdatas_diff", {
+                        id: data,
+                        txtdata_diff: {
+                          name: name[index],
+                          city_name: city_name[index],
+                          address: address[index],
+                          comment: comment[index],
+                          rate: rate[index],
+                          type: type[index],
+                          tag: tag[index],
+                          exists: true
+                        }
+                      });
+                    } else {
+                      commit("FETCH_txtdatas_diff", {
+                        id: data,
+                        txtdata_diff: {
+                          name: name[index],
+                          city_name: city_name[index],
+                          address: address[index],
+                          comment: comment[index],
+                          rate: rate[index],
+                          type: type[index],
+                          tag: tag[index],
+                          exists: false
+                        }
+                      });
+                    }
+                  };
+
                 })
                 .catch(function (error) {
                   console.log("Error getting document:", error);
@@ -452,7 +471,14 @@ const getters = {
   },
   txtinfo: state => {
     return state.txtinfo;
-  }
+  },
+  txtdatas_ok: state => {
+    return state.txtdatas_ok;
+  },
+  txtdatas_diff_ok: state => {
+    return state.txtdatas_diff_ok;
+  },
+
 };
 
 export default {

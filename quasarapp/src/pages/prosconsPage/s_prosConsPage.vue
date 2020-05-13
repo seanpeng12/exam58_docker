@@ -1,17 +1,12 @@
 <template>
   <q-page>
     <div class="q-pa-md doc-container">
-      <div
-        class="gt-xs q-pa-lg items-center text-black bg-grey-3"
-        style="height:250px;"
-      >
+      <div class="gt-xs q-pa-lg items-center text-black bg-grey-3" style="height:250px;">
         <div class="row">
           <div class="col"></div>
 
           <div class="col-12 col-md-auto">
-            <p style="font-size: 28px;font-family: Microsoft JhengHei;">
-              景點優缺點分析
-            </p>
+            <p style="font-size: 28px;font-family: Microsoft JhengHei;">景點優缺點分析</p>
           </div>
 
           <div class="col q-mt-sm q-ml-sm">
@@ -27,9 +22,7 @@
               <b
                 class="text"
                 style="font-size: 20px;font-family: Microsoft JhengHei;"
-              >
-                為您找出景點綜合評論，讓您不用花大把時間在網路上爬文</b
-              >
+              >為您找出景點綜合評論，讓您不用花大把時間在網路上爬文</b>
               <br />
             </div>
           </div>
@@ -69,15 +62,33 @@
     <!--  -->
 
     <!-- 左右區域 web -->
-    <div class="q-pa-md">
-      <div class="row">
-        <div class="col-6">
-          <proscons-data></proscons-data>
+    <div v-if="isShow">
+      <div class="q-pa-md">
+        <div class="row">
+          <div class="col-6">
+            <proscons-data></proscons-data>
+          </div>
+          <!-- 懶人包區域 -->
+          <div class="col-6">
+            <proscons-r></proscons-r>
+          </div>
         </div>
-        <!-- 懶人包區域 -->
-        <div class="col-6">
-          <proscons-r></proscons-r>
-        </div>
+      </div>
+    </div>
+
+    <!-- 介紹頁面 -->
+    <div v-else class="row" style="font-family: Microsoft JhengHei;">
+      <div
+        class="col q-ma-md text-center text-h4 text-white"
+        style="padding:150px; background-size: cover;background-position: center;background-repeat: no-repeat;background-image: url('https://images.unsplash.com/photo-1557683311-eac922347aa1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1315&q=80');"
+      >
+        <p>
+          請先選擇
+          <b>城市</b>
+
+          <br />
+          <b>再選擇你喜歡的景點</b>，按開始以進行分析
+        </p>
       </div>
     </div>
     <!-- end -->
@@ -98,12 +109,20 @@ export default {
   },
   data() {
     return {
-      loading2: false
+      loading2: false,
+      //顯示下方頁面
+      isShow: false
     };
   },
   computed: {
     // 取得vuex state變動值
-    ...mapGetters("proscons", ["run_index", "prosConsSelected_site"])
+    ...mapGetters("proscons", [
+      "selected_city",
+      "prosConsSelected_site",
+      "start_index",
+      "run_index",
+      "prosConsSelected_site"
+    ])
   },
   methods: {
     ...mapActions("collections", [
@@ -116,17 +135,7 @@ export default {
 
       this.proconsAddToCollection(value);
     },
-    changeSrc() {
-      document
-        .getElementById("myFrame_good")
-        .contentWindow.location.reload(true);
-      document.getElementById("myFrame_good").src = "./statics/good.html";
 
-      document
-        .getElementById("myFrame_bad")
-        .contentWindow.location.reload(true);
-      document.getElementById("myFrame_bad").src = "./statics/bad.html";
-    },
     simulateProgress(number) {
       // we set loading state
       this[`loading${number}`] = true;
@@ -138,8 +147,15 @@ export default {
     }
   },
   watch: {
+    start_index(val) {
+      this.isShow = true;
+    },
     prosConsSelected_site(val) {
       this.loading2 = false;
+      this.isShow = false;
+    },
+    selected_city(val) {
+      this.isShow = false;
     }
   }
 };
