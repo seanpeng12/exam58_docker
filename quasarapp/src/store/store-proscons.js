@@ -1,7 +1,6 @@
-import axios, {
-  axiosInstance
-} from "boot/axios";
+import axios, { axiosInstance } from "boot/axios";
 import Vue from "vue";
+import { fstore, firebaseAuth, firebaseApp, firestore } from "boot/firebase";
 
 const state = {
   namespaced: true,
@@ -28,7 +27,8 @@ const state = {
 
   // 優缺點懶人包
   prosData: [],
-  consData: []
+  consData: [],
+  checkCollectionExists: {}
 };
 const mutations = {
   FETCH_Citys(state, value) {
@@ -63,12 +63,17 @@ const mutations = {
   },
   Update_ConsData(state, value) {
     return (state.consData = value);
+  },
+  checkCollectionExists(state, value) {
+    state.checkCollectionExists = value;
+    console.log(
+      "checkCollectionExists from mutation:",
+      state.checkCollectionExists
+    );
   }
 };
 const actions = {
-  fetchCitys({
-    commit
-  }) {
+  fetchCitys({ commit }) {
     axiosInstance
       .get("http://140.136.155.116/api/proscons_site_data_City")
       .then(res => {
@@ -80,9 +85,7 @@ const actions = {
       });
   },
 
-  fetchSites({
-    commit
-  }) {
+  fetchSites({ commit }) {
     axiosInstance
       .post("http://140.136.155.116/api/sitesByCity", {
         city_name: state.selected_city
@@ -96,9 +99,7 @@ const actions = {
       });
   },
 
-  fetchProsConsR({
-    commit
-  }) {
+  fetchProsConsR({ commit }) {
     axiosInstance
       .post("http://140.136.155.116/api/proscons", {
         name: state.selected_site
@@ -113,9 +114,7 @@ const actions = {
       });
   },
 
-  fetchPros({
-    commit
-  }) {
+  fetchPros({ commit }) {
     axiosInstance
       .post("http://140.136.155.116/api/prosData", {
         name: state.selected_site
@@ -129,9 +128,7 @@ const actions = {
       });
   },
 
-  fetchCons({
-    commit
-  }) {
+  fetchCons({ commit }) {
     axiosInstance
       .post("http://140.136.155.116/api/consData", {
         name: state.selected_site
@@ -143,6 +140,39 @@ const actions = {
       .catch(err => {
         console.log(err);
       });
+  },
+  siteExistsCollection({ commit }, site_name) {
+    const uid = firebaseAuth.currentUser.uid;
+    const checkCollectionExists = fstore
+      .collection("sightseeingMember")
+      .doc(uid)
+      .collection("我的收藏");
+
+    axiosInstance
+      .post("http://140.136.155.116/api/proconsAddToCollection", {
+        name: site_name
+      })
+      .then(datas => {
+        console.log("取優缺id測試:", datas.data[0].id);
+
+        checkCollectionExists
+          .doc(datas.data[0].id)
+          .get()
+          .then(function(doc) {
+            if (doc.exists) {
+              console.log("存在");
+
+              return commit("checkCollectionExists", { exists: true }, 1000);
+            } else {
+              console.log("不存在");
+
+              return commit("checkCollectionExists", {
+                exists: false
+              });
+            }
+          });
+      });
+    //
   }
 };
 
@@ -180,6 +210,9 @@ const getters = {
   },
   consData: state => {
     return state.consData;
+  },
+  checkCollectionExist: state => {
+    return state.checkCollectionExists;
   }
 };
 

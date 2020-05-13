@@ -177,13 +177,6 @@
                   </template>
                 </hCard>
               </div>
-              <q-btn
-                dense
-                label="前往下一步"
-                class="row absolute-bottom-right"
-                color="secondary"
-                style="max-width: 300px"
-              />
             </q-tab-panel>
 
             <q-tab-panel name="alarms">
@@ -415,14 +408,6 @@
                 </div>
               </div>
               <!-- END -->
-              <q-btn
-                dense
-                label="前往下一步"
-                class="row absolute-bottom-right"
-                color="secondary"
-                size="20px"
-                style="margin:8px"
-              />
             </q-tab-panel>
 
             <q-tab-panel name="movies">
@@ -465,14 +450,6 @@
                   </div>
                 </div>
               </div>
-              <q-btn
-                dense
-                label="前往下一步"
-                class="row absolute-bottom-right"
-                color="secondary"
-                size="20px"
-                style="margin:8px"
-              />
             </q-tab-panel>
             <q-tab-panel name="advantage">
               <div class="q-pa-md">
@@ -518,15 +495,6 @@
                 </div>
                 <!-- end -->
               </q-page>
-
-              <q-btn
-                dense
-                label="前往下一步"
-                class="row absolute-bottom-right"
-                color="secondary"
-                size="20px"
-                style="margin:8px"
-              />
             </q-tab-panel>
             <!-- 飯店優缺點分析 -->
             <q-tab-panel name="h_advantage">
@@ -573,15 +541,6 @@
                 </div>
                 <!-- end -->
               </q-page>
-
-              <q-btn
-                dense
-                label="前往下一步"
-                class="row absolute-bottom-right"
-                color="secondary"
-                size="20px"
-                style="margin:8px"
-              />
             </q-tab-panel>
             <q-tab-panel name="aa">
               <div class="text-h4">

@@ -15,7 +15,7 @@ const mutations = {
   }
 };
 const actions = {
-  registerUser({ }, payload) {
+  registerUser({}, payload) {
     firebaseAuth
       .createUserWithEmailAndPassword(payload.email, payload.password)
       .then(response => {
@@ -25,7 +25,7 @@ const actions = {
         showErrorMessage(error.message);
       });
   },
-  loginUser({ }, payload) {
+  loginUser({}, payload) {
     firebaseAuth
       .signInWithEmailAndPassword(payload.email, payload.password)
       .then(response => {
@@ -50,7 +50,11 @@ const actions = {
   },
   logoutUser() {
     firebaseAuth.signOut();
+    console.log("logout");
+
     this.$router.push("/").then(() => {
+      console.log("reload");
+
       this.$router.go(0);
     });
   },

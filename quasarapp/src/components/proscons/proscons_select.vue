@@ -62,7 +62,7 @@
         :loading="loading1"
         :percentage="percentage1"
         color="cyan-9"
-        @click="startComputing(1)"
+        @click="startComputing(1), showAddColletionFilter()"
         v-on:click="runR()"
         style="width: 150px"
       >
@@ -71,26 +71,26 @@
           <q-spinner-gears class="on-left" />分析中...
         </template>
       </q-btn>
-      <slot name="addToCollection"></slot>
-      <!-- 
+      <slot
+        name="addToCollection"
+        v-if="
+          loggedIn == true &&
+            showAddToCollection == true &&
+            checkCollectionExist.exists == false
+        "
+      ></slot>
       <q-btn
-        size="10px"
-        round
-        color="blue-grey-8"
-        icon="help"
-        style="margin-left:10px"
-      >
-        <q-tooltip
-          anchor="center right"
-          self="center left"
-          :offset="[10, 10]"
-          content-class="bg-blue-grey-8"
-        >
-          依您
-          <strong>選擇的景點</strong>做分析，統整優點/缺點
-        </q-tooltip>
-      </q-btn> -->
-      <!-- end -->
+        class="q-ml-sm"
+        v-else-if="
+          loggedIn == true &&
+            showAddToCollection == true &&
+            checkCollectionExist.exists == true
+        "
+        :disable="!progress"
+        color="red-7"
+        @click="progress = false"
+        label="已在收藏列表"
+      ></q-btn>
     </div>
   </div>
   <!-- </div> -->
@@ -114,7 +114,9 @@ export default {
       // 分析按鈕
       loading1: false,
       // 按鈕百分比
-      percentage1: 0
+      percentage1: 0,
+      showAddToCollection: false,
+      progress: false
     };
   },
   computed: {
@@ -126,8 +128,10 @@ export default {
       "selected_site",
       "start_index",
       "run_index",
-      "data_index"
-    ])
+      "data_index",
+      "checkCollectionExist"
+    ]),
+    ...mapGetters("auth", ["loggedIn"])
   },
 
   methods: {
@@ -136,7 +140,7 @@ export default {
     ...mapActions("proscons", ["fetchSites"]),
     ...mapActions("proscons", ["fetchProsConsR"]),
     ...mapActions("proscons", ["fetchCons"]),
-    ...mapActions("proscons", ["fetchPros"]),
+    ...mapActions("proscons", ["fetchPros", "siteExistsCollection"]),
 
     startComputing(id) {
       // 開啟loading狀態
@@ -162,6 +166,24 @@ export default {
       // 懶人包
       this.fetchCons();
       this.fetchPros();
+      // 顯示收藏鈕開關
+
+      console.log("觸發 fetchProsConsR及優缺懶人包，run_index+1");
+    },
+    showAddColletionFilter() {
+      this.$store
+        .dispatch("proscons/siteExistsCollection", this.selected_site_local)
+        .then(() => {
+          console.log("test:", this.checkCollectionExist.exists);
+
+          setTimeout(() => {
+            this.showAddToCollection = true;
+          }, 2000);
+        })
+        .then(() => {
+          // console.log(this.showAddToCollection);
+        });
+
       console.log("觸發 fetchProsConsR及優缺懶人包，run_index+1");
     },
     // 第一層過濾清單
@@ -190,10 +212,16 @@ export default {
       this.fetchSites();
       // 清空下一層
       this.selected_site_local = "";
+      // 顯示收藏鈕開關
+
+      this.showAddToCollection = false;
     },
     selected_site_local(val) {
       console.log("偵測到變動 commit site!", val);
       this.$store.commit("proscons/Update_Selected_Site", val);
+      // 顯示收藏鈕開關
+
+      this.showAddToCollection = false;
     },
     data_index(val) {
       this[`percentage1`] = 97;

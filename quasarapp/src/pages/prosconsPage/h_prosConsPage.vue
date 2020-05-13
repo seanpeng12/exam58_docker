@@ -99,24 +99,15 @@ export default {
   },
   computed: {
     // 取得vuex state變動值
-    ...mapGetters("h_proscons", ["run_index", "h_prosConsselected_site"])
+    ...mapGetters("h_proscons", ["run_index", "h_prosConsselected_site"]),
+    ...mapGetters("auth", ["loggedIn"])
   },
   methods: {
     ...mapActions("collections", ["h_proconsAddToCollection"]),
     addToCollection(value) {
       this.h_proconsAddToCollection(value);
     },
-    changeSrc() {
-      document
-        .getElementById("myFrame_good")
-        .contentWindow.location.reload(true);
-      document.getElementById("myFrame_good").src = "./statics/good.html";
 
-      document
-        .getElementById("myFrame_bad")
-        .contentWindow.location.reload(true);
-      document.getElementById("myFrame_bad").src = "./statics/bad.html";
-    },
     simulateProgress(number) {
       // we set loading state
       this[`loading${number}`] = true;

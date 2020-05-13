@@ -38,30 +38,30 @@
       <q-space />
       <q-btn
         color="amber"
-        style="position: fix; bottom:0px; left:400px"
+        style="position: fix; bottom:0px; left:200px"
         :label="tab"
         type="submit"
       />
       <div class="col">
-        <q-linear-progress size="25px" value="1" class="q-mt-md" color="grey">
-          <div class="absolute-full flex flex-center">
-            <q-badge
-              color="white"
-              text-color="accent"
-              label="or"
-              style="font-weight:bold"
-            />
-          </div>
-        </q-linear-progress>
+        <!-- <q-linear-progress size="10px" value="1" class="q-mt-md" color="grey"> -->
+        <div class="flex flex-center q-mt-md q-pa-none">
+          <q-badge
+            size="30px"
+            color="white"
+            text-color="black"
+            label="or"
+            style="font-weight:bold"
+          />
+        </div>
+        <!-- </q-linear-progress> -->
       </div>
 
       <q-btn
         class="q-mt-md"
         @click="loginWithGoogle"
         color="negative"
-        icon-right="account_circle"
         :label="'以Google帳號' + tab"
-        style="position: fix; bottom:0px; left:270px"
+        style="position: fix; bottom:0px; left:154px"
       />
     </div>
   </form>
