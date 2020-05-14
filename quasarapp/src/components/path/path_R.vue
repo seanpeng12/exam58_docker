@@ -51,7 +51,6 @@
                     v-if="isLoading"
                     :active.sync="isLoading"
                     :can-cancel="false"
-                    :on-cancel="onCancel"
                     :is-full-page="fullPage"
                   ></loading>
                 </transition>
@@ -83,7 +82,7 @@ export default {
       isShow_R: true,
 
       //vue-loading-overley套件
-      isLoading: false,
+      isLoading: true,
       fullPage: false
     };
   },
@@ -114,10 +113,7 @@ export default {
     run_index(val) {
       this.changeSrc();
       console.log("R組件偵測到Run_Index改變：執行changeSrc", val);
-      this.$store.commit(
-        "path/Update_src_path",
-        "http://140.136.155.116:8080/statics/path.html"
-      );
+      this.$store.commit("path/Update_src_path", "../statics/path.html");
       this.isLoading = false;
     }
   },

@@ -27,7 +27,7 @@ const state = {
   data_index: 0,
 
   // r 圖產生位置
-  src_path: "http://140.136.155.116:8080/statics/path.html",
+  src_path: "../statics/path.html",
 
   // 路徑點懶人包
   pathData: [],

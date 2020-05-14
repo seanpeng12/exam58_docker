@@ -27,7 +27,7 @@
       </div>
       <!--  -->
     </div>
-    <div class="q-gutter-xs ">
+    <div class="q-gutter-xs">
       <!-- 下拉式選單 -->
       <div class="q-pa-md">
         <div class="row">
@@ -40,7 +40,7 @@
             input-debounce="0"
             :options="options"
             @filter="filterFn_2"
-            hint="選擇景點"
+            hint="選擇飯店"
             style="width:250px; padding-bottom: 32px"
           >
             <template v-slot:no-option>

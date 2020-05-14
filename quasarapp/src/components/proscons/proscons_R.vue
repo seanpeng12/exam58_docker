@@ -112,7 +112,7 @@ export default {
       expanded: true,
       isShow_R: true,
       //vue-loading-overley套件
-      isLoading: false,
+      isLoading: true,
       fullPage: false
     };
   },
@@ -133,18 +133,12 @@ export default {
       // document
       //   .getElementById("myFrame_good")
       //   .contentWindow.location.reload(true);
-
-      // this.$refs.myFrame_good.contentWindow.location.reload();
+      this.$refs.myFrame_good.contentWindow.location.reload();
       console.log("change重整畫面成功!data_index+1");
 
-      this.$store.commit(
-        "proscons/Update_Good_Src",
-        "http://140.136.155.116:8080/statics/good.html"
-      );
-      this.$store.commit(
-        "proscons/Update_Bad_Src",
-        "http://140.136.155.116:8080/statics/bad.html"
-      );
+      this.$store.commit("proscons/Update_Good_Src", "../statics/good.html");
+      this.$store.commit("proscons/Update_Bad_Src", "../statics/bad.html");
+      // 關閉loading
       this.isLoading = false;
 
       this.$store.commit("proscons/Update_Data_Index", 1);

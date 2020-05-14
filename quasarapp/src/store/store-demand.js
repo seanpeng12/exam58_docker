@@ -260,6 +260,33 @@ const actions = {
                   if (index === id.length - 1) {
                     commit("update_txtdatas_ok", true);
                     console.log("site:txtdatas最後一筆");
+                    if (doc.exists) {
+                      commit("FETCH_txtdatas", {
+                        id: data,
+                        txtdata: {
+                          name: name[index],
+                          city_name: city_name[index],
+                          address: address[index],
+                          comment: comment[index],
+                          rate: rate[index],
+                          type: type[index],
+                          exists: true
+                        }
+                      });
+                    } else {
+                      commit("FETCH_txtdatas", {
+                        id: data,
+                        txtdata: {
+                          name: name[index],
+                          city_name: city_name[index],
+                          address: address[index],
+                          comment: comment[index],
+                          rate: rate[index],
+                          type: type[index],
+                          exists: false
+                        }
+                      });
+                    }
                   } else {
                     if (doc.exists) {
                       commit("FETCH_txtdatas", {
@@ -359,6 +386,35 @@ const actions = {
                   if (index === id.length - 1) {
                     commit("update_txtdatas_diff_ok", true);
                     console.log("txtdatas_diff最後一筆");
+                    if (doc.exists) {
+                      commit("FETCH_txtdatas_diff", {
+                        id: data,
+                        txtdata_diff: {
+                          name: name[index],
+                          city_name: city_name[index],
+                          address: address[index],
+                          comment: comment[index],
+                          rate: rate[index],
+                          type: type[index],
+                          tag: tag[index],
+                          exists: true
+                        }
+                      });
+                    } else {
+                      commit("FETCH_txtdatas_diff", {
+                        id: data,
+                        txtdata_diff: {
+                          name: name[index],
+                          city_name: city_name[index],
+                          address: address[index],
+                          comment: comment[index],
+                          rate: rate[index],
+                          type: type[index],
+                          tag: tag[index],
+                          exists: false
+                        }
+                      });
+                    }
                   } else { // 判斷資料是否存在資料庫
                     if (doc.exists) {
                       commit("FETCH_txtdatas_diff", {

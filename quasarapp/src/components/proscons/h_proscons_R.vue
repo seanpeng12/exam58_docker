@@ -61,14 +61,14 @@
                     ></iframe>
 
                     <!-- loading 插件 -->
-                    <transition name="fade">
+                    <!-- <transition name="fade">
                       <loading
                         v-if="isLoading"
                         :active.sync="isLoading"
                         :can-cancel="false"
                         :is-full-page="fullPage"
                       ></loading>
-                    </transition>
+                    </transition>-->
                     <!--  -->
                   </q-tab-panel>
                 </q-tab-panels>
@@ -114,7 +114,7 @@ export default {
       expanded: true,
       isShow_R: true,
       //vue-loading-overley套件
-      isLoading: false,
+      isLoading: true,
       fullPage: false
     };
   },
@@ -136,17 +136,15 @@ export default {
       //   .getElementById("myFrame_good")
       //   .contentWindow.location.reload(true);
 
-      // this.$refs.myFrame_good.contentWindow.location.reload();
+      this.$refs.myFrame_good.contentWindow.location.reload();
       console.log("change重整畫面成功!data_index+1");
 
       this.$store.commit(
         "h_proscons/Update_Good_Src",
-        "http://140.136.155.116:8080/statics/h_good.html"
+        "../statics/h_good.html"
       );
-      this.$store.commit(
-        "h_proscons/Update_Bad_Src",
-        "http://140.136.155.116:8080/statics/h_bad.html"
-      );
+      this.$store.commit("h_proscons/Update_Bad_Src", "../statics/h_bad.html");
+      //  關閉loading
       this.isLoading = false;
 
       this.$store.commit("h_proscons/Update_Data_Index", 1);
@@ -170,7 +168,7 @@ export default {
 <style>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 3s;
+  transition: opacity 2s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
