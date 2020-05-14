@@ -259,7 +259,7 @@ const actions = {
                 .then(function (doc) {
                   if (index === id.length - 1) {
                     commit("update_txtdatas_ok", true);
-                    console.log("site:txtdatas最後一筆");
+                    console.log("site:txtdatas最後一筆(登入會員)");
                     if (doc.exists) {
                       commit("FETCH_txtdatas", {
                         id: data,
@@ -323,23 +323,39 @@ const actions = {
                 });
             })
           } else {
-            // console.log("no");
+            // console.log("not login");
             id.forEach(function (data, index, array) {
-              commit("FETCH_txtdatas", {
-                id: data,
-                txtdata: {
-                  name: name[index],
-                  city_name: city_name[index],
-                  address: address[index],
-                  comment: comment[index],
-                  rate: rate[index],
-                  type: type[index]
-                }
-              });
+              if (index === id.length - 1) {
+                commit("update_txtdatas_ok", true);
+                console.log("site:txtdatas最後一筆(未登入)");
+                commit("FETCH_txtdatas", {
+                  id: data,
+                  txtdata: {
+                    name: name[index],
+                    city_name: city_name[index],
+                    address: address[index],
+                    comment: comment[index],
+                    rate: rate[index],
+                    type: type[index]
+                  }
+                });
+              } else {
+                commit("FETCH_txtdatas", {
+                  id: data,
+                  txtdata: {
+                    name: name[index],
+                    city_name: city_name[index],
+                    address: address[index],
+                    comment: comment[index],
+                    rate: rate[index],
+                    type: type[index]
+                  }
+                });
+              }
+
             });
           }
         });
-
         // console.log("txtdatas from actions", txtdatas);
 
         // commit('FETCH_txtdatas', txtdatas);
@@ -371,7 +387,7 @@ const actions = {
         firebaseAuth.onAuthStateChanged(user => {
           // 如果登入，判斷是否收入收藏
           if (user) {
-            console.log("site:成功取diff");
+            // console.log("site:成功取diff");
             // console.log(response.data);
             const uid = firebaseAuth.currentUser.uid;
             const checkCollectionExists = fstore
@@ -385,7 +401,7 @@ const actions = {
                 .then(function (doc) {
                   if (index === id.length - 1) {
                     commit("update_txtdatas_diff_ok", true);
-                    console.log("txtdatas_diff最後一筆");
+                    console.log("site:txtdatas_diff最後一筆(登入會員)");
                     if (doc.exists) {
                       commit("FETCH_txtdatas_diff", {
                         id: data,
@@ -456,18 +472,36 @@ const actions = {
           // 未登入，不判斷資料是否存在資料庫
           else {
             id.forEach(function (data, index, array) {
-              commit("FETCH_txtdatas_diff", {
-                id: data,
-                txtdata_diff: {
-                  name: name[index],
-                  city_name: city_name[index],
-                  address: address[index],
-                  comment: comment[index],
-                  rate: rate[index],
-                  type: type[index],
-                  tag: tag[index]
-                }
-              });
+              if (index === id.length - 1) {
+                commit("update_txtdatas_diff_ok", true);
+                console.log("site:txtdatas_diff最後一筆(未登入)");
+                commit("FETCH_txtdatas_diff", {
+                  id: data,
+                  txtdata_diff: {
+                    name: name[index],
+                    city_name: city_name[index],
+                    address: address[index],
+                    comment: comment[index],
+                    rate: rate[index],
+                    type: type[index],
+                    tag: tag[index]
+                  }
+                });
+              } else {
+                commit("FETCH_txtdatas_diff", {
+                  id: data,
+                  txtdata_diff: {
+                    name: name[index],
+                    city_name: city_name[index],
+                    address: address[index],
+                    comment: comment[index],
+                    rate: rate[index],
+                    type: type[index],
+                    tag: tag[index]
+                  }
+                });
+              }
+
             });
           }
         });
