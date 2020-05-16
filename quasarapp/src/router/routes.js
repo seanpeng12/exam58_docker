@@ -7,6 +7,14 @@ const routes = [{
     }]
   },
   {
+    path: "/manager_index",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{
+      path: "",
+      component: () => import("pages/manager_index.vue"),
+    }]
+  },
+  {
     path: "/index",
     component: () => import("layouts/MainLayout.vue"),
     children: [{
