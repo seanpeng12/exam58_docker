@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col"></div>
 
-      <q-item v-ripple class="bg-grey-2 q-ma-md" style="width:800px">
+      <q-item v-ripple class="bg-grey-2 q-ma-md" style="width:1100px">
         <q-item-section avatar>
           <!-- <q-avatar rounded> -->
           <q-icon
@@ -18,7 +18,7 @@
         <q-item-section>
           <q-item-label>
             <h4 class="col-12 col-md-auto" style="font-weight:bold">
-              依照您的身分，提供不一樣的分析功能
+              SIGHTSEEING依照您的身分，提供不一樣的分析功能
             </h4>
           </q-item-label>
           <!-- <q-item-label caption>
@@ -41,11 +41,16 @@
       <div class="col"></div>
       <div class="col-6 col-md-auto q-ma-md">
         <q-card class="my-card" flat bordered>
-          <q-card-section horizontal>
+          <q-card-section horizontal style="height:250px">
             <q-card-section class="q-pt-xs">
               <div class="text-overline">您的身分?</div>
-              <div class="text-h5 q-mt-sm q-mb-xs">飯店景點管理者</div>
-              <div class="text-caption text-grey">
+              <div
+                class="text-h5 q-mt-sm q-mb-xs"
+                style="font-weight:bold;color:#261873"
+              >
+                飯店景點管理者
+              </div>
+              <div class="text-h7 text-grey-10">
                 作為旅遊業者，不管是景點或旅館經營業者，可透過我們的分析洞察產業在消費者眼中的主要優缺分析
                 、尋找適合的合作對象，獲得消費者消費動向，創造共榮共生。
               </div>
@@ -59,23 +64,27 @@
           <q-separator />
 
           <q-card-actions>
-            <q-btn flat round icon="event" />
-            <q-btn flat>
+            <!-- <q-btn flat>
               7:30PM
-            </q-btn>
-            <q-btn flat color="primary">
-              Reserve
+            </q-btn> -->
+            <q-btn flat style="font-weight:bold;color:#6aa0d9">
+              進入功能
             </q-btn>
           </q-card-actions>
         </q-card>
       </div>
       <div class="col-6 col-md-auto q-ma-md">
         <q-card class="my-card" flat bordered>
-          <q-card-section horizontal>
+          <q-card-section horizontal style="height:250px">
             <q-card-section class="q-pt-xs">
               <div class="text-overline">您的身分?</div>
-              <div class="text-h5 q-mt-sm q-mb-xs">一般旅客</div>
-              <div class="text-caption text-grey">
+              <div
+                class="text-h5 q-mt-sm q-mb-xs"
+                style="font-weight:bold;color:#261873"
+              >
+                一般旅客
+              </div>
+              <div class="text-h7 text-grey-10">
                 如果您是喜愛自己規劃旅行，但又沒有甚麼頭緒抑或是覺得要上網爬分享的文章，
                 覺得要花許多時間，那你一定要點進來。
                 提供符合您需求的景點與飯店、快速整理每個旅遊景點的綜合評論優缺點，無須在上網爬文
@@ -90,12 +99,8 @@
           <q-separator />
 
           <q-card-actions>
-            <q-btn flat round icon="event" />
-            <q-btn flat>
-              7:30PM
-            </q-btn>
-            <q-btn flat color="primary">
-              Reserve
+            <q-btn flat style="font-weight:bold;color:#6aa0d9">
+              進入功能
             </q-btn>
           </q-card-actions>
         </q-card>
@@ -157,6 +162,6 @@ export default {
 }
 .my-card {
   width: 100%;
-  max-width: 350px;
+  max-width: 450px;
 }
 </style>
