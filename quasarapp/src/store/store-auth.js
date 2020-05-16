@@ -3,6 +3,7 @@ import { firebaseAuth, google_provider } from "boot/firebase";
 import { showErrorMessage } from "src/functions/function-show-error-message";
 const state = {
   loggedIn: false,
+  role: {},
   userDetail: {}
 };
 const mutations = {
@@ -89,6 +90,10 @@ const actions = {
         // this.$router.replace("/Pageauth").catch((err) => {});
       }
     });
+  },
+  chooseRole({ commit }, roleName) {
+    console.log("roleName from action", roleName);
+    LocalStorage.set("role", roleName);
   }
 };
 const getters = {
