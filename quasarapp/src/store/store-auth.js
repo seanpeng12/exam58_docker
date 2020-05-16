@@ -1,12 +1,22 @@
-import { LocalStorage } from "quasar";
-import { firebaseAuth, google_provider } from "boot/firebase";
-import { showErrorMessage } from "src/functions/function-show-error-message";
+import {
+  LocalStorage
+} from "quasar";
+import {
+  firebaseAuth,
+  google_provider
+} from "boot/firebase";
+import {
+  showErrorMessage
+} from "src/functions/function-show-error-message";
 const state = {
   loggedIn: false,
-  role: {},
+  role: "",
   userDetail: {}
 };
 const mutations = {
+  update_role(state, value) {
+    state.role = value;
+  },
   setLoggedIn(state, value) {
     state.loggedIn = value;
   },
@@ -60,7 +70,10 @@ const actions = {
     });
   },
 
-  handleAuthStateChange({ commit, dispatch }, scheduleId) {
+  handleAuthStateChange({
+    commit,
+    dispatch
+  }, scheduleId) {
     firebaseAuth.onAuthStateChanged(user => {
       if (user) {
         const name = firebaseAuth.currentUser.displayName;
@@ -91,9 +104,21 @@ const actions = {
       }
     });
   },
-  chooseRole({ commit }, roleName) {
-    console.log("roleName from action", roleName);
-    LocalStorage.set("role", roleName);
+  chooseRole({
+    commit
+  }, roleName) {
+    //傳入check，則role會更新(for reload)
+    if (roleName == "check") {
+      var checked = localStorage.getItem("role");
+      commit("update_role", checked);
+    } else {
+      // 新的設定值也會更新role
+      commit("update_role", roleName);
+      //
+      localStorage.setItem("role", roleName);
+    }
+
+
   }
 };
 const getters = {
@@ -105,6 +130,9 @@ const getters = {
   },
   loggedIn: state => {
     return state.loggedIn;
+  },
+  role: state => {
+    return state.role;
   }
 };
 export default {

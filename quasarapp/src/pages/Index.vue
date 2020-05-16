@@ -63,17 +63,11 @@
         <!-- 需求分析 -->
         <div class="q-pa-md row">
           <div class="col-6 bg-grey-3 text-h5">
-            <div
-              style="color: black;padding-top:150px;padding-bottom:150px;padding-left:50px;"
-            >
-              <div
-                style="font-size:50px;font-family:NSimSun;height:auto;line-height:50px;"
-              >
+            <div style="color: black;padding-top:150px;padding-bottom:150px;padding-left:50px;">
+              <div style="font-size:50px;font-family:NSimSun;height:auto;line-height:50px;">
                 <b>給拿不定主意的你</b>
               </div>
-              <div
-                style="padding-top:50px;font-size:28px; font-family:Microsoft JhengHei;"
-              >
+              <div style="padding-top:50px;font-size:28px; font-family:Microsoft JhengHei;">
                 <p>還在為找不到想去的景點煩惱？</p>
                 <p>選擇喜歡的類型</p>
                 <p>符合的景點報你知!</p>
@@ -81,10 +75,7 @@
             </div>
           </div>
           <div class="col-6 bg-grey-3 text-center">
-            <div
-              class="container"
-              style="position: relative;text-align: center;color: white;"
-            >
+            <div class="container" style="position: relative;text-align: center;color: white;">
               <img
                 src="~assets/index_demand_txt.png"
                 alt="Snow"
@@ -114,17 +105,11 @@
         <!-- 需求分析 -->
         <div class="q-pa-md row">
           <div class="col-6 bg-grey-3 text-h5">
-            <div
-              style="color: black;padding-top:150px;padding-bottom:150px;padding-left:50px"
-            >
-              <div
-                style="font-size:50px;font-family:NSimSun;height:auto;line-height:50px;"
-              >
+            <div style="color: black;padding-top:150px;padding-bottom:150px;padding-left:50px">
+              <div style="font-size:50px;font-family:NSimSun;height:auto;line-height:50px;">
                 <b>不想踩雷的你</b>
               </div>
-              <div
-                style="padding-top:50px;font-size:28px; font-family:Microsoft JhengHei;"
-              >
+              <div style="padding-top:50px;font-size:28px; font-family:Microsoft JhengHei;">
                 <p>
                   使用我們的優缺點分析功能
                   輸入景點或飯店名稱，優點與缺點一目瞭然
@@ -133,10 +118,7 @@
             </div>
           </div>
           <div class="col-6 bg-grey-3 text-center">
-            <div
-              class="container"
-              style="position: relative;text-align: center;color: white;"
-            >
+            <div class="container" style="position: relative;text-align: center;color: white;">
               <img
                 src="~assets/proscons.jpg"
                 alt="Snow"
@@ -151,28 +133,17 @@
         <!-- 需求分析 -->
         <div class="q-pa-md row">
           <div class="col-6 bg-grey-3 text-h5">
-            <div
-              style="color: black;padding-top:150px;padding-bottom:150px;padding-left:50px"
-            >
-              <div
-                style="font-size:50px;font-family:NSimSun;height:auto;line-height:50px;"
-              >
+            <div style="color: black;padding-top:150px;padding-bottom:150px;padding-left:50px">
+              <div style="font-size:50px;font-family:NSimSun;height:auto;line-height:50px;">
                 <b>想要找尋受歡迎路線的你</b>
               </div>
-              <div
-                style="padding-top:50px;font-size:28px; font-family:Microsoft JhengHei;"
-              >
-                <p>
-                  只要輸入一個想去的景點作為起點，就可以找到受大眾歡迎的路線
-                </p>
+              <div style="padding-top:50px;font-size:28px; font-family:Microsoft JhengHei;">
+                <p>只要輸入一個想去的景點作為起點，就可以找到受大眾歡迎的路線</p>
               </div>
             </div>
           </div>
           <div class="col-6 bg-grey-3 text-center">
-            <div
-              class="container"
-              style="position: relative;text-align: center;color: white;"
-            >
+            <div class="container" style="position: relative;text-align: center;color: white;">
               <img
                 src="~assets/path.png"
                 alt="Snow"
@@ -203,12 +174,7 @@
     </q-carousel>
     <!-- 需求分析 end -->
     <!-- 游標 -->
-    <q-page-scroller
-      reverse
-      position="top-right"
-      :scroll-offset="20"
-      :offset="[18, 18]"
-    >
+    <q-page-scroller reverse position="top-right" :scroll-offset="20" :offset="[18, 18]">
       <q-btn fab icon="keyboard_arrow_down" color="dark" />
     </q-page-scroller>
     <!-- end -->
@@ -223,10 +189,7 @@
         :key="func.name"
       >
         <!-- <q-responsive :ratio="4 / 3" class="col"> -->
-        <q-img
-          v-bind:src="func.img"
-          style="height:140px; width:140px; margin: 60px"
-        ></q-img>
+        <q-img v-bind:src="func.img" style="height:140px; width:140px; margin: 60px"></q-img>
         <!-- </q-responsive> -->
         <!-- <q-img src="~assets/comment.jpg" /> -->
         <q-card-section>
@@ -265,10 +228,7 @@
       </q-card>
       <!--  -->
       <q-card class="my-card" style="margin: 20px; width: 250px;" flat bordered>
-        <q-img
-          src="~assets/vacation.png"
-          style="height:140px; width:140px; margin: 60px"
-        ></q-img>
+        <q-img src="~assets/vacation.png" style="height:140px; width:140px; margin: 60px"></q-img>
 
         <q-card-section>
           <div class="text-overline text-orange-9">想要來一趟旅程的你</div>
@@ -298,11 +258,7 @@
       </q-card>
     </div>
     <q-btn color="secondary" label="manager" @click="setRole('manager')" />
-    <q-btn
-      color="secondary"
-      label="generalUser"
-      @click="setRole('generalUser')"
-    />
+    <q-btn color="secondary" label="generalUser" @click="setRole('generalUser')" />
 
     <!-- card end -->
   </div>
@@ -372,8 +328,13 @@ export default {
   methods: {
     ...mapActions("auth", ["chooseRole"]),
     setRole(roleName) {
-      console.log("manager");
+      // console.log("manager");
       this.chooseRole(roleName);
+      if (localStorage.getItem("role") == "manager") {
+        console.log(localStorage.getItem("role"));
+      } else {
+        console.log(localStorage.getItem("role"));
+      }
     }
   }
 };
