@@ -19,7 +19,7 @@
         ref="email"
         :rules="[
           val =>
-            isValidEmailAddress(val) || 'Please enter a valid Email address'
+            isValidEmailAddress(val) || '請輸入Email正確格式'
         ]"
         lazy-rules
       />
@@ -32,17 +32,20 @@
         v-model="formData.password"
         label="password"
         stack-label
-        :rules="[val => val.length >= 6 || 'Please use at least 6 characters']"
+        :rules="[val => val.length >= 6 || '請輸入最少6個字元']"
         lazy-rules
       />
       <q-space />
-      <q-btn
-        color="amber"
-        style="position: fix; bottom:0px; left:200px"
-        :label="tab"
-        type="submit"
-      />
-      <div class="col">
+      <div class="col text-center">
+        <q-btn
+          color="amber"
+          :label="tab"
+          type="submit"
+          style="padding-left:60px;padding-right:60px;"
+        />
+      </div>
+
+      <div class="col text-center">
         <!-- <q-linear-progress size="10px" value="1" class="q-mt-md" color="grey"> -->
         <div class="flex flex-center q-mt-md q-pa-none">
           <q-badge
@@ -56,13 +59,15 @@
         <!-- </q-linear-progress> -->
       </div>
 
-      <q-btn
-        class="q-mt-md"
-        @click="loginWithGoogle"
-        color="negative"
-        :label="'以Google帳號' + tab"
-        style="position: fix; bottom:0px; left:154px"
-      />
+      <div class="col text-center">
+        <q-btn
+          class="q-mt-md"
+          @click="loginWithGoogle"
+          color="negative"
+          icon="fab fa-google"
+          :label="'Google帳號' + tab"
+        />
+      </div>
     </div>
   </form>
 </template>
