@@ -26,7 +26,13 @@
           </div>
           <div class="row-8 q-py-sm">
             <p>起點</p>
-            <q-select id="start" filled v-model="start" :options="originOptions" label="請選擇您的起點" />
+            <q-select
+              id="start"
+              filled
+              v-model="start"
+              :options="originOptions"
+              label="請選擇您的起點"
+            />
           </div>
           <div class="row-8 q-py-sm">
             <p>中繼點(多選)</p>
@@ -44,7 +50,13 @@
           </div>
           <div class="row-8 q-py-sm">
             <p>終點</p>
-            <q-select id="end" filled v-model="end" :options="endOptions" label="請選擇您的終點" />
+            <q-select
+              id="end"
+              filled
+              v-model="end"
+              :options="endOptions"
+              label="請選擇您的終點"
+            />
           </div>
           <div class="row-8 q-py-sm">
             <p>路徑結果</p>
@@ -82,6 +94,7 @@ export default {
       // 預設經緯度在信義區附近
       lat: 23.7,
       lng: 121,
+      zoom: 8.3,
       chooseDate: "",
       accepted: [],
       start: "",
@@ -128,29 +141,30 @@ export default {
       this.map = new google.maps.Map(this.$refs.bmap, {
         // 信義區附近
         center: { lat: this.lat, lng: this.lng },
-        zoom: 8.3,
+        zoom: this.zoom,
         maxZoom: 20,
         minZoom: 3
       });
 
       // 畫圖
-      var polylinePathPoints = [
-        { lat: 25.0336962, lng: 121.5643673 },
-        { lat: 25.033755, lng: 121.565412 },
-        { lat: 25.031985, lng: 121.56538 },
-        { lat: 25.032083, lng: 121.561324 }
-      ];
-      var polylinePath = new google.maps.Polyline({
-        path: polylinePathPoints,
-        geodesic: true,
-        strokeColor: "#008800",
-        strokeOpacity: 0.8,
-        strokeWeight: 10,
-        editable: true,
-        geodesic: false,
-        draggable: false
-      });
-      polylinePath.setMap(this.map);
+      // var polylinePathPoints = [
+      //   { lat: 25.0336962, lng: 121.5643673 },
+      //   { lat: 25.033755, lng: 121.565412 },
+      //   { lat: 25.031985, lng: 121.56538 },
+      //   { lat: 25.032083, lng: 121.561324 }
+      // ];
+      // var polylinePath = new google.maps.Polyline({
+      //   path: polylinePathPoints,
+      //   geodesic: true,
+      //   strokeColor: "#008800",
+      //   strokeOpacity: 0.8,
+      //   strokeWeight: 10,
+      //   editable: true,
+      //   geodesic: false,
+      //   draggable: false
+      // });
+      // polylinePath.setMap(this.map);
+      // console.log("polylinePath:", polylinePath);
 
       /* directionsService.route(
         {
@@ -181,6 +195,7 @@ export default {
           color: "secondary"
         });
       });
+      // console.log("item_1:", item_1);
 
       this.$q
         .dialog({
@@ -203,15 +218,7 @@ export default {
             this.waypointOptions.push(item);
             this.endOptions.push(item);
           });
-          console.log("this.originOptions: ", this.originOptions);
-
-          /* this.$store.dispatch("travel/fbAddEverySiteData", {
-            site: this.h_prosConsselected_site,
-            date: data,
-            scheduleId: this.id
-          });*/
-
-          // console.log('>>>> OK, received', data)
+          // console.log("this.originOptions: ", this.originOptions);
         })
         .onCancel(() => {
           // console.log('>>>> Cancel')
@@ -249,25 +256,12 @@ export default {
             var map = this.map;
             console.log(response);
             console.log("=========");
-            console.log(response.routes[0].waypoint_order);
+            // console.log(response.routes[0].waypoint_order);
 
             // SEAN
             console.log("=========");
+            var arr_latlngs = [];
             var latlngs = polyUtil.decode(response.routes[0].overview_polyline);
-
-            L.PolylineUtil.decode;
-            console.log(latlngs);
-            var polylinePath_2 = new google.maps.Polyline({
-              path: latlngs,
-              geodesic: true,
-              strokeColor: "#008800",
-              strokeOpacity: 0.8,
-              strokeWeight: 10,
-              editable: true,
-              geodesic: false,
-              draggable: false
-            });
-            polylinePath_2.setMap(this.map);
 
             // 加入起點到新舊串列
             _this.old_list.push(response.request.origin.query);
@@ -294,41 +288,60 @@ export default {
 
             (this.lat = response.routes[0].legs[0].start_location.lat(name)),
               (this.lng = response.routes[0].legs[0].start_location.lng(name));
+            this.zoom = 11;
             this.initMap();
 
             // setMarker設定
-            for (var i = 0; i < response.routes[0].legs.length; i++) {
-              if (i != response.routes[0].legs.length - 1) {
-                // first
-                this.setMarker(
-                  String.fromCharCode((i + 97).toString()),
-                  response.routes[0].legs[i].start_address,
-                  _this.new_list[i],
-                  response.routes[0].legs[i].start_location.lat(name),
-                  response.routes[0].legs[i].start_location.lng(name)
-                );
-              } else {
-                console.log("setMarker", i);
-                //start
-                this.setMarker(
-                  String.fromCharCode((i + 97).toString()),
-                  response.routes[0].legs[i].start_address,
-                  _this.new_list[i],
-                  response.routes[0].legs[i].start_location.lat(name),
-                  response.routes[0].legs[i].start_location.lng(name)
-                );
+            let promise = new Promise(function(resolve, reject) {
+              for (var i = 0; i < response.routes[0].legs.length; i++) {
+                if (i != response.routes[0].legs.length - 1) {
+                  // first
+                  _this.setMarker(
+                    String.fromCharCode((i + 97).toString()),
+                    response.routes[0].legs[i].start_address,
+                    _this.new_list[i],
+                    response.routes[0].legs[i].start_location.lat(name),
+                    response.routes[0].legs[i].start_location.lng(name)
+                  );
+                } else {
+                  console.log("setMarker", i);
+                  //start
+                  _this.setMarker(
+                    String.fromCharCode((i + 97).toString()),
+                    response.routes[0].legs[i].start_address,
+                    _this.new_list[i],
+                    response.routes[0].legs[i].start_location.lat(name),
+                    response.routes[0].legs[i].start_location.lng(name)
+                  );
 
-                //end
-                var index = _this.new_list.length - 1;
-                this.setMarker(
-                  String.fromCharCode((i + 98).toString()),
-                  response.routes[0].legs[i].end_address,
-                  _this.new_list[index],
-                  response.routes[0].legs[i].end_location.lat(name),
-                  response.routes[0].legs[i].end_location.lng(name)
-                );
+                  //end
+                  var index = _this.new_list.length - 1;
+                  _this.setMarker(
+                    String.fromCharCode((i + 98).toString()),
+                    response.routes[0].legs[i].end_address,
+                    _this.new_list[index],
+                    response.routes[0].legs[i].end_location.lat(name),
+                    response.routes[0].legs[i].end_location.lng(name)
+                  );
+                }
               }
-            }
+              resolve("result");
+            });
+
+            promise
+              .then(function(result) {
+                // 把latlng轉陣列包物件
+                for (var i = 0; i < latlngs.length; i++) {
+                  arr_latlngs.push({
+                    lat: latlngs[i][0],
+                    lng: latlngs[i][1]
+                  });
+                }
+              })
+              .then(() => {
+                // 畫路徑
+                _this.drawPath(arr_latlngs);
+              });
 
             //這裡是他文字路線的顯示(成功)
             var route = response.routes[0];
@@ -340,21 +353,39 @@ export default {
                 summaryPanel.innerHTML +=
                   String.fromCharCode((i + 97).toString()).toUpperCase() +
                   ": " +
+                  "<b>" +
                   response.routes[0].legs[i].start_address +
+                  "</b>" +
                   "<br />" +
-                  "↓" +
+                  "↓   " +
+                  "<span style='font-size:11px;color:grey'>" +
+                  "共" +
+                  route.legs[i].duration.text +
+                  " / " +
+                  route.legs[i].distance.text +
+                  "</span>" +
                   "<br />";
               } else {
                 summaryPanel.innerHTML +=
                   String.fromCharCode((i + 97).toString()).toUpperCase() +
                   ": " +
+                  "<b>" +
                   response.routes[0].legs[i].start_address +
+                  "</b>" +
                   "<br />" +
                   "↓" +
+                  "<span style='font-size:11px;color:grey'>" +
+                  "共" +
+                  route.legs[i].duration.text +
+                  " / " +
+                  route.legs[i].distance.text +
+                  "</span>" +
                   "<br />" +
                   String.fromCharCode((i + 98).toString()).toUpperCase() +
                   ": " +
-                  response.routes[0].legs[i].end_address;
+                  "<b>" +
+                  response.routes[0].legs[i].end_address +
+                  "</b>";
               }
             }
           } else {
@@ -365,34 +396,19 @@ export default {
         }
       );
     },
-    deleteMarkers() {
-      var sydney = new google.maps.LatLng(-33.867, 151.195);
-      this.map = new google.maps.Map(this.$refs.bmap, {
-        center: sydney,
-        zoom: 7.9,
-        maxZoom: 20,
-        minZoom: 3
+    drawPath(path) {
+      // console.log("path:", path);
+      var polylinePath_1 = new google.maps.Polyline({
+        path: path,
+        geodesic: true,
+        strokeColor: "#008800",
+        strokeOpacity: 0.8,
+        strokeWeight: 5,
+        editable: false,
+        geodesic: false,
+        draggable: false
       });
-
-      /*map = new google.maps.Map(document.getElementById("map"), {
-        center: sydney,
-        zoom: 15
-      });*/
-
-      var request = {
-        query: "Museum of Contemporary Art Australia",
-        fields: ["name", "geometry"]
-      };
-
-      const service = new google.maps.places.PlacesService(map);
-
-      service.findPlaceFromQuery(request, (results, status) => {
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-          for (var i = 0; i < results.length; i++) {
-            this.createMarker(results[i]);
-          }
-        }
-      });
+      polylinePath_1.setMap(this.map);
     },
 
     createMarker(place) {
@@ -400,12 +416,6 @@ export default {
         map: map,
         position: place.geometry.location
       });
-      console.log("name: ", place.name);
-      console.log("place: ", place);
-      /*google.maps.event.addListener(marker, "click", function() {
-        infowindow.setContent(place.name);
-        infowindow.open(map, this);
-      });*/
     },
     setMarker(order, address, site_name, lat, lng) {
       console.log(lat, lng);
@@ -454,10 +464,10 @@ export default {
 
       this.waypoint.forEach((item, index) => {
         this.endOptions = this.endOptions.filter(a => {
-          console.log(a);
+          // console.log(a);
           return a != item;
         });
-        console.log("this.item_1:", this.endOptions);
+        // console.log("this.item_1:", this.endOptions);
       });
     }
   }
