@@ -41,7 +41,7 @@
           color="amber"
           :label="tab"
           type="submit"
-          style="padding-left:60px;padding-right:60px;"
+          style="padding-left:61px;padding-right:61px;"
         />
       </div>
 
