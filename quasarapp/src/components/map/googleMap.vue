@@ -36,13 +36,7 @@
                 dense
               />
             </p>
-            <q-select
-              id="start"
-              filled
-              v-model="start"
-              :options="originOptions"
-              label="請選擇您的起點"
-            />
+            <q-select id="start" filled v-model="start" :options="originOptions" label="請選擇您的起點" />
           </div>
           <div class="row-8 q-py-sm">
             <p>中繼點(多選)</p>
@@ -60,21 +54,39 @@
           </div>
           <div class="row-8 q-py-sm">
             <p>終點</p>
-            <q-select
-              id="end"
-              filled
-              v-model="end"
-              :options="endOptions"
-              label="請選擇您的終點"
-            />
+            <q-select id="end" filled v-model="end" :options="endOptions" label="請選擇您的終點" />
           </div>
-          <div class="row-8 q-py-sm">
+          <!--  -->
+          <div v-show="path_list.length != 0" class="row-8 q-py-sm">
             <p>路徑結果</p>
             <q-scroll-area
               class="bg-lime-3 text-black rounded-borders"
               style="height: 186px; max-width: 500px; "
             >
               <div class="q-pa-xs" id="directions-panel"></div>
+            </q-scroll-area>
+          </div>
+          <!--  -->
+          <div class="row-8 q-py-sm">
+            <p class="text-h5 text-bold">路徑結果</p>
+
+            <q-scroll-area
+              class="bg-grey-5 rounded-borders"
+              style="height: 200px; max-width: 800px; width:auto"
+            >
+              <div v-for="(lst,index) in path_list" :key="index">
+                <q-chip class="text-black" size="md" style="width:auto">
+                  <q-avatar color="red" text-color="white">{{lst.cap}}</q-avatar>
+                  <div class="text-bold">{{ new_list[index] }}</div>
+                  {{lst.addr}}
+                </q-chip>
+
+                <div v-if="index != path_list.length - 1" class="q-ml-md">
+                  ↓ 開車需
+                  <span class="text-bold">{{lst.duration_time}}</span>
+                  <span>{{lst.distance_km}}</span>
+                </div>
+              </div>
             </q-scroll-area>
           </div>
           <div class="row-8 q-py-sm">
@@ -106,6 +118,8 @@ export default {
       old_list: [],
       // 新順序
       new_list: [],
+      // 路徑文字結果
+      path_list: [],
       map: null,
       // 預設經緯度在信義區附近
       lat: 23.7,
@@ -295,7 +309,7 @@ export default {
             console.log("=========");
             // console.log(response.routes[0].waypoint_order);
 
-            // SEAN
+            // 處理回傳
             console.log("=========");
             var arr_latlngs = [];
             var latlngs = polyUtil.decode(response.routes[0].overview_polyline);
@@ -321,7 +335,7 @@ export default {
 
             console.log("舊順序:" + _this.old_list);
             console.log("新順序:" + _this.new_list);
-            // sean 結束
+            // 結束
 
             (this.lat = response.routes[0].legs[0].start_location.lat(name)),
               (this.lng = response.routes[0].legs[0].start_location.lng(name));
@@ -381,12 +395,22 @@ export default {
               });
 
             //這裡是他文字路線的顯示(成功)
+            _this.path_list = [];
             var route = response.routes[0];
             var summaryPanel = document.getElementById("directions-panel");
             summaryPanel.innerHTML = "";
 
             for (var i = 0; i < response.routes[0].legs.length; i++) {
               if (i != response.routes[0].legs.length - 1) {
+                // start
+                //
+                _this.path_list.push({
+                  cap: String.fromCharCode((i + 97).toString()).toUpperCase(),
+                  addr: response.routes[0].legs[i].start_address,
+                  duration_time: route.legs[i].duration.text,
+                  distance_km: route.legs[i].distance.text
+                });
+                // end
                 summaryPanel.innerHTML +=
                   String.fromCharCode((i + 97).toString()).toUpperCase() +
                   ": " +
@@ -396,13 +420,30 @@ export default {
                   "<br />" +
                   "↓   " +
                   "<span style='font-size:11px;color:grey'>" +
-                  "共" +
+                  "開車共" +
                   route.legs[i].duration.text +
                   " / " +
                   route.legs[i].distance.text +
                   "</span>" +
                   "<br />";
               } else {
+                // start
+                //
+                _this.path_list.push({
+                  cap: String.fromCharCode((i + 97).toString()).toUpperCase(),
+                  addr: response.routes[0].legs[i].start_address,
+                  duration_time: route.legs[i].duration.text,
+                  distance_km: route.legs[i].distance.text
+                });
+                // 最後加入最後一筆
+                _this.path_list.push({
+                  cap: String.fromCharCode((i + 98).toString()).toUpperCase(),
+                  addr: response.routes[0].legs[i].end_address,
+                  duration_time: "",
+                  distance_km: ""
+                });
+                // end
+
                 summaryPanel.innerHTML +=
                   String.fromCharCode((i + 97).toString()).toUpperCase() +
                   ": " +
@@ -412,7 +453,7 @@ export default {
                   "<br />" +
                   "↓" +
                   "<span style='font-size:11px;color:grey'>" +
-                  "共" +
+                  "開車共" +
                   route.legs[i].duration.text +
                   " / " +
                   route.legs[i].distance.text +
@@ -425,6 +466,7 @@ export default {
                   "</b>";
               }
             }
+            console.log("ccccccccccccccccc:", _this.path_list);
           } else {
             window.alert(
               "無法規劃該路線 Directions request failed due to " + status
@@ -433,12 +475,13 @@ export default {
         }
       );
     },
+    // 繪製路線
     drawPath(path) {
       // console.log("path:", path);
       var polylinePath_1 = new google.maps.Polyline({
         path: path,
         geodesic: true,
-        strokeColor: "#008800",
+        strokeColor: "#359FFC",
         strokeOpacity: 0.8,
         strokeWeight: 5,
         editable: false,
@@ -446,6 +489,16 @@ export default {
         draggable: false
       });
       polylinePath_1.setMap(this.map);
+      console.log(this.latlngs);
+      // var bounds = new google.maps.LatLngBounds();
+      // for (var j = 0; j < this.markers.length; j++) {
+      //   bounds.extend(this.markers[j]);
+      // }
+      // this.map.fitBounds(bounds);
+
+      //remove one zoom level to ensure no marker is on the edge.
+      // map.setZoom(this.map.getZoom() - 1);
+      this.map.setZoom(10);
     },
 
     createMarker(place) {
