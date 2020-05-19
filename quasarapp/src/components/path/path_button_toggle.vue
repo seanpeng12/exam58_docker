@@ -10,7 +10,7 @@
         color="white"
         text-color="primary"
         :options="options"
-      /> -->
+      />-->
     </div>
     <div class="row">
       <div class="col-8">
@@ -94,6 +94,7 @@ export default {
   },
   watch: {
     selected_site(val) {
+      console.log(val);
       // this.process(val, 0);
       // this.$store.commit("path/Update_Selected_Site", "請選擇");
       this.$store.commit("path/Update_Selected_Site_2", "請選擇");

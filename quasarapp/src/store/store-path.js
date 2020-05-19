@@ -1,4 +1,6 @@
-import axios, { axiosInstance } from "boot/axios";
+import axios, {
+  axiosInstance
+} from "boot/axios";
 
 const state = {
   namespaced: true,
@@ -44,9 +46,8 @@ const mutations = {
     return (state.selected_city = value);
   },
   Update_Selected_Site(state, value) {
-    console.log(state.selected_site);
-
     return (state.selected_site = value);
+
   },
   // Reset_Selected_Site(state) {
   //   state.selected_site = {};
@@ -77,7 +78,9 @@ const mutations = {
   }
 };
 const actions = {
-  fetchCitys({ commit }) {
+  fetchCitys({
+    commit
+  }) {
     axiosInstance
       .get("http://140.136.155.116/api/site_dataCity")
       .then(res => {
@@ -89,7 +92,9 @@ const actions = {
       });
   },
 
-  fetchSites({ commit }) {
+  fetchSites({
+    commit
+  }) {
     axiosInstance
       .post("http://140.136.155.116/api/sitesByCity", {
         city_name: state.selected_city
@@ -103,7 +108,9 @@ const actions = {
       });
   },
 
-  fetchPathR({ commit }) {
+  fetchPathR({
+    commit
+  }) {
     axiosInstance
       .post("http://140.136.155.116/api/runPath", {
         city: state.selected_city,
@@ -119,7 +126,9 @@ const actions = {
       });
   },
   //
-  fetchPath({ commit }) {
+  fetchPath({
+    commit
+  }) {
     axiosInstance
       .post("http://140.136.155.116/api/PathData", {
         name: state.selected_site
@@ -130,12 +139,14 @@ const actions = {
 
         commit("Update_PathData", res);
       })
-      .catch(function(response) {
+      .catch(function (response) {
         console.log(response);
       });
   },
   //
-  fetchPath_2({ commit }) {
+  fetchPath_2({
+    commit
+  }) {
     axiosInstance
       .post("http://140.136.155.116/api/PathData", {
         name: state.selected_site_2
@@ -144,7 +155,7 @@ const actions = {
         console.log("取得第二層景點懶人包");
         commit("Update_PathData_2", res);
       })
-      .catch(function(response) {
+      .catch(function (response) {
         console.log(response);
       });
   }

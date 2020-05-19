@@ -219,7 +219,7 @@ export default {
       this.selected_site_local = "";
     },
     selected_site_local(val) {
-      console.log("偵測到變動 commit site!", val);
+      // console.log("偵測到變動 commit site!", val);
       this.$store.commit("path/Update_Selected_Site", val);
     },
     run_index(val) {
