@@ -1,13 +1,24 @@
 <template>
   <div>
-    <q-carousel v-model="slide" color="white" infinite arrows autoplay height="200px">
+    <q-carousel
+      v-model="slide"
+      color="white"
+      infinite
+      arrows
+      autoplay
+      height="200px"
+    >
       <q-carousel-slide
         :name="1"
         img-src="https://global-uploads.webflow.com/576fd5a8f192527e50a4b95c/5bfe550d9464455edc331bee_Thaproban%20Beach%20House-min.jpg"
       >
         <div class="absolute-center custom-caption" style="margin-top:25px">
-          <div class="text-h3" style="font-weight: bold;font-family:NSimSun">我的口袋名單</div>
-          <div class="text-h5" style="font-weight: bold; font-family:cursive">My Collection</div>
+          <div class="text-h3" style="font-weight: bold;font-family:NSimSun">
+            我的口袋名單
+          </div>
+          <div class="text-h5" style="font-weight: bold; font-family:cursive">
+            My Collection
+          </div>
           <br />
           <!-- <br />
           <br />
@@ -19,12 +30,14 @@
       <p
         class="q-ma-md text-h5 text-white"
         style="font-weight: bold; font-family:NSimSun;"
-      >您可使用快速搜尋，找到您收藏的景點與飯店資訊</p>
+      >
+        您可使用快速搜尋，找到您收藏的景點與飯店資訊
+      </p>
       <search />
 
       <q-tabs v-model="tab" class="text-black">
-        <q-tab name="site" icon="local_car_wash" label="景點收藏" />
-        <q-tab name="hotel" icon="hot_tub" label="飯店收藏" />
+        <q-tab name="site" icon="fas fa-car-side" label="景點收藏" />
+        <q-tab name="hotel" icon="fas fa-hotel" label="飯店收藏" />
       </q-tabs>
     </div>
     <div class="row" v-if="tab == 'site'">

@@ -23,6 +23,12 @@
                   <q-card-section>
                     <q-scroll-area style="height: 250px; max-width: auto;">
                       <div v-for="a in pathData.data" :key="a.id">
+                        <q-icon v-if="a.type == 'R'" name="fas fa-utensils" />
+                        <q-icon
+                          v-else-if="a.type == 'S'"
+                          name="fas fa-car-side"
+                        />
+                        <q-icon v-else name="fas fa-hotel" />
                         <q-btn
                           flat
                           @click="second_request(a.name)"
@@ -53,6 +59,12 @@
                   <q-card-section>
                     <q-scroll-area style="height: 210px; max-width: auto;">
                       <div v-for="b in pathData_2.data" :key="b.id">
+                        <q-icon v-if="b.type == 'R'" name="fas fa-utensils" />
+                        <q-icon
+                          v-else-if="b.type == 'S'"
+                          name="fas fa-car-side"
+                        />
+                        <q-icon v-else name="fas fa-hotel" />
                         <q-btn
                           flat
                           @click="third_request(b.name)"
