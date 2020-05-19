@@ -56,22 +56,12 @@
             <p>終點</p>
             <q-select id="end" filled v-model="end" :options="endOptions" label="請選擇您的終點" />
           </div>
-          <!--  -->
-          <div v-show="path_list.length != 0" class="row-8 q-py-sm">
-            <p>路徑結果</p>
-            <q-scroll-area
-              class="bg-lime-3 text-black rounded-borders"
-              style="height: 186px; max-width: 500px; "
-            >
-              <div class="q-pa-xs" id="directions-panel"></div>
-            </q-scroll-area>
-          </div>
-          <!--  -->
+
           <div class="row-8 q-py-sm">
             <p class="text-h5 text-bold">路徑結果</p>
 
             <q-scroll-area
-              class="bg-grey-5 rounded-borders"
+              class="bg-grey-2 rounded-borders"
               style="height: 200px; max-width: 800px; width:auto"
             >
               <div v-for="(lst,index) in path_list" :key="index">
@@ -175,41 +165,6 @@ export default {
         maxZoom: 20,
         minZoom: 3
       });
-
-      // 畫圖
-      // var polylinePathPoints = [
-      //   { lat: 25.0336962, lng: 121.5643673 },
-      //   { lat: 25.033755, lng: 121.565412 },
-      //   { lat: 25.031985, lng: 121.56538 },
-      //   { lat: 25.032083, lng: 121.561324 }
-      // ];
-      // var polylinePath = new google.maps.Polyline({
-      //   path: polylinePathPoints,
-      //   geodesic: true,
-      //   strokeColor: "#008800",
-      //   strokeOpacity: 0.8,
-      //   strokeWeight: 10,
-      //   editable: true,
-      //   geodesic: false,
-      //   draggable: false
-      // });
-      // polylinePath.setMap(this.map);
-      // console.log("polylinePath:", polylinePath);
-
-      /* directionsService.route(
-        {
-          origin: { lat: 61, lng: 13 },
-          destination: { lat: 62, lng: 15 },
-          travelMode: "DRIVING"
-        },
-        function(response, status) {
-          if (status === "OK") {
-            directionsRenderer.setDirections(response);
-          } else {
-            console.log("Directions request failed due to " + status);
-          }
-        }
-      );*/
     },
     initChooseItem() {
       //清除上一次選擇的項目
@@ -339,7 +294,7 @@ export default {
 
             (this.lat = response.routes[0].legs[0].start_location.lat(name)),
               (this.lng = response.routes[0].legs[0].start_location.lng(name));
-            this.zoom = 11;
+
             this.initMap();
 
             // setMarker設定
@@ -397,8 +352,6 @@ export default {
             //這裡是他文字路線的顯示(成功)
             _this.path_list = [];
             var route = response.routes[0];
-            var summaryPanel = document.getElementById("directions-panel");
-            summaryPanel.innerHTML = "";
 
             for (var i = 0; i < response.routes[0].legs.length; i++) {
               if (i != response.routes[0].legs.length - 1) {
@@ -410,22 +363,6 @@ export default {
                   duration_time: route.legs[i].duration.text,
                   distance_km: route.legs[i].distance.text
                 });
-                // end
-                summaryPanel.innerHTML +=
-                  String.fromCharCode((i + 97).toString()).toUpperCase() +
-                  ": " +
-                  "<b>" +
-                  response.routes[0].legs[i].start_address +
-                  "</b>" +
-                  "<br />" +
-                  "↓   " +
-                  "<span style='font-size:11px;color:grey'>" +
-                  "開車共" +
-                  route.legs[i].duration.text +
-                  " / " +
-                  route.legs[i].distance.text +
-                  "</span>" +
-                  "<br />";
               } else {
                 // start
                 //
@@ -442,28 +379,6 @@ export default {
                   duration_time: "",
                   distance_km: ""
                 });
-                // end
-
-                summaryPanel.innerHTML +=
-                  String.fromCharCode((i + 97).toString()).toUpperCase() +
-                  ": " +
-                  "<b>" +
-                  response.routes[0].legs[i].start_address +
-                  "</b>" +
-                  "<br />" +
-                  "↓" +
-                  "<span style='font-size:11px;color:grey'>" +
-                  "開車共" +
-                  route.legs[i].duration.text +
-                  " / " +
-                  route.legs[i].distance.text +
-                  "</span>" +
-                  "<br />" +
-                  String.fromCharCode((i + 98).toString()).toUpperCase() +
-                  ": " +
-                  "<b>" +
-                  response.routes[0].legs[i].end_address +
-                  "</b>";
               }
             }
             console.log("ccccccccccccccccc:", _this.path_list);
@@ -489,7 +404,7 @@ export default {
         draggable: false
       });
       polylinePath_1.setMap(this.map);
-      console.log(this.latlngs);
+      // console.log(this.latlngs);
       // var bounds = new google.maps.LatLngBounds();
       // for (var j = 0; j < this.markers.length; j++) {
       //   bounds.extend(this.markers[j]);
@@ -499,6 +414,21 @@ export default {
       //remove one zoom level to ensure no marker is on the edge.
       // map.setZoom(this.map.getZoom() - 1);
       this.map.setZoom(10);
+      // var bounds = LatLngBounds;
+      var sw = new google.maps.LatLng({
+        lat: 25.037180000000003,
+        lng: 121.51320000000001
+      });
+      var ne = new google.maps.LatLng({
+        lat: 25.175320000000003,
+        lng: 121.75386
+      });
+      // var sw = (121.51320000000001, 25.037180000000003);
+      // var ne = (121.75386, 25.175320000000003);
+      var bounds = [sw, ne];
+      var rr = new google.maps.LatLngBounds(bounds);
+      console.log("LatLngBounds", LatLngBounds[0].lat(name));
+      this.map.fitBounds(rr);
     },
 
     createMarker(place) {
