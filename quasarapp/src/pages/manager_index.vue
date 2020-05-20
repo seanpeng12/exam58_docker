@@ -86,7 +86,7 @@
                 <div class="q-ml-lg" style="display:inline;">
                   <q-btn
                     size="18px"
-                    to="/site_ProsCons"
+                    to="/site_Path"
                     class="bg-blue-6 text-white q-pa-xs q-ma-xs"
                   >旅遊業者/飯店業者</q-btn>
                 </div>

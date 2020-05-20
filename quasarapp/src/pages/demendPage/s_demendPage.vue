@@ -49,55 +49,26 @@
     <!-- 左右區域-->
 
     <div v-if="isShow">
+      <!-- 第一行 -->
       <div class="row q-pa-sm">
-        <div class="col-md-6 q-pa-md" style="overflow:hidden;height:100%">
-          <!-- iframe區域 -->
-          <q-card
-            class="my-card text-center q-pa-sm"
-            style="height:100%;width:100%;max-height:800px;max-width:100%;"
-          >
-            <q-card-section>
-              <div class="text-h6">需求分析圖</div>
-              <div class="text-subtitle2">{{ r_title_1 }} {{ r_title_2 }} {{ r_title_3 }}</div>
-            </q-card-section>
-
-            <q-separator />
-
-            <q-card-section>
-              <demand-r :src="src" :runR_value="runR_value"></demand-r>
-              <!-- loading 插件 -->
-              <transition name="fade">
-                <loading
-                  v-if="isLoading"
-                  :active.sync="isLoading"
-                  :can-cancel="false"
-                  :is-full-page="fullPage"
-                ></loading>
-              </transition>
-              <!--  -->
-            </q-card-section>
-          </q-card>
-        </div>
-        <div class="col-md-6 q-pa-md" style="overflow:hidden;height:100%">
+        <div class="col-md-6 q-pa-md" style="overflow:hidden;height:100%;margin:0px auto;">
           <!-- 懶人包區域 -->
           <q-card
             class="my-card bg-secondary text-white"
             style="height:100%;width:100%;max-height:600px;max-width:100%;"
           >
-            <transition name="fade" mode="out-in">
-              <q-card-section>
-                <b class="text" style="font-size: 25px;font-family: Microsoft JhengHei;">
-                  <q-circular-progress
-                    v-show="!txtdatas_diff_ok"
-                    indeterminate
-                    size="50px"
-                    color="lime"
-                    class="q-ma-md"
-                  />
-                  {{ txtinfo }}
-                </b>
-              </q-card-section>
-            </transition>
+            <q-card-section>
+              <b class="text" style="font-size: 25px;font-family: Microsoft JhengHei;">
+                <q-circular-progress
+                  v-show="!txtdatas_diff_ok"
+                  indeterminate
+                  size="50px"
+                  color="lime"
+                  class="q-ma-md"
+                />
+                {{ txtinfo }}
+              </b>
+            </q-card-section>
 
             <q-separator dark />
           </q-card>
@@ -239,6 +210,37 @@
               <q-separator />
             </q-list>
           </div>
+        </div>
+      </div>
+      <!-- 第二行 -->
+      <div class="row q-pa-sm">
+        <div class="col-md-6 q-pa-md" style="overflow:hidden;height:100%;margin:0px auto;">
+          <!-- iframe區域 -->
+          <q-card
+            class="my-card text-center q-pa-sm"
+            style="height:100%;width:100%;max-height:800px;max-width:100%;"
+          >
+            <q-card-section>
+              <div class="text-h6">需求分析圖</div>
+              <div class="text-subtitle2">{{ r_title_1 }} {{ r_title_2 }} {{ r_title_3 }}</div>
+            </q-card-section>
+
+            <q-separator />
+
+            <q-card-section>
+              <demand-r :src="src" :runR_value="runR_value"></demand-r>
+              <!-- loading 插件 -->
+              <transition name="fade">
+                <loading
+                  v-if="isLoading"
+                  :active.sync="isLoading"
+                  :can-cancel="false"
+                  :is-full-page="fullPage"
+                ></loading>
+              </transition>
+              <!--  -->
+            </q-card-section>
+          </q-card>
         </div>
       </div>
     </div>
@@ -468,20 +470,12 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 2s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
-}
-
-.frameStyle {
-  width: 100%;
-  height: 500px;
-}
-.de {
-  padding-bottom: 50px;
 }
 </style>

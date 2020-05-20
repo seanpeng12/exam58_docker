@@ -50,35 +50,7 @@
     <!-- 左右區域 -->
     <div v-if="isShow">
       <div class="row q-pa-sm">
-        <div class="col-md-6 q-pa-md" style="overflow:hidden;height:100%">
-          <!-- iframe區域 -->
-          <q-card
-            class="my-card text-center q-pa-sm"
-            style="height:100%;width:100%;max-height:800px;max-width:100%;"
-          >
-            <q-card-section>
-              <div class="text-h6">需求分析圖</div>
-              <div class="text-subtitle2">{{ r_title_1 }} {{ r_title_2 }} {{ r_title_3 }}</div>
-            </q-card-section>
-
-            <q-separator />
-
-            <q-card-section>
-              <demand-r :src="src" :runR_value="runR_value"></demand-r>
-              <!-- loading 插件 -->
-              <transition name="fade">
-                <loading
-                  v-if="isLoading"
-                  :active.sync="isLoading"
-                  :can-cancel="false"
-                  :is-full-page="fullPage"
-                ></loading>
-              </transition>
-              <!--  -->
-            </q-card-section>
-          </q-card>
-        </div>
-        <div class="col-md-6 q-pa-md" style="overflow:hidden;height:100%">
+        <div class="col-md-6 q-pa-md" style="overflow:hidden;height:100%;margin:0px auto;">
           <!-- 懶人包區域 -->
           <q-card
             class="my-card bg-secondary text-white"
@@ -242,6 +214,36 @@
               <q-separator />
             </q-list>
           </div>
+        </div>
+      </div>
+      <div class="row q-pa-sm">
+        <div class="col-md-6 q-pa-md" style="overflow:hidden;height:100%;margin:0px auto;">
+          <!-- iframe區域 -->
+          <q-card
+            class="my-card text-center q-pa-sm"
+            style="height:100%;width:100%;max-height:800px;max-width:100%;"
+          >
+            <q-card-section>
+              <div class="text-h6">需求分析圖</div>
+              <div class="text-subtitle2">{{ r_title_1 }} {{ r_title_2 }} {{ r_title_3 }}</div>
+            </q-card-section>
+
+            <q-separator />
+
+            <q-card-section>
+              <demand-r :src="src" :runR_value="runR_value"></demand-r>
+              <!-- loading 插件 -->
+              <transition name="fade">
+                <loading
+                  v-if="isLoading"
+                  :active.sync="isLoading"
+                  :can-cancel="false"
+                  :is-full-page="fullPage"
+                ></loading>
+              </transition>
+              <!--  -->
+            </q-card-section>
+          </q-card>
         </div>
       </div>
     </div>
