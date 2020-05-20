@@ -82,9 +82,20 @@
 
     <!-- 測試用 -->
     <div style="max-width: 600px">
-      <q-tabs class="q-mb-lg" v-model="tab" align="justify" narrow-indicator>
-        <q-tab class="text-purple" name="tab_1" :label="tab_1" />
-        <q-tab class="text-orange" name="tab_2" :label="tab_2" />
+      <q-tabs
+        class="bg-green-4 text-black q-mb-lg"
+        style="font-family: Microsoft JhengHei;"
+        indicator-color="transparent"
+        active-color="white"
+        v-model="tab"
+        align="justify"
+        narrow-indicator
+      >
+        <q-tab icon="place" name="tab_1" :label="tab_1" />
+        <q-icon name="fast_forward" style="font-size: 18px;color:black" />
+        <q-tab icon="place" name="tab_2" :label="tab_2" />
+        <q-icon name="fast_forward" style="font-size: 18px;color:black" />
+        <q-tab icon="place" name="tab_3" :label="tab_3" />
       </q-tabs>
 
       <div class="q-gutter-y-sm">
@@ -96,14 +107,18 @@
           class="bg-grey-6 text-white text-center"
         >
           <q-tab-panel name="tab_1">
-            <div class="text-h6 text-bold">{{selected_site}}</div>
+            <div class="text-h6 text-bold" style="font-family:NSimSun">
+              去過 {{
+              selected_site }} 還會去
+            </div>
+
             <q-expansion-item
               v-model="expanded1"
               group="somegroup"
               icon="directions_run"
-              :label="'去過<' + selected_site + '>還會去:'"
-              header-class="text-blue-grey-10"
-              style="font-weight:bold;"
+              :label="'請選擇'"
+              header-class="text-grey-3"
+              style="font-weight:bold;font-family: Microsoft JhengHei;"
             >
               <q-card>
                 <q-card-section>
@@ -117,11 +132,11 @@
                         flat
                         @click="second_request(a.name)"
                         :label="a.name"
-                        style="color:  #699c4c;font-family: Microsoft JhengHei;font-weight:bold"
+                        style="width:210px;color:#699c4c;font-family: Microsoft JhengHei;font-weight:bold"
                         icon-right="arrow_forward_ios"
-                      />
+                      ></q-btn>
                       <!--  -->
-                      <span>有 {{ a.weight }} 人選擇這裡</span>
+                      <span class="text-black">有 {{ a.weight }} 人選擇這裡</span>
                     </div>
                   </q-scroll-area>
                 </q-card-section>
@@ -130,14 +145,17 @@
           </q-tab-panel>
 
           <q-tab-panel name="tab_2">
-            <div class="text-h6 text-bold">{{selected_site_2}}</div>
+            <div class="text-h6 text-bold" style="font-family:NSimSun">
+              去過 {{
+              selected_site_2 }} 還會去
+            </div>
             <q-expansion-item
               group="somegroup"
               v-model="expanded2"
               icon="directions_run"
-              :label="'去過<' + selected_site_2 + '>還會去:'"
-              header-class="text-blue-grey-10"
-              style="font-weight:bold;"
+              :label="'請選擇'"
+              header-class="text-grey-3"
+              style="font-weight:bold;font-family: Microsoft JhengHei;"
             >
               <q-card>
                 <q-card-section>
@@ -151,11 +169,11 @@
                         flat
                         @click="third_request(b.name)"
                         :label="b.name"
-                        style="color: #0062c4;font-family: Microsoft JhengHei;font-weight:bold"
+                        style="width:210px;color: #0062c4;font-family: Microsoft JhengHei;font-weight:bold"
                         icon-right="arrow_forward_ios"
-                      />
+                      ></q-btn>
                       <!--  -->
-                      <span class="text-caption">有 {{ b.weight }} 人選擇這裡</span>
+                      <span class="text-black">有 {{ b.weight }} 人選擇這裡</span>
                     </div>
                   </q-scroll-area>
                 </q-card-section>
@@ -163,9 +181,10 @@
             </q-expansion-item>
           </q-tab-panel>
 
-          <!-- <q-tab-panel name="tab_3">
-            <div class="text-h6">Movies</div>Nostrum necessitatibus expedita dolores? Voluptatem repudiandae magni ea.
-          </q-tab-panel>-->
+          <q-tab-panel name="tab_3">
+            <div class="text-h6 text-bold" style="font-family:NSimSun">{{selected_site_3 }}</div>
+            <q-btn>景點加入排程</q-btn>
+          </q-tab-panel>
         </q-tab-panels>
       </div>
     </div>
@@ -182,13 +201,14 @@ export default {
   data() {
     return {
       // dropdownitem
-      expanded1: false,
-      expanded2: false,
+      expanded1: true,
+      expanded2: true,
 
       model: "2",
       tab: "tab_1",
-      tab_1: "地點二",
-      tab_2: "地點三"
+      tab_1: "地點一",
+      tab_2: "地點二",
+      tab_3: "地點三"
     };
   },
   computed: {
@@ -199,6 +219,7 @@ export default {
       "data_index",
       "pathData",
       "pathData_2",
+      "selected_city",
       "selected_site",
       "selected_site_2",
       "selected_site_3"
@@ -212,10 +233,14 @@ export default {
       console.log(val);
       this.$store.commit("path/Update_Selected_Site_2", val);
       this.fetchPath_2();
+      this.tab = "tab_2";
+      this.tab_2 = this.selected_site_2;
     },
     third_request(val) {
       console.log(val);
       this.$store.commit("path/Update_Selected_Site_3", val);
+      this.tab = "tab_3";
+      this.tab_3 = this.selected_site_3;
     }
   },
   watch: {
@@ -226,21 +251,23 @@ export default {
     data_index(val) {
       console.log("(測試)偵測到data_index改變：取得val", val);
     },
-    selected_site(val) {
-      // this.tab_1 = val;
-      // console.log("tab_1:", this.tab_1);
+    selected_city(val) {
+      this.$store.commit("path/Update_Selected_Site_2", "請選擇");
+      this.$store.commit("path/Update_Selected_Site_3", "請選擇");
+      this.tab_1 = "地點一";
+      this.tab_2 = "地點二";
+      this.tab_3 = "地點三";
     },
-
-    selected_site_2(val) {
-      this.tab = "tab_1";
-      // function change() {
-      this.expanded1 = true;
-      this.expanded2 = true;
-      // }
-      // change().then(() => {
-      //   this.expanded1 = false;
-      // });
+    selected_site(val) {
+      this.$store.commit("path/Update_Selected_Site_2", "請選擇");
+      this.$store.commit("path/Update_Selected_Site_3", "請選擇");
+      this.tab_1 = val;
+      this.tab_2 = "地點二";
+      this.tab_3 = "地點三";
     }
+    // selected_site_2(val) {
+    //   this.tab_2 = val;
+    // }
   }
 };
 </script>

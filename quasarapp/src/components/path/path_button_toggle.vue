@@ -19,17 +19,32 @@
           inline-label
           indicator-color="transparent"
           active-color="white"
-          class="bg-lime-5 text-black shadow-2"
+          class="bg-green-4 text-black shadow-2"
         >
-          <q-tab name="firstSite" icon="place" :label="selected_site" />
+          <q-tab
+            name="firstSite"
+            icon="place"
+            :label="selected_site"
+            style="font-size: 18px;color:black"
+          />
+
+          <q-icon name="fast_forward" />
+
+          <q-tab
+            name="secondSite"
+            icon="place"
+            :label="selected_site_2"
+            style="font-size: 18px;color:black"
+          />
 
           <q-icon name="fast_forward" style="font-size: 18px;color:black" />
 
-          <q-tab name="secondSite" icon="place" :label="selected_site_2" />
-
-          <q-icon name="fast_forward" style="font-size: 18px;color:black" />
-
-          <q-tab name="thirdSite" icon="place" :label="selected_site_3" />
+          <q-tab
+            name="thirdSite"
+            icon="place"
+            :label="selected_site_3"
+            style="font-size: 18px;color:black"
+          />
         </q-tabs>
       </div>
       <div class="col q-ml-lg q-mt-sm">
@@ -94,7 +109,6 @@ export default {
   },
   watch: {
     selected_site(val) {
-      console.log(val);
       // this.process(val, 0);
       // this.$store.commit("path/Update_Selected_Site", "請選擇");
       this.$store.commit("path/Update_Selected_Site_2", "請選擇");

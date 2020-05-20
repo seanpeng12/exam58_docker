@@ -53,7 +53,7 @@
     </div>
 
     <!-- 左右區域 web -->
-    <div v-if="isShow">
+    <div v-show="isShow">
       <div class="q-pa-md">
         <div class="row">
           <div class="col-6">
@@ -68,7 +68,7 @@
     </div>
 
     <!-- 介紹頁面 -->
-    <div v-else class="row" style="font-family: Microsoft JhengHei;">
+    <div v-show="!isShow" class="row" style="font-family: Microsoft JhengHei;">
       <div
         class="col q-ma-md text-center text-h4 text-white"
         style="padding:150px; background-size: cover;background-position: center;background-repeat: no-repeat;background-image: url('https://images.unsplash.com/photo-1557683311-eac922347aa1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1315&q=80');"
