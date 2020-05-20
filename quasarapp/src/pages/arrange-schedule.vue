@@ -423,26 +423,24 @@
                   </div>
                 </div>
               </div>
-              <div class="row-8">
-                <path-button-toggle>
-                  <template slot="addToSchedule">
-                    <q-btn
-                      rounded
-                      icon="add"
-                      label="加進排程"
-                      color="warning"
-                      @click="promptToAddRouteSites()"
-                      dense
-                      size="12px"
-                      style="margin-left:30px;font-weight:bold"
-                    />
-                  </template>
-                </path-button-toggle>
-              </div>
+
               <div class="q-pa-none">
                 <div class="row">
                   <div class="col-6">
-                    <path-data></path-data>
+                    <path-data>
+                      <template slot="addToSchedule">
+                        <q-btn
+                          class="q-mt-sm"
+                          icon="add"
+                          label="加進排程"
+                          color="warning"
+                          @click="promptToAddRouteSites()"
+                          dense
+                          size="12px"
+                          style="font-weight:bold"
+                        />
+                      </template>
+                    </path-data>
                   </div>
                   <!-- 懶人包區域 -->
                   <div class="col-6">

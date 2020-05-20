@@ -1,17 +1,6 @@
 <template>
   <div class="q-pa-md">
-    <div style="max-width:auto">
-      <!-- <q-btn-toggle
-        v-model="model"
-        class="my-custom-toggle"
-        no-caps
-        unelevated
-        toggle-color="purple"
-        color="white"
-        text-color="primary"
-        :options="options"
-      />-->
-    </div>
+    <div style="max-width:auto"></div>
     <div class="row">
       <div class="col-8">
         <q-tabs
