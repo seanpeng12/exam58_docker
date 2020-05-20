@@ -32,7 +32,12 @@
 
                 <q-separator />
 
-                <q-tab-panels class="text-dark" v-model="tab" style="max-height: 500px;" animated>
+                <q-tab-panels
+                  class="text-dark"
+                  v-model="tab"
+                  style="max-height: 500px;"
+                  animated
+                >
                   <q-tab-panel name="mails">
                     <iframe
                       style="height: 1500px"
