@@ -81,7 +81,7 @@
     </div>-->
 
     <!-- 測試用 -->
-    <div style="max-width: 600px">
+    <div class="gt-xs q-pa-sm column text-black bg-white" style="width: auto">
       <q-tabs
         class="bg-green-4 text-grey-4 q-mb-lg"
         style="font-family: Microsoft JhengHei;border-radius: 10px;"
