@@ -27,7 +27,9 @@
           class="bg-grey-6 text-white text-center"
         >
           <q-tab-panel name="tab_1">
-            <div class="text-h6 text-bold" style="font-family:NSimSun">去過 {{ selected_site }} 還會去</div>
+            <div class="text-h6 text-bold" style="font-family:NSimSun">
+              去過 {{ selected_site }} 還會去
+            </div>
 
             <q-expansion-item
               v-model="expanded1"
@@ -41,19 +43,29 @@
                 <q-card-section>
                   <q-scroll-area style="height: 250px; max-width: auto;">
                     <div v-for="a in pathData.data" :key="a.id" class="q-ml-sm">
-                      <q-icon v-if="a.type == 'R'" name="fas fa-utensils" color="black" />
-                      <q-icon v-else-if="a.type == 'S'" name="fas fa-car-side" color="black" />
+                      <q-icon
+                        v-if="a.type == 'R'"
+                        name="fas fa-utensils"
+                        color="black"
+                      />
+                      <q-icon
+                        v-else-if="a.type == 'S'"
+                        name="fas fa-car-side"
+                        color="black"
+                      />
                       <q-icon v-else name="fas fa-hotel" color="black" />
                       <!-- button -->
                       <q-btn
                         flat
                         @click="second_request(a.name)"
-                        :label="a.name + a.type"
+                        :label="a.name"
                         style="width:250px;color:#699c4c;font-family: Microsoft JhengHei;font-weight:bold"
                         icon-right="arrow_forward_ios"
                       ></q-btn>
                       <!--  -->
-                      <span class="text-black">有 {{ a.weight }} 人選擇這裡</span>
+                      <span class="text-black"
+                        >有 {{ a.weight }} 人選擇這裡</span
+                      >
                     </div>
                   </q-scroll-area>
                 </q-card-section>
@@ -62,7 +74,9 @@
           </q-tab-panel>
 
           <q-tab-panel name="tab_2">
-            <div class="text-h6 text-bold" style="font-family:NSimSun">去過 {{ selected_site_2 }} 還會去</div>
+            <div class="text-h6 text-bold" style="font-family:NSimSun">
+              去過 {{ selected_site_2 }} 還會去
+            </div>
             <q-expansion-item
               group="somegroup"
               v-model="expanded2"
@@ -75,8 +89,16 @@
                 <q-card-section>
                   <q-scroll-area style="height: 210px; max-width: auto;">
                     <div v-for="b in pathData_2.data" :key="b.id">
-                      <q-icon v-if="b.type == 'R'" name="fas fa-utensils" color="black" />
-                      <q-icon v-else-if="b.type == 'S'" name="fas fa-car-side" color="black" />
+                      <q-icon
+                        v-if="b.type == 'R'"
+                        name="fas fa-utensils"
+                        color="black"
+                      />
+                      <q-icon
+                        v-else-if="b.type == 'S'"
+                        name="fas fa-car-side"
+                        color="black"
+                      />
                       <q-icon v-else name="fas fa-hotel" color="black" />
                       <!-- button -->
                       <q-btn
@@ -87,7 +109,9 @@
                         icon-right="arrow_forward_ios"
                       ></q-btn>
                       <!--  -->
-                      <span class="text-black">有 {{ b.weight }} 人選擇這裡</span>
+                      <span class="text-black"
+                        >有 {{ b.weight }} 人選擇這裡</span
+                      >
                     </div>
                   </q-scroll-area>
                 </q-card-section>
