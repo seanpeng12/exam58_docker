@@ -83,8 +83,8 @@
     <!-- 測試用 -->
     <div style="max-width: 600px">
       <q-tabs
-        class="bg-green-4 text-black q-mb-lg"
-        style="font-family: Microsoft JhengHei;"
+        class="bg-green-4 text-grey-4 q-mb-lg"
+        style="font-family: Microsoft JhengHei;border-radius: 10px;"
         indicator-color="transparent"
         active-color="white"
         v-model="tab"
@@ -182,8 +182,8 @@
           </q-tab-panel>
 
           <q-tab-panel name="tab_3">
-            <div class="text-h6 text-bold" style="font-family:NSimSun">{{selected_site_3 }}</div>
-            <q-btn>景點加入排程</q-btn>
+            <div class="text-h6 text-bold q-pa-md" style="font-family:NSimSun">done</div>
+            <q-btn>加入排程</q-btn>
           </q-tab-panel>
         </q-tab-panels>
       </div>
