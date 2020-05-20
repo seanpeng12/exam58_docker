@@ -117,6 +117,9 @@ Route::group(['middleware' => ['CORS']], function () {
 // 路徑分析
 Route::group(['middleware' => ['CORS']], function () {
 
+    // 第二層選單：輸入城市 ->城市所有景點
+    Route::post('/path_sitesByCity', 'PathController@path_sitesByCity');
+    
     // 路徑分析(PHP + R)
     Route::post('/runPath', 'PathController@runPath');
     // 執行搭配php的R(跑路徑分析用path.php)
