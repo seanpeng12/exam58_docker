@@ -26,7 +26,7 @@
     </div>
 
     <div class="rounded-borders q-pa-md q-mx-md q-gutter-sm bg-grey-1">
-      <q-splitter v-model="splitterModel" style="height: 400px">
+      <q-splitter v-model="splitterModel" style="height: 420px">
         <template v-slot:before>
           <q-tabs v-model="tab" vertical class="text-grey-8">
             <!-- <q-tab name="demand" icon="img:statics/images/b_demand.png" label="需求分析" /> -->
@@ -48,7 +48,18 @@
           >
             <q-tab-panel name="proscons">
               <!-- 第一格 -->
-              <div class="text-h4 q-ma-md">優缺點分析</div>
+              <div class="text-h4 q-ma-md">
+                <span>優缺點分析</span>
+                <div class="q-ml-lg" style="display:inline;">
+                  <q-btn
+                    size="18px"
+                    to="/site_ProsCons"
+                    class="bg-blue-6 text-white q-pa-xs q-ma-xs"
+                  >旅遊業者</q-btn>
+                  <q-btn size="18px" to="/hotel_ProsCons" class="q-pa-xs q-ma-xs">飯店業者</q-btn>
+                </div>
+              </div>
+
               <!-- 第二格 -->
               <p class="text-h5 q-pa-md q-my-sm bg-grey text-white" style="border-radius: 25px;">
                 <b>主要對象:旅遊業者、景點或旅館經營業者。</b>
@@ -70,7 +81,16 @@
 
             <q-tab-panel name="path">
               <!-- 第一格 -->
-              <div class="text-h4 q-ma-md">路徑分析</div>
+              <div class="text-h4 q-ma-md">
+                <span>路徑分析</span>
+                <div class="q-ml-lg" style="display:inline;">
+                  <q-btn
+                    size="18px"
+                    to="/site_ProsCons"
+                    class="bg-blue-6 text-white q-pa-xs q-ma-xs"
+                  >旅遊業者/飯店業者</q-btn>
+                </div>
+              </div>
               <!-- 第二格 -->
               <p class="text-h5 q-pa-md q-my-sm bg-grey text-white" style="border-radius: 25px;">
                 <b>主要對象:旅遊業者、景點或旅館經營業者。</b>
