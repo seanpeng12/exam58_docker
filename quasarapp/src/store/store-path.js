@@ -96,7 +96,7 @@ const actions = {
     commit
   }) {
     axiosInstance
-      .post("http://140.136.155.116/api/sitesByCity", {
+      .post("http://140.136.155.116/api/path_sitesByCity", {
         city_name: state.selected_city
       })
       .then(res => {

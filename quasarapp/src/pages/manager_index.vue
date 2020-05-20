@@ -19,7 +19,7 @@
             icon="fab fa-google"
             style="color:black;font-family:Microsoft JhengHei;"
             color="teal-5"
-            label="登入"
+            label="登入商業帳號"
           />
         </div>
       </q-banner>

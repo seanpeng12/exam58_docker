@@ -3,7 +3,7 @@
     class="body"
     style="font-family:Microsoft JhengHei;
     background-image: url(statics/images/beach.jpg);
-    height: auto;width:100%;max-height:auto;background-position: center;
+    height: 100%;width:100%;max-height:auto;background-position: center;
     background-repeat: no-repeat;
     background-size: cover;"
   >
@@ -11,9 +11,7 @@
     <div
       class="q-pa-lg text-h4 text-white text-center"
       style="font-family:Microsoft JhengHei;"
-    >
-      開始你的旅程
-    </div>
+    >開始你的旅程</div>
     <!--  -->
     <!-- 登入 -->
     <q-card class="auto-tabs" style="margin-bottom:50px">

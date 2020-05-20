@@ -11,6 +11,15 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class PathController extends Controller
 {
+    // 第二層：輸入城市 ->城市所有景點 > 30評論
+    function path_sitesByCity(Request $request)
+    {
+        $city = $request->input('city_name');
+        $sql = FacadesDB::select("SELECT name FROM site_data WHERE city_name='$city' AND comment >=30 ORDER BY site_data.comment DESC");
+        return response()->json($sql, 200);
+    }
+    
+
     function getGoogleImg(Request $request)
     {
         $city = $request->input("name");
