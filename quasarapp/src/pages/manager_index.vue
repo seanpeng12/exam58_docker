@@ -55,7 +55,7 @@
                     size="18px"
                     to="/site_ProsCons"
                     class="bg-blue-6 text-white q-pa-xs q-ma-xs"
-                  >旅遊業者</q-btn>
+                  >景點業者</q-btn>
                   <q-btn size="18px" to="/hotel_ProsCons" class="q-pa-xs q-ma-xs">飯店業者</q-btn>
                 </div>
               </div>
@@ -88,7 +88,7 @@
                     size="18px"
                     to="/site_Path"
                     class="bg-blue-6 text-white q-pa-xs q-ma-xs"
-                  >旅遊業者/飯店業者</q-btn>
+                  >景點/飯店業者</q-btn>
                 </div>
               </div>
               <!-- 第二格 -->
