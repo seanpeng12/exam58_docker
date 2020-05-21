@@ -8,7 +8,8 @@
             to="/"
             flat
             style="font-family:Trebuchet MS,Papyrus,Verdana, Geneva, sans-serif;font-size:22px;font-weight:bold"
-          >SIGHTSEEING</q-btn>
+            >SIGHTSEEING</q-btn
+          >
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -18,15 +19,26 @@
         <div v-if="card_1" class="row">
           <div class="col"></div>
 
-          <q-item v-ripple class="bg-grey-2 q-ma-lg q-pa-xs" style="width:920px;border">
+          <q-item
+            v-ripple
+            class="bg-grey-2 q-ma-lg q-pa-xs"
+            style="width:920px;border"
+          >
             <q-item-section avatar>
               <!-- <q-avatar rounded> -->
-              <q-icon size="60px" style="color:#ed74ad" name="fas fa-user-tag" class="q-ma-xl" />
+              <q-icon
+                size="60px"
+                style="color:#ed74ad"
+                name="fas fa-user-tag"
+                class="q-ma-xl"
+              />
               <!-- </q-avatar> -->
             </q-item-section>
 
             <q-item-section>
-              <q-item-label class="col-12 col-md-auto text-h4 text-bold layout-font">
+              <q-item-label
+                class="col-12 col-md-auto text-h4 text-bold layout-font"
+              >
                 <p>SIGHTSEEING 依照您的身分</p>
                 <p>提供不一樣的分析功能</p>
               </q-item-label>
@@ -52,13 +64,15 @@
                   <div
                     class="text-h5 q-mt-sm q-mb-xs layout-font"
                     style="font-weight:bold;color:#261873"
-                  >飯店景點管理者</div>
+                  >
+                    飯店景點管理者
+                  </div>
                   <div class="text-h7 text-grey-10">
                     不論您是飯店業者或景點的管理者，可透過我們的
                     <b>
                       分析洞察自己與競爭者在消費者眼中的主要優劣勢
-                      、也能透過消費者的旅遊軌跡尋找合適的合作對象
-                    </b>，與其共生共榮。
+                      、也能透過消費者的旅遊軌跡尋找合適的合作對象 </b
+                    >，與其共生共榮。
                   </div>
                 </q-card-section>
 
@@ -77,7 +91,8 @@
                   class="layout-font"
                   style="width:100%;font-weight:bold;color:#4B76D9"
                   @click="chooseRole('manager')"
-                >進入功能</q-btn>
+                  >進入功能</q-btn
+                >
               </q-card-actions>
             </q-card>
           </div>
@@ -89,12 +104,16 @@
                   <div
                     class="text-h5 q-mt-sm q-mb-xs layout-font"
                     style="font-weight:bold;color:#261873"
-                  >一般旅客</div>
+                  >
+                    一般旅客
+                  </div>
                   <span class="text-h7 text-grey-10">
                     如果您喜歡自己規劃旅遊行程，但在一開始又對那個城市的景點、
                     飯店沒有頭緒或是不想花費大把時間在網上找尋每個景點、飯店的評價，那您一定要試試我們的系統!
                     <br />
-                    <b>我們可以直接提供您符合需求的景點與飯店，並為您整合各個景點飯店的評論優缺點，讓您無須再上網爬文。</b>
+                    <b
+                      >我們可以直接提供您符合需求的景點與飯店，並為您整合各個景點飯店的評論優缺點，讓您無須再上網爬文。</b
+                    >
                   </span>
                 </q-card-section>
 
@@ -113,7 +132,8 @@
                   style="width:100%;font-weight:bold;color:#4B76D9"
                   @click="chooseRole('generalUser')"
                   to="/index"
-                >進入功能</q-btn>
+                  >進入功能</q-btn
+                >
               </q-card-actions>
             </q-card>
           </div>
@@ -161,7 +181,7 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
-      manager: false,
+      // manager: false,
       card_1: false
     };
   },
@@ -172,28 +192,10 @@ export default {
     ...mapActions("auth", ["chooseRole"])
   },
   mounted: function() {
-    this.chooseRole("check");
-    if (this.role == "manager") {
-      console.log("確認為管理者");
-      this.manager = true;
-    } else if (this.role == "generalUser") {
-      console.log("確認為一般使用者");
-      this.manager = false;
-    }
     // 過渡效果
     this.card_1 = true;
   },
-  watch: {
-    role(val) {
-      if (this.role == "manager") {
-        console.log("確認為管理者");
-        this.manager = true;
-      } else if (this.role == "generalUser") {
-        console.log("確認為一般使用者");
-        this.manager = false;
-      }
-    }
-  }
+  watch: {}
 };
 </script>
 

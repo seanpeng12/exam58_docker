@@ -22,7 +22,7 @@ const mutations = {
   },
   h_addCollection(state, payload) {
     Vue.set(state.h_collections, payload.id, payload.collection);
-    console.log("h_addCollection: ", state.h_collections);
+    // console.log("h_addCollection: ", state.h_collections);
 
     // state.sightseeingMembers = payload;
   },
