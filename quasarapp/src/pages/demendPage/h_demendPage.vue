@@ -1,48 +1,54 @@
 <template>
   <q-page>
-    <div class="q-pa-md" style="align-items: center">
-      <div class="q-gt-xs q-pa-lg items-center text-black bg-grey-3" style="height: 300px;">
-        <div class="row" style>
-          <div class="col"></div>
-          <div class="col-12 col-md-auto">
-            <p style="font-size: 28px;font-family: Microsoft JhengHei;">飯店需求分析</p>
-          </div>
+    <!-- select區塊 -->
+    <transition name="h-demand-select">
+      <div v-if="h_demand_select" class="q-pa-md" style="align-items: center">
+        <div class="q-gt-xs q-pa-lg items-center text-black bg-grey-3" style="height: 300px;">
+          <div class="row" style>
+            <div class="col"></div>
+            <div class="col-12 col-md-auto">
+              <p style="font-size: 28px;font-family: Microsoft JhengHei;">飯店需求分析</p>
+            </div>
 
-          <div class="col q-mt-sm q-ml-sm">
-            <hSiDemandInfo></hSiDemandInfo>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col"></div>
-
-          <div class="col-md-auto">
-            <div>
-              <b class="text" style="font-size: 30px;font-family: Microsoft JhengHei;">選擇想分析飯店的城市/類型</b>
-              <br />
+            <div class="col q-mt-sm q-ml-sm">
+              <hSiDemandInfo></hSiDemandInfo>
             </div>
           </div>
-          <div class="col"></div>
-        </div>
-        <div class="row">
-          <div class="col"></div>
-          <div class="col-12 col-md-auto">
-            <demand-select
-              :citys="citys"
-              :cats="cats"
-              :selected_p="selected_p"
-              :selected_p_detail_item="selected_p_detail_item"
-              :selected_p_detail_item_2="selected_p_detail_item_2"
-              @changed_1="selected_1"
-              @changed_2="selected_2"
-              @changed_3="selected_3"
-              @runR="run_R"
-            ></demand-select>
+
+          <div class="row">
+            <div class="col"></div>
+
+            <div class="col-md-auto">
+              <div>
+                <b
+                  class="text"
+                  style="font-size: 30px;font-family: Microsoft JhengHei;"
+                >選擇想分析飯店的城市/類型</b>
+                <br />
+              </div>
+            </div>
+            <div class="col"></div>
           </div>
-          <div class="col"></div>
+          <div class="row">
+            <div class="col"></div>
+            <div class="col-12 col-md-auto">
+              <demand-select
+                :citys="citys"
+                :cats="cats"
+                :selected_p="selected_p"
+                :selected_p_detail_item="selected_p_detail_item"
+                :selected_p_detail_item_2="selected_p_detail_item_2"
+                @changed_1="selected_1"
+                @changed_2="selected_2"
+                @changed_3="selected_3"
+                @runR="run_R"
+              ></demand-select>
+            </div>
+            <div class="col"></div>
+          </div>
         </div>
       </div>
-    </div>
+    </transition>
     <!--  -->
 
     <!-- end web page -->
@@ -338,6 +344,8 @@ export default {
   },
   data() {
     return {
+      // 轉場觸發
+      h_demand_select: false,
       // 暫存R_title
       r_title_1: "",
       r_title_2: "",
@@ -482,25 +490,11 @@ export default {
       }
       this.ok = !this.txtdatas_diff_ok;
     }
-    // 第一層選擇城市 > 回傳第二層資料
-    // selected_p_local: {
-    //   handler(val) {
-    //     // 傳送第一層城市到vuex
-
-    //   },
-    //   deep: true
-    // },
-
-    // selected_p_detail_item_local: function(val) {
-    //   this.$store.commit("h_demand/update_selected_p_detail_item", val);
-    // },
-    // selected_p_detail_item_local2: function(val) {
-    //   this.$store.commit("h_demand/update_selected_p_detail_item_2", val);
-    // },
   },
   mounted: function() {
     // 初始化時取第一層城市資料(vuex)
     this.fetchCitys();
+    this.h_demand_select = true;
   }
 };
 </script>
@@ -511,6 +505,13 @@ export default {
   transition: opacity 2s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+/* transition */
+.h-demand-select-enter-active {
+  transition: opacity 1s ease;
+}
+.h-demand-select-enter {
   opacity: 0;
 }
 

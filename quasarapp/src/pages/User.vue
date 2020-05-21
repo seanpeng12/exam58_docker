@@ -1,24 +1,19 @@
-<template style="margin: 0;padding: 0;">
+<template class="template">
   <q-layout view="hHh lpR fFf">
     <q-header elevated class="bg-blue-grey-7 text-white">
       <q-toolbar>
         <q-toolbar-title>
-          <q-btn
-            clickable
-            to="/"
-            flat
-            style="font-family:Trebuchet MS,Papyrus,Verdana, Geneva, sans-serif;font-size:22px;font-weight:bold"
-          >SIGHTSEEING</q-btn>
+          <q-btn class="capital" clickable to="/" flat>SIGHTSEEING</q-btn>
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
 
-    <q-page-container style="overflow: hidden;">
+    <q-page-container class="overflow-hidden">
       <transition name="card-1">
         <div v-if="card_1" class="row">
           <div class="col"></div>
 
-          <q-item v-ripple class="bg-grey-2 q-ma-lg q-pa-xs" style="width:920px;border">
+          <q-item v-ripple class="bg-grey-2 q-ma-lg q-pa-xs capital-item">
             <q-item-section avatar>
               <!-- <q-avatar rounded> -->
               <q-icon size="60px" style="color:#ed74ad" name="fas fa-user-tag" class="q-ma-xl" />
@@ -198,11 +193,23 @@ export default {
 </script>
 
 <style scoped>
+.template {
+  margin: 0;
+  padding: 0;
+}
+.overflow-hidden {
+  overflow: hidden;
+}
 .layout-font {
   font-family: Microsoft JhengHei;
 }
-.capital-font {
-  font-family: NSimSun;
+.capital {
+  font-family: Trebuchet MS, Papyrus, Verdana, Geneva, sans-serif;
+  font-size: 22px;
+  font-weight: bold;
+}
+.capital-item {
+  width: 920px;
 }
 .my-card {
   width: 100%;

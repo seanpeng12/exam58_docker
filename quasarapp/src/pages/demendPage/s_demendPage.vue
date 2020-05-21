@@ -1,49 +1,54 @@
 <template>
   <q-page>
     <!-- select 區塊 -->
-    <div class="q-pa-md" style="align-items: center">
-      <div class="q-gt-xs q-pa-lg items-center text-black bg-grey-3" style="height: 300px;">
-        <div class="row" style>
-          <div class="col"></div>
-          <div class="col-12 col-md-auto">
-            <p style="font-size: 28px;font-family: Microsoft JhengHei;">景點需求分析</p>
-          </div>
+    <transition name="demand-select">
+      <div v-if="demand_select" class="q-pa-md" style="align-items: center">
+        <div class="q-gt-xs q-pa-lg items-center text-black bg-grey-3" style="height: 300px;">
+          <div class="row" style>
+            <div class="col"></div>
+            <div class="col-12 col-md-auto">
+              <p style="font-size: 28px;font-family: Microsoft JhengHei;">景點需求分析</p>
+            </div>
 
-          <div class="col q-mt-sm q-ml-sm">
-            <sSiDemandInfo></sSiDemandInfo>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col"></div>
-
-          <div class="col-md-auto">
-            <div>
-              <b class="text" style="font-size: 30px;font-family: Microsoft JhengHei;">選擇想分析的景點城市/類型</b>
-              <br />
+            <div class="col q-mt-sm q-ml-sm">
+              <sSiDemandInfo></sSiDemandInfo>
             </div>
           </div>
-          <div class="col"></div>
-        </div>
-        <div class="row">
-          <div class="col"></div>
-          <div class="col-12 col-md-auto">
-            <demand-select
-              :citys="citys"
-              :cats="cats"
-              :selected_p="selected_p"
-              :selected_p_detail_item="selected_p_detail_item"
-              :selected_p_detail_item_2="selected_p_detail_item_2"
-              @changed_1="selected_1"
-              @changed_2="selected_2"
-              @changed_3="selected_3"
-              @runR="run_R"
-            ></demand-select>
+
+          <div class="row">
+            <div class="col"></div>
+
+            <div class="col-md-auto">
+              <div>
+                <b
+                  class="text"
+                  style="font-size: 30px;font-family: Microsoft JhengHei;"
+                >選擇想分析的景點城市/類型</b>
+                <br />
+              </div>
+            </div>
+            <div class="col"></div>
           </div>
-          <div class="col"></div>
+          <div class="row">
+            <div class="col"></div>
+            <div class="col-12 col-md-auto">
+              <demand-select
+                :citys="citys"
+                :cats="cats"
+                :selected_p="selected_p"
+                :selected_p_detail_item="selected_p_detail_item"
+                :selected_p_detail_item_2="selected_p_detail_item_2"
+                @changed_1="selected_1"
+                @changed_2="selected_2"
+                @changed_3="selected_3"
+                @runR="run_R"
+              ></demand-select>
+            </div>
+            <div class="col"></div>
+          </div>
         </div>
       </div>
-    </div>
+    </transition>
     <!--  -->
 
     <!-- 左右區域-->
@@ -314,6 +319,8 @@ export default {
   },
   data() {
     return {
+      //轉場觸發
+      demand_select: false,
       // 暫存R_title
       r_title_1: "",
       r_title_2: "",
@@ -466,6 +473,8 @@ export default {
   mounted: function() {
     // 初始化時取第一層城市資料(vuex)
     this.fetchCitys();
+    // transition
+    this.demand_select = true;
   }
 };
 </script>
@@ -476,6 +485,13 @@ export default {
   transition: opacity 2s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+/* transition */
+.demand-select-enter-active {
+  transition: opacity 1s ease;
+}
+.demand-select-enter {
   opacity: 0;
 }
 </style>
