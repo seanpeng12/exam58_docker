@@ -73,26 +73,37 @@
         v-if="
           loggedIn == true &&
             showAddToCollection == true &&
-            checkCollectionExist.exists == false
+            checkCollectionExist.exists == false &&
+            role == 'generalUser'
         "
       ></slot>
-      <q-btn
+      <slot
+        name="havenAdd"
         v-else-if="
           loggedIn == true &&
             showAddToCollection == true &&
-            checkCollectionExist.exists == true
+            checkCollectionExist.exists == true &&
+            role == 'generalUser'
+        "
+      ></slot>
+      <!-- <q-btn
+        v-else-if="
+          loggedIn == true &&
+            showAddToCollection == true &&
+            checkCollectionExist.exists == true &&
+            role != 'manager'
         "
         :disable="!progress"
         color="red-7"
         @click="progress = false"
         label="已在收藏列表"
-      ></q-btn>
+      ></q-btn> -->
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import { mapActions } from "vuex";
 
 const stringOptions = ["台北", "桃園", "新竹", "苗栗", "台東"];
@@ -126,7 +137,8 @@ export default {
       "data_index",
       "checkCollectionExist"
     ]),
-    ...mapGetters("auth", ["loggedIn"])
+    ...mapGetters("auth", ["loggedIn"]),
+    ...mapState("auth", ["role"])
   },
 
   methods: {

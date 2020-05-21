@@ -5,7 +5,7 @@
         <q-btn dense flat round icon="menu" @click="left = !left" />
 
         <q-toolbar-title style="font-weight:bold">{{ title }}</q-toolbar-title>
-        <q-item class="gt-xs" exact clickable to="/">
+        <q-item class="gt-xs" exact clickable to="/index">
           <q-item-section>
             <q-item-label class>首頁</q-item-label>
           </q-item-section>

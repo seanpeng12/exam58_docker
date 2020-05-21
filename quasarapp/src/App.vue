@@ -5,15 +5,16 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 export default {
   name: "App",
   methods: {
-    ...mapActions("auth", ["handleAuthStateChange"]),
+    ...mapActions("auth", ["handleAuthStateChange"])
   },
+  computed: {},
   mounted() {
     this.handleAuthStateChange();
-  },
+  }
 
   // props: ["text"],
   // name: "App"

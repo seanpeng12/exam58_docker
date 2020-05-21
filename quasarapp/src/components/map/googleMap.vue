@@ -36,7 +36,13 @@
                 dense
               />
             </p>
-            <q-select id="start" filled v-model="start" :options="originOptions" label="請選擇您的起點" />
+            <q-select
+              id="start"
+              filled
+              v-model="start"
+              :options="originOptions"
+              label="請選擇您的起點"
+            />
           </div>
           <div class="row-8 q-py-sm">
             <p>中繼點(多選)</p>
@@ -54,7 +60,13 @@
           </div>
           <div class="row-8 q-py-sm">
             <p>終點</p>
-            <q-select id="end" filled v-model="end" :options="endOptions" label="請選擇您的終點" />
+            <q-select
+              id="end"
+              filled
+              v-model="end"
+              :options="endOptions"
+              label="請選擇您的終點"
+            />
           </div>
 
           <div class="row-8 q-py-sm">
@@ -64,17 +76,19 @@
               class="bg-grey-2 rounded-borders"
               style="height: 200px; max-width: 800px; width:auto"
             >
-              <div v-for="(lst,index) in path_list" :key="index">
+              <div v-for="(lst, index) in path_list" :key="index">
                 <q-chip class="text-black" size="md" style="width:auto">
-                  <q-avatar color="red" text-color="white">{{lst.cap}}</q-avatar>
+                  <q-avatar color="red" text-color="white">{{
+                    lst.cap
+                  }}</q-avatar>
                   <div class="text-bold">{{ new_list[index] }}</div>
-                  {{lst.addr}}
+                  {{ lst.addr }}
                 </q-chip>
 
                 <div v-if="index != path_list.length - 1" class="q-ml-md">
                   ↓ 開車需
-                  <span class="text-bold">{{lst.duration_time}}</span>
-                  <span>{{lst.distance_km}}</span>
+                  <span class="text-bold">{{ lst.duration_time }}</span>
+                  <span>{{ lst.distance_km }}</span>
                 </div>
               </div>
             </q-scroll-area>
@@ -176,6 +190,7 @@ export default {
       new Promise((resolve, reject) => {
         console.log("Initial");
         this.initChooseItem();
+
         resolve();
       }).then(() => {
         var everydaySites = this.everydaySites[this.chooseDate];
@@ -191,6 +206,8 @@ export default {
       this.endOptions = [];
       this.originOptions = [];
       this.waypointOptions = [];
+      this.path_list = [];
+      this.new_list = [];
       const dateList = Object.keys(this.everydaySites);
       const item_1 = [];
       // 日期作為下面item的物件選項(radio)
@@ -464,7 +481,11 @@ export default {
       });
       marker.addListener("click", () => {
         // 指定在哪個地圖和地標上開啟訊息視窗
+        if (this.infowindow) this.infowindow.close();
+        // 顯示被點擊地標的訊息視窗
         infowindow.open(this.map, marker);
+        // 存入目前開啟的訊息視窗
+        this.infowindow = infowindow;
       });
     }
   },

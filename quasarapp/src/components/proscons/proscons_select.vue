@@ -76,21 +76,19 @@
         v-if="
           loggedIn == true &&
             showAddToCollection == true &&
-            checkCollectionExist.exists == false
+            checkCollectionExist.exists == false &&
+            role == 'generalUser'
         "
       ></slot>
-      <q-btn
-        class="q-ml-sm"
+      <slot
+        name="havenAdd"
         v-else-if="
           loggedIn == true &&
             showAddToCollection == true &&
-            checkCollectionExist.exists == true
+            checkCollectionExist.exists == true &&
+            role == 'generalUser'
         "
-        :disable="!progress"
-        color="red-7"
-        @click="progress = false"
-        label="已在收藏列表"
-      ></q-btn>
+      ></slot>
     </div>
   </div>
   <!-- </div> -->
@@ -116,7 +114,7 @@ export default {
       // 按鈕百分比
       percentage1: 0,
       showAddToCollection: false,
-      progress: false
+      
     };
   },
   computed: {
@@ -131,7 +129,7 @@ export default {
       "data_index",
       "checkCollectionExist"
     ]),
-    ...mapGetters("auth", ["loggedIn"])
+    ...mapGetters("auth", ["loggedIn", "role"])
   },
 
   methods: {
