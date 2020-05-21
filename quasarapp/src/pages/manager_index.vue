@@ -13,14 +13,14 @@
           font-size:2.2vw;"
         >提供給你有價值的分析內容</div>
         <div class="q-py-lg q-gutter-xs text-center">
-          <q-btn
+          <!-- <q-btn
             to="/PageAuth"
             size="20px"
             icon="fab fa-google"
             style="color:black;font-family:Microsoft JhengHei;"
             color="teal-5"
             label="登入商業帳號"
-          />
+          />-->
         </div>
       </q-banner>
     </div>
