@@ -18,7 +18,7 @@
         <div v-if="card_1" class="row">
           <div class="col"></div>
 
-          <q-item v-ripple class="bg-grey-2 q-ma-md q-pa-xs" style="width:1100px">
+          <q-item v-ripple class="bg-grey-2 q-ma-lg q-pa-xs" style="width:920px;border">
             <q-item-section avatar>
               <!-- <q-avatar rounded> -->
               <q-icon size="60px" style="color:#ed74ad" name="fas fa-user-tag" class="q-ma-xl" />
@@ -26,15 +26,10 @@
             </q-item-section>
 
             <q-item-section>
-              <q-item-label>
-                <h4 class="col-12 col-md-auto" style="font-weight:bold">SIGHTSEEING依照您的身分，提供不一樣的分析功能</h4>
+              <q-item-label class="col-12 col-md-auto text-h4 text-bold layout-font">
+                <p>SIGHTSEEING 依照您的身分</p>
+                <p>提供不一樣的分析功能</p>
               </q-item-label>
-              <!-- <q-item-label caption>
-            <q-badge color="yellow-6" text-color="black">
-              3
-              <q-icon name="warning" size="14px" class="q-ml-xs" />
-            </q-badge>
-              </q-item-label>-->
             </q-item-section>
 
             <!-- <q-item-section side>
@@ -50,17 +45,15 @@
         <div v-if="card_1" class="row q-mt-none">
           <div class="col"></div>
           <div class="col-6 col-md-auto q-ma-sm">
-            <q-card class="my-card bg-lime-2" flat bordered to="/manager_index">
+            <q-card class="q-pa-sm my-card bg-lime-2" flat to="/manager_index">
               <q-card-section horizontal style="height:270px">
                 <q-card-section class="q-pt-xs">
                   <div class="text-overline">您的身分?</div>
                   <div
-                    class="text-h5 q-mt-sm q-mb-xs"
+                    class="text-h5 q-mt-sm q-mb-xs layout-font"
                     style="font-weight:bold;color:#261873"
                   >飯店景點管理者</div>
                   <div class="text-h7 text-grey-10">
-                    <!-- 作為旅遊業者，不管是景點或旅館經營業者，可透過我們的分析洞察產業在消費者眼中的主要優缺分析
-                    、尋找適合的合作對象，獲得消費者消費動向，創造共榮共生。-->
                     不論您是飯店業者或景點的管理者，可透過我們的
                     <b>
                       分析洞察自己與競爭者在消費者眼中的主要優劣勢
@@ -80,18 +73,23 @@
                 <q-space />
                 <q-btn
                   to="/manager_index"
-                  style="font-weight:bold;color:#6aa0d9"
+                  size="18px"
+                  class="layout-font"
+                  style="width:100%;font-weight:bold;color:#4B76D9"
                   @click="chooseRole('manager')"
                 >進入功能</q-btn>
               </q-card-actions>
             </q-card>
           </div>
           <div class="col-6 col-md-auto q-ma-sm">
-            <q-card class="my-card bg-lime-2" flat bordered>
+            <q-card class="q-pa-sm my-card bg-lime-2" flat>
               <q-card-section horizontal style="height:270px">
                 <q-card-section class="q-pt-xs">
                   <div class="text-overline">您的身分?</div>
-                  <div class="text-h5 q-mt-sm q-mb-xs" style="font-weight:bold;color:#261873">一般旅客</div>
+                  <div
+                    class="text-h5 q-mt-sm q-mb-xs layout-font"
+                    style="font-weight:bold;color:#261873"
+                  >一般旅客</div>
                   <span class="text-h7 text-grey-10">
                     如果您喜歡自己規劃旅遊行程，但在一開始又對那個城市的景點、
                     飯店沒有頭緒或是不想花費大把時間在網上找尋每個景點、飯店的評價，那您一定要試試我們的系統!
@@ -110,7 +108,9 @@
               <q-card-actions>
                 <q-space />
                 <q-btn
-                  style="font-weight:bold;color:#6aa0d9"
+                  size="18px"
+                  class="layout-font"
+                  style="width:100%;font-weight:bold;color:#4B76D9"
                   @click="chooseRole('generalUser')"
                   to="/index"
                 >進入功能</q-btn>
@@ -200,7 +200,9 @@ export default {
 <style scoped>
 .layout-font {
   font-family: Microsoft JhengHei;
-  /* font-family: NSimSun; */
+}
+.capital-font {
+  font-family: NSimSun;
 }
 .my-card {
   width: 100%;
@@ -208,10 +210,10 @@ export default {
 }
 
 .card-1-enter-active {
-  transition: all 1s ease;
+  transition: all 1s;
 }
 .card-1-enter {
-  transform: translateX(50px);
+  transform: translateY(50px);
   opacity: 0;
 }
 </style>
