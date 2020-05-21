@@ -156,7 +156,7 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
-      manager: false,
+      // manager: false,
       card_1: false
     };
   },
@@ -167,28 +167,10 @@ export default {
     ...mapActions("auth", ["chooseRole"])
   },
   mounted: function() {
-    this.chooseRole("check");
-    if (this.role == "manager") {
-      console.log("確認為管理者");
-      this.manager = true;
-    } else if (this.role == "generalUser") {
-      console.log("確認為一般使用者");
-      this.manager = false;
-    }
     // 過渡效果
     this.card_1 = true;
   },
-  watch: {
-    role(val) {
-      if (this.role == "manager") {
-        console.log("確認為管理者");
-        this.manager = true;
-      } else if (this.role == "generalUser") {
-        console.log("確認為一般使用者");
-        this.manager = false;
-      }
-    }
-  }
+  watch: {}
 };
 </script>
 

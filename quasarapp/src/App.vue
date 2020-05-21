@@ -9,11 +9,12 @@ import { mapActions, mapState } from "vuex";
 export default {
   name: "App",
   methods: {
-    ...mapActions("auth", ["handleAuthStateChange"])
+    ...mapActions("auth", ["handleAuthStateChange", "readRole"])
   },
   computed: {},
   mounted() {
     this.handleAuthStateChange();
+    this.readRole();
   }
 
   // props: ["text"],
