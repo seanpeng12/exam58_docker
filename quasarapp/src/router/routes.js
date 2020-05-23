@@ -1,15 +1,12 @@
 const routes = [
   {
     path: "/",
-    // component: () => import("layouts/MainLayout.vue"),
-    // children: [{
-    //   path: "",
     component: () => import("pages/User.vue")
-    // }]
   },
+  // managerUser routes
   {
     path: "/manager_index",
-    component: () => import("layouts/MainLayout.vue"),
+    component: () => import("layouts/managerMainLayout.vue"),
     children: [
       {
         path: "",
@@ -17,6 +14,40 @@ const routes = [
       }
     ]
   },
+  {
+    path: "/manager/site_ProsCons",
+    component: () => import("layouts/managerMainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () =>
+          import("pages/managerUser/prosconsPage/s_prosConsPage.vue")
+      }
+    ]
+  },
+  {
+    path: "/manager/hotel_ProsCons",
+    component: () => import("layouts/managerMainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () =>
+          import("pages/managerUser/prosconsPage/h_prosConsPage.vue")
+      }
+    ]
+  },
+  {
+    path: "/manager/site_Path",
+    component: () => import("layouts/managerMainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/managerUser/pathPage/s_pathPage.vue")
+      }
+    ]
+  },
+
+  // generalUser routes
   {
     path: "/index",
     component: () => import("layouts/MainLayout.vue"),
@@ -29,7 +60,8 @@ const routes = [
   },
   {
     path: "/arrange-schedule",
-    component: () => import("pages/arrange-schedule.vue")
+    component: () =>
+      import("pages/generalUser/arrangeSchedule/arrange-schedule.vue")
     // children: [{ path: "", component: () => import("pages/class.vue") }]
   },
   {
@@ -48,27 +80,19 @@ const routes = [
     children: [
       {
         path: "",
-        component: () => import("pages/mySchedule.vue")
+        component: () =>
+          import("pages/generalUser/arrangeSchedule/mySchedule.vue")
       }
     ]
   },
-  {
-    path: "/Like",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/site_collection/likeCard.vue")
-      }
-    ]
-  },
+
   {
     path: "/site_demend",
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {
         path: "",
-        component: () => import("pages/demendPage/s_demendPage.vue")
+        component: () => import("pages/generalUser/demendPage/s_demendPage.vue")
       }
     ]
   },
@@ -78,7 +102,7 @@ const routes = [
     children: [
       {
         path: "",
-        component: () => import("pages/demendPage/h_demendPage.vue")
+        component: () => import("pages/generalUser/demendPage/h_demendPage.vue")
       }
     ]
   },
@@ -88,7 +112,8 @@ const routes = [
     children: [
       {
         path: "",
-        component: () => import("pages/prosconsPage/s_prosConsPage.vue")
+        component: () =>
+          import("pages/generalUser/prosconsPage/s_prosConsPage.vue")
       }
     ]
   },
@@ -98,7 +123,8 @@ const routes = [
     children: [
       {
         path: "",
-        component: () => import("pages/prosconsPage/h_prosConsPage.vue")
+        component: () =>
+          import("pages/generalUser/prosconsPage/h_prosConsPage.vue")
       }
     ]
   },
@@ -108,7 +134,7 @@ const routes = [
     children: [
       {
         path: "",
-        component: () => import("pages/pathPage/s_pathPage.vue")
+        component: () => import("pages/generalUser/pathPage/s_pathPage.vue")
       }
     ]
   },
@@ -132,26 +158,7 @@ const routes = [
       }
     ]
   },
-  {
-    path: "/ftore_data",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/ftore_data.vue")
-      }
-    ]
-  },
-  {
-    path: "/map",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/map.vue")
-      }
-    ]
-  },
+
   {
     path: "/waypoints",
     component: () => import("layouts/MainLayout.vue"),
@@ -168,9 +175,8 @@ const routes = [
     children: [
       {
         path: "",
-        component: () => import("pages/collection/collection.vue")
+        component: () => import("pages/generalUser/collection/collection.vue")
       }
-      // { path: "place", component: () => import("pages/place") }
     ]
   }
 ];
