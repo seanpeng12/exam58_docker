@@ -126,6 +126,8 @@ Route::group(['middleware' => ['CORS']], function () {
     Route::post('/runRafterPHP', 'PathController@runRafterPHP');
 
     Route::post('/PathData', 'PathController@PathData');
+    // 取得商家資訊
+
 });
 
 
@@ -135,4 +137,7 @@ Route::group(['middleware' => ['CORS']], function () {
     Route::post('/preferTag', 'PostController@preferTag');
 
     Route::post('/getGoogleImg', 'PathController@getGoogleImg');
+
+    Route::post('/pathSiteGooglePlaceId', 'PathController@pathSiteGooglePlaceId');
+
 });
