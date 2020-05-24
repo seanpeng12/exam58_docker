@@ -57,7 +57,9 @@
                       <!-- button -->
                       <q-btn
                         flat
-                        @click="second_request(a.name)"
+                        @click="
+                          second_request(a.name), getSiteGoogleDetail(a.name)
+                        "
                         :label="a.name"
                         style="width:250px;color:#699c4c;font-family: Microsoft JhengHei;font-weight:bold"
                         icon-right="arrow_forward_ios"
@@ -103,7 +105,9 @@
                       <!-- button -->
                       <q-btn
                         flat
-                        @click="third_request(b.name)"
+                        @click="
+                          third_request(b.name), getSiteGoogleDetail(b.name)
+                        "
                         :label="b.name"
                         style="width:250px;color: #0062c4;font-family: Microsoft JhengHei;font-weight:bold"
                         icon-right="arrow_forward_ios"
@@ -169,7 +173,7 @@ export default {
   },
   methods: {
     // 由此找vuex所需method
-    ...mapActions("path", ["fetchPath", "fetchPath_2"]),
+    ...mapActions("path", ["fetchPath", "fetchPath_2", "getSiteGoogleDetail"]),
     // 第二次查詢
     second_request(val) {
       console.log(val);
