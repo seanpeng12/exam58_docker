@@ -38,22 +38,26 @@
       <q-space />
       <div class="col text-center">
         <q-btn
+          class="full-width"
           color="amber"
           :label="tab"
+          icon="ion-mail"
           type="submit"
-          style="padding-left:61px;padding-right:61px;"
+          style="padding-left:43px;padding-right:43px;"
         />
       </div>
 
       <div class="col text-center">
         <!-- <q-linear-progress size="10px" value="1" class="q-mt-md" color="grey"> -->
+
+        <q-separator />
         <div class="flex flex-center q-mt-md q-pa-none">
           <q-badge
-            size="30px"
+            size="18px"
             color="white"
-            text-color="black"
-            label="or"
-            style="font-weight:bold"
+            text-color="grey"
+            :label="'使用其他'+tab+'方式'"
+            style="font-weight:bold;"
           />
         </div>
         <!-- </q-linear-progress> -->
@@ -61,10 +65,10 @@
 
       <div class="col text-center">
         <q-btn
-          class="q-mt-md"
+          class="q-mt-md full-width"
           @click="loginWithGoogle"
+          icon="ion-logo-google"
           color="negative"
-          icon="fab fa-google"
           :label="'Google帳號' + tab"
         />
       </div>
