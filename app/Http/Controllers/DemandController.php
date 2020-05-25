@@ -46,7 +46,7 @@ class DemandController extends Controller
         $cc = "'" . $temp_d . "'";
 
         // 以外部指令的方式呼叫 R 進行繪圖->h_between_relationship.html
-        
+
         // window10
         // $your_command = "/usr/local/bin/Rscript R/h_betweenss_attr_2020.R $cc";
         // $process = new Process($your_command);
@@ -60,7 +60,7 @@ class DemandController extends Controller
 
         //mac
         $set_charset = 'export LANG=en_US.UTF-8;';
-        exec($set_charset."/usr/local/bin/Rscript R/h_betweenss_attr_2020.R $cc");
+        exec($set_charset . "/usr/local/bin/Rscript R/h_betweenss_attr_2020.R $cc");
 
         return response()->json(array(
             'name' => $name,
@@ -104,5 +104,166 @@ class DemandController extends Controller
         ORDER BY hotel_data.rate DESC");
 
         return response()->json($sql_diff, 200);
+    }
+
+    // google 取照片
+    function getGoogleImg(Request $request)
+    {
+        $city = $request->input("name");
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" . $city . "&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        $result = json_decode($response);
+
+        // 取得photo_reference
+        $result_1 = $result->candidates[0]->photos[0]->photo_reference;
+
+        $img = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=900&maxheight=600&photoreference=" . $result_1 . "&key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A";
+        return response()->json($img, 200);
+    }
+
+    function GooglePlaceInfo(Request $request)
+    {
+        $site_name = $request->input("name");
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" . $site_name . "&inputtype=textquery&fields=place_id,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        $result = json_decode($response);
+        // 取得id
+        $place_id = $result->candidates[0]->place_id;
+
+
+        //
+        $curl_2 = curl_init();
+
+        curl_setopt_array($curl_2, array(
+            CURLOPT_URL => "https://maps.googleapis.com/maps/api/place/details/json?place_id=" . $place_id . "&fields=reviews,opening_hours,price_level,name,rating,user_ratings_total,website,formatted_phone_number,address_component,adr_address,business_status,formatted_address,geometry,icon,name,permanently_closed,photo,place_id,plus_code,type,url,utc_offset,vicinity&language=zh-TW&key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+        ));
+
+        $response_2 = curl_exec($curl_2);
+        curl_close($curl_2);
+
+        $result_2 = json_decode($response_2);
+        // 取得所有資料
+        $detail_info = $result_2->result;
+        $name = $detail_info->name;
+        $address = $detail_info->formatted_address;
+        $icon_url = $detail_info->icon;
+        $photos_temp = $detail_info->photos;
+
+        // 照片
+        $photos = array();
+        for ($i = 0; $i < count($photos_temp); $i++) {
+            $temp = $photos_temp[$i]->photo_reference;
+
+            $dataA = [
+                'url' => "https://maps.googleapis.com/maps/api/place/photo?maxwidth=900&maxheight=600&photoreference=" . $temp . "&key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A"
+            ];
+            array_push($photos, $dataA);
+        };
+        // 電話
+        if (!empty($detail_info->formatted_phone_number)) {
+            $number = $detail_info->formatted_phone_number;
+        } else {
+            $number = "null";
+        }
+        // 營業資訊
+        if (!empty($detail_info->business_status)) {
+            $business_status = $detail_info->business_status;
+        } else {
+            $business_status = "null";
+        }
+        // 星等
+        if (!empty($detail_info->rating)) {
+            $rating = $detail_info->rating;
+        } else {
+            $rating = "null";
+        }
+        // user_ratings_total
+        if (!empty($detail_info->user_ratings_total)) {
+            $user_ratings_total = $detail_info->user_ratings_total;
+        } else {
+            $user_ratings_total = "null";
+        }
+        // 分類
+        if (!empty($detail_info->types)) {
+            $types = $detail_info->types;
+        } else {
+            $types = "null";
+        }
+        // 價格區間
+        if (!empty($detail_info->price_level)) {
+            $price_level = $detail_info->price_level;
+        } else {
+            $price_level = "null";
+        }
+        // 評論
+        if (!empty($detail_info->reviews)) {
+            $reviews = $detail_info->reviews;
+        } else {
+            $reviews = "null";
+        }
+        // opening_hours
+        if (!empty($detail_info->opening_hours)) {
+            $opening_hours = $detail_info->opening_hours;
+        } else {
+            $opening_hours = "null";
+        }
+        // website
+        if (!empty($detail_info->website)) {
+            $website = $detail_info->website;
+        } else {
+            $website = "null";
+        }
+
+        return response()->json(array(
+            'name' => $name,
+            'address' => $address,
+            'icon_url' => $icon_url,
+            'phone_number' => $number,
+            'status' => $business_status,
+            'rating' => $rating,
+            'rating_total' => $user_ratings_total,
+            'types' =>  $types,
+            'price_level' => $price_level,
+            'opening_hours' => $opening_hours,
+            'website' => $website,
+            'review' => $reviews,
+            'photos' => $photos,
+
+        ), 200);
     }
 }

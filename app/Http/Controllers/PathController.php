@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Site_data;
+use App\Hotel_data;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 use Illuminate\Support\Facades\DB as FacadesDB;
@@ -18,8 +19,17 @@ class PathController extends Controller
         $sql = FacadesDB::select("SELECT name FROM site_data WHERE city_name='$city' AND comment >=30 ORDER BY site_data.comment DESC");
         return response()->json($sql, 200);
     }
-    
 
+    // 第二層：輸入城市 ->城市所有飯店 > 50評論
+    function h_path_sitesByCity(Request $request)
+    {
+        $city = $request->input('city_name');
+        $sql = Hotel_data::select('name')->where('city_name', "=", "$city")->where('comment', ">", 50)->get();
+
+        return response()->json($sql, 200);
+    }
+
+    // google 取照片
     function getGoogleImg(Request $request)
     {
         $city = $request->input("name");
@@ -80,14 +90,14 @@ class PathController extends Controller
 
         $set_charset = 'export LANG=en_US.UTF-8;';
         // "php php/path.php city=嘉義縣 site=故宮南院"
-        $output = shell_exec($set_charset."php php/path.php city=$city site=$site");
-        $output2 = shell_exec($set_charset."/usr/local/bin/Rscript R/new_path.R");
+        $output = shell_exec($set_charset . "php php/path.php city=$city site=$site");
+        $output2 = shell_exec($set_charset . "/usr/local/bin/Rscript R/new_path.R");
 
 
 
         return response()->json(array(
             'php' => $output,
-            'R' => $output2, 
+            'R' => $output2,
             'response' => '成功，產生csv在public，R/path.R讀取csv'
         ), 200);
     }
@@ -171,7 +181,8 @@ class PathController extends Controller
             200
         );
     }
-    function pathSiteGooglePlaceId(Request $request){
+    function pathSiteGooglePlaceId(Request $request)
+    {
         $site_name = $request->input("name");
         $curl = curl_init();
 
@@ -192,13 +203,13 @@ class PathController extends Controller
         $result = json_decode($response);
         // 取得id
         $place_id = $result->candidates[0]->place_id;
-        
 
-        // 
+
+        //
         $curl_2 = curl_init();
 
         curl_setopt_array($curl_2, array(
-            CURLOPT_URL => "https://maps.googleapis.com/maps/api/place/details/json?place_id=".$place_id."&fields=name,rating,formatted_phone_number,address_component,adr_address,business_status,formatted_address,geometry,icon,name,permanently_closed,photo,place_id,plus_code,type,url,utc_offset,vicinity&language=zh-TW&key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A",
+            CURLOPT_URL => "https://maps.googleapis.com/maps/api/place/details/json?place_id=" . $place_id . "&fields=name,rating,formatted_phone_number,address_component,adr_address,business_status,formatted_address,geometry,icon,name,permanently_closed,photo,place_id,plus_code,type,url,utc_offset,vicinity&language=zh-TW&key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -215,9 +226,8 @@ class PathController extends Controller
         // 取得id
         $detail_info = $result_2->result;
 
-        
+
 
         return response()->json($detail_info, 200);
-
     }
 }

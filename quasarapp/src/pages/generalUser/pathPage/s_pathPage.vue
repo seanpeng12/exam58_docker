@@ -1,12 +1,12 @@
 <template>
   <q-page>
     <div class="q-pa-md doc-container">
-      <div class="gt-xs q-pa-lg items-center text-black bg-grey-3" style="height:250px;">
+      <div class="gt-xs q-pa-lg items-center text-black bg-grey-3" style="height:auto;">
         <div class="row">
           <div class="col"></div>
 
           <div class="col-12 col-md-auto">
-            <p style="font-size: 28px;font-family: Microsoft JhengHei;">路徑推薦分析</p>
+            <p style="font-size: 28px;font-family: Microsoft JhengHei;">{{choose}}路徑推薦分析</p>
           </div>
 
           <div class="col q-mt-sm q-ml-sm">

@@ -51,8 +51,6 @@ Route::group(['middleware' => ['CORS']], function () {
     Route::post('/cat', 'PostController@bothCatagory');
     // 景點需求分析---取(聯集-交集)景點
     Route::post('/cat_diff', 'PostController@diffCatagory');
-    
-
 
 
     // 飯店
@@ -67,7 +65,11 @@ Route::group(['middleware' => ['CORS']], function () {
     // 景點需求分析---取(聯集-交集)景點
     Route::post('/h_cat_diff', 'DemandController@diffCatagory');
 
-
+    // api
+    // google照片
+    Route::post('/demand_Img', 'DemandController@getGoogleImg');
+    // google資料
+    Route::post('/demand_info', 'DemandController@GooglePlaceInfo');
 
 
     // 測試區域
@@ -111,15 +113,20 @@ Route::group(['middleware' => ['CORS']], function () {
     Route::post('/h_consData', 'ProsCosController@h_consData');
     // 飯店加入最愛
     Route::post('/h_proconsAddToCollection', 'ProsCosController@h_proconsAddToCollection');
-    
 });
 
 // 路徑分析
 Route::group(['middleware' => ['CORS']], function () {
+    // 景點第一層 => <get> api/site_dataCity
+
+    // 旅館第一層 => <get> api/h_site_dataCity
 
     // 第二層選單：輸入城市 ->城市所有景點
     Route::post('/path_sitesByCity', 'PathController@path_sitesByCity');
-    
+
+    // 第二層選單：輸入城市 ->城市所有景點
+    Route::post('/h_path_sitesByCity', 'PathController@h_path_sitesByCity');
+
     // 路徑分析(PHP + R)
     Route::post('/runPath', 'PathController@runPath');
     // 執行搭配php的R(跑路徑分析用path.php)
@@ -139,5 +146,4 @@ Route::group(['middleware' => ['CORS']], function () {
     Route::post('/getGoogleImg', 'PathController@getGoogleImg');
 
     Route::post('/pathSiteGooglePlaceId', 'PathController@pathSiteGooglePlaceId');
-
 });
