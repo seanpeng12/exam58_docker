@@ -1,13 +1,6 @@
-import {
-  LocalStorage
-} from "quasar";
-import {
-  firebaseAuth,
-  google_provider
-} from "boot/firebase";
-import {
-  showErrorMessage
-} from "src/functions/function-show-error-message";
+import { LocalStorage } from "quasar";
+import { firebaseAuth, google_provider } from "boot/firebase";
+import { showErrorMessage } from "src/functions/function-show-error-message";
 const state = {
   loggedIn: false,
   role: "",
@@ -53,16 +46,15 @@ const actions = {
       .signInWithPopup(google_provider)
       .then(result => {
         this.user = result.user;
-        if (state.role == 'generalUser') {
+        if (state.role == "generalUser") {
           this.$router.push("/index").then(() => {
             this.$router.go(0);
           });
-        } else if (state.role == 'manager') {
+        } else if (state.role == "manager") {
           this.$router.push("/manager_index").then(() => {
             this.$router.go(0);
           });
         }
-
       })
       .catch(err => console.error(err));
   },
@@ -77,10 +69,7 @@ const actions = {
     });
   },
 
-  handleAuthStateChange({
-    commit,
-    dispatch
-  }, scheduleId) {
+  handleAuthStateChange({ commit, dispatch }, scheduleId) {
     firebaseAuth.onAuthStateChanged(user => {
       if (user) {
         const name = firebaseAuth.currentUser.displayName;
@@ -100,9 +89,13 @@ const actions = {
         dispatch("collections/h_fbReadData", null, {
           root: true
         });
+        dispatch("collections/company_fbReadData", null, {
+          root: true
+        });
         dispatch("travel/fbEverySiteData", scheduleId, {
           root: true
         });
+
         console.log("登入成功");
       } else {
         commit("setLoggedIn", false);
@@ -111,17 +104,13 @@ const actions = {
       }
     });
   },
-  chooseRole({
-    commit
-  }, roleName) {
+  chooseRole({ commit }, roleName) {
     console.log("chooseRole:", roleName);
     localStorage.setItem("role", roleName);
 
     commit("update_role", roleName);
   },
-  readRole({
-    commit
-  }) {
+  readRole({ commit }) {
     console.log("reaadRole:", localStorage.getItem("role"));
     commit("update_role", localStorage.getItem("role"));
   }

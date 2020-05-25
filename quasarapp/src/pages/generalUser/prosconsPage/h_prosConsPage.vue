@@ -11,7 +11,9 @@
             <div class="col"></div>
 
             <div class="col-12 col-md-auto">
-              <p style="font-size: 28px;font-family: Microsoft JhengHei;">飯店優缺點分析</p>
+              <p style="font-size: 28px;font-family: Microsoft JhengHei;">
+                飯店優缺點分析
+              </p>
             </div>
 
             <div class="col q-mt-sm q-ml-sm">
@@ -27,7 +29,8 @@
                 <b
                   class="text"
                   style="font-size: 20px;font-family: Microsoft JhengHei;"
-                >從網站評論資訊，幫您分析飯店是否符合您的需求</b>
+                  >從網站評論資訊，幫您分析飯店是否符合您的需求</b
+                >
                 <br />
               </div>
             </div>
@@ -43,9 +46,9 @@
                   <q-btn
                     :loading="loading2"
                     @click="
-                    simulateProgress(2),
-                      addToCollection(h_prosConsselected_site)
-                  "
+                      simulateProgress(2),
+                        addToCollection(h_prosConsselected_site)
+                    "
                     label="加入收藏"
                     color="warning"
                     style="width:100px"
@@ -79,7 +82,34 @@
         <div class="q-pa-md">
           <div class="row">
             <div class="col-6">
-              <proscons-data></proscons-data>
+              <proscons-data
+                ><template slot="text_ProsExplain"
+                  ><q-chip>
+                    <q-avatar
+                      color="green-8"
+                      text-color="white"
+                      size="15px"
+                    ></q-avatar>
+                    <span style="font-size: 15px;">
+                      <b>顏色越深，好評中提及該關鍵字的人數越多</b>
+                    </span>
+                  </q-chip></template
+                >
+                <template slot="text_ConsExplain"
+                  ><q-chip>
+                    <q-avatar
+                      color="red-8"
+                      text-color="white"
+                      size="15px"
+                    ></q-avatar>
+                    <span style="font-size: 15px;">
+                      <b
+                        >顏色越深，負評中提及該關鍵字的人數越多，您需特別注意的缺點</b
+                      >
+                    </span>
+                  </q-chip></template
+                >></proscons-data
+              >
             </div>
             <!-- 懶人包區域 -->
             <div class="col-6">

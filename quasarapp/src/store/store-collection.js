@@ -9,6 +9,7 @@ const state = {
   expend: false,
   collections: {},
   h_collections: {},
+  company_collections: {},
   search: "",
   watch: {},
   src: ""
@@ -31,6 +32,13 @@ const mutations = {
   },
   h_deleteCollection(state, id) {
     Vue.delete(state.h_collections, id);
+  },
+  deleteCompanyCollection(state, id) {
+    Vue.delete(state.company_collections, id);
+  },
+  company_fbReadData(state, payload) {
+    Vue.set(state.company_collections, payload.id, payload.collection);
+    console.log("state.company_collections:", state.company_collections);
   },
   setSearch(state, value) {
     state.search = value;
@@ -71,6 +79,26 @@ const actions = {
         // console.log(doc.data());
 
         commit("h_addCollection", {
+          id: doc.id,
+          collection: doc.data()
+        });
+      });
+    });
+  },
+  // 企業資訊收藏
+  company_fbReadData({ commit }) {
+    const uid = firebaseAuth.currentUser.uid;
+    console.log("fbReadData", uid);
+    const userCollection = fstore
+      .collection("sightseeingMember")
+      .doc(uid)
+      .collection("我的商家資訊收藏");
+
+    userCollection.onSnapshot(Snapshot => {
+      Snapshot.forEach(doc => {
+        console.log(doc.data());
+
+        commit("company_fbReadData", {
           id: doc.id,
           collection: doc.data()
         });
@@ -188,6 +216,7 @@ const actions = {
       });
     // 取src
   },
+
   h_proconsAddToCollection({}, hotel_name) {
     const uid = firebaseAuth.currentUser.uid;
     // const collectionId = datas.data.id;
@@ -226,6 +255,22 @@ const actions = {
           });
       });
   },
+  // 景點路徑商家資訊加入收藏
+  sitePathAddToCollection({ commit }, payload) {
+    const uid = firebaseAuth.currentUser.uid;
+    fstore
+      .collection("sightseeingMember")
+      .doc(uid)
+      .collection("我的商家資訊收藏")
+      .doc(payload.id)
+      .set({
+        site_name: payload.site_name,
+        phone_number: payload.phone_number,
+        address: payload.address,
+        rating: payload.rating,
+        img: payload.img
+      });
+  },
   fbDeleteCollection({ commit }, id) {
     const uid = firebaseAuth.currentUser.uid;
     const deleteData = fstore
@@ -255,6 +300,24 @@ const actions = {
       .then(function() {
         console.log("Document successfully deleted!");
         commit("h_deleteCollection", id);
+      })
+      .catch(function(error) {
+        console.error("Error removing document: ", error);
+      });
+  },
+  // 商家資訊收藏刪除
+  fbDeleteCompanyCollection({ commit }, id) {
+    const uid = firebaseAuth.currentUser.uid;
+    const deleteData = fstore
+      .collection("sightseeingMember")
+      .doc(uid)
+      .collection("我的商家資訊收藏")
+      .doc(id);
+    deleteData
+      .delete()
+      .then(function() {
+        console.log("Document successfully deleted!");
+        commit("deleteCompanyCollection", id);
       })
       .catch(function(error) {
         console.error("Error removing document: ", error);
@@ -363,6 +426,37 @@ const getters = {
       collections[key] = collection;
     });
     return collections;
+  },
+  company_collections: (state, getters) => {
+    let company_collectionsFiltered = getters.company_collectionsFiltered;
+    let company_collections = {};
+    Object.keys(company_collectionsFiltered).forEach(function(key) {
+      let company_collection = company_collectionsFiltered[key];
+
+      company_collections[key] = company_collection;
+    });
+    return company_collections;
+  },
+  company_collectionsFiltered: state => {
+    let company_collectionsFiltered = {};
+    if (state.search) {
+      Object.keys(state.company_collections).forEach(function(key) {
+        let company_collection = state.company_collections[key],
+          collectionNameLowerCase = company_collection.site_name.toLowerCase(),
+          collectionAddressLowerCase = company_collection.address.toLowerCase(),
+          collectionPhoneLowerCase = company_collection.phone_number.toLowerCase(),
+          searchcollection = state.search.toLowerCase();
+        if (
+          collectionNameLowerCase.includes(searchcollection) ||
+          collectionAddressLowerCase.includes(searchcollection) ||
+          collectionPhoneLowerCase.includes(searchcollection)
+        ) {
+          company_collectionsFiltered[key] = company_collection;
+        }
+      });
+      return company_collectionsFiltered;
+    }
+    return state.company_collections;
   }
 };
 export default {

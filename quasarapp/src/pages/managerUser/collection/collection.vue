@@ -19,6 +19,7 @@
           <div class="text-h5" style="font-weight: bold; font-family:cursive">
             My Collection
           </div>
+
           <br />
           <!-- <br />
           <br />
@@ -35,16 +36,16 @@
       </p>
       <search />
 
-      <q-tabs v-model="tab" class="text-black">
+      <!-- <q-tabs v-model="tab" class="text-black">
         <q-tab name="site" icon="fas fa-car-side" label="景點收藏" />
         <q-tab name="hotel" icon="fas fa-hotel" label="飯店收藏" />
-      </q-tabs>
+      </q-tabs> -->
     </div>
-    <div class="row" v-if="tab == 'site'">
-      <LCard
-        v-for="(item, key) in collections"
+    <div class="row">
+      <companyCard
+        v-for="(item, key) in company_collections"
         :key="key"
-        :collection="item"
+        :company_collection="item"
         :index="key"
         style="margin-right: 4px;"
       >
@@ -55,41 +56,14 @@
             dense
             label="刪除收藏"
             icon-right="delete"
-            size="10px"
+            size="14px"
             color="red"
             @click="promptToDelete(key)"
             style="font-family: NSimSun; margin-left:60px"
           />
         </template>
-      </LCard>
+      </companyCard>
     </div>
-    <div class="row" v-else>
-      <hCard
-        v-for="(item, key) in h_collections"
-        :key="key"
-        :h_collection="item"
-        :index="key"
-        style="margin-right: 4px;"
-      >
-        <template slot="deleteCollection">
-          <q-btn
-            no-caps
-            flat
-            dense
-            label="刪除收藏"
-            icon-right="delete"
-            size="10px"
-            color="red"
-            @click="h_promptToDelete(key)"
-            style="font-family: NSimSun; margin-left:60px"
-          />
-        </template>
-      </hCard>
-    </div>
-
-    <!--  -->
-
-    <!--  -->
   </div>
 </template>
 
@@ -98,25 +72,24 @@ import { mapGetters, mapState, mapActions } from "vuex";
 export default {
   data() {
     return {
-      slide: 1,
-      tab: "site"
+      slide: 1
+      // tab: "site"
       // stars: 3.5
       // search: ""
     };
   },
   computed: {
-    ...mapGetters("collections", ["collections", "h_collections"]),
+    ...mapGetters("collections", ["company_collections"]),
     ...mapState("collections", ["search"])
   },
   components: {
     search: () => import("components/search.vue"),
-    LCard: () => import("components/collection/LCard.vue"),
-    hCard: () => import("components/collection/h_card.vue")
+    companyCard: () => import("components/collection/company_card.vue")
   },
   methods: {
     ...mapActions("collections", [
-      "fbDeleteCollection",
-      "h_fbDeleteCollection"
+      "company_fbReadData",
+      "fbDeleteCompanyCollection"
     ]),
     promptToDelete(value) {
       this.$q
@@ -127,19 +100,7 @@ export default {
           persistent: true
         })
         .onOk(() => {
-          this.fbDeleteCollection(value);
-        });
-    },
-    h_promptToDelete(value) {
-      this.$q
-        .dialog({
-          title: "Confirm",
-          message: "確定要刪除嗎?",
-          cancel: true,
-          persistent: true
-        })
-        .onOk(() => {
-          this.h_fbDeleteCollection(value);
+          this.fbDeleteCompanyCollection(value);
         });
     }
   }

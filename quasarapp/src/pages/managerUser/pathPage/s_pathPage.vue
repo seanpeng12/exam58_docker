@@ -62,8 +62,9 @@
           </div>
           <div class="col-6 q-mt-lg">
             <companyDetail2
-              v-for="item in siteGoogleDetails"
-              :key="item.id"
+              v-for="(item, key) in siteGoogleDetails"
+              :key="key"
+              :id="key"
               :siteGoogleDetail="item"
             ></companyDetail2>
           </div>
