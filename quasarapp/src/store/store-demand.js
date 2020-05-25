@@ -48,7 +48,9 @@ const state = {
   txtdatas_ok: false,
   txtdatas_diff_ok: false,
 
-
+  // google
+  site_name: "",
+  Gdata: {}
 };
 const mutations = {
   FETCH_citys(state, citys) {
@@ -66,6 +68,12 @@ const mutations = {
     // console.log("FETCH_txtdatas from mutation:", state.txtdatas);
 
     // return state.txtdatas = res
+  },
+  FETCH_site_name(state, res) {
+    return (state.site_name = res);
+  },
+  FETCH_Gdata(state, res) {
+    return (state.Gdata = res);
   },
   resetTxtdatas(state) {
     // console.log("reset");
@@ -516,7 +524,23 @@ const actions = {
   }) {
     commit("resetTxtdatas");
     commit("resetTxtdatas_diff");
-  }
+  },
+  fetchInfo({
+    commit
+  }) {
+    axiosInstance
+      .post("http://127.0.0.1/api/demand_info", {
+        name: state.site_name,
+      })
+      .then(response => {
+        console.log("成功取Gdata");
+        console.log(response.data);
+        commit("FETCH_Gdata", response.data);
+      })
+      .catch(function (response) {
+        console.log(response);
+      });
+  },
 };
 const getters = {
   citys: state => {
@@ -568,7 +592,12 @@ const getters = {
   txtdatas_diff_ok: state => {
     return state.txtdatas_diff_ok;
   },
-
+  site_name: state => {
+    return state.site_name;
+  },
+  Gdata: state => {
+    return state.Gdata;
+  },
 };
 
 export default {

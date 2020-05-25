@@ -14,10 +14,10 @@
     >開始你的旅程</div>
     <!--  -->
     <!-- 登入 -->
-    <q-card class="auto-tabs" style="margin-bottom:50px">
+    <q-card class="auto-tabs" style="margin-bottom:50px;width:400px">
       <q-tabs
         v-model="tab"
-        class="text-grey"
+        class="text-grey-7"
         active-color="primary"
         indicator-color="primary"
         align="justify"

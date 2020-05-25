@@ -5,7 +5,11 @@
       class="q-pa-lg q-ma-sm bg-teal-3"
       style="color:white;font-weight: bold;font-size : 25px;font-family: Microsoft JhengHei;"
     >
-      <p>優缺點分析結果</p>
+      <div class="row q-ma-xs">
+        <div class="col">
+          <p>優缺點分析結果</p>
+        </div>
+      </div>
 
       <!--  -->
       <q-card>

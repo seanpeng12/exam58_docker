@@ -1,6 +1,6 @@
 <template>
   <!-- <q-page> -->
-  <q-item clickable v-ripple>
+  <q-item clickable v-on:click="data(txtdata.name)" v-ripple>
     <q-item-section>{{ txtdata.name }}</q-item-section>
     <slot name="addToSchedule"></slot>
     <slot name="addToCollection"></slot>
@@ -16,6 +16,8 @@ export default {
   props: ["txtinfo", "txtdata"],
   data() {
     return {
+      //
+      splitterModel: 50,
       loading4: false,
       loading2: false
     };
@@ -37,6 +39,11 @@ export default {
     }
   },
   methods: {
+    data(val) {
+      console.log(val);
+      this.$emit("site_name", val);
+    },
+
     selectionChanged: function(data) {
       console.log("被觸發");
 
