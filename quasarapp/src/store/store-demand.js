@@ -543,7 +543,7 @@ const actions = {
     commit
   }) {
     axiosInstance
-      .post("http://127.0.0.1/api/demand_info", {
+      .post("http://140.136.155.116/api/demand_info", {
         name: state.site_name,
       })
       .then(response => {

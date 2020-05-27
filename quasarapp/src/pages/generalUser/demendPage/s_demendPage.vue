@@ -7,7 +7,7 @@
           <div class="row" style>
             <div class="col"></div>
             <div class="col-12 col-md-auto">
-              <p style="font-size: 28px;font-family: Microsoft JhengHei;">景點需求分析{{txtdatas_diff_ok}}</p>
+              <p style="font-size: 28px;font-family: Microsoft JhengHei;">景點需求分析</p>
             </div>
 
             <div class="col q-mt-sm q-ml-sm">
@@ -456,7 +456,7 @@ export default {
       fullPage: false,
 
       //顯示下方頁面
-      isShow: true,
+      isShow: false,
 
       // card
       expanded: false,
