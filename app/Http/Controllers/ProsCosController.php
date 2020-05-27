@@ -49,8 +49,8 @@ class ProsCosController extends Controller
         // setlocale (LC_ALL, 'zh_TW.UTF-8');
         // header("Content-type:text/html; charset=utf-8");
         $set_charset = 'export LANG=en_US.UTF-8;';
-        $output = shell_exec($set_charset."/usr/local/bin/Rscript R/degree.R $id");
-        $output2 = shell_exec($set_charset."/usr/local/bin/Rscript R/bad_degree.R $id");
+        $output = shell_exec($set_charset . "/usr/local/bin/Rscript R/degree.R $id");
+        $output2 = shell_exec($set_charset . "/usr/local/bin/Rscript R/bad_degree.R $id");
 
         // $your_command_good = "/usr/local/bin/Rscript R/h_degree.R $id";
         // $your_command_bad = "/usr/local/bin/Rscript R/h_bad_degree.R $id";
@@ -79,7 +79,6 @@ class ProsCosController extends Controller
             'debug缺點' => "完成",
 
         ), 200);
-
     }
     // 景點優點
     function prosData(Request $request)
@@ -93,7 +92,7 @@ class ProsCosController extends Controller
         $id = $obj[0]->id;
 
 
-        $sql_positive = FacadesDB::select("SELECT id,segment,degree FROM segment_data WHERE site_id = '$id' AND degree >= 1 AND evaluation = 'P' ORDER BY degree DESC LIMIT 15");
+        $sql_positive = FacadesDB::select("SELECT id,segment,degree FROM segment_data WHERE site_id = '$id' AND degree >= 1 AND evaluation = 'P' ORDER BY degree DESC LIMIT 9");
 
 
 
@@ -111,7 +110,7 @@ class ProsCosController extends Controller
         $id = $obj[0]->id;
 
 
-        $sql_negative = FacadesDB::select("SELECT id,segment,degree FROM segment_data WHERE site_id = '$id' AND degree >= 1 AND evaluation = 'N' ORDER BY degree DESC LIMIT 15");
+        $sql_negative = FacadesDB::select("SELECT id,segment,degree FROM segment_data WHERE site_id = '$id' AND degree >= 1 AND evaluation = 'N' ORDER BY degree DESC LIMIT 9");
 
 
         return response()->json($sql_negative, 200);
@@ -185,10 +184,10 @@ class ProsCosController extends Controller
 
         // macOS
         $set_charset = 'export LANG=en_US.UTF-8;';
-        $output = shell_exec($set_charset."/usr/local/bin/Rscript R/h_degree.R $id");
-        $output2 = shell_exec($set_charset."/usr/local/bin/Rscript R/h_bad_degree.R $id");
+        $output = shell_exec($set_charset . "/usr/local/bin/Rscript R/h_degree.R $id");
+        $output2 = shell_exec($set_charset . "/usr/local/bin/Rscript R/h_bad_degree.R $id");
 
-        
+
         return response()->json(array(
             'id' => $id,
             'debug優點' => $output,
@@ -208,7 +207,7 @@ class ProsCosController extends Controller
         $id = $obj[0]->id;
 
 
-        $sql_positive = FacadesDB::select("SELECT id,segment,degree FROM h_segment_data WHERE hotel_id = '$id' AND degree >= 1 AND evaluation = 'P' ORDER BY degree DESC LIMIT 15");
+        $sql_positive = FacadesDB::select("SELECT id,segment,degree FROM h_segment_data WHERE hotel_id = '$id' AND degree >= 1 AND evaluation = 'P' ORDER BY degree DESC LIMIT 9");
 
 
 
@@ -226,7 +225,7 @@ class ProsCosController extends Controller
         $id = $obj[0]->id;
 
 
-        $sql_negative = FacadesDB::select("SELECT id,segment,degree FROM h_segment_data WHERE hotel_id = '$id' AND degree >= 1 AND evaluation = 'N' ORDER BY degree DESC LIMIT 15");
+        $sql_negative = FacadesDB::select("SELECT id,segment,degree FROM h_segment_data WHERE hotel_id = '$id' AND degree >= 1 AND evaluation = 'N' ORDER BY degree DESC LIMIT 9");
 
 
         return response()->json($sql_negative, 200);
