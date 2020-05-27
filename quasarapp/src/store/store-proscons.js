@@ -1,6 +1,13 @@
-import axios, { axiosInstance } from "boot/axios";
+import axios, {
+  axiosInstance
+} from "boot/axios";
 import Vue from "vue";
-import { fstore, firebaseAuth, firebaseApp, firestore } from "boot/firebase";
+import {
+  fstore,
+  firebaseAuth,
+  firebaseApp,
+  firestore
+} from "boot/firebase";
 
 const state = {
   namespaced: true,
@@ -73,7 +80,9 @@ const mutations = {
   }
 };
 const actions = {
-  fetchCitys({ commit }) {
+  fetchCitys({
+    commit
+  }) {
     axiosInstance
       .get("http://140.136.155.116/api/proscons_site_data_City")
       .then(res => {
@@ -85,7 +94,9 @@ const actions = {
       });
   },
 
-  fetchSites({ commit }) {
+  fetchSites({
+    commit
+  }) {
     axiosInstance
       .post("http://140.136.155.116/api/sitesByCity", {
         city_name: state.selected_city
@@ -99,7 +110,9 @@ const actions = {
       });
   },
 
-  fetchProsConsR({ commit }) {
+  fetchProsConsR({
+    commit
+  }) {
     axiosInstance
       .post("http://140.136.155.116/api/proscons", {
         name: state.selected_site
@@ -114,13 +127,15 @@ const actions = {
       });
   },
 
-  fetchPros({ commit }) {
+  fetchPros({
+    commit
+  }) {
     axiosInstance
       .post("http://140.136.155.116/api/prosData", {
         name: state.selected_site
       })
       .then(res => {
-        console.log("取得景點優點");
+        console.log("取得景點優點", res);
         commit("Update_ProsData", res);
       })
       .catch(err => {
@@ -128,20 +143,24 @@ const actions = {
       });
   },
 
-  fetchCons({ commit }) {
+  fetchCons({
+    commit
+  }) {
     axiosInstance
       .post("http://140.136.155.116/api/consData", {
         name: state.selected_site
       })
       .then(res => {
-        console.log("取得景點缺點");
+        console.log("取得景點缺點", res);
         commit("Update_ConsData", res);
       })
       .catch(err => {
         console.log(err);
       });
   },
-  siteExistsCollection({ commit }, site_name) {
+  siteExistsCollection({
+    commit
+  }, site_name) {
     const uid = firebaseAuth.currentUser.uid;
     const checkCollectionExists = fstore
       .collection("sightseeingMember")
@@ -162,7 +181,9 @@ const actions = {
             if (doc.exists) {
               console.log("存在");
 
-              return commit("checkCollectionExists", { exists: true }, 1000);
+              return commit("checkCollectionExists", {
+                exists: true
+              }, 1000);
             } else {
               console.log("不存在");
 
