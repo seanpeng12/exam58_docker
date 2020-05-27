@@ -8,13 +8,10 @@
       autoplay
       height="200px"
     >
-      <q-carousel-slide
-        :name="1"
-        img-src="https://global-uploads.webflow.com/576fd5a8f192527e50a4b95c/5bfe550d9464455edc331bee_Thaproban%20Beach%20House-min.jpg"
-      >
+      <q-carousel-slide :name="1" img-src="~assets/managerCollection.jpg">
         <div class="absolute-center custom-caption" style="margin-top:25px">
           <div class="text-h3" style="font-weight: bold;font-family:NSimSun">
-            我的口袋名單
+            我的店家資訊收藏
           </div>
           <div class="text-h5" style="font-weight: bold; font-family:cursive">
             My Collection
@@ -27,14 +24,16 @@
         </div>
       </q-carousel-slide>
     </q-carousel>
-    <div class="row" style="background-color:#a9c9c6">
-      <p
-        class="q-ma-md text-h5 text-white"
-        style="font-weight: bold; font-family:NSimSun;"
-      >
-        您可使用快速搜尋，找到您收藏的景點與飯店資訊
-      </p>
-      <search />
+    <div class="row" style="background-color:#463470">
+      <div class="col">
+        <p
+          class="q-ma-md text-h5 text-white"
+          style="font-weight: bold; font-family:NSimSun;"
+        >
+          您可使用快速搜尋，找到您收藏店家資訊
+        </p>
+      </div>
+      <div class="col-3 q-ma-xs"><search /></div>
 
       <!-- <q-tabs v-model="tab" class="text-black">
         <q-tab name="site" icon="fas fa-car-side" label="景點收藏" />
