@@ -1,6 +1,11 @@
 <template>
   <!-- <q-page> -->
-  <q-item clickable v-ripple v-if="txtdata_diff.tag == selected_p_detail_item">
+  <q-item
+    clickable
+    v-ripple
+    v-on:click="data(txtdata_diff.name)"
+    v-if="txtdata_diff.tag == selected_p_detail_item"
+  >
     <q-item-section>{{ txtdata_diff.name }}</q-item-section>
     <slot name="addToSchedule"></slot>
     <slot name="addToCollection"></slot>
@@ -37,6 +42,10 @@ export default {
     }
   },
   methods: {
+    data(val) {
+      console.log(val);
+      this.$emit("site_name", val);
+    },
     selectionChanged: function(data) {
       console.log("被觸發");
 

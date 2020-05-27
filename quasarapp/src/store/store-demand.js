@@ -50,7 +50,21 @@ const state = {
 
   // google
   site_name: "",
-  Gdata: {}
+  Gdata: {
+    opening_hours: {
+      open_now: false,
+      weekday_text: null
+    },
+    rating: 0,
+    rating_total: 0,
+    name: null,
+    address: null,
+    photos: [{
+      url: "https://cdn.quasar.dev/img/parallax2.jpg"
+    }]
+
+
+  }
 };
 const mutations = {
   FETCH_citys(state, citys) {
@@ -538,7 +552,7 @@ const actions = {
         commit("FETCH_Gdata", response.data);
       })
       .catch(function (response) {
-        console.log(response);
+        console.log("發生錯誤", response);
       });
   },
 };

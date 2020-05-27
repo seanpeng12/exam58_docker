@@ -7,7 +7,7 @@
           <div class="row" style>
             <div class="col"></div>
             <div class="col-12 col-md-auto">
-              <p style="font-size: 28px;font-family: Microsoft JhengHei;">景點需求分析</p>
+              <p style="font-size: 28px;font-family: Microsoft JhengHei;">景點需求分析{{txtdatas_diff_ok}}</p>
             </div>
 
             <div class="col q-mt-sm q-ml-sm">
@@ -61,30 +61,13 @@
           style="overflow:hidden;width:auto;height:100%;margin:0px auto;"
         >
           <!-- 懶人包區域 -->
-          <!-- 介紹 -->
-          <q-card
-            class="my-card bg-secondary text-white"
-            style="height:100%;max-height:600px;max-width:100%;"
-          >
-            <q-card-section>
-              <b class="text" style="font-size: 25px;font-family: Microsoft JhengHei;">
-                <q-circular-progress
-                  v-show="!txtdatas_diff_ok"
-                  indeterminate
-                  size="50px"
-                  color="lime"
-                  class="q-ma-md"
-                />
-                {{ txtinfo }}
-              </b>
-            </q-card-section>
+          <!-- 介紹txtinfo -->
 
-            <q-separator dark />
-          </q-card>
           <!--  -->
           <div class="row">
+            <!-- 左 -->
             <div class="col-6">
-              <div class="q-pa-lg" style="height:100%;width:100%;max-width:100%;">
+              <div class="q-pa-lg" style="height:100%;width:800px;max-width:100%;">
                 <q-list
                   bordered
                   class="bg-grey-1 text-bold"
@@ -158,6 +141,7 @@
                               :txtdata_diff="txtdata"
                               :selected_p_detail_item="selected_p_detail_item"
                               @txtdatas_Update="txtdatas_toVuex"
+                              @site_name="getName"
                             >
                               <template slot="addToCollection" v-if="loggedIn == true">
                                 <q-space />
@@ -198,6 +182,7 @@
                               :txtdata_diff="txtdata"
                               :selected_p_detail_item_2="selected_p_detail_item_2"
                               @txtdatas_Update="txtdatas_toVuex"
+                              @site_name="getName"
                             >
                               <template slot="addToCollection" v-if="loggedIn == true">
                                 <q-space />
@@ -222,42 +207,150 @@
                 </q-list>
               </div>
             </div>
+            <!-- 右 -->
             <div class="col-6">
               <div class="q-pa-lg">
-                <div class="row items-start q-gutter-md">
-                  <q-card class="my-card" flat bordered>
-                    <q-img src="https://cdn.quasar.dev/img/parallax2.jpg" />
-
+                <div v-if="Info_clicked" class="row items-start q-gutter-md">
+                  <q-card class="my-card" bordered style="width:100%;max-width:100%;">
+                    <q-img style="height:200px;width:100%;" :src="Gdata.photos[0].url"></q-img>
+                    <!-- <q-parallax :src="Gdata.photos[0].url" :height="300" /> -->
                     <q-card-section>
-                      <div class="text-overline text-orange-9">Overline</div>
-                      <div class="text-h5 q-mt-sm q-mb-xs">Title</div>
                       <div
-                        class="text-caption text-grey"
-                      >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                        class="text-overline text-orange-9"
+                      >{{ Gdata.opening_hours.open_now ? '營業中' :"休息中/無營業時間資訊"}}</div>
+                      <div class="text-h5 q-mt-sm q-mb-xs">{{Gdata.name}}</div>
+                      <div class="text-caption text-grey">
+                        <q-chip
+                          class="glossy"
+                          color="orange"
+                          text-color="white"
+                          icon-right="star"
+                        >{{Gdata.rating}}</q-chip>
+                        總評價數:{{Gdata.rating_total}}
+                      </div>
                     </q-card-section>
 
                     <q-card-actions>
-                      <q-btn flat color="dark" label="Share" />
-                      <q-btn flat color="primary" label="Book" />
-
-                      <q-space />
-
-                      <q-btn
-                        color="grey"
-                        round
-                        flat
-                        dense
-                        :icon="expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
-                        @click="expanded = !expanded"
-                      />
+                      <q-tabs v-model="tab" class="text-teal">
+                        <q-tab label="詳細資訊" name="one" />
+                        <q-tab label="營業時間" name="two" />
+                      </q-tabs>
                     </q-card-actions>
+                    <!-- tab -->
+                    <q-separator />
 
-                    <q-slide-transition>
-                      <div v-show="expanded">
-                        <q-separator />
-                        <q-card-section class="text-subitle2">{{ lorem }}</q-card-section>
-                      </div>
-                    </q-slide-transition>
+                    <q-tab-panels v-model="tab" animated>
+                      <q-tab-panel name="one">
+                        <div>
+                          <q-btn
+                            rounded
+                            type="a"
+                            :href="Gdata.website"
+                            target="__blank"
+                            color="blue"
+                            class="text-bold"
+                            label="官方網站"
+                          />
+                        </div>
+                        <div>
+                          <q-chip
+                            color="grey-7"
+                            text-color="white"
+                            icon="directions"
+                          >{{Gdata.address}}</q-chip>
+                        </div>
+                        <div>
+                          <q-chip
+                            outline
+                            color="black"
+                            text-color="white"
+                            icon="phone"
+                          >{{Gdata.phone_number}}</q-chip>
+                        </div>
+                      </q-tab-panel>
+
+                      <q-tab-panel name="two">
+                        <div class="q-pa-xs">
+                          營業時間:
+                          <div v-if="Gdata.opening_hours == '無資料'">
+                            <b>{{Gdata.opening_hours}}</b>
+                          </div>
+                          <div
+                            v-else
+                            v-for="(a,index) in Gdata.opening_hours.weekday_text"
+                            :key="index"
+                          >
+                            <b>{{ a }}</b>
+                          </div>
+                        </div>
+                      </q-tab-panel>
+                      <!-- <q-tab-panel name="three">
+                        <div class="q-pa-md" style="max-width: 350px">
+                          <q-list bordered class="rounded-borders">
+                            <div v-for="(review,index) in Gdata.review" :key="index">
+                              <q-expansion-item
+                                expand-separator
+                                header-class="text-purple"
+                                icon="img:review.profile_photo_url"
+                                :label="review.author_name"
+                                :caption="'評分:'+review.rating"
+                              >
+                                <q-card>
+                                  <q-card-section>{{review.text }}</q-card-section>
+                                </q-card>
+                              </q-expansion-item>
+                            </div>
+                          </q-list>
+                        </div>
+
+                        <div v-for="(review,index) in Gdata.review" :key="index">
+                          <q-chip rounded>
+                            <q-avatar>
+                              <img :src="review.profile_photo_url" />
+                            </q-avatar>
+                            {{review.author_name}}
+                          </q-chip>
+
+                          <p class="text-h7">{{review.text }}</p>
+                          <q-separator />
+                        </div>
+                      </q-tab-panel>-->
+                    </q-tab-panels>
+                  </q-card>
+                </div>
+                <div v-else>
+                  <q-card
+                    class="my-card bg-secondary text-white text-center"
+                    style="height:100%;max-height:600px;max-width:100%;"
+                  >
+                    <q-card-section>
+                      <b class="text" style="font-size: 25px;font-family: Microsoft JhengHei;">
+                        <q-circular-progress
+                          v-show="!txtdatas_diff_ok"
+                          indeterminate
+                          size="50px"
+                          color="lime"
+                          class="q-ma-md"
+                        />
+                        {{ txtinfo }}
+                      </b>
+                    </q-card-section>
+
+                    <q-separator dark />
+                  </q-card>
+
+                  <q-card
+                    class="q-my-md my-card bg-grey text-white"
+                    style="height:100%;max-height:600px;max-width:100%;"
+                  >
+                    <q-card-section>
+                      <div class="text-h6">Our Changing Planet</div>
+                      <div class="text-subtitle2">by John Doe</div>
+                    </q-card-section>
+
+                    <q-card-section>
+                      <p class="text-h6">點按景點檢視詳細資訊</p>
+                    </q-card-section>
                   </q-card>
                 </div>
               </div>
@@ -267,7 +360,10 @@
       </div>
       <!-- 第二行 -->
       <div class="row q-pa-sm">
-        <div class="col-md-6 q-pa-md" style="overflow:hidden;height:100%;margin:0px auto;">
+        <div
+          class="col-md-6 q-pa-md"
+          style="overflow:hidden;height:100%;margin:0px auto;max-width:100%"
+        >
           <!-- iframe區域 -->
           <q-card
             class="my-card text-center q-pa-sm"
@@ -371,6 +467,8 @@ export default {
     return {
       //轉場觸發
       demand_select: false,
+      // 觸發顯示右側詳細資訊
+      Info_clicked: false,
       // 暫存R_title
       r_title_1: "",
       r_title_2: "",
@@ -388,6 +486,7 @@ export default {
       ok: true,
       // card
       expanded: false,
+      tab: "one",
       lorem:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
     };
@@ -397,7 +496,7 @@ export default {
     // 由此找vuex所需method
     ...mapActions("demand", ["fetchCitys"]),
     ...mapActions("demand", ["fetchCats"]),
-    ...mapActions("demand", ["upload_axios"]),
+    ...mapActions("demand", ["upload_axios", "fetchInfo"]),
     ...mapActions("demand", ["upload_axios_2", "upload_axios_2_diff"]),
 
     changeSrc() {
@@ -428,6 +527,7 @@ export default {
       console.log("demandpage:", val);
       // 同步state
       this.$store.commit("demand/FETCH_site_name", val);
+      this.fetchInfo();
     },
 
     // from emit local then set vuex
@@ -479,6 +579,9 @@ export default {
     run_R(value) {
       //是否顯示
       this.isShow = false;
+      // info
+      this.Info_clicked = false;
+
       this.r_title_1 = this.selected_p;
       this.r_title_2 = this.selected_p_detail_item;
       this.r_title_3 = this.selected_p_detail_item_2;
@@ -528,6 +631,9 @@ export default {
         );
       }
       this.ok = !this.txtdatas_diff_ok;
+    },
+    site_name: function(val) {
+      this.Info_clicked = true;
     }
   },
   mounted: function() {
@@ -535,6 +641,8 @@ export default {
     this.fetchCitys();
     // transition
     this.demand_select = true;
+    // info
+    this.Info_clicked = false;
   }
 };
 </script>

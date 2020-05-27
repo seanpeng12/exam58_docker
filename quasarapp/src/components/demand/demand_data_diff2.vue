@@ -3,6 +3,7 @@
   <q-item
     clickable
     v-ripple
+    v-on:click="data(txtdata_diff.name)"
     v-if="txtdata_diff.tag == selected_p_detail_item_2"
   >
     <q-item-section>{{ txtdata_diff.name }}</q-item-section>
@@ -41,6 +42,10 @@ export default {
     }
   },
   methods: {
+    data(val) {
+      console.log(val);
+      this.$emit("site_name", val);
+    },
     selectionChanged: function(data) {
       console.log("被觸發");
 

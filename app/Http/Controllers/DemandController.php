@@ -198,55 +198,55 @@ class DemandController extends Controller
         if (!empty($detail_info->formatted_phone_number)) {
             $number = $detail_info->formatted_phone_number;
         } else {
-            $number = "null";
+            $number = "無資料";
         }
         // 營業資訊
         if (!empty($detail_info->business_status)) {
             $business_status = $detail_info->business_status;
         } else {
-            $business_status = "null";
+            $business_status = "無資料";
         }
         // 星等
         if (!empty($detail_info->rating)) {
             $rating = $detail_info->rating;
         } else {
-            $rating = "null";
+            $rating = "無資料";
         }
         // user_ratings_total
         if (!empty($detail_info->user_ratings_total)) {
             $user_ratings_total = $detail_info->user_ratings_total;
         } else {
-            $user_ratings_total = "null";
+            $user_ratings_total = "無資料";
         }
         // 分類
         if (!empty($detail_info->types)) {
             $types = $detail_info->types;
         } else {
-            $types = "null";
+            $types = "無資料";
         }
         // 價格區間
         if (!empty($detail_info->price_level)) {
             $price_level = $detail_info->price_level;
         } else {
-            $price_level = "null";
+            $price_level = "無資料";
         }
         // 評論
         if (!empty($detail_info->reviews)) {
             $reviews = $detail_info->reviews;
         } else {
-            $reviews = "null";
+            $reviews = "無資料";
         }
         // opening_hours
         if (!empty($detail_info->opening_hours)) {
             $opening_hours = $detail_info->opening_hours;
         } else {
-            $opening_hours = "null";
+            $opening_hours = "無資料";
         }
         // website
         if (!empty($detail_info->website)) {
             $website = $detail_info->website;
         } else {
-            $website = "null";
+            $website = "無資料";
         }
 
         return response()->json(array(
