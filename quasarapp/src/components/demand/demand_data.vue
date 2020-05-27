@@ -1,6 +1,6 @@
 <template>
   <!-- <q-page> -->
-  <q-item clickable v-on:click="data(txtdata.name)" v-ripple>
+  <q-item clickable v-on:click="data(txtdata.name), data_key(index)" v-ripple>
     <q-item-section>{{ txtdata.name }}</q-item-section>
     <slot name="addToSchedule"></slot>
     <slot name="addToCollection"></slot>
@@ -13,7 +13,7 @@
 </template>
 <script>
 export default {
-  props: ["txtinfo", "txtdata"],
+  props: ["txtinfo", "txtdata", "index"],
   data() {
     return {
       //
@@ -40,8 +40,13 @@ export default {
   },
   methods: {
     data(val) {
-      console.log(val);
+      // console.log(val);
       this.$emit("site_name", val);
+    },
+
+    data_key(val) {
+      // console.log("key", val);
+      this.$emit("txtdata_key", val);
     },
 
     selectionChanged: function(data) {

@@ -3,11 +3,16 @@
     <!-- select區塊 -->
     <transition name="h-demand-select">
       <div v-if="h_demand_select" class="q-pa-md" style="align-items: center">
-        <div class="q-gt-xs q-pa-lg items-center text-black bg-grey-3" style="height: 300px;">
+        <div
+          class="q-gt-xs q-pa-lg items-center text-black bg-grey-3"
+          style="height: 300px;"
+        >
           <div class="row" style>
             <div class="col"></div>
             <div class="col-12 col-md-auto">
-              <p style="font-size: 28px;font-family: Microsoft JhengHei;">飯店需求分析</p>
+              <p style="font-size: 28px;font-family: Microsoft JhengHei;">
+                飯店需求分析
+              </p>
             </div>
 
             <div class="col q-mt-sm q-ml-sm">
@@ -23,7 +28,8 @@
                 <b
                   class="text"
                   style="font-size: 30px;font-family: Microsoft JhengHei;"
-                >選擇想分析飯店的城市/類型</b>
+                  >選擇想分析飯店的城市/類型</b
+                >
                 <br />
               </div>
             </div>
@@ -56,7 +62,10 @@
     <!-- 左右區域 -->
     <div v-if="isShow">
       <div class="row q-pa-sm">
-        <div class="col-md-6 q-pa-md" style="overflow:hidden;height:100%;margin:0px auto;">
+        <div
+          class="col-md-6 q-pa-md"
+          style="overflow:hidden;height:100%;margin:0px auto;"
+        >
           <!-- 懶人包區域 -->
           <q-card
             class="my-card bg-secondary text-white"
@@ -64,7 +73,10 @@
           >
             <transition name="fade" mode="out-in">
               <q-card-section>
-                <b class="text" style="font-size: 25px;font-family: Microsoft JhengHei;">
+                <b
+                  class="text"
+                  style="font-size: 25px;font-family: Microsoft JhengHei;"
+                >
                   <q-circular-progress
                     v-show="!txtdatas_diff_ok"
                     indeterminate
@@ -95,7 +107,9 @@
                 <!-- txtdatas有資料 -->
                 <q-card>
                   <q-card-section>
-                    <q-scroll-area style="height:200px;width:100%;max-width: auto;">
+                    <q-scroll-area
+                      style="height:200px;width:100%;max-width: auto;"
+                    >
                       <q-list>
                         <div v-if="txtdatas_ok">
                           <demand-data
@@ -105,17 +119,22 @@
                             :txtdata="txtdata"
                             @txtdatas_Update="txtdatas_toVuex"
                           >
-                            <template slot="addToCollection" v-if="loggedIn == true">
+                            <template slot="addToSchedule">
                               <q-space />
-                              <hAddToCollectionBtn
-                                :txtdata="txtdata"
-                                :id="key"
-                                :city_name="txtdata.city_name"
-                                :site_name="txtdata.name"
-                                :address="txtdata.address"
-                                :comment="txtdata.comment"
-                                :rate="txtdata.rate"
-                              ></hAddToCollectionBtn>
+                              <q-btn
+                                icon-right="add"
+                                label="加進排程"
+                                color="warning"
+                                @click.stop="
+                                  promptToAddSite({
+                                    id: key,
+                                    site: txtdata.name
+                                  })
+                                "
+                                dense
+                                size="12px"
+                                style="margin-left:20px"
+                              />
                             </template>
                           </demand-data>
                         </div>
@@ -124,7 +143,8 @@
                             <q-item-section
                               class="text-center"
                               style="font-family: Microsoft JhengHei;"
-                            >無交集資料</q-item-section>
+                              >無交集資料</q-item-section
+                            >
                           </q-item>
                         </div>
                       </q-list>
@@ -149,7 +169,9 @@
                 <q-card>
                   <q-card-section>
                     <!-- test txtdatas_diff -->
-                    <q-scroll-area style="height:200px;width:100%;max-width: auto;">
+                    <q-scroll-area
+                      style="height:200px;width:100%;max-width: auto;"
+                    >
                       <q-list>
                         <demandDataDiff
                           v-for="(txtdata, key) in txtdatas_diff"
@@ -159,17 +181,22 @@
                           :selected_p_detail_item="selected_p_detail_item"
                           @txtdatas_Update="txtdatas_toVuex"
                         >
-                          <template slot="addToCollection" v-if="loggedIn == true">
+                          <template slot="addToSchedule">
                             <q-space />
-                            <hAddToCollectionBtn
-                              :txtdata="txtdata"
-                              :id="key"
-                              :city_name="txtdata.city_name"
-                              :site_name="txtdata.name"
-                              :address="txtdata.address"
-                              :comment="txtdata.comment"
-                              :rate="txtdata.rate"
-                            ></hAddToCollectionBtn>
+                            <q-btn
+                              icon-right="add"
+                              label="加進排程"
+                              color="warning"
+                              @click.stop="
+                                promptToAddSite({
+                                  id: key,
+                                  site: txtdata.name
+                                })
+                              "
+                              dense
+                              size="12px"
+                              style="margin-left:20px"
+                            />
                           </template>
                         </demandDataDiff>
                       </q-list>
@@ -188,7 +215,9 @@
               >
                 <q-card>
                   <q-card-section>
-                    <q-scroll-area style="height:200px;width:100%;max-width: auto;">
+                    <q-scroll-area
+                      style="height:200px;width:100%;max-width: auto;"
+                    >
                       <q-list>
                         <demandDataDiff2
                           v-for="(txtdata, key) in txtdatas_diff"
@@ -198,17 +227,22 @@
                           :selected_p_detail_item_2="selected_p_detail_item_2"
                           @txtdatas_Update="txtdatas_toVuex"
                         >
-                          <template slot="addToCollection" v-if="loggedIn == true">
+                          <template slot="addToSchedule">
                             <q-space />
-                            <hAddToCollectionBtn
-                              :txtdata="txtdata"
-                              :id="key"
-                              :city_name="txtdata.city_name"
-                              :site_name="txtdata.name"
-                              :address="txtdata.address"
-                              :comment="txtdata.comment"
-                              :rate="txtdata.rate"
-                            ></hAddToCollectionBtn>
+                            <q-btn
+                              icon-right="add"
+                              label="加進排程"
+                              color="warning"
+                              @click.stop="
+                                promptToAddSite({
+                                  id: key,
+                                  site: txtdata.name
+                                })
+                              "
+                              dense
+                              size="12px"
+                              style="margin-left:20px"
+                            />
                           </template>
                         </demandDataDiff2>
                       </q-list>
@@ -223,7 +257,10 @@
         </div>
       </div>
       <div class="row q-pa-sm">
-        <div class="col-md-6 q-pa-md" style="overflow:hidden;height:100%;margin:0px auto;">
+        <div
+          class="col-md-6 q-pa-md"
+          style="overflow:hidden;height:100%;margin:0px auto;"
+        >
           <!-- iframe區域 -->
           <q-card
             class="my-card text-center q-pa-sm"
@@ -231,7 +268,9 @@
           >
             <q-card-section>
               <div class="text-h6">社會網絡分析圖</div>
-              <div class="text-subtitle2">{{ r_title_1 }} {{ r_title_2 }} {{ r_title_3 }}</div>
+              <div class="text-subtitle2">
+                {{ r_title_1 }} {{ r_title_2 }} {{ r_title_3 }}
+              </div>
             </q-card-section>
 
             <q-separator />
@@ -315,7 +354,8 @@ export default {
       "txtdatas_ok",
       "txtdatas_diff_ok"
     ]),
-    ...mapGetters("auth", ["loggedIn"])
+    ...mapGetters("auth", ["loggedIn"]),
+    ...mapGetters("travel", ["everydaySites"])
 
     // selected_p_trigger: {
     //   get: function() {
@@ -342,6 +382,7 @@ export default {
     //   }
     // }
   },
+  props: ["id"],
   data() {
     return {
       // 轉場觸發
@@ -465,6 +506,48 @@ export default {
     // demand_data元件更改txtdatas至vuex
     txtdatas_toVuex(value) {
       this.$store.commit("h_demand/update_txtdatas", value);
+    },
+    promptToAddSite(value) {
+      const dateList = Object.keys(this.everydaySites);
+      const item_1 = [];
+      // 日期作為下面item的物件選項(radio)
+      dateList.forEach(function(item, index, array) {
+        item_1.push({
+          label: item,
+          value: item,
+          color: "secondary"
+        });
+      });
+
+      this.$q
+        .dialog({
+          title: "選擇您想加入的日期",
+          message: "日期:",
+          options: {
+            type: "radio",
+            model: "opt1",
+            // inline: true
+            items: item_1
+          },
+          cancel: true,
+          persistent: true
+        })
+        .onOk(data => {
+          console.log("promptToAddSite:", value, data);
+          this.$store.dispatch("travel/fbAddEverySiteData", {
+            site: value.site,
+            date: data,
+            scheduleId: this.id
+          });
+
+          // console.log('>>>> OK, received', data)
+        })
+        .onCancel(() => {
+          // console.log('>>>> Cancel')
+        })
+        .onDismiss(() => {
+          // console.log('I am triggered on both OK and Cancel')
+        });
     }
   },
   watch: {
