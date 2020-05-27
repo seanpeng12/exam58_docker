@@ -1,6 +1,6 @@
 <template>
   <!-- 懶人包 -->
-  <div class="q-pa-md doc-container" v-if="isShow_data">
+  <div class="q-pa-none doc-container" v-if="isShow_data">
     <!-- 標題 -->
     <div
       class="gt-xs q-pa-lg q-ma-sm column text-black bg-blue-grey-2"

@@ -102,22 +102,28 @@
             align="justify"
             narrow-indicator
           >
-            <q-tab name="mails" label="Step1(您的收藏) " icon:label_important />
+            <q-tab
+              name="collections"
+              label="Step1(您的收藏) "
+              icon:label_important
+            />
             <q-icon name="label_important" style="font-size: 32px;" />
-            <q-tab name="alarms" label="Step2(景點需求分析)" />
+            <q-tab name="prosCons" label="Step2(景點、飯店優缺點分析)" />
             <q-icon name="label_important" style="font-size: 32px;" />
-            <q-tab name="movies" label="Step3(路徑規劃分析)" />
+
+            <q-tab name="searchSite" label="Step3(找景點)" />
             <q-icon name="label_important" style="font-size: 32px;" />
-            <q-tab name="advantage" label="Step4(景點優缺點分析)" />
+            <q-tab name="searchHotel" label="Step4(找飯店)" />
             <q-icon name="label_important" style="font-size: 32px;" />
-            <q-tab name="h_advantage" label="Step5(飯店優缺點分析)" />
+            <q-tab name="movies" label="Step5(路徑規劃分析)" />
             <q-icon name="label_important" style="font-size: 32px;" />
+
             <q-tab name="aa" label="Step6(Google自動行程安排)" />
           </q-tabs>
 
           <q-separator />
           <q-tab-panels v-model="tab" animated>
-            <q-tab-panel name="mails">
+            <q-tab-panel name="collections">
               <!-- <q-banner class="bg-primary text-white">
                 <div class="text-h6 row"></div>
               </q-banner>-->
@@ -179,11 +185,11 @@
               </div>
             </q-tab-panel>
 
-            <q-tab-panel name="alarms">
+            <q-tab-panel name="searchSite">
               <div class="text-h6">
                 <!-- Tip: 需求分析 -->
                 <q-toggle
-                  v-model="fourth"
+                  v-model="prefer"
                   checked-icon="check"
                   color="red"
                   label="依照您曾經收藏類型推薦"
@@ -192,7 +198,7 @@
               </div>
               <!-- <p>{{ after_axios }}</p> -->
               <!-- 需求分析 select -->
-              <div class="q-pa-md" v-if="fourth == false">
+              <div class="q-pa-md" v-if="prefer == false">
                 <div class="q-pa-md doc-container text-black bg-grey-3">
                   <div class="row text-h4">
                     <b>景點需求分析</b>
@@ -409,7 +415,203 @@
               </div>
               <!-- END -->
             </q-tab-panel>
+            <q-tab-panel name="searchHotel">
+              <!-- <p>{{ after_axios }}</p> -->
+              <!-- 需求分析 select -->
+              <div class="q-pa-md">
+                <div class="q-pa-md doc-container text-black bg-grey-3">
+                  <div class="row text-h4">
+                    <b>飯店需求分析</b>
+                    <demandInfo></demandInfo>
+                  </div>
 
+                  <div class="row q-pl-xl">
+                    <demand-select
+                      :citys="citys"
+                      :cats="cats"
+                      :selected_p="selected_p"
+                      :selected_p_detail_item="selected_p_detail_item"
+                      :selected_p_detail_item_2="selected_p_detail_item_2"
+                      @changed_1="selected_1"
+                      @changed_2="selected_2"
+                      @changed_3="selected_3"
+                      @runR="run_R"
+                    ></demand-select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 需求分析 R圖 -->
+
+              <div class="q-pt-none">
+                <div class="row">
+                  <div class="col-7">
+                    <demand-r :src="src" :runR_value="runR_value"></demand-r>
+                  </div>
+
+                  <!-- 需求分析 懶人包 -->
+
+                  <div class="col q-mt-xl">
+                    <p
+                      class="text"
+                      style="font-size: 30px;font-family: Microsoft JhengHei;"
+                    >
+                      {{ txtinfo }}
+                    </p>
+
+                    <q-list bordered>
+                      <q-expansion-item
+                        group="somegroup"
+                        icon="explore"
+                        :label="
+                          selected_p_detail_item +
+                            '&&' +
+                            selected_p_detail_item_2
+                        "
+                        default-opened
+                        header-class="text-purple"
+                      >
+                        <q-card>
+                          <q-card-section>
+                            <q-scroll-area
+                              style="height:200px; max-width: 600px;"
+                            >
+                              <q-list>
+                                <demand-data
+                                  v-for="(txtdata, key) in txtdatas"
+                                  :key="key"
+                                  :txtinfo="txtinfo"
+                                  :txtdata="txtdata"
+                                  @txtdatas_Update="txtdatas_toVuex"
+                                >
+                                  <template slot="addToSchedule">
+                                    <q-space />
+                                    <q-btn
+                                      icon-right="add"
+                                      label="加進排程"
+                                      color="warning"
+                                      @click="
+                                        promptToAddSite({
+                                          id: key,
+                                          site: txtdata.name
+                                        })
+                                      "
+                                      dense
+                                      size="12px"
+                                      style="margin-left:20px"
+                                    />
+                                  </template>
+                                </demand-data>
+                              </q-list>
+                            </q-scroll-area>
+                          </q-card-section>
+                        </q-card>
+                      </q-expansion-item>
+
+                      <q-separator />
+
+                      <q-expansion-item
+                        group="somegroup"
+                        icon="explore"
+                        :label="selected_p_detail_item"
+                        header-class="text-primary"
+                      >
+                        <q-card>
+                          <q-card-section>
+                            <!-- test txtdatas_diff -->
+                            <q-scroll-area
+                              style="height:200px; max-width: 600px;"
+                            >
+                              <q-list>
+                                <demandDataDiff
+                                  v-for="(txtdata, key) in txtdatas_diff"
+                                  :key="key"
+                                  :txtinfo_diff="txtinfo"
+                                  :txtdata_diff="txtdata"
+                                  :selected_p_detail_item="
+                                    selected_p_detail_item
+                                  "
+                                  @txtdatas_Update="txtdatas_toVuex"
+                                >
+                                  <template slot="addToSchedule">
+                                    <q-space />
+                                    <q-btn
+                                      icon-right="add"
+                                      label="加進排程"
+                                      color="warning"
+                                      @click="
+                                        promptToAddSite({
+                                          id: key,
+                                          site: txtdata.name
+                                        })
+                                      "
+                                      dense
+                                      size="12px"
+                                      style="margin-left:20px"
+                                    />
+                                  </template>
+                                </demandDataDiff>
+                              </q-list>
+                            </q-scroll-area>
+                          </q-card-section>
+                        </q-card>
+                      </q-expansion-item>
+
+                      <q-separator />
+
+                      <q-expansion-item
+                        group="somegroup"
+                        icon="explore"
+                        :label="selected_p_detail_item_2"
+                        header-class="text-primary"
+                      >
+                        <q-card>
+                          <q-card-section>
+                            <q-scroll-area
+                              style="height:200px; max-width: 600px;"
+                            >
+                              <q-list>
+                                <demandDataDiff2
+                                  v-for="(txtdata, key) in txtdatas_diff"
+                                  :key="key"
+                                  :txtinfo_diff="txtinfo"
+                                  :txtdata_diff="txtdata"
+                                  :selected_p_detail_item_2="
+                                    selected_p_detail_item_2
+                                  "
+                                  @txtdatas_Update="txtdatas_toVuex"
+                                >
+                                  <template slot="addToSchedule">
+                                    <q-space />
+                                    <q-btn
+                                      icon-right="add"
+                                      label="加進排程"
+                                      color="warning"
+                                      @click="
+                                        promptToAddSite({
+                                          id: key,
+                                          site: txtdata.name
+                                        })
+                                      "
+                                      dense
+                                      size="12px"
+                                      style="margin-left:20px"
+                                    />
+                                  </template>
+                                </demandDataDiff2>
+                              </q-list>
+                            </q-scroll-area>
+                          </q-card-section>
+                        </q-card>
+                      </q-expansion-item>
+
+                      <q-separator />
+                    </q-list>
+                  </div>
+                </div>
+              </div>
+              <!-- END -->
+            </q-tab-panel>
             <q-tab-panel name="movies">
               <div class="q-pa-md">
                 <div class="q-pa-md doc-container text-black bg-grey-3">
@@ -457,97 +659,116 @@
                 </div>
               </div>
             </q-tab-panel>
-            <q-tab-panel name="advantage">
-              <div class="q-pa-md">
-                <div class="q-pa-md doc-container text-black bg-grey-3">
-                  <div class="row text-h4">
-                    <b>優缺點分析</b>
 
-                    <prosconsInfo></prosconsInfo>
-                  </div>
-                  <div class="row q-pl-xl">
-                    <!-- proscons-select 區域 -->
-                    <proscons-select></proscons-select>
-                    <!-- end proscons select -->
-                  </div>
-                </div>
+            <q-tab-panel name="prosCons">
+              <div
+                class="row q-mx-md q-pa-sm q-mb-none doc-container text-black bg-grey-3"
+              >
+                <q-tabs v-model="step2Tab" class="text-black" dense>
+                  <q-tab
+                    name="site"
+                    icon="fas fa-car-side"
+                    label="景點優缺點分析"
+                  />
+                  <q-tab
+                    name="hotel"
+                    icon="fas fa-hotel"
+                    label="飯店優缺點分析"
+                  />
+                </q-tabs>
               </div>
+              <div v-if="step2Tab == 'site'">
+                <div class="q-pa-md q-mt-none">
+                  <div class="q-pa-md doc-container text-black bg-grey-3">
+                    <div class="row text-h4">
+                      <b>優缺點分析</b>
 
-              <q-page>
-                <!-- 左右區域 web -->
-                <div class="q-pa-md">
-                  <div class="row">
-                    <div class="col-6">
-                      <proscons-data>
-                        <template slot="addToSchedule">
-                          <q-btn
-                            rounded
-                            icon="add"
-                            label="景點加進排程"
-                            color="warning"
-                            @click="promptToAddProsSite()"
-                            dense
-                            size="12px"
-                            style="margin-left:30px;font-weight:bold"
-                          />
-                        </template>
-                      </proscons-data>
+                      <prosconsInfo></prosconsInfo>
                     </div>
-                    <!-- 懶人包區域 -->
-                    <div class="col-6">
-                      <proscons-r></proscons-r>
+                    <div class="row q-pl-xl">
+                      <!-- proscons-select 區域 -->
+                      <proscons-select></proscons-select>
+                      <!-- end proscons select -->
                     </div>
                   </div>
                 </div>
-                <!-- end -->
-              </q-page>
-            </q-tab-panel>
-            <!-- 飯店優缺點分析 -->
-            <q-tab-panel name="h_advantage">
-              <div class="q-pa-md">
-                <div class="q-pa-md doc-container text-black bg-grey-3">
-                  <div class="row text-h4">
-                    <b>飯店優缺點分析</b>
 
-                    <prosconsInfo></prosconsInfo>
+                <q-page>
+                  <!-- 左右區域 web -->
+                  <div class="q-pa-md">
+                    <div class="row">
+                      <div class="col-6">
+                        <proscons-data>
+                          <template slot="addToSchedule">
+                            <q-btn
+                              rounded
+                              icon="add"
+                              label="景點加進排程"
+                              color="warning"
+                              @click="promptToAddProsSite()"
+                              dense
+                              size="12px"
+                              style="margin-left:30px;font-weight:bold"
+                            />
+                          </template>
+                        </proscons-data>
+                      </div>
+                      <!-- 懶人包區域 -->
+                      <div class="col-6">
+                        <proscons-r></proscons-r>
+                      </div>
+                    </div>
                   </div>
-                  <div class="row-12 q-pl-xl">
-                    <!-- proscons-select 區域 -->
-                    <hotelProsconsSelect></hotelProsconsSelect>
-                    <!-- end proscons select -->
-                  </div>
-                </div>
+                  <!-- end -->
+                </q-page>
               </div>
-
-              <q-page>
-                <!-- 左右區域 web -->
+              <div v-if="step2Tab == 'hotel'">
                 <div class="q-pa-md">
-                  <div class="row">
-                    <div class="col-6">
-                      <hotelProsconsData>
-                        <template slot="addToSchedule">
-                          <q-btn
-                            rounded
-                            icon="add"
-                            label="飯店加進排程"
-                            color="warning"
-                            @click="promptToAddHotelProsSite()"
-                            dense
-                            size="12px"
-                            style="margin-left:30px;font-weight:bold"
-                          />
-                        </template>
-                      </hotelProsconsData>
+                  <div class="q-pa-md doc-container text-black bg-grey-3">
+                    <div class="row text-h4">
+                      <b>飯店優缺點分析</b>
+
+                      <prosconsInfo></prosconsInfo>
                     </div>
-                    <!-- 懶人包區域 -->
-                    <div class="col-6">
-                      <hotelProsconsR></hotelProsconsR>
+                    <div class="row-12 q-pl-xl">
+                      <!-- proscons-select 區域 -->
+                      <hotelProsconsSelect></hotelProsconsSelect>
+                      <!-- end proscons select -->
                     </div>
                   </div>
                 </div>
-                <!-- end -->
-              </q-page>
+
+                <q-page>
+                  <!-- 左右區域 web -->
+                  <div class="q-pa-md">
+                    <div class="row">
+                      <div class="col-6">
+                        <hotelProsconsData>
+                          <template slot="addToSchedule">
+                            <q-btn
+                              rounded
+                              icon="add"
+                              label="飯店加進排程"
+                              color="warning"
+                              @click="promptToAddHotelProsSite()"
+                              dense
+                              size="12px"
+                              style="margin-left:30px;font-weight:bold"
+                            />
+                          </template>
+                        </hotelProsconsData>
+                      </div>
+                      <!-- 懶人包區域 -->
+                      <div class="col-6">
+                        <hotelProsconsR></hotelProsconsR>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- end -->
+                </q-page>
+              </div>
             </q-tab-panel>
+
             <q-tab-panel name="aa">
               <div class="text-h4">
                 GoogleMap找出最短路線
@@ -583,14 +804,16 @@ import draggable from "vuedraggable";
 export default {
   data() {
     return {
-      tab: "mails",
+      tab: "collections",
       left: false,
       darkDialog: false,
       model: null,
       model_route: null,
       model_city: null,
-      fourth: true,
-
+      // step1(需求轉偏好) toggle
+      prefer: true,
+      // (step2景點轉飯店優缺點分析)toggle,
+      site: true,
       id: "",
       date: "",
       prompt: false,
@@ -600,7 +823,8 @@ export default {
       title: "",
       slider: 1,
       step: 1,
-      step1Tab: "site"
+      step1Tab: "site",
+      step2Tab: "site"
     };
   },
   components: {

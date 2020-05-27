@@ -13,7 +13,7 @@
       <q-card style="width:500px" class="q-px-sm q-pb-md">
         <q-item-label header style="color:#57a5ba"
           ><q-icon name="multiline_chart" style="color:#57a5ba" size="20px" /><b
-            >分析圖式說明</b
+            >分析圖示說明</b
           ></q-item-label
         >
         <q-item dense>
@@ -55,7 +55,7 @@
                 />(第二景點)的連線表示，其他使用者在去過起始點後會前往的景點，<span
                   style="font-weight:bold"
                   >線條越粗</span
-                >表示越多人有同樣的安排
+                >表示越多人有同樣的安排，您可能找到找到其他人也會去的熱門景點或私房景點！
               </span>
               <br />
             </div>

@@ -13,7 +13,7 @@
       <q-card style="width:500px" class="q-px-sm q-pb-md">
         <q-item-label header style="color:#57a5ba"
           ><q-icon name="multiline_chart" style="color:#57a5ba" size="20px" /><b
-            >分析圖式說明</b
+            >分析圖示說明</b
           ></q-item-label
         >
         <q-item dense>
