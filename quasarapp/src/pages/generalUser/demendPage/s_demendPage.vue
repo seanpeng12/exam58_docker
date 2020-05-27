@@ -481,7 +481,7 @@ export default {
       fullPage: false,
 
       //顯示下方頁面
-      isShow: true,
+      isShow: false,
       // ok
       ok: true,
       // card
