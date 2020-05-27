@@ -123,7 +123,7 @@ const actions = {
     commit
   }) {
     axiosInstance
-      .post("http://127.0.0.1/api/h_path_sitesByCity", {
+      .post("http://140.136.155.116/api/h_path_sitesByCity", {
         city_name: state.selected_city
       })
       .then(res => {
@@ -196,7 +196,7 @@ const actions = {
       })
       .then(img => {
         axiosInstance
-          .post("http://127.0.0.1/api/pathSiteGooglePlaceId", {
+          .post("http://140.136.155.116/api/pathSiteGooglePlaceId", {
             name: site_name
           })
 

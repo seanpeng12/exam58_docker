@@ -7,7 +7,7 @@
           <div class="row" style>
             <div class="col"></div>
             <div class="col-12 col-md-auto">
-              <p style="font-size: 28px;font-family: Microsoft JhengHei;">景點需求分析{{txtdatas_diff_ok}}</p>
+              <p style="font-size: 28px;font-family: Microsoft JhengHei;">景點需求分析</p>
             </div>
 
             <div class="col q-mt-sm q-ml-sm">
@@ -68,6 +68,9 @@
             <!-- 左 -->
             <div class="col-6">
               <div class="q-pa-lg" style="height:100%;width:800px;max-width:100%;">
+                <q-toolbar class="bg-primary text-white shadow-2">
+                  <q-toolbar-title>分析結果</q-toolbar-title>
+                </q-toolbar>
                 <q-list
                   bordered
                   class="bg-grey-1 text-bold"
@@ -75,7 +78,7 @@
                 >
                   <q-expansion-item
                     group="somegroup"
-                    icon="explore"
+                    icon="donut_small"
                     :label="selected_p_detail_item + ' / ' + selected_p_detail_item_2"
                     default-opened
                     header-class="text-purple"
@@ -124,7 +127,7 @@
 
                   <q-expansion-item
                     group="somegroup"
-                    icon="explore"
+                    icon="donut_large"
                     :label="selected_p_detail_item"
                     header-class="text-primary"
                   >
@@ -166,7 +169,7 @@
 
                   <q-expansion-item
                     group="somegroup"
-                    icon="explore"
+                    icon="donut_large"
                     :label="selected_p_detail_item_2"
                     header-class="text-primary"
                   >
@@ -241,7 +244,7 @@
 
                     <q-tab-panels v-model="tab" animated>
                       <q-tab-panel name="one">
-                        <div>
+                        <div v-if="Gdata.website != '無資料'">
                           <q-btn
                             rounded
                             type="a"
@@ -251,6 +254,9 @@
                             class="text-bold"
                             label="官方網站"
                           />
+                        </div>
+                        <div v-else>
+                          <q-btn rounded color="primary" disable label="無官方網站" />
                         </div>
                         <div>
                           <q-chip
@@ -284,37 +290,6 @@
                           </div>
                         </div>
                       </q-tab-panel>
-                      <!-- <q-tab-panel name="three">
-                        <div class="q-pa-md" style="max-width: 350px">
-                          <q-list bordered class="rounded-borders">
-                            <div v-for="(review,index) in Gdata.review" :key="index">
-                              <q-expansion-item
-                                expand-separator
-                                header-class="text-purple"
-                                icon="img:review.profile_photo_url"
-                                :label="review.author_name"
-                                :caption="'評分:'+review.rating"
-                              >
-                                <q-card>
-                                  <q-card-section>{{review.text }}</q-card-section>
-                                </q-card>
-                              </q-expansion-item>
-                            </div>
-                          </q-list>
-                        </div>
-
-                        <div v-for="(review,index) in Gdata.review" :key="index">
-                          <q-chip rounded>
-                            <q-avatar>
-                              <img :src="review.profile_photo_url" />
-                            </q-avatar>
-                            {{review.author_name}}
-                          </q-chip>
-
-                          <p class="text-h7">{{review.text }}</p>
-                          <q-separator />
-                        </div>
-                      </q-tab-panel>-->
                     </q-tab-panels>
                   </q-card>
                 </div>
@@ -482,8 +457,7 @@ export default {
 
       //顯示下方頁面
       isShow: false,
-      // ok
-      ok: true,
+
       // card
       expanded: false,
       tab: "one",
@@ -546,8 +520,6 @@ export default {
       }
       // hide
       this.isShow = false;
-      // reset ok(loading關閉)
-      this.ok = false;
     },
     // from emit local then set vuex
     selected_2(value) {
@@ -559,8 +531,6 @@ export default {
       );
       // hide
       this.isShow = false;
-      // reset ok(loading關閉)
-      this.ok = false;
     },
     // from emit local then set vuex
     selected_3(value) {
@@ -572,8 +542,6 @@ export default {
       );
       // hide
       this.isShow = false;
-      // reset ok(loading關閉)
-      this.ok = false;
     },
     // 傳送runR引數至vuex
     run_R(value) {
@@ -620,17 +588,25 @@ export default {
       this.selected_p_detail_item_local = "";
       this.selected_p_detail_item_local2 = "";
     },
-    // txtdatas_ok: function(val) {
-    //   this.ok = !this.txtdatas_ok;
-    // },
+
     txtdatas_diff_ok: function(val) {
+      var _this = this;
       if (val == true) {
-        this.$store.commit(
-          "demand/update_txtinfo",
-          "分析完成! 已列出所有符合兩類別景點，可以點選加入最愛："
-        );
+        let promise = new Promise(function(resolve, reject) {
+          _this.$store.commit(
+            "demand/update_txtinfo",
+            "分析完成! 已列出所有符合兩類別景點，可以點選加入最愛："
+          );
+
+          resolve("result");
+        });
+
+        promise.then(function(result) {
+          console.log("全部完成資料載入");
+        });
+      } else {
+        console.log("error!檢查txtdatas_diff_ok");
       }
-      this.ok = !this.txtdatas_diff_ok;
     },
     site_name: function(val) {
       this.Info_clicked = true;
