@@ -1,6 +1,6 @@
 <template>
   <!-- 懶人包 -->
-  <div class="q-pa-none doc-container" v-if="isShow_data">
+  <div class="q-pa-none doc-container">
     <!-- 標題 -->
     <div class="gt-xs q-pa-lg q-ma-sm column text-black bg-blue-grey-1" style="height: auto;">
       <div class="col">
@@ -15,7 +15,7 @@
                 <span style="font-size: 15px;">
                   <b>顏色越深，好評中提及該關鍵字的人數越多</b>
                 </span>
-              </q-chip> -->
+              </q-chip>-->
             </p>
             <div>
               <q-scroll-area
@@ -95,7 +95,7 @@
                 <span style="font-size: 15px;">
                   <b>顏色越深，負評中提及該關鍵字的人數越多</b>
                 </span>
-              </q-chip> -->
+              </q-chip>-->
             </p>
             <div>
               <q-scroll-area
@@ -174,10 +174,7 @@ import { mapActions } from "vuex";
 export default {
   data() {
     return {
-      tab: "mails",
-      // dropdownitem
-      expanded: true,
-      isShow_data: true
+      tab: "mails"
     };
   },
   computed: {

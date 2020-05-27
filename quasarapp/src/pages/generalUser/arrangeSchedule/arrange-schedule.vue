@@ -20,12 +20,7 @@
 
     <q-drawer show-if-above v-model="left" side="left" bordered :width="260">
       <!-- 往上一頁 -->
-      <q-icon
-        class="q-mt-none q-mb-xs q-ml-md"
-        color="#cccccc"
-        name="help"
-        size="26px"
-      >
+      <q-icon class="q-mt-none q-mb-xs q-ml-md" color="#cccccc" name="help" size="26px">
         <q-tooltip
           anchor="top middle"
           content-class="q-pa-md bg-amber-2 text-black shadow-4"
@@ -34,9 +29,7 @@
           transition-hide="fade"
           :offset="[10, 10]"
         >
-          <span style="font-family:Microsoft JhengHei;"
-            >您可以搭配我們的分析步驟，把喜愛的景點飯店加入排程</span
-          >
+          <span style="font-family:Microsoft JhengHei;">您可以搭配我們的分析步驟，把喜愛的景點飯店加入排程</span>
         </q-tooltip>
       </q-icon>
       <q-breadcrumbs-el
@@ -102,11 +95,7 @@
             align="justify"
             narrow-indicator
           >
-            <q-tab
-              name="collections"
-              label="Step1(您的收藏) "
-              icon:label_important
-            />
+            <q-tab name="collections" label="Step1(您的收藏) " icon:label_important />
             <q-icon name="label_important" style="font-size: 32px;" />
             <q-tab name="prosCons" label="Step2(景點、飯店優缺點分析)" />
             <q-icon name="label_important" style="font-size: 32px;" />
@@ -199,29 +188,10 @@
               <!-- <p>{{ after_axios }}</p> -->
               <!-- 需求分析 select -->
               <div class="q-pa-md" v-if="prefer == false">
-                <div class="q-pa-md doc-container text-black bg-grey-3">
-                  <div class="row text-h4">
-                    <b>景點需求分析</b>
-                    <demandInfo></demandInfo>
-                  </div>
-
-                  <div class="row q-pl-xl">
-                    <demand-select
-                      :citys="citys"
-                      :cats="cats"
-                      :selected_p="selected_p"
-                      :selected_p_detail_item="selected_p_detail_item"
-                      :selected_p_detail_item_2="selected_p_detail_item_2"
-                      @changed_1="selected_1"
-                      @changed_2="selected_2"
-                      @changed_3="selected_3"
-                      @runR="run_R"
-                    ></demand-select>
-                  </div>
-                </div>
+                <DemandPage></DemandPage>
               </div>
               <div class="q-pa-md" v-else>
-                <div class="q-pa-md doc-container text-black bg-grey-3">
+                <div class="q-pa-md doc-container">
                   <div class="row text-h4">
                     <b>需求推薦分析</b>
                     <preferInfo></preferInfo>
@@ -241,184 +211,177 @@
                       @runR="run_R"
                     ></demand-prefer>
                   </div>
-                </div>
-              </div>
 
-              <!-- 需求分析 R圖 -->
+                  <div class="q-pt-none">
+                    <div class="row">
+                      <!-- 需求分析 R圖 -->
+                      <div class="col-7">
+                        <demand-r :src="src" :runR_value="runR_value"></demand-r>
+                      </div>
 
-              <div class="q-pt-none">
-                <div class="row">
-                  <div class="col-7">
-                    <demand-r :src="src" :runR_value="runR_value"></demand-r>
-                  </div>
+                      <!-- 需求分析 懶人包 -->
 
-                  <!-- 需求分析 懶人包 -->
+                      <div class="col q-mt-xl">
+                        <p
+                          class="text"
+                          style="font-size: 30px;font-family: Microsoft JhengHei;"
+                        >{{ txtinfo }}</p>
 
-                  <div class="col q-mt-xl">
-                    <p
-                      class="text"
-                      style="font-size: 30px;font-family: Microsoft JhengHei;"
-                    >
-                      {{ txtinfo }}
-                    </p>
-
-                    <q-list bordered>
-                      <q-expansion-item
-                        group="somegroup"
-                        icon="explore"
-                        :label="
+                        <q-list bordered>
+                          <q-expansion-item
+                            group="somegroup"
+                            icon="explore"
+                            :label="
                           selected_p_detail_item +
                             '&&' +
                             selected_p_detail_item_2
                         "
-                        default-opened
-                        header-class="text-purple"
-                      >
-                        <q-card>
-                          <q-card-section>
-                            <q-scroll-area
-                              style="height:200px; max-width: 600px;"
-                            >
-                              <q-list>
-                                <demand-data
-                                  v-for="(txtdata, key) in txtdatas"
-                                  :key="key"
-                                  :txtinfo="txtinfo"
-                                  :txtdata="txtdata"
-                                  @txtdatas_Update="txtdatas_toVuex"
-                                >
-                                  <template slot="addToSchedule">
-                                    <q-space />
-                                    <q-btn
-                                      icon-right="add"
-                                      label="加進排程"
-                                      color="warning"
-                                      @click="
+                            default-opened
+                            header-class="text-purple"
+                          >
+                            <q-card>
+                              <q-card-section>
+                                <q-scroll-area style="height:200px; max-width: 600px;">
+                                  <q-list>
+                                    <demand-data
+                                      v-for="(txtdata, key) in txtdatas"
+                                      :key="key"
+                                      :txtinfo="txtinfo"
+                                      :txtdata="txtdata"
+                                      @txtdatas_Update="txtdatas_toVuex"
+                                    >
+                                      <template slot="addToSchedule">
+                                        <q-space />
+                                        <q-btn
+                                          icon-right="add"
+                                          label="加進排程"
+                                          color="warning"
+                                          @click="
                                         promptToAddSite({
                                           id: key,
                                           site: txtdata.name
                                         })
                                       "
-                                      dense
-                                      size="12px"
-                                      style="margin-left:20px"
-                                    />
-                                  </template>
-                                </demand-data>
-                              </q-list>
-                            </q-scroll-area>
-                          </q-card-section>
-                        </q-card>
-                      </q-expansion-item>
+                                          dense
+                                          size="12px"
+                                          style="margin-left:20px"
+                                        />
+                                      </template>
+                                    </demand-data>
+                                  </q-list>
+                                </q-scroll-area>
+                              </q-card-section>
+                            </q-card>
+                          </q-expansion-item>
 
-                      <q-separator />
+                          <q-separator />
 
-                      <q-expansion-item
-                        group="somegroup"
-                        icon="explore"
-                        :label="selected_p_detail_item"
-                        header-class="text-primary"
-                      >
-                        <q-card>
-                          <q-card-section>
-                            <!-- test txtdatas_diff -->
-                            <q-scroll-area
-                              style="height:200px; max-width: 600px;"
-                            >
-                              <q-list>
-                                <demandDataDiff
-                                  v-for="(txtdata, key) in txtdatas_diff"
-                                  :key="key"
-                                  :txtinfo_diff="txtinfo"
-                                  :txtdata_diff="txtdata"
-                                  :selected_p_detail_item="
+                          <q-expansion-item
+                            group="somegroup"
+                            icon="explore"
+                            :label="selected_p_detail_item"
+                            header-class="text-primary"
+                          >
+                            <q-card>
+                              <q-card-section>
+                                <!-- test txtdatas_diff -->
+                                <q-scroll-area style="height:200px; max-width: 600px;">
+                                  <q-list>
+                                    <demandDataDiff
+                                      v-for="(txtdata, key) in txtdatas_diff"
+                                      :key="key"
+                                      :txtinfo_diff="txtinfo"
+                                      :txtdata_diff="txtdata"
+                                      :selected_p_detail_item="
                                     selected_p_detail_item
                                   "
-                                  @txtdatas_Update="txtdatas_toVuex"
-                                >
-                                  <template slot="addToSchedule">
-                                    <q-space />
-                                    <q-btn
-                                      icon-right="add"
-                                      label="加進排程"
-                                      color="warning"
-                                      @click="
+                                      @txtdatas_Update="txtdatas_toVuex"
+                                    >
+                                      <template slot="addToSchedule">
+                                        <q-space />
+                                        <q-btn
+                                          icon-right="add"
+                                          label="加進排程"
+                                          color="warning"
+                                          @click="
                                         promptToAddSite({
                                           id: key,
                                           site: txtdata.name
                                         })
                                       "
-                                      dense
-                                      size="12px"
-                                      style="margin-left:20px"
-                                    />
-                                  </template>
-                                </demandDataDiff>
-                              </q-list>
-                            </q-scroll-area>
-                          </q-card-section>
-                        </q-card>
-                      </q-expansion-item>
+                                          dense
+                                          size="12px"
+                                          style="margin-left:20px"
+                                        />
+                                      </template>
+                                    </demandDataDiff>
+                                  </q-list>
+                                </q-scroll-area>
+                              </q-card-section>
+                            </q-card>
+                          </q-expansion-item>
 
-                      <q-separator />
+                          <q-separator />
 
-                      <q-expansion-item
-                        group="somegroup"
-                        icon="explore"
-                        :label="selected_p_detail_item_2"
-                        header-class="text-primary"
-                      >
-                        <q-card>
-                          <q-card-section>
-                            <q-scroll-area
-                              style="height:200px; max-width: 600px;"
-                            >
-                              <q-list>
-                                <demandDataDiff2
-                                  v-for="(txtdata, key) in txtdatas_diff"
-                                  :key="key"
-                                  :txtinfo_diff="txtinfo"
-                                  :txtdata_diff="txtdata"
-                                  :selected_p_detail_item_2="
+                          <q-expansion-item
+                            group="somegroup"
+                            icon="explore"
+                            :label="selected_p_detail_item_2"
+                            header-class="text-primary"
+                          >
+                            <q-card>
+                              <q-card-section>
+                                <q-scroll-area style="height:200px; max-width: 600px;">
+                                  <q-list>
+                                    <demandDataDiff2
+                                      v-for="(txtdata, key) in txtdatas_diff"
+                                      :key="key"
+                                      :txtinfo_diff="txtinfo"
+                                      :txtdata_diff="txtdata"
+                                      :selected_p_detail_item_2="
                                     selected_p_detail_item_2
                                   "
-                                  @txtdatas_Update="txtdatas_toVuex"
-                                >
-                                  <template slot="addToSchedule">
-                                    <q-space />
-                                    <q-btn
-                                      icon-right="add"
-                                      label="加進排程"
-                                      color="warning"
-                                      @click="
+                                      @txtdatas_Update="txtdatas_toVuex"
+                                    >
+                                      <template slot="addToSchedule">
+                                        <q-space />
+                                        <q-btn
+                                          icon-right="add"
+                                          label="加進排程"
+                                          color="warning"
+                                          @click="
                                         promptToAddSite({
                                           id: key,
                                           site: txtdata.name
                                         })
                                       "
-                                      dense
-                                      size="12px"
-                                      style="margin-left:20px"
-                                    />
-                                  </template>
-                                </demandDataDiff2>
-                              </q-list>
-                            </q-scroll-area>
-                          </q-card-section>
-                        </q-card>
-                      </q-expansion-item>
+                                          dense
+                                          size="12px"
+                                          style="margin-left:20px"
+                                        />
+                                      </template>
+                                    </demandDataDiff2>
+                                  </q-list>
+                                </q-scroll-area>
+                              </q-card-section>
+                            </q-card>
+                          </q-expansion-item>
 
-                      <q-separator />
-                    </q-list>
+                          <q-separator />
+                        </q-list>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
+
               <!-- END -->
             </q-tab-panel>
             <q-tab-panel name="searchHotel">
+              <hDemandPage></hDemandPage>
               <!-- <p>{{ after_axios }}</p> -->
-              <!-- 需求分析 select -->
-              <div class="q-pa-md">
+              <!-- 飯店需求分析 select -->
+              <!-- <div class="q-pa-md">
                 <div class="q-pa-md doc-container text-black bg-grey-3">
                   <div class="row text-h4">
                     <b>飯店需求分析</b>
@@ -439,177 +402,10 @@
                     ></demand-select>
                   </div>
                 </div>
-              </div>
+              </div>-->
 
               <!-- 需求分析 R圖 -->
 
-              <div class="q-pt-none">
-                <div class="row">
-                  <div class="col-7">
-                    <demand-r :src="src" :runR_value="runR_value"></demand-r>
-                  </div>
-
-                  <!-- 需求分析 懶人包 -->
-
-                  <div class="col q-mt-xl">
-                    <p
-                      class="text"
-                      style="font-size: 30px;font-family: Microsoft JhengHei;"
-                    >
-                      {{ txtinfo }}
-                    </p>
-
-                    <q-list bordered>
-                      <q-expansion-item
-                        group="somegroup"
-                        icon="explore"
-                        :label="
-                          selected_p_detail_item +
-                            '&&' +
-                            selected_p_detail_item_2
-                        "
-                        default-opened
-                        header-class="text-purple"
-                      >
-                        <q-card>
-                          <q-card-section>
-                            <q-scroll-area
-                              style="height:200px; max-width: 600px;"
-                            >
-                              <q-list>
-                                <demand-data
-                                  v-for="(txtdata, key) in txtdatas"
-                                  :key="key"
-                                  :txtinfo="txtinfo"
-                                  :txtdata="txtdata"
-                                  @txtdatas_Update="txtdatas_toVuex"
-                                >
-                                  <template slot="addToSchedule">
-                                    <q-space />
-                                    <q-btn
-                                      icon-right="add"
-                                      label="加進排程"
-                                      color="warning"
-                                      @click="
-                                        promptToAddSite({
-                                          id: key,
-                                          site: txtdata.name
-                                        })
-                                      "
-                                      dense
-                                      size="12px"
-                                      style="margin-left:20px"
-                                    />
-                                  </template>
-                                </demand-data>
-                              </q-list>
-                            </q-scroll-area>
-                          </q-card-section>
-                        </q-card>
-                      </q-expansion-item>
-
-                      <q-separator />
-
-                      <q-expansion-item
-                        group="somegroup"
-                        icon="explore"
-                        :label="selected_p_detail_item"
-                        header-class="text-primary"
-                      >
-                        <q-card>
-                          <q-card-section>
-                            <!-- test txtdatas_diff -->
-                            <q-scroll-area
-                              style="height:200px; max-width: 600px;"
-                            >
-                              <q-list>
-                                <demandDataDiff
-                                  v-for="(txtdata, key) in txtdatas_diff"
-                                  :key="key"
-                                  :txtinfo_diff="txtinfo"
-                                  :txtdata_diff="txtdata"
-                                  :selected_p_detail_item="
-                                    selected_p_detail_item
-                                  "
-                                  @txtdatas_Update="txtdatas_toVuex"
-                                >
-                                  <template slot="addToSchedule">
-                                    <q-space />
-                                    <q-btn
-                                      icon-right="add"
-                                      label="加進排程"
-                                      color="warning"
-                                      @click="
-                                        promptToAddSite({
-                                          id: key,
-                                          site: txtdata.name
-                                        })
-                                      "
-                                      dense
-                                      size="12px"
-                                      style="margin-left:20px"
-                                    />
-                                  </template>
-                                </demandDataDiff>
-                              </q-list>
-                            </q-scroll-area>
-                          </q-card-section>
-                        </q-card>
-                      </q-expansion-item>
-
-                      <q-separator />
-
-                      <q-expansion-item
-                        group="somegroup"
-                        icon="explore"
-                        :label="selected_p_detail_item_2"
-                        header-class="text-primary"
-                      >
-                        <q-card>
-                          <q-card-section>
-                            <q-scroll-area
-                              style="height:200px; max-width: 600px;"
-                            >
-                              <q-list>
-                                <demandDataDiff2
-                                  v-for="(txtdata, key) in txtdatas_diff"
-                                  :key="key"
-                                  :txtinfo_diff="txtinfo"
-                                  :txtdata_diff="txtdata"
-                                  :selected_p_detail_item_2="
-                                    selected_p_detail_item_2
-                                  "
-                                  @txtdatas_Update="txtdatas_toVuex"
-                                >
-                                  <template slot="addToSchedule">
-                                    <q-space />
-                                    <q-btn
-                                      icon-right="add"
-                                      label="加進排程"
-                                      color="warning"
-                                      @click="
-                                        promptToAddSite({
-                                          id: key,
-                                          site: txtdata.name
-                                        })
-                                      "
-                                      dense
-                                      size="12px"
-                                      style="margin-left:20px"
-                                    />
-                                  </template>
-                                </demandDataDiff2>
-                              </q-list>
-                            </q-scroll-area>
-                          </q-card-section>
-                        </q-card>
-                      </q-expansion-item>
-
-                      <q-separator />
-                    </q-list>
-                  </div>
-                </div>
-              </div>
               <!-- END -->
             </q-tab-panel>
             <q-tab-panel name="movies">
@@ -643,12 +439,7 @@
                         />
                       </template>
                       <template slot="finishTip">
-                        <div
-                          class="text-h6 text-bold"
-                          style="font-family:NSimSun"
-                        >
-                          完成
-                        </div>
+                        <div class="text-h6 text-bold" style="font-family:NSimSun">完成</div>
                       </template>
                     </path-data>
                   </div>
@@ -661,20 +452,10 @@
             </q-tab-panel>
 
             <q-tab-panel name="prosCons">
-              <div
-                class="row q-mx-md q-pa-sm q-mb-none doc-container text-black bg-grey-3"
-              >
+              <div class="row q-mx-md q-pa-sm q-mb-none doc-container text-black bg-grey-3">
                 <q-tabs v-model="step2Tab" class="text-black" dense>
-                  <q-tab
-                    name="site"
-                    icon="fas fa-car-side"
-                    label="景點優缺點分析"
-                  />
-                  <q-tab
-                    name="hotel"
-                    icon="fas fa-hotel"
-                    label="飯店優缺點分析"
-                  />
+                  <q-tab name="site" icon="fas fa-car-side" label="景點優缺點分析" />
+                  <q-tab name="hotel" icon="fas fa-hotel" label="飯店優缺點分析" />
                 </q-tabs>
               </div>
               <div v-if="step2Tab == 'site'">
@@ -773,9 +554,7 @@
               <div class="text-h4">
                 GoogleMap找出最短路線
                 <q-icon color="red" name="report_problem" size="20px" />
-                <span class="text-subtitle2" style="color:red"
-                  >起點與終點為固定順序</span
-                >
+                <span class="text-subtitle2" style="color:red">起點與終點為固定順序</span>
               </div>
 
               <googleMap>
@@ -841,6 +620,10 @@ export default {
     demandDataDiff2: () => import("components/demand/demand_data_diff2.vue"),
     demandInfo: () => import("components/demand/demand_info.vue"),
     preferInfo: () => import("components/demand/prefer_info.vue"),
+    // 引用景點需求元件(整頁)
+    DemandPage: () => import("components/schedules/page/demand_all.vue"),
+    // 引用飯店需求元件(整頁)
+    hDemandPage: () => import("components/schedules/page/h_demand_all.vue"),
     // 引用景點優缺點元件
     prosconsSelect: () => import("components/proscons/proscons_select.vue"),
     prosconsR: () => import("components/proscons/proscons_R.vue"),
