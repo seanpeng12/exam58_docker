@@ -5,6 +5,7 @@
         <q-btn
           class="title"
           to="/"
+          @click="logoutUser()"
           flat
           style="font-family:Trebuchet MS,Papyrus,Verdana, Geneva, sans-serif;font-size:22px;font-weight:bold"
           >SightSeeing</q-btn

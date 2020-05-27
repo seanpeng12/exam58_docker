@@ -46,7 +46,16 @@ const routes = [
       }
     ]
   },
-
+  {
+    path: "/manager/collection",
+    component: () => import("layouts/managerMainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/managerUser/collection/collection.vue")
+      }
+    ]
+  },
   // generalUser routes
   {
     path: "/index",

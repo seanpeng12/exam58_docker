@@ -5,7 +5,12 @@
       class="q-pa-lg q-ma-sm bg-teal-5"
       style="color:white;font-weight: bold;font-size : 25px;font-family: Microsoft JhengHei;"
     >
-      <p>優缺點分析結果</p>
+      <div class="row">
+        <div class="col-4 q-mt-xs">
+          <p>社會網絡分析圖</p>
+        </div>
+        <div class="col-3 q-ml-sm"><slot name="photoExplain"></slot></div>
+      </div>
 
       <!--  -->
       <q-card>
@@ -28,7 +33,12 @@
 
                 <q-separator />
 
-                <q-tab-panels class="text-dark" v-model="tab" style="max-height: 500px;" animated>
+                <q-tab-panels
+                  class="text-dark"
+                  v-model="tab"
+                  style="max-height: 500px;"
+                  animated
+                >
                   <q-tab-panel name="pros">
                     <iframe
                       style="height: 1500px"

@@ -5,6 +5,7 @@
         <q-btn
           class="title"
           to="/"
+          @click="logoutUser()"
           flat
           style="font-family:Trebuchet MS,Papyrus,Verdana, Geneva, sans-serif;font-size:22px;font-weight:bold"
           >SightSeeing</q-btn
@@ -92,7 +93,7 @@
             style="margin-left: 20px;"
           />-->
           <q-btn-dropdown
-            v-if="loggedIn && role == 'generalUser'"
+            v-if="loggedIn && role == 'manager'"
             flat
             label="會員功能"
           >
@@ -101,7 +102,7 @@
                 clickable
                 v-close-popup
                 @click="onItemClick"
-                to="manager/collection"
+                to="/manager/collection"
               >
                 <q-item-section>
                   <q-item-label>我的收藏商家</q-item-label>

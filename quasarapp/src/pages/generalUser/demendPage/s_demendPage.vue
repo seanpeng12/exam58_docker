@@ -370,7 +370,7 @@
             style="height:100%;width:100%;max-height:800px;max-width:100%;"
           >
             <q-card-section>
-              <div class="text-h6">需求分析圖</div>
+              <div class="text-h6">社會網絡分析圖</div>
               <div class="text-subtitle2">{{ r_title_1 }} {{ r_title_2 }} {{ r_title_3 }}</div>
             </q-card-section>
 

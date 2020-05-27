@@ -12,7 +12,9 @@
             <div class="col"></div>
 
             <div class="col-12 col-md-auto">
-              <p style="font-size: 28px;font-family: Microsoft JhengHei;">景點優缺點分析</p>
+              <p style="font-size: 28px;font-family: Microsoft JhengHei;">
+                景點優缺點分析
+              </p>
             </div>
 
             <div class="col q-mt-sm q-ml-sm">
@@ -28,7 +30,8 @@
                 <b
                   class="text"
                   style="font-size: 20px;font-family: Microsoft JhengHei;"
-                >為您找出景點綜合評論，讓您不用花大把時間在網路上爬文</b>
+                  >為您找出景點綜合評論，讓您了解自身與競爭對手的優劣勢</b
+                >
                 <br />
               </div>
             </div>
@@ -45,8 +48,9 @@
                     :loading="loading2"
                     class="q-ml-md"
                     @click="
-                    addToCollection(prosConsSelected_site), simulateProgress(2)
-                  "
+                      addToCollection(prosConsSelected_site),
+                        simulateProgress(2)
+                    "
                     dense
                     label="加入收藏"
                     color="warning"
@@ -83,11 +87,44 @@
         <div class="q-pa-md">
           <div class="row">
             <div class="col-6">
-              <proscons-data></proscons-data>
+              <proscons-data>
+                <template slot="text_ProsExplain"
+                  ><q-chip>
+                    <q-avatar
+                      color="green-8"
+                      text-color="white"
+                      size="15px"
+                    ></q-avatar>
+                    <span style="font-size: 15px;">
+                      <b
+                        >顏色越深，好評中提及該關鍵字的人數越多，可能為您的優勢，建議從此進行優化</b
+                      >
+                    </span>
+                  </q-chip></template
+                >
+                <template slot="text_ConsExplain"
+                  ><q-chip>
+                    <q-avatar
+                      color="red-8"
+                      text-color="white"
+                      size="15px"
+                    ></q-avatar>
+                    <span style="font-size: 15px;">
+                      <b
+                        >顏色越深，負評中提及該關鍵字的人數越多，為您急迫需要解決的問題</b
+                      >
+                    </span>
+                  </q-chip></template
+                >
+              </proscons-data>
             </div>
             <!-- 懶人包區域 -->
             <div class="col-6">
-              <proscons-r></proscons-r>
+              <proscons-r>
+                <template slot="photoExplain">
+                  <sitePhotoInfo></sitePhotoInfo>
+                </template>
+              </proscons-r>
             </div>
           </div>
         </div>
@@ -125,7 +162,8 @@ export default {
     prosconsSelect: () => import("components/proscons/proscons_select.vue"),
     prosconsR: () => import("components/proscons/proscons_R.vue"),
     prosconsData: () => import("components/proscons/proscons_data.vue"),
-    sSiProsConsInfo: () => import("components/proscons/s_si_proscons_info.vue")
+    sSiProsConsInfo: () => import("components/proscons/s_si_proscons_info.vue"),
+    sitePhotoInfo: () => import("components/proscons/manager/sitePhotoInfo.vue")
   },
   data() {
     return {

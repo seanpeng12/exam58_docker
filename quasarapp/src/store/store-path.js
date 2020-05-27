@@ -191,26 +191,28 @@ const actions = {
   }, site_name) {
     commit("resetSiteGoogleDetail");
     axiosInstance
-      .post("http://127.0.0.1/api/pathSiteGooglePlaceId", {
+      .post("http://140.136.155.116/api/getGoogleImg", {
         name: site_name
       })
+      .then(img => {
+        axiosInstance
+          .post("http://127.0.0.1/api/pathSiteGooglePlaceId", {
+            name: site_name
+          })
 
-      .then(res => {
-        commit("getSiteGoogleDetail", {
-          id: res.data.place_id,
-          detail: {
-            site_name: site_name,
-            phone_number: res.data.formatted_phone_number,
-            address: res.data.formatted_address,
-            rating: res.data.rating
-          }
-        });
-        console.log(
-          "res.data--getSiteGoogleDetail",
-          res.data.formatted_address,
-          res.data.formatted_phone_number,
-          res.data.rating
-        );
+          .then(res => {
+            commit("getSiteGoogleDetail", {
+              id: res.data.place_id,
+              detail: {
+                site_name: site_name,
+                phone_number: res.data.formatted_phone_number,
+                address: res.data.formatted_address,
+                rating: res.data.rating,
+                img: img.data
+              }
+            });
+            console.log("res.data--getSiteGoogleDetail", res.data);
+          });
       });
   }
 };

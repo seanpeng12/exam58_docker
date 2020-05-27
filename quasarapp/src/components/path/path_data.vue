@@ -123,11 +123,9 @@
             </q-expansion-item>
           </q-tab-panel>
 
-          <q-tab-panel name="tab_3">
-            <div class="text-h6 text-bold" style="font-family:NSimSun">
-              <!-- {{ selected_site_3 }} -->
-              完成
-            </div>
+          <q-tab-panel name="tab_3"
+            ><slot name="finishTip"></slot>
+
             <slot name="addToSchedule"></slot>
             <!-- <q-btn>景點加入排程</q-btn> -->
           </q-tab-panel>

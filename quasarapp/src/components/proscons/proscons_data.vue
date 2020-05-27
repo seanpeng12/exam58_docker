@@ -9,12 +9,13 @@
             <p style="font-size: 26px;font-weight:bold;font-family: Microsoft JhengHei;">
               {{ prosConsSelected_site }}的優點
               <slot name="addToSchedule"></slot>
-              <q-chip>
+              <slot name="text_ProsExplain"></slot>
+              <!-- <q-chip>
                 <q-avatar color="green-8" text-color="white" size="15px"></q-avatar>
                 <span style="font-size: 15px;">
                   <b>顏色越深，好評中提及該關鍵字的人數越多</b>
                 </span>
-              </q-chip>
+              </q-chip> -->
             </p>
             <div>
               <q-scroll-area
@@ -88,12 +89,13 @@
           <div>
             <p style="font-size: 26px;font-weight:bold;font-family: Microsoft JhengHei;">
               {{ prosConsSelected_site }}的缺點
-              <q-chip>
+              <slot name="text_ConsExplain"></slot>
+              <!-- <q-chip>
                 <q-avatar color="red-8" text-color="white" size="15px"></q-avatar>
                 <span style="font-size: 15px;">
                   <b>顏色越深，負評中提及該關鍵字的人數越多</b>
                 </span>
-              </q-chip>
+              </q-chip> -->
             </p>
             <div>
               <q-scroll-area
