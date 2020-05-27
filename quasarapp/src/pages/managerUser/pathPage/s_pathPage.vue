@@ -27,7 +27,7 @@
               <b
                 class="text"
                 style="font-size: 20px;font-family: Microsoft JhengHei;"
-                >不採雷的路線推薦，給拿不定下一站的您!</b
+                >透過了解消費者的旅遊軌跡，找到潛在的合作商家</b
               >
               <br />
             </div>
@@ -58,7 +58,13 @@
       <div class="q-pa-md">
         <div class="row">
           <div class="col-6">
-            <path-data></path-data>
+            <path-data>
+              <template slot="finishTip">
+                <div class="text-h6 text-bold" style="font-family:NSimSun">
+                  趕緊聯繫您的潛在合作商家吧！
+                </div>
+              </template>
+            </path-data>
           </div>
           <div class="col-6 q-mt-lg">
             <companyDetail2
@@ -75,7 +81,11 @@
         <div class="row"></div>
         <!-- 懶人包區域 -->
         <div class="col-6" style="width:50%;margin:0px auto">
-          <path-r></path-r>
+          <path-r>
+            <template slot="photoExplain">
+              <pathPhotoInfo></pathPhotoInfo>
+            </template>
+          </path-r>
         </div>
       </div>
     </div>
@@ -112,7 +122,8 @@ export default {
     pathButtonToggle: () => import("components/path/path_button_toggle.vue"),
     siPathInfo: () => import("components/path/si_path_info.vue"),
     companyDetail2: () => import("components/path/companyDetail2.vue"),
-    companyDetail3: () => import("components/path/companyDetail3.vue")
+    companyDetail3: () => import("components/path/companyDetail3.vue"),
+    pathPhotoInfo: () => import("components/path/manager/pathPhotoInfo.vue")
   },
   data() {
     return {

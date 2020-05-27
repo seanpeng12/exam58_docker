@@ -20,7 +20,12 @@
 
     <q-drawer show-if-above v-model="left" side="left" bordered :width="260">
       <!-- 往上一頁 -->
-      <q-icon class="q-mt-none q-mb-xs q-ml-md" color="#cccccc" name="help" size="26px">
+      <q-icon
+        class="q-mt-none q-mb-xs q-ml-md"
+        color="#cccccc"
+        name="help"
+        size="26px"
+      >
         <q-tooltip
           anchor="top middle"
           content-class="q-pa-md bg-amber-2 text-black shadow-4"
@@ -29,7 +34,9 @@
           transition-hide="fade"
           :offset="[10, 10]"
         >
-          <span style="font-family:Microsoft JhengHei;">您可以搭配我們的分析步驟，把喜愛的景點飯店加入排程</span>
+          <span style="font-family:Microsoft JhengHei;"
+            >您可以搭配我們的分析步驟，把喜愛的景點飯店加入排程</span
+          >
         </q-tooltip>
       </q-icon>
       <q-breadcrumbs-el
@@ -245,7 +252,9 @@
                     <p
                       class="text"
                       style="font-size: 30px;font-family: Microsoft JhengHei;"
-                    >{{ txtinfo }}</p>
+                    >
+                      {{ txtinfo }}
+                    </p>
 
                     <q-list bordered>
                       <q-expansion-item
@@ -261,7 +270,9 @@
                       >
                         <q-card>
                           <q-card-section>
-                            <q-scroll-area style="height:200px; max-width: 600px;">
+                            <q-scroll-area
+                              style="height:200px; max-width: 600px;"
+                            >
                               <q-list>
                                 <demand-data
                                   v-for="(txtdata, key) in txtdatas"
@@ -305,7 +316,9 @@
                         <q-card>
                           <q-card-section>
                             <!-- test txtdatas_diff -->
-                            <q-scroll-area style="height:200px; max-width: 600px;">
+                            <q-scroll-area
+                              style="height:200px; max-width: 600px;"
+                            >
                               <q-list>
                                 <demandDataDiff
                                   v-for="(txtdata, key) in txtdatas_diff"
@@ -351,7 +364,9 @@
                       >
                         <q-card>
                           <q-card-section>
-                            <q-scroll-area style="height:200px; max-width: 600px;">
+                            <q-scroll-area
+                              style="height:200px; max-width: 600px;"
+                            >
                               <q-list>
                                 <demandDataDiff2
                                   v-for="(txtdata, key) in txtdatas_diff"
@@ -424,6 +439,14 @@
                           size="12px"
                           style="font-weight:bold"
                         />
+                      </template>
+                      <template slot="finishTip">
+                        <div
+                          class="text-h6 text-bold"
+                          style="font-family:NSimSun"
+                        >
+                          完成
+                        </div>
                       </template>
                     </path-data>
                   </div>
@@ -529,7 +552,9 @@
               <div class="text-h4">
                 GoogleMap找出最短路線
                 <q-icon color="red" name="report_problem" size="20px" />
-                <span class="text-subtitle2" style="color:red">起點與終點為固定順序</span>
+                <span class="text-subtitle2" style="color:red"
+                  >起點與終點為固定順序</span
+                >
               </div>
 
               <googleMap>
@@ -991,5 +1016,3 @@ export default {
   }
 };
 </script>
-
-

@@ -30,7 +30,7 @@
                 <b
                   class="text"
                   style="font-size: 20px;font-family: Microsoft JhengHei;"
-                  >為您找出景點綜合評論，讓您了解自身的缺點與競爭對手的優點</b
+                  >為您找出景點綜合評論，讓您了解自身與競爭對手的優劣勢</b
                 >
                 <br />
               </div>
@@ -97,7 +97,7 @@
                     ></q-avatar>
                     <span style="font-size: 15px;">
                       <b
-                        >顏色越深，好評中提及該關鍵字的人數越多，可能為旅客最在意的點</b
+                        >顏色越深，好評中提及該關鍵字的人數越多，可能為您的優勢，建議從此進行優化</b
                       >
                     </span>
                   </q-chip></template
@@ -111,7 +111,7 @@
                     ></q-avatar>
                     <span style="font-size: 15px;">
                       <b
-                        >顏色越深，負評中提及該關鍵字的人數越多，最需被改善的缺點</b
+                        >顏色越深，負評中提及該關鍵字的人數越多，為您急迫需要解決的問題</b
                       >
                     </span>
                   </q-chip></template
@@ -120,7 +120,11 @@
             </div>
             <!-- 懶人包區域 -->
             <div class="col-6">
-              <proscons-r></proscons-r>
+              <proscons-r>
+                <template slot="photoExplain">
+                  <sitePhotoInfo></sitePhotoInfo>
+                </template>
+              </proscons-r>
             </div>
           </div>
         </div>
@@ -158,7 +162,8 @@ export default {
     prosconsSelect: () => import("components/proscons/proscons_select.vue"),
     prosconsR: () => import("components/proscons/proscons_R.vue"),
     prosconsData: () => import("components/proscons/proscons_data.vue"),
-    sSiProsConsInfo: () => import("components/proscons/s_si_proscons_info.vue")
+    sSiProsConsInfo: () => import("components/proscons/s_si_proscons_info.vue"),
+    sitePhotoInfo: () => import("components/proscons/manager/sitePhotoInfo.vue")
   },
   data() {
     return {

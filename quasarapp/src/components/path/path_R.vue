@@ -5,8 +5,12 @@
       class="q-pa-md q-ma-sm bg-teal-3"
       style="color:white;font-weight: bold;font-size : 25px;font-family: Microsoft JhengHei;"
     >
-      <p>路徑分析圖</p>
-
+      <div class="row">
+        <div class="col-4 q-mt-sm">
+          <p>社會網絡分析圖</p>
+        </div>
+        <div class="col-3 "><slot name="photoExplain"></slot></div>
+      </div>
       <!--  -->
       <q-card>
         <q-card-section>

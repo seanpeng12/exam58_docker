@@ -1,12 +1,17 @@
 <template>
   <q-page>
     <div class="q-pa-md doc-container">
-      <div class="gt-xs q-pa-lg items-center text-black bg-grey-3" style="height:auto;">
+      <div
+        class="gt-xs q-pa-lg items-center text-black bg-grey-3"
+        style="height:auto;"
+      >
         <div class="row">
           <div class="col"></div>
 
           <div class="col-12 col-md-auto">
-            <p style="font-size: 28px;font-family: Microsoft JhengHei;">{{choose}}路徑推薦分析</p>
+            <p style="font-size: 28px;font-family: Microsoft JhengHei;">
+              {{ choose }}路徑推薦分析
+            </p>
           </div>
 
           <div class="col q-mt-sm q-ml-sm">
@@ -22,7 +27,8 @@
               <b
                 class="text"
                 style="font-size: 20px;font-family: Microsoft JhengHei;"
-              >不採雷的路線推薦，給拿不定下一站的您!</b>
+                >不採雷的路線推薦，給拿不定下一站的您!</b
+              >
               <br />
             </div>
           </div>
@@ -52,13 +58,23 @@
       <div class="q-pa-md">
         <div class="row">
           <div class="col-6" style="margin:0px auto;">
-            <path-data></path-data>
+            <path-data>
+              <template slot="finishTip">
+                <div class="text-h6 text-bold" style="font-family:NSimSun">
+                  完成
+                </div>
+              </template>
+            </path-data>
           </div>
         </div>
         <div class="row"></div>
         <!-- 懶人包區域 -->
         <div class="col-6" style="width:50%;margin:0px auto">
-          <path-r></path-r>
+          <path-r>
+            <template slot="photoExplain">
+              <pathPhotoInfo></pathPhotoInfo>
+            </template>
+          </path-r>
         </div>
       </div>
     </div>
@@ -73,8 +89,7 @@
           請先選擇
           <b>城市</b>
 
-          <br />選擇
-          <b>景點作為你的起始點</b>，按開始以進行分析
+          <br />選擇 <b>景點作為你的起始點</b>，按開始以進行分析
         </p>
       </div>
     </div>
@@ -94,7 +109,8 @@ export default {
     pathR: () => import("components/path/path_R.vue"),
     pathData: () => import("components/path/path_data.vue"),
     pathButtonToggle: () => import("components/path/path_button_toggle.vue"),
-    siPathInfo: () => import("components/path/si_path_info.vue")
+    siPathInfo: () => import("components/path/si_path_info.vue"),
+    pathPhotoInfo: () => import("components/path/generalUser/pathPhotoInfo.vue")
   },
   data() {
     return {

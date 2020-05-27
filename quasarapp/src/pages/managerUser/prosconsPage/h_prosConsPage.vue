@@ -29,7 +29,7 @@
                 <b
                   class="text"
                   style="font-size: 20px;font-family: Microsoft JhengHei;"
-                  >從網站評論資訊，幫您分析飯店是否符合您的需求</b
+                  >為您找出飯店綜合評論，讓您了解自身與競爭對手的優劣勢</b
                 >
                 <br />
               </div>
@@ -42,7 +42,7 @@
             <div class="col"></div>
             <div class="col-12 col-md-auto">
               <proscons-select>
-                <template slot="addToCollection">
+                <!-- <template slot="addToCollection">
                   <q-btn
                     :loading="loading2"
                     @click="
@@ -65,7 +65,7 @@
                     @click="progress = false"
                     label="已在收藏列表"
                   ></q-btn>
-                </template>
+                </template> -->
               </proscons-select>
             </div>
             <div class="col"></div>
@@ -92,7 +92,7 @@
                     ></q-avatar>
                     <span style="font-size: 15px;">
                       <b
-                        >顏色越深，好評中提及該關鍵字的人數越多，可能為旅客最在意的點</b
+                        >顏色越深，好評中提及該關鍵字的人數越多，可能為您的優勢，建議從此進行優化</b
                       >
                     </span>
                   </q-chip></template
@@ -106,7 +106,7 @@
                     ></q-avatar>
                     <span style="font-size: 15px;">
                       <b
-                        >顏色越深，負評中提及該關鍵字的人數越多，最需被改善的缺點</b
+                        >顏色越深，負評中提及該關鍵字的人數越多，為您急迫需要解決的問題</b
                       >
                     </span>
                   </q-chip></template
@@ -115,7 +115,11 @@
             </div>
             <!-- 懶人包區域 -->
             <div class="col-6">
-              <proscons-r></proscons-r>
+              <proscons-r>
+                <template slot="photoExplain">
+                  <hotelPhotoInfo></hotelPhotoInfo>
+                </template>
+              </proscons-r>
             </div>
           </div>
         </div>
@@ -154,7 +158,9 @@ export default {
     prosconsSelect: () => import("components/proscons/h_proscons_select.vue"),
     prosconsR: () => import("components/proscons/h_proscons_R.vue"),
     prosconsData: () => import("components/proscons/h_proscons_data.vue"),
-    hSiProsConsInfo: () => import("components/proscons/h_si_proscons_info.vue")
+    hSiProsConsInfo: () => import("components/proscons/h_si_proscons_info.vue"),
+    hotelPhotoInfo: () =>
+      import("components/proscons/manager/hotelPhotoInfo.vue")
   },
   data() {
     return {
