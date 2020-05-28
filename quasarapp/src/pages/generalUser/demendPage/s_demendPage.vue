@@ -213,87 +213,7 @@
             <!-- 右 -->
             <div class="col-6">
               <div class="q-pa-lg">
-                <div v-if="Info_clicked" class="row items-start q-gutter-md">
-                  <q-card class="my-card" bordered style="width:100%;max-width:100%;">
-                    <q-img style="height:200px;width:100%;" :src="Gdata.photos[0].url"></q-img>
-                    <!-- <q-parallax :src="Gdata.photos[0].url" :height="300" /> -->
-                    <q-card-section>
-                      <div
-                        class="text-overline text-orange-9"
-                      >{{ Gdata.opening_hours.open_now ? '營業中' :"休息中/無營業時間資訊"}}</div>
-                      <div class="text-h5 q-mt-sm q-mb-xs">{{Gdata.name}}</div>
-                      <div class="text-caption text-grey">
-                        <q-chip
-                          class="glossy"
-                          color="orange"
-                          text-color="white"
-                          icon-right="star"
-                        >{{Gdata.rating}}</q-chip>
-                        總評價數:{{Gdata.rating_total}}
-                      </div>
-                    </q-card-section>
-
-                    <q-card-actions>
-                      <q-tabs v-model="tab" class="text-teal">
-                        <q-tab label="詳細資訊" name="one" />
-                        <q-tab label="營業時間" name="two" />
-                      </q-tabs>
-                    </q-card-actions>
-                    <!-- tab -->
-                    <q-separator />
-
-                    <q-tab-panels v-model="tab" animated>
-                      <q-tab-panel name="one">
-                        <div v-if="Gdata.website != '無資料'">
-                          <q-btn
-                            rounded
-                            type="a"
-                            :href="Gdata.website"
-                            target="__blank"
-                            color="blue"
-                            class="text-bold"
-                            label="官方網站"
-                          />
-                        </div>
-                        <div v-else>
-                          <q-btn rounded color="primary" disable label="無官方網站" />
-                        </div>
-                        <div>
-                          <q-chip
-                            color="grey-7"
-                            text-color="white"
-                            icon="directions"
-                          >{{Gdata.address}}</q-chip>
-                        </div>
-                        <div>
-                          <q-chip
-                            outline
-                            color="black"
-                            text-color="white"
-                            icon="phone"
-                          >{{Gdata.phone_number}}</q-chip>
-                        </div>
-                      </q-tab-panel>
-
-                      <q-tab-panel name="two">
-                        <div class="q-pa-xs">
-                          營業時間:
-                          <div v-if="Gdata.opening_hours == '無資料'">
-                            <b>{{Gdata.opening_hours}}</b>
-                          </div>
-                          <div
-                            v-else
-                            v-for="(a,index) in Gdata.opening_hours.weekday_text"
-                            :key="index"
-                          >
-                            <b>{{ a }}</b>
-                          </div>
-                        </div>
-                      </q-tab-panel>
-                    </q-tab-panels>
-                  </q-card>
-                </div>
-                <div v-else>
+                <div>
                   <q-card
                     class="my-card bg-secondary text-white text-center"
                     style="height:100%;max-height:600px;max-width:100%;"
@@ -313,21 +233,100 @@
 
                     <q-separator dark />
                   </q-card>
-
-                  <q-card
-                    class="q-my-md my-card bg-grey text-white"
-                    style="height:100%;max-height:600px;max-width:100%;"
-                  >
-                    <q-card-section>
-                      <div class="text-h6">Our Changing Planet</div>
-                      <div class="text-subtitle2">by John Doe</div>
-                    </q-card-section>
-
-                    <q-card-section>
-                      <p class="text-h6">點按景點檢視詳細資訊</p>
-                    </q-card-section>
-                  </q-card>
                 </div>
+                <transition name="info" mode="out-in">
+                  <div v-if="Info_clicked" key="info1" class="q-my-sm row items-start q-gutter-md">
+                    <q-card class="my-card" bordered style="width:100%;max-width:100%;">
+                      <q-img style="height:200px;width:100%;" :src="Gdata.photos[0].url"></q-img>
+                      <!-- <q-parallax :src="Gdata.photos[0].url" :height="300" /> -->
+                      <q-card-section>
+                        <div
+                          class="text-overline text-orange-9"
+                        >{{ Gdata.opening_hours.open_now ? '營業中' :"休息中/無營業時間資訊"}}</div>
+                        <div class="text-h5 q-mt-sm q-mb-xs">{{Gdata.name}}</div>
+                        <div class="text-caption text-grey">
+                          <q-chip
+                            class="glossy"
+                            color="orange"
+                            text-color="white"
+                            icon-right="star"
+                          >{{Gdata.rating}}</q-chip>
+                          總評價數:{{Gdata.rating_total}}
+                        </div>
+                      </q-card-section>
+
+                      <q-card-actions>
+                        <q-tabs v-model="tab" class="text-teal">
+                          <q-tab label="詳細資訊" name="one" />
+                          <q-tab label="營業時間" name="two" />
+                        </q-tabs>
+                      </q-card-actions>
+                      <!-- tab -->
+                      <q-separator />
+
+                      <q-tab-panels v-model="tab" animated>
+                        <q-tab-panel name="one">
+                          <div v-if="Gdata.website != '無資料'">
+                            <q-btn
+                              rounded
+                              type="a"
+                              :href="Gdata.website"
+                              target="__blank"
+                              color="blue"
+                              class="text-bold"
+                              label="官方網站"
+                            />
+                          </div>
+                          <div v-else>
+                            <q-btn rounded color="primary" disable label="無官方網站" />
+                          </div>
+                          <div>
+                            <q-chip
+                              color="grey-7"
+                              text-color="white"
+                              icon="directions"
+                            >{{Gdata.address}}</q-chip>
+                          </div>
+                          <div>
+                            <q-chip
+                              outline
+                              color="black"
+                              text-color="white"
+                              icon="phone"
+                            >{{Gdata.phone_number}}</q-chip>
+                          </div>
+                        </q-tab-panel>
+
+                        <q-tab-panel name="two">
+                          <div class="q-pa-xs">
+                            營業時間:
+                            <div v-if="Gdata.opening_hours == '無資料'">
+                              <b>{{Gdata.opening_hours}}</b>
+                            </div>
+                            <div
+                              v-else
+                              v-for="(a,index) in Gdata.opening_hours.weekday_text"
+                              :key="index"
+                            >
+                              <b>{{ a }}</b>
+                            </div>
+                          </div>
+                        </q-tab-panel>
+                      </q-tab-panels>
+                    </q-card>
+                  </div>
+                  <div v-else key="info2">
+                    <q-card
+                      class="q-my-sm my-card bg-grey text-white"
+                      style="height:100%;max-height:600px;max-width:100%;"
+                    >
+                      <q-card-section>
+                        <div class="text-h6">點按景點檢視詳細資訊</div>
+                        <div class="text-subtitle2"></div>
+                      </q-card-section>
+                    </q-card>
+                  </div>
+                </transition>
               </div>
             </div>
           </div>
@@ -456,7 +455,7 @@ export default {
       fullPage: false,
 
       //顯示下方頁面
-      isShow: false,
+      isShow: true,
 
       // card
       expanded: false,
@@ -636,6 +635,32 @@ export default {
   transition: opacity 1s ease;
 }
 .demand-select-enter {
+  opacity: 0;
+}
+/* info */
+.info-enter-active,
+.info-leave-active {
+  transition: all 1s;
+}
+.info-enter {
+  transform: translateX(50px);
+  opacity: 0;
+}
+.info-leave-to {
+  transform: translateX(-50px);
+  opacity: 0;
+}
+/* info-out */
+.info-out-enter-active,
+.info-out-leave-active {
+  transition: all 0.5s;
+}
+.info-out-enter {
+  transform: translateX(50px);
+  opacity: 0;
+}
+.info-out-leave-to {
+  transform: translateY(-50px);
   opacity: 0;
 }
 </style>

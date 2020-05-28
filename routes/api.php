@@ -51,7 +51,8 @@ Route::group(['middleware' => ['CORS']], function () {
     Route::post('/cat', 'PostController@bothCatagory');
     // 景點需求分析---取(聯集-交集)景點
     Route::post('/cat_diff', 'PostController@diffCatagory');
-
+    // 測試
+    Route::post('/new_diff', 'PostController@new_diff');
 
     // 飯店
     // 取得所有城市名稱-第一層選單
