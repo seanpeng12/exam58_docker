@@ -55,6 +55,134 @@
 
     <!-- 左右區域 -->
     <div v-if="isShow">
+      <!-- 彈出式視窗 -->
+      <q-dialog v-model="icon">
+        <q-card style="width: 1000px; max-width: 80vw;">
+          <q-card-section class="row items-center q-pb-none">
+            <div
+              class="q-px-md q-py-none text-h6 text-bold"
+              style="font-family: Microsoft JhengHei;"
+            >優缺點與詳細資訊</div>
+            <q-space />
+            <q-btn icon="close" flat round dense v-close-popup />
+          </q-card-section>
+
+          <q-card-section>
+            <div class="row">
+              <!-- 優缺點 -->
+              <div class="col-6 q-px-xs">
+                <proscons>
+                  <template slot="text_ProsExplain">
+                    <!-- <q-chip>
+                      <q-avatar color="green-8" text-color="white" size="15px"></q-avatar>
+                      <span style="font-size: 15px;">
+                        <b>{{prosdata}}顏色越深，好評中提及該關鍵字的人數越多，為此景點的特色</b>
+                      </span>
+                    </q-chip>-->
+                  </template>
+                  <template slot="text_ConsExplain">
+                    <!-- <q-chip>
+                      <q-avatar color="red-8" text-color="white" size="15px"></q-avatar>
+                      <span style="font-size: 15px;">
+                        <b>顏色越深，負評中提及該關鍵字的人數越多，您可以從中考慮是否要前往</b>
+                      </span>
+                    </q-chip>-->
+                  </template>
+                </proscons>
+              </div>
+              <!-- 詳細資訊介紹 -->
+              <div class="col-6 q-pa-sm">
+                <div class="row items-start q-gutter-md">
+                  <q-card class="my-card" bordered style="width:100%;max-width:100%;">
+                    <q-img style="height:200px;width:100%;" :src="Gdata.photos[0].url"></q-img>
+                    <!-- <q-parallax :src="Gdata.photos[0].url" :height="300" /> -->
+                    <q-card-section>
+                      <div class="text-overline text-orange-9">
+                        {{
+                        Gdata.opening_hours.open_now
+                        ? "營業中"
+                        : "休息中/無營業時間資訊"
+                        }}
+                      </div>
+                      <div class="text-h5 q-mt-sm q-mb-xs">{{ Gdata.name }}</div>
+                      <div class="text-caption text-grey">
+                        <q-chip
+                          class="glossy"
+                          color="orange"
+                          text-color="white"
+                          icon-right="star"
+                        >{{ Gdata.rating }}</q-chip>
+                        總評價數:{{ Gdata.rating_total }}
+                      </div>
+                    </q-card-section>
+
+                    <q-card-actions>
+                      <q-tabs v-model="tab" class="text-teal">
+                        <q-tab label="詳細資訊" name="one" />
+                        <q-tab label="營業時間" name="two" />
+                      </q-tabs>
+                    </q-card-actions>
+                    <!-- tab -->
+                    <q-separator />
+
+                    <q-tab-panels v-model="tab" animated>
+                      <q-tab-panel name="one">
+                        <div v-if="Gdata.website != '無資料'">
+                          <q-btn
+                            rounded
+                            type="a"
+                            :href="Gdata.website"
+                            target="__blank"
+                            color="blue"
+                            class="text-bold"
+                            label="官方網站"
+                          />
+                        </div>
+                        <div v-else>
+                          <q-btn rounded color="primary" disable label="無官方網站" />
+                        </div>
+                        <div>
+                          <q-chip
+                            color="grey-7"
+                            text-color="white"
+                            icon="directions"
+                          >{{ Gdata.address }}</q-chip>
+                        </div>
+                        <div>
+                          <q-chip
+                            outline
+                            color="black"
+                            text-color="white"
+                            icon="phone"
+                          >{{ Gdata.phone_number }}</q-chip>
+                        </div>
+                      </q-tab-panel>
+
+                      <q-tab-panel name="two">
+                        <div class="q-pa-xs">
+                          營業時間:
+                          <div v-if="Gdata.opening_hours == '無資料'">
+                            <b>{{ Gdata.opening_hours }}</b>
+                          </div>
+                          <div
+                            v-else
+                            v-for="(a, index) in Gdata.opening_hours
+                              .weekday_text"
+                            :key="index"
+                          >
+                            <b>{{ a }}</b>
+                          </div>
+                        </div>
+                      </q-tab-panel>
+                    </q-tab-panels>
+                  </q-card>
+                </div>
+              </div>
+            </div>
+          </q-card-section>
+        </q-card>
+      </q-dialog>
+      <!-- 第一行 -->
       <div class="row q-pa-sm">
         <div
           class="col-md-6 q-pa-md"
@@ -63,14 +191,18 @@
           <!-- 懶人包區域 -->
           <div class="row">
             <div class="col-6">
-              <div class="q-pt-lg" style="height:900px;width:800px;max-width:100%;">
+              <div
+                class="q-pa-lg"
+                style="height:900px;width:800px;max-width:100%;font-family: Microsoft JhengHei;"
+              >
+                <q-toolbar class="bg-primary text-white shadow-2">
+                  <q-toolbar-title>分析結果</q-toolbar-title>
+                </q-toolbar>
                 <q-list bordered>
                   <q-expansion-item
                     group="somegroup"
-                    icon="explore"
-                    :label="
-                  selected_p_detail_item + ' / ' + selected_p_detail_item_2
-                "
+                    icon="donut_small"
+                    :label="selected_p_detail_item + ' / ' + selected_p_detail_item_2"
                     default-opened
                     header-class="text-purple"
                   >
@@ -86,6 +218,7 @@
                                 :txtinfo="txtinfo"
                                 :txtdata="txtdata"
                                 @txtdatas_Update="txtdatas_toVuex"
+                                @site_name="getName"
                               >
                                 <template slot="addToSchedule">
                                   <q-space />
@@ -118,18 +251,13 @@
                         </q-scroll-area>
                       </q-card-section>
                     </q-card>
-                    <!-- loading 插件 -->
-                    <!-- <transition name="fade">
-                  <loading v-if="ok" :active.sync="ok" :can-cancel="false" :is-full-page="fullPage"></loading>
-                    </transition>-->
-                    <!--  -->
                   </q-expansion-item>
 
                   <q-separator />
 
                   <q-expansion-item
                     group="somegroup"
-                    icon="explore"
+                    icon="donut_large"
                     :label="selected_p_detail_item"
                     header-class="text-primary"
                   >
@@ -145,6 +273,7 @@
                               :txtdata_diff="txtdata"
                               :selected_p_detail_item="selected_p_detail_item"
                               @txtdatas_Update="txtdatas_toVuex"
+                              @site_name="getName"
                             >
                               <template slot="addToSchedule">
                                 <q-space />
@@ -174,7 +303,7 @@
 
                   <q-expansion-item
                     group="somegroup"
-                    icon="explore"
+                    icon="donut_large"
                     :label="selected_p_detail_item_2"
                     header-class="text-primary"
                   >
@@ -189,6 +318,7 @@
                               :txtdata_diff="txtdata"
                               :selected_p_detail_item_2="selected_p_detail_item_2"
                               @txtdatas_Update="txtdatas_toVuex"
+                              @site_name="getName"
                             >
                               <template slot="addToSchedule">
                                 <q-space />
@@ -317,7 +447,10 @@ export default {
 
     hAddToCollectionBtn: () =>
       import("components/demand/h_addToCollectionBtn.vue"),
-    hSiDemandInfo: () => import("components/demand/h_si_demand_info.vue")
+    // 解釋btn
+    hSiDemandInfo: () => import("components/demand/h_si_demand_info.vue"),
+    // h優缺點(排程使用)
+    proscons: () => import("components/proscons/h_proscons_data.vue")
   },
   computed: {
     // 取得vuex state值
@@ -328,7 +461,9 @@ export default {
       "txtdatas_diff",
       "src",
       "Rdata",
-      "txtinfo"
+      "txtinfo",
+      "site_name",
+      "Gdata"
     ]),
     ...mapGetters("h_demand", [
       "selected_p",
@@ -350,26 +485,12 @@ export default {
     //     this.$store.commit("h_demand/update_selected_p", value);
     //   }
     // },
-    // selected_p_detail_item_trigger: {
-    //   get: function() {
-    //     return this.$store.state.selected_p_detail_item;
-    //   },
-    //   set: function(value) {
-    //     this.$store.commit("h_demand/update_selected_p_detail_item", value);
-    //   }
-    // },
-    // selected_p_detail_item_2_trigger: {
-    //   get: function() {
-    //     return this.$store.state.selected_p_detail_item_2;
-    //   },
-    //   set: function(value) {
-    //     this.$store.commit("h_demand/update_selected_p_detail_item_2", value);
-    //   }
-    // }
   },
   props: ["id"],
   data() {
     return {
+      //彈出式視窗觸發
+      icon: false,
       // 轉場觸發
       h_demand_select: false,
       // 暫存R_title
@@ -386,7 +507,12 @@ export default {
       //顯示下方頁面
       isShow: true,
       // ok
-      ok: true
+      ok: true,
+      // card
+      expanded: false,
+      tab: "one",
+      lorem:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
     };
   },
 
@@ -394,9 +520,9 @@ export default {
     // 由此找vuex所需method
     ...mapActions("h_demand", ["fetchCitys"]),
     ...mapActions("h_demand", ["fetchCats"]),
-    ...mapActions("h_demand", ["upload_axios"]),
+    ...mapActions("h_demand", ["upload_axios", "fetchInfo"]),
     ...mapActions("h_demand", ["upload_axios_2", "upload_axios_2_diff"]),
-
+    ...mapActions("h_proscons", ["fetchPros", "fetchCons"]),
     changeSrc() {
       //
       var _this = this;
@@ -419,6 +545,29 @@ export default {
         "http://140.136.155.116:8080/statics/h_between_relationship.html"
       );
       this.$store.commit("h_demand/update_txtinfo", "文字載入中...");
+    },
+
+    getName(val) {
+      // 開啟彈出式視窗
+      this.icon = true;
+      console.log("你點了", val);
+      // 同步state
+      this.$store.commit("h_demand/FETCH_site_name", val);
+
+      // 取dialog優缺數值
+      var _this = this;
+      let promise = new Promise(function(resolve, reject) {
+        _this.$store.commit("h_proscons/Update_Selected_Site", val);
+        resolve();
+      });
+
+      promise.then(function() {
+        _this.fetchPros();
+        _this.fetchCons();
+      });
+
+      // 取google資訊
+      this.fetchInfo();
     },
 
     // from emit local then set vuex

@@ -56,9 +56,12 @@
     <div v-if="isShow">
       <!-- 彈出式視窗 -->
       <q-dialog v-model="icon">
-        <q-card style="width: 800px; max-width: 80vw;">
+        <q-card style="width: 1000px; max-width: 80vw;">
           <q-card-section class="row items-center q-pb-none">
-            <div class="text-h6">{{ Gdata.name }}</div>
+            <div
+              class="q-px-md q-py-none text-h6 text-bold"
+              style="font-family: Microsoft JhengHei;"
+            >優缺點與詳細資訊</div>
             <q-space />
             <q-btn icon="close" flat round dense v-close-popup />
           </q-card-section>
@@ -66,7 +69,7 @@
           <q-card-section>
             <div class="row">
               <!-- 優缺點 -->
-              <div class="col-6 q-pa-xs">
+              <div class="col-6 q-px-xs">
                 <proscons>
                   <template slot="text_ProsExplain">
                     <!-- <q-chip>
@@ -184,10 +187,9 @@
           class="col-md-6 q-pa-md"
           style="overflow:hidden;width:auto;height:100%;margin:0px auto;"
         >
+          <!-- 懶人包區域 -->
           <div class="row">
-            <!-- 左 -->
             <div class="col-6">
-              <!-- 懶人包區域 -->
               <div class="q-pa-lg" style="height:900px;width:800px;max-width:100%;">
                 <q-toolbar class="bg-primary text-white shadow-2">
                   <q-toolbar-title>分析結果</q-toolbar-title>
@@ -506,7 +508,7 @@ export default {
       fullPage: false,
 
       //顯示下方頁面
-      isShow: true,
+      isShow: false,
 
       // card
       expanded: false,
