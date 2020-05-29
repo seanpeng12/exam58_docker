@@ -56,16 +56,16 @@
           <q-item-section>
             <div class="row">
               <div class="col">
-                <q-icon name="fas fa-circle" color="orange"
+                <q-icon name="fad fa-circle" color="orange"
                   ><span style="color:black; margin-left:10px">
                     表示飯店</span
                   ></q-icon
                 >
               </div>
               <div class="col">
-                <q-icon name="fas fa-square" color="red-6" style="margin:5px"
+                <q-icon name="fad fa-square" color="red-6" style="margin:5px"
                   ><span style="color:black;margin-left:10px">
-                    表示飯店擁有的特點</span
+                    表示飯店擁有的服務</span
                   ></q-icon
                 >
               </div>
@@ -75,18 +75,18 @@
               <span style=""
                 >1.
                 <q-icon
-                  name="fas fa-circle"
+                  name="fad fa-circle"
                   color="orange"
                   class="q-mx-xs"
                 />(飯店)與<q-icon
                   name="fas fa-square"
                   color="red-6"
                   class="q-mx-xs"
-                />(飯店特點) 連成線，表示該飯店擁有的特點為<q-icon
+                />(飯店服務) 連成線，表示該飯店擁有的服務為<q-icon
                   name="fas fa-square"
                   color="red-6"
                   class="q-mx-xs"
-                />(特點)</span
+                />(服務)</span
               >
               <br />
             </div>
@@ -100,7 +100,7 @@
                   name="fas fa-square"
                   color="red-6"
                   class="q-mx-xs"
-                />(特點) 相連，表示該飯店同時擁有兩種特點</span
+                />(特點) 相連，表示該飯店同時擁有兩種服務</span
               >
             </div>
           </q-item-section>

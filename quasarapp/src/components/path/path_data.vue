@@ -50,8 +50,9 @@
                       />
                       <q-icon
                         v-else-if="a.type == 'S'"
-                        name="fas fa-car-side"
+                        name="las la-landmark"
                         color="black"
+                        size="20px"
                       />
                       <q-icon v-else name="fas fa-hotel" color="black" />
                       <!-- button -->
@@ -98,7 +99,8 @@
                       />
                       <q-icon
                         v-else-if="b.type == 'S'"
-                        name="fas fa-car-side"
+                        name="las la-landmark"
+                        size="20px"
                         color="black"
                       />
                       <q-icon v-else name="fas fa-hotel" color="black" />
