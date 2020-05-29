@@ -47,6 +47,22 @@ const state = {
   // v-show
   txtdatas_ok: false,
   txtdatas_diff_ok: false,
+
+  // google
+  site_name: "",
+  Gdata: {
+    opening_hours: {
+      open_now: false,
+      weekday_text: null
+    },
+    rating: 0,
+    rating_total: 0,
+    name: null,
+    address: null,
+    photos: [{
+      url: "https://cdn.quasar.dev/img/parallax2.jpg"
+    }]
+  }
 };
 const mutations = {
   FETCH_citys(state, citys) {
@@ -64,6 +80,12 @@ const mutations = {
     // console.log("FETCH_txtdatas from mutation:", state.txtdatas);
 
     // return state.txtdatas = res
+  },
+  FETCH_site_name(state, res) {
+    return (state.site_name = res);
+  },
+  FETCH_Gdata(state, res) {
+    return (state.Gdata = res);
   },
   resetTxtdatas(state) {
     // console.log("reset");
@@ -151,54 +173,6 @@ const actions = {
         console.log(err);
       });
   },
-
-  // upload_axios({
-  //   commit
-  // }) {
-  //   axiosInstance
-  //     .post("http://127.0.0.1:80/api/runR_twoC", {
-  //       name: state.selected_p,
-  //       c1: state.selected_p_detail_item,
-  //       c20: state.selected_p_detail_item_2
-  //     })
-  //     .then(response => {
-  //       console.log("成功");
-  //       console.log(response.data);
-  //       commit('FETCH_Rdata', response.data);
-  //       commit('FETCH_index', 1);
-  //     })
-  //     .catch(function (response) {
-  //       console.log(response);
-  //     });
-
-  //   // axiosInstance.all([
-  //   //   axiosInstance.post("http://127.0.0.1:80/api/runR_twoC", {
-  //   //     name: state.selected_p,
-  //   //     c1: state.selected_p_detail_item,
-  //   //     c20: state.selected_p_detail_item_2}),
-  //   //     axiosInstance.post("http://127.0.0.1:80/api/cat", {
-  //   //     name: state.selected_p,
-  //   //     c1: state.selected_p_detail_item,
-  //   //     c20: state.selected_p_detail_item_2}),
-  //   // ])
-  //   // .then(axiosInstance.spread((response1, response2) => {
-
-  //   //   // this.state.Rdata = response1.data
-  //   //   console.log("vuex-twoC?????");
-  //   //   console.log(response1.data);
-  //   //   // commit('FETCH_Rdata', response1.data);
-  //   //   // commit('FETCH_txtdata', response2.data);
-  //   //   // commit('FETCH_index', 1);
-  //   //   // this.Rdata = response1.data;
-  //   //   // this.txtdata = response2.data;
-  //   //   // 更改iframe src
-  //   //   // this.changeSrc();
-  //   //   // this.src = "./statics/between_relationship.html";
-  //   //   console.log("成功!~~~~~~~~~~~~~~~~~");
-  //   // })).catch(function(response) {
-  //   //     console.log(response);
-  //   //   });
-  // },
   // ajax跑R圖
   upload_axios({
     commit
@@ -514,7 +488,23 @@ const actions = {
   }) {
     commit("resetTxtdatas");
     commit("resetTxtdatas_diff");
-  }
+  },
+  fetchInfo({
+    commit
+  }) {
+    axiosInstance
+      .post("http://140.136.155.116/api/demand_info", {
+        name: state.site_name,
+      })
+      .then(response => {
+        console.log("成功取Gdata");
+        console.log(response.data);
+        commit("FETCH_Gdata", response.data);
+      })
+      .catch(function (response) {
+        console.log("發生錯誤", response);
+      });
+  },
 };
 const getters = {
   citys: state => {
@@ -565,6 +555,12 @@ const getters = {
   },
   txtdatas_diff_ok: state => {
     return state.txtdatas_diff_ok;
+  },
+  site_name: state => {
+    return state.site_name;
+  },
+  Gdata: state => {
+    return state.Gdata;
   },
 
 };

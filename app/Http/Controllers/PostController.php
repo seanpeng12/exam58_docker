@@ -118,8 +118,8 @@ class PostController extends Controller
 
         //mac
         $set_charset = 'export LANG=en_US.UTF-8;';
-        exec($set_charset."/usr/local/bin/Rscript R/betweenss_attr_2020.R $cc");
-        
+        exec($set_charset . "/usr/local/bin/Rscript R/betweenss_attr_2020.R $cc");
+
         return response()->json(array(
             'name' => $name,
             'c1' => $c1,
@@ -127,7 +127,7 @@ class PostController extends Controller
             'RhtmlCheck' => 'between_relationship.html。'
         ), 200);
     }
-    // 需求分析懶人包
+    // 需求分析懶人包(照著site_data.comment 由大排到小)
     function bothCatagory(Request $request)
     {
         $city = $request->input('name');
@@ -138,7 +138,7 @@ class PostController extends Controller
             FROM site_relationship, site_data, site_attr
             WHERE (site_relationship.from_id = site_data.id AND site_relationship.to_id = site_attr.id)
             AND site_data.city_name = '$city'
-            AND (site_attr.tag = '$c1' OR site_attr.tag = '$c2') GROUP BY site_data.id HAVING COUNT(*) > 1");
+            AND (site_attr.tag = '$c1' OR site_attr.tag = '$c2') GROUP BY site_data.id HAVING COUNT(*) > 1 ORDER BY site_data.comment DESC");
 
         // $sql =  FacadesDB::table('site_data')
         //     ->selectRaw("DISTINCT site_data.id, site_data.name, site_data.city_name, site_data.type,site_data.completed
@@ -163,10 +163,7 @@ class PostController extends Controller
         //         $query->orWhere(['site_attr.tag' => "博物館", 'site_attr.tag' => "古蹟"]);
         //     })->groupBy('site_data.id')->havingRaw('COUNT(*) > ?', [1])->get();
     }
-
-
-
-
+    // 需求分析懶人包2 3(照著site_data.comment 由大排到小)
     function diffCatagory(Request $request)
     {
         $city = $request->input('name');
@@ -182,9 +179,58 @@ class PostController extends Controller
         AND (site_attr.tag = '$c1' OR site_attr.tag = '$c2')
         GROUP BY site_data.id
         HAVING COUNT(*) = 1
-        ORDER BY site_data.rate DESC");
+        ORDER BY site_data.comment DESC");
+
+
+
+
+
+
 
         return response()->json($sql_diff, 200);
+    }
+    // 新api區分懶人包2 3(照著site_data.comment 由大排到小)
+    function new_diff(Request $request)
+    {
+        $city = $request->input('name');
+        $c1 = $request->input('c1');
+        $c2 = $request->input('c20');
+
+        // 取(聯集-交集)，傳回含單一tag
+        $sql_diff = FacadesDB::select("SELECT DISTINCT site_data.id,site_data.name,site_data.city_name,site_data.address,site_data.type,site_data.comment
+        ,site_data.rate,site_data.href,site_attr.tag
+        FROM site_relationship, site_data, site_attr
+        WHERE (site_relationship.from_id = site_data.id AND site_relationship.to_id = site_attr.id)
+        AND site_data.city_name ='$city'
+        AND (site_attr.tag = '$c1' OR site_attr.tag = '$c2')
+        GROUP BY site_data.id
+        HAVING COUNT(*) = 1
+        ORDER BY site_data.comment DESC");
+
+
+        // array取id值
+
+        $data = $sql_diff;
+
+
+        // 資料格式修改
+        $result_1 = array();
+        $result_2 = array();
+
+        $temp = array();
+        for ($i = 0; $i < count($data); $i++) {
+            $temp = $data[$i]->tag;
+
+            if ($temp == $c1) {
+                array_push($result_1, $data[$i]);
+            } else {
+                array_push($result_2, $data[$i]);
+            }
+        };
+        return response()->json(array(
+            $c1 => $result_1,
+            $c2 => $result_2
+        ), 200);
     }
 
 

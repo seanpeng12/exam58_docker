@@ -70,7 +70,7 @@ class DemandController extends Controller
             'RhtmlCheck' => 'h_between_relationship.html。'
         ), 200);
     }
-    // /h_cat 需求分析懶人包(未完成)
+    // /h_cat 需求分析懶人包1(依照comment由大到小)
     function bothCatagory(Request $request)
     {
         $city = $request->input('name');
@@ -81,11 +81,11 @@ class DemandController extends Controller
             FROM hotel_relationship, hotel_data, hotel_attr
             WHERE (hotel_relationship.from_id = hotel_data.id AND hotel_relationship.to_id = hotel_attr.id)
             AND hotel_data.city_name = '$city'
-            AND (hotel_attr.tag = '$c1' OR hotel_attr.tag = '$c2') GROUP BY hotel_data.id HAVING COUNT(*) > 1");
+            AND (hotel_attr.tag = '$c1' OR hotel_attr.tag = '$c2') GROUP BY hotel_data.id HAVING COUNT(*) > 1 ORDER BY hotel_data.comment DESC");
 
         return response()->json($sql, 200);
     }
-    // /h_cat_diff 懶人包2(未完成)
+    // /h_cat_diff 懶人包2 3(照著hotel_data.comment由大到小)
     function diffCatagory(Request $request)
     {
         $city = $request->input('name');
@@ -101,9 +101,53 @@ class DemandController extends Controller
         AND (hotel_attr.tag = '$c1' OR hotel_attr.tag = '$c2')
         GROUP BY hotel_data.id
         HAVING COUNT(*) = 1
-        ORDER BY hotel_data.rate DESC");
+        ORDER BY hotel_data.comment DESC");
 
         return response()->json($sql_diff, 200);
+    }
+
+    // 新api區分懶人包2 3(照著hotel_data.comment 由大排到小)
+    function new_diff(Request $request)
+    {
+        $city = $request->input('name');
+        $c1 = $request->input('c1');
+        $c2 = $request->input('c20');
+
+        // 取(聯集-交集)，傳回含單一tag
+        $sql_diff = FacadesDB::select("SELECT DISTINCT hotel_data.id,hotel_data.name,hotel_data.city_name,hotel_data.address,hotel_data.type,hotel_data.comment
+        ,hotel_data.rate,hotel_data.href,hotel_attr.tag
+        FROM hotel_relationship, hotel_data, hotel_attr
+        WHERE (hotel_relationship.from_id = hotel_data.id AND hotel_relationship.to_id = hotel_attr.id)
+        AND hotel_data.city_name ='$city'
+        AND (hotel_attr.tag = '$c1' OR hotel_attr.tag = '$c2')
+        GROUP BY hotel_data.id
+        HAVING COUNT(*) = 1
+        ORDER BY hotel_data.comment DESC");
+
+
+        // array取id值
+
+        $data = $sql_diff;
+
+
+        // 資料格式修改
+        $result_1 = array();
+        $result_2 = array();
+
+        $temp = array();
+        for ($i = 0; $i < count($data); $i++) {
+            $temp = $data[$i]->tag;
+
+            if ($temp == $c1) {
+                array_push($result_1, $data[$i]);
+            } else {
+                array_push($result_2, $data[$i]);
+            }
+        };
+        return response()->json(array(
+            $c1 => $result_1,
+            $c2 => $result_2
+        ), 200);
     }
 
     // google 取照片
@@ -155,115 +199,131 @@ class DemandController extends Controller
         curl_close($curl);
 
         $result = json_decode($response);
-        // 取得id
-        $place_id = $result->candidates[0]->place_id;
 
+        if ($result->status == "OK") {
+            // 取得id
+            $place_id = $result->candidates[0]->place_id;
+            //
+            $curl_2 = curl_init();
 
-        //
-        $curl_2 = curl_init();
+            curl_setopt_array($curl_2, array(
+                CURLOPT_URL => "https://maps.googleapis.com/maps/api/place/details/json?place_id=" . $place_id . "&fields=reviews,opening_hours,price_level,name,rating,user_ratings_total,website,formatted_phone_number,address_component,adr_address,business_status,formatted_address,geometry,icon,name,permanently_closed,photo,place_id,plus_code,type,url,utc_offset,vicinity&language=zh-TW&key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "GET",
+            ));
 
-        curl_setopt_array($curl_2, array(
-            CURLOPT_URL => "https://maps.googleapis.com/maps/api/place/details/json?place_id=" . $place_id . "&fields=reviews,opening_hours,price_level,name,rating,user_ratings_total,website,formatted_phone_number,address_component,adr_address,business_status,formatted_address,geometry,icon,name,permanently_closed,photo,place_id,plus_code,type,url,utc_offset,vicinity&language=zh-TW&key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-        ));
+            $response_2 = curl_exec($curl_2);
+            curl_close($curl_2);
 
-        $response_2 = curl_exec($curl_2);
-        curl_close($curl_2);
+            $result_2 = json_decode($response_2);
 
-        $result_2 = json_decode($response_2);
-        // 取得所有資料
-        $detail_info = $result_2->result;
-        $name = $detail_info->name;
-        $address = $detail_info->formatted_address;
-        $icon_url = $detail_info->icon;
-        $photos_temp = $detail_info->photos;
+            // 取得所有資料
+            $detail_info = $result_2->result;
+            $name = $detail_info->name;
+            $address = $detail_info->formatted_address;
+            $icon_url = $detail_info->icon;
+            $photos_temp = $detail_info->photos;
 
-        // 照片
-        $photos = array();
-        for ($i = 0; $i < count($photos_temp); $i++) {
-            $temp = $photos_temp[$i]->photo_reference;
+            // 照片
+            $photos = array();
+            for ($i = 0; $i < count($photos_temp); $i++) {
+                $temp = $photos_temp[$i]->photo_reference;
 
-            $dataA = [
-                'url' => "https://maps.googleapis.com/maps/api/place/photo?maxwidth=900&maxheight=600&photoreference=" . $temp . "&key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A"
-            ];
-            array_push($photos, $dataA);
-        };
-        // 電話
-        if (!empty($detail_info->formatted_phone_number)) {
-            $number = $detail_info->formatted_phone_number;
-        } else {
-            $number = "無資料";
-        }
-        // 營業資訊
-        if (!empty($detail_info->business_status)) {
-            $business_status = $detail_info->business_status;
-        } else {
-            $business_status = "無資料";
-        }
-        // 星等
-        if (!empty($detail_info->rating)) {
-            $rating = $detail_info->rating;
-        } else {
-            $rating = "無資料";
-        }
-        // user_ratings_total
-        if (!empty($detail_info->user_ratings_total)) {
-            $user_ratings_total = $detail_info->user_ratings_total;
-        } else {
-            $user_ratings_total = "無資料";
-        }
-        // 分類
-        if (!empty($detail_info->types)) {
-            $types = $detail_info->types;
-        } else {
-            $types = "無資料";
-        }
-        // 價格區間
-        if (!empty($detail_info->price_level)) {
-            $price_level = $detail_info->price_level;
-        } else {
-            $price_level = "無資料";
-        }
-        // 評論
-        if (!empty($detail_info->reviews)) {
-            $reviews = $detail_info->reviews;
-        } else {
-            $reviews = "無資料";
-        }
-        // opening_hours
-        if (!empty($detail_info->opening_hours)) {
-            $opening_hours = $detail_info->opening_hours;
-        } else {
-            $opening_hours = "無資料";
-        }
-        // website
-        if (!empty($detail_info->website)) {
-            $website = $detail_info->website;
-        } else {
-            $website = "無資料";
-        }
+                $dataA = [
+                    'url' => "https://maps.googleapis.com/maps/api/place/photo?maxwidth=900&maxheight=600&photoreference=" . $temp . "&key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A"
+                ];
+                array_push($photos, $dataA);
+            };
+            // 電話
+            if (!empty($detail_info->formatted_phone_number)) {
+                $number = $detail_info->formatted_phone_number;
+            } else {
+                $number = "無資料";
+            }
+            // 營業資訊
+            if (!empty($detail_info->business_status)) {
+                $business_status = $detail_info->business_status;
+            } else {
+                $business_status = "無資料";
+            }
+            // 星等
+            if (!empty($detail_info->rating)) {
+                $rating = $detail_info->rating;
+            } else {
+                $rating = "無資料";
+            }
+            // user_ratings_total
+            if (!empty($detail_info->user_ratings_total)) {
+                $user_ratings_total = $detail_info->user_ratings_total;
+            } else {
+                $user_ratings_total = "無資料";
+            }
+            // 分類
+            if (!empty($detail_info->types)) {
+                $types = $detail_info->types;
+            } else {
+                $types = "無資料";
+            }
+            // 價格區間
+            if (!empty($detail_info->price_level)) {
+                $price_level = $detail_info->price_level;
+            } else {
+                $price_level = "無資料";
+            }
+            // 評論
+            // if (!empty($detail_info->reviews)) {
+            //     $reviews = $detail_info->reviews;
+            // } else {
+            //     $reviews = "無資料";
+            // }
+            // opening_hours
+            if (!empty($detail_info->opening_hours)) {
+                $opening_hours = $detail_info->opening_hours;
+            } else {
+                $opening_hours = "無資料";
+            }
+            // website
+            if (!empty($detail_info->website)) {
+                $website = $detail_info->website;
+            } else {
+                $website = "無資料";
+            }
+            return response()->json(array(
+                'name' => $name,
+                'address' => $address,
+                'icon_url' => $icon_url,
+                'phone_number' => $number,
+                'status' => $business_status,
+                'rating' => $rating,
+                'rating_total' => $user_ratings_total,
+                'types' =>  $types,
+                'price_level' => $price_level,
+                'opening_hours' => $opening_hours,
+                'website' => $website,
+                'photos' => $photos,
 
-        return response()->json(array(
-            'name' => $name,
-            'address' => $address,
-            'icon_url' => $icon_url,
-            'phone_number' => $number,
-            'status' => $business_status,
-            'rating' => $rating,
-            'rating_total' => $user_ratings_total,
-            'types' =>  $types,
-            'price_level' => $price_level,
-            'opening_hours' => $opening_hours,
-            'website' => $website,
-            'review' => $reviews,
-            'photos' => $photos,
-
-        ), 200);
+            ), 200);
+        } else {
+            return response()->json(array(
+                'ok' => false,
+                'name' => "無資料",
+                'address' => "無資料",
+                'icon_url' => "無資料",
+                'phone_number' => "無資料",
+                'status' => "無資料",
+                'rating' => "無資料",
+                'rating_total' => "無資料",
+                'types' =>  "無資料",
+                'price_level' => "無資料",
+                'opening_hours' => "無資料",
+                'website' => "無資料",
+                'photos' => "無資料",
+            ), 200);
+        }
     }
 }

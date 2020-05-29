@@ -3,16 +3,11 @@
     <!-- select 區塊 -->
     <transition name="demand-select">
       <div v-if="demand_select" class="q-pa-md" style="align-items: center">
-        <div
-          class="q-gt-xs q-pa-lg items-center text-black bg-grey-3"
-          style="height: auto;"
-        >
+        <div class="q-gt-xs q-pa-lg items-center text-black bg-grey-3" style="height: auto;">
           <div class="row" style>
             <div class="col"></div>
             <div class="col-12 col-md-auto">
-              <p style="font-size: 28px;font-family: Microsoft JhengHei;">
-                景點需求分析
-              </p>
+              <p style="font-size: 28px;font-family: Microsoft JhengHei;">景點需求分析</p>
             </div>
 
             <div class="col q-mt-sm q-ml-sm">
@@ -28,8 +23,7 @@
                 <b
                   class="text"
                   style="font-size: 30px;font-family: Microsoft JhengHei;"
-                  >選擇想分析的景點城市/類型</b
-                >
+                >選擇想分析的景點城市/類型</b>
                 <br />
               </div>
             </div>
@@ -62,49 +56,61 @@
     <div v-if="isShow">
       <!-- 彈出式視窗 -->
       <q-dialog v-model="icon">
-        <q-card style="width: 800px; max-width: 80vw;">
+        <q-card style="width: 1000px; max-width: 80vw;">
           <q-card-section class="row items-center q-pb-none">
-            <div class="text-h6">{{ Gdata.name }}</div>
+            <div
+              class="q-px-md q-py-none text-h6 text-bold"
+              style="font-family: Microsoft JhengHei;"
+            >優缺點與詳細資訊</div>
             <q-space />
             <q-btn icon="close" flat round dense v-close-popup />
           </q-card-section>
 
           <q-card-section>
             <div class="row">
-              <div class="col-6 q-pa-xs">
-                <proscons></proscons>
+              <!-- 優缺點 -->
+              <div class="col-6 q-px-xs">
+                <proscons>
+                  <template slot="text_ProsExplain">
+                    <!-- <q-chip>
+                      <q-avatar color="green-8" text-color="white" size="15px"></q-avatar>
+                      <span style="font-size: 15px;">
+                        <b>{{prosdata}}顏色越深，好評中提及該關鍵字的人數越多，為此景點的特色</b>
+                      </span>
+                    </q-chip>-->
+                  </template>
+                  <template slot="text_ConsExplain">
+                    <!-- <q-chip>
+                      <q-avatar color="red-8" text-color="white" size="15px"></q-avatar>
+                      <span style="font-size: 15px;">
+                        <b>顏色越深，負評中提及該關鍵字的人數越多，您可以從中考慮是否要前往</b>
+                      </span>
+                    </q-chip>-->
+                  </template>
+                </proscons>
               </div>
+              <!-- 詳細資訊介紹 -->
               <div class="col-6 q-pa-sm">
                 <div class="row items-start q-gutter-md">
-                  <q-card
-                    class="my-card"
-                    bordered
-                    style="width:100%;max-width:100%;"
-                  >
-                    <q-img
-                      style="height:200px;width:100%;"
-                      :src="Gdata.photos[0].url"
-                    ></q-img>
+                  <q-card class="my-card" bordered style="width:100%;max-width:100%;">
+                    <q-img style="height:200px;width:100%;" :src="Gdata.photos[0].url"></q-img>
                     <!-- <q-parallax :src="Gdata.photos[0].url" :height="300" /> -->
                     <q-card-section>
                       <div class="text-overline text-orange-9">
                         {{
-                          Gdata.opening_hours.open_now
-                            ? "營業中"
-                            : "休息中/無營業時間資訊"
+                        Gdata.opening_hours.open_now
+                        ? "營業中"
+                        : "休息中/無營業時間資訊"
                         }}
                       </div>
-                      <div class="text-h5 q-mt-sm q-mb-xs">
-                        {{ Gdata.name }}
-                      </div>
+                      <div class="text-h5 q-mt-sm q-mb-xs">{{ Gdata.name }}</div>
                       <div class="text-caption text-grey">
                         <q-chip
                           class="glossy"
                           color="orange"
                           text-color="white"
                           icon-right="star"
-                          >{{ Gdata.rating }}</q-chip
-                        >
+                        >{{ Gdata.rating }}</q-chip>
                         總評價數:{{ Gdata.rating_total }}
                       </div>
                     </q-card-section>
@@ -132,20 +138,14 @@
                           />
                         </div>
                         <div v-else>
-                          <q-btn
-                            rounded
-                            color="primary"
-                            disable
-                            label="無官方網站"
-                          />
+                          <q-btn rounded color="primary" disable label="無官方網站" />
                         </div>
                         <div>
                           <q-chip
                             color="grey-7"
                             text-color="white"
                             icon="directions"
-                            >{{ Gdata.address }}</q-chip
-                          >
+                          >{{ Gdata.address }}</q-chip>
                         </div>
                         <div>
                           <q-chip
@@ -153,8 +153,7 @@
                             color="black"
                             text-color="white"
                             icon="phone"
-                            >{{ Gdata.phone_number }}</q-chip
-                          >
+                          >{{ Gdata.phone_number }}</q-chip>
                         </div>
                       </q-tab-panel>
 
@@ -189,16 +188,9 @@
           style="overflow:hidden;width:auto;height:100%;margin:0px auto;"
         >
           <!-- 懶人包區域 -->
-          <!-- 介紹txtinfo -->
-
-          <!--  -->
           <div class="row">
-            <!-- 左 -->
             <div class="col-6">
-              <div
-                class="q-pa-lg"
-                style="height:900px;width:800px;max-width:100%;"
-              >
+              <div class="q-pa-lg" style="height:900px;width:800px;max-width:100%;">
                 <q-toolbar class="bg-primary text-white shadow-2">
                   <q-toolbar-title>分析結果</q-toolbar-title>
                 </q-toolbar>
@@ -219,9 +211,7 @@
                     <!-- txtdatas有資料 -->
                     <q-card>
                       <q-card-section>
-                        <q-scroll-area
-                          style="height:200px;width:100%;max-width: auto;"
-                        >
+                        <q-scroll-area style="height:200px;width:100%;max-width: auto;">
                           <q-list>
                             <div v-if="txtdatas_ok">
                               <!-- 元件一 -->
@@ -233,7 +223,6 @@
                                 :txtdata="txtdata"
                                 @txtdatas_Update="txtdatas_toVuex"
                                 @site_name="getName"
-                                @txtdata_key="getKey"
                               >
                                 <template slot="addToSchedule">
                                   <q-space />
@@ -256,10 +245,7 @@
                             </div>
                             <div v-if="!txtdatas_ok">
                               <q-item clickable v-ripple>
-                                <q-item-section
-                                  style="font-family: Microsoft JhengHei;"
-                                  >無交集資料</q-item-section
-                                >
+                                <q-item-section style="font-family: Microsoft JhengHei;">無交集資料</q-item-section>
                               </q-item>
                             </div>
                           </q-list>
@@ -280,9 +266,7 @@
                     <q-card>
                       <q-card-section>
                         <!-- test txtdatas_diff -->
-                        <q-scroll-area
-                          style="height:200px;width:100%;max-width: auto;"
-                        >
+                        <q-scroll-area style="height:200px;width:100%;max-width: auto;">
                           <q-list>
                             <demandDataDiff
                               v-for="(txtdata, key) in txtdatas_diff"
@@ -328,9 +312,7 @@
                     <!-- txtdatas_diff有資料 -->
                     <q-card v-if="Object.keys(this.txtdatas_diff).length">
                       <q-card-section>
-                        <q-scroll-area
-                          style="height:200px;width:100%;max-width: auto;"
-                        >
+                        <q-scroll-area style="height:200px;width:100%;max-width: auto;">
                           <q-list>
                             <demandDataDiff2
                               v-for="(txtdata, key) in txtdatas_diff"
@@ -375,15 +357,13 @@
             <div class="col-6">
               <div class="q-pa-lg">
                 <div>
+                  <!-- 介紹 -->
                   <q-card
                     class="my-card bg-secondary text-white text-center"
                     style="height:100%;max-height:600px;max-width:100%;"
                   >
                     <q-card-section>
-                      <b
-                        class="text"
-                        style="font-size: 25px;font-family: Microsoft JhengHei;"
-                      >
+                      <b class="text" style="font-size: 25px;font-family: Microsoft JhengHei;">
                         <q-circular-progress
                           v-show="!txtdatas_diff_ok"
                           indeterminate
@@ -405,9 +385,7 @@
                   >
                     <q-card-section>
                       <div class="text-h6">社會網絡分析圖</div>
-                      <div class="text-subtitle2">
-                        {{ r_title_1 }} {{ r_title_2 }} {{ r_title_3 }}
-                      </div>
+                      <div class="text-subtitle2">{{ r_title_1 }} {{ r_title_2 }} {{ r_title_3 }}</div>
                     </q-card-section>
 
                     <q-separator />
@@ -506,7 +484,8 @@ export default {
       "txtdatas_diff_ok"
     ]),
     ...mapGetters("auth", ["loggedIn"]),
-    ...mapGetters("travel", ["everydaySites"])
+    ...mapGetters("travel", ["everydaySites"]),
+    ...mapGetters("proscons", ["selected_site"])
   },
   props: ["id"],
   data() {
@@ -529,7 +508,7 @@ export default {
       fullPage: false,
 
       //顯示下方頁面
-      isShow: true,
+      isShow: false,
 
       // card
       expanded: false,
@@ -545,6 +524,7 @@ export default {
     ...mapActions("demand", ["fetchCats"]),
     ...mapActions("demand", ["upload_axios", "fetchInfo"]),
     ...mapActions("demand", ["upload_axios_2", "upload_axios_2_diff"]),
+    ...mapActions("proscons", ["fetchPros", "fetchCons"]),
 
     changeSrc() {
       //
@@ -576,6 +556,20 @@ export default {
       console.log("你點", val);
       // 同步state
       this.$store.commit("demand/FETCH_site_name", val);
+
+      // 取dialog優缺數值
+      var _this = this;
+      let promise = new Promise(function(resolve, reject) {
+        _this.$store.commit("proscons/Update_Selected_Site", val);
+        resolve();
+      });
+
+      promise.then(function() {
+        _this.fetchPros();
+        _this.fetchCons();
+      });
+
+      // 取google資訊
       this.fetchInfo();
     },
 
