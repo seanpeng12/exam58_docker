@@ -51,8 +51,8 @@ Route::group(['middleware' => ['CORS']], function () {
     Route::post('/cat', 'PostController@bothCatagory');
     // 景點需求分析---取(聯集-交集)景點
     Route::post('/cat_diff', 'PostController@diffCatagory');
-    // 測試
-    Route::post('/new_diff', 'PostController@new_diff');
+    // 新取(聯集-交集)景點(分開取)
+    Route::post('/new_cat_diff', 'PostController@new_diff');
 
     // 飯店
     // 取得所有城市名稱-第一層選單
@@ -65,7 +65,8 @@ Route::group(['middleware' => ['CORS']], function () {
     Route::post('/h_cat', 'DemandController@bothCatagory');
     // 景點需求分析---取(聯集-交集)景點
     Route::post('/h_cat_diff', 'DemandController@diffCatagory');
-
+    // 新取(聯集-交集)景點(分開取)
+    Route::post('/new_h_cat_diff', 'DemandController@new_diff');
     // api
     // google照片
     Route::post('/demand_Img', 'DemandController@getGoogleImg');

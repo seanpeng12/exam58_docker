@@ -70,7 +70,7 @@ class DemandController extends Controller
             'RhtmlCheck' => 'h_between_relationship.html。'
         ), 200);
     }
-    // /h_cat 需求分析懶人包(未完成)
+    // /h_cat 需求分析懶人包1(依照comment由大到小)
     function bothCatagory(Request $request)
     {
         $city = $request->input('name');
@@ -81,11 +81,11 @@ class DemandController extends Controller
             FROM hotel_relationship, hotel_data, hotel_attr
             WHERE (hotel_relationship.from_id = hotel_data.id AND hotel_relationship.to_id = hotel_attr.id)
             AND hotel_data.city_name = '$city'
-            AND (hotel_attr.tag = '$c1' OR hotel_attr.tag = '$c2') GROUP BY hotel_data.id HAVING COUNT(*) > 1");
+            AND (hotel_attr.tag = '$c1' OR hotel_attr.tag = '$c2') GROUP BY hotel_data.id HAVING COUNT(*) > 1 ORDER BY hotel_data.comment DESC");
 
         return response()->json($sql, 200);
     }
-    // /h_cat_diff 懶人包2(未完成)
+    // /h_cat_diff 懶人包2 3(照著hotel_data.comment由大到小)
     function diffCatagory(Request $request)
     {
         $city = $request->input('name');
@@ -101,9 +101,53 @@ class DemandController extends Controller
         AND (hotel_attr.tag = '$c1' OR hotel_attr.tag = '$c2')
         GROUP BY hotel_data.id
         HAVING COUNT(*) = 1
-        ORDER BY hotel_data.rate DESC");
+        ORDER BY hotel_data.comment DESC");
 
         return response()->json($sql_diff, 200);
+    }
+
+    // 新api區分懶人包2 3(照著hotel_data.comment 由大排到小)
+    function new_diff(Request $request)
+    {
+        $city = $request->input('name');
+        $c1 = $request->input('c1');
+        $c2 = $request->input('c20');
+
+        // 取(聯集-交集)，傳回含單一tag
+        $sql_diff = FacadesDB::select("SELECT DISTINCT hotel_data.id,hotel_data.name,hotel_data.city_name,hotel_data.address,hotel_data.type,hotel_data.comment
+        ,hotel_data.rate,hotel_data.href,hotel_attr.tag
+        FROM hotel_relationship, hotel_data, hotel_attr
+        WHERE (hotel_relationship.from_id = hotel_data.id AND hotel_relationship.to_id = hotel_attr.id)
+        AND hotel_data.city_name ='$city'
+        AND (hotel_attr.tag = '$c1' OR hotel_attr.tag = '$c2')
+        GROUP BY hotel_data.id
+        HAVING COUNT(*) = 1
+        ORDER BY hotel_data.comment DESC");
+
+
+        // array取id值
+
+        $data = $sql_diff;
+
+
+        // 資料格式修改
+        $result_1 = array();
+        $result_2 = array();
+
+        $temp = array();
+        for ($i = 0; $i < count($data); $i++) {
+            $temp = $data[$i]->tag;
+
+            if ($temp == $c1) {
+                array_push($result_1, $data[$i]);
+            } else {
+                array_push($result_2, $data[$i]);
+            }
+        };
+        return response()->json(array(
+            $c1 => $result_1,
+            $c2 => $result_2
+        ), 200);
     }
 
     // google 取照片
