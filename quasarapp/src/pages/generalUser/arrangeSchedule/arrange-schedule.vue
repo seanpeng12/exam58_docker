@@ -108,7 +108,7 @@
               icon:label_important
             />
             <q-icon name="label_important" style="font-size: 32px;" />
-            <q-tab name="prosCons" label="Step2(景點、飯店優缺點分析)" />
+            <q-tab name="prosCons" label="Step2(加入自選景點或飯店)" />
             <q-icon name="label_important" style="font-size: 32px;" />
 
             <q-tab name="searchSite" label="Step3(找景點)" />

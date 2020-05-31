@@ -10,6 +10,15 @@
           >SightSeeing</q-btn
         >
         <q-space />
+        <q-item
+          class="q-mt-sm"
+          style="font-family: NSimSun;font-weight:bold"
+          clickable
+          v-close-popup
+          to="/manager_index"
+          v-show="role == 'manager'"
+          >首頁
+        </q-item>
         <!-- gt-xs view -->
         <q-chip
           v-if="loggedIn"
@@ -19,6 +28,7 @@
           icon="face"
           >{{ userDetail }}您好</q-chip
         >
+
         <!-- <q-item class="gt-xs" exact clickable to="/">
           <q-item-section>
             <q-item-label class>首頁</q-item-label>

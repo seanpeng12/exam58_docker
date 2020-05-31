@@ -11,15 +11,7 @@
         >
         <q-space />
         <!-- gt-xs view -->
-        <q-item
-          class="q-mt-sm"
-          style="font-family: NSimSun;font-weight:bold"
-          clickable
-          v-close-popup
-          to="/manager_index"
-          v-show="role == 'manager'"
-          >首頁
-        </q-item>
+
         <q-item
           class="q-mt-sm"
           style="font-family: NSimSun;font-weight:bold"
