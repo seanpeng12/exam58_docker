@@ -28,19 +28,21 @@
         >
           <q-tab-panel name="tab_1">
             <div class="row">
-              <div class="col-1">
-                <q-icon name="fas fa-utensils" size="20px" color="black" />餐廳
-                <q-icon name="las la-landmark" size="20px" color="black" />景點
-                <q-icon name="fas fa-hotel" size="20px" color="black" />飯店
-              </div>
               <div
-                class="q-ml-none text-h6 text-bold col"
+                class="q-ml-none text-h5 text-bold col"
                 style="font-family:NSimSun"
-              >
-                去過 {{ selected_site }} 還會去
+              >去過 {{ selected_site }} 還會去</div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <q-icon class="q-px-md" name="fas fa-utensils" size="20px" color="white" />
+                <span style="font-weight:bold;font-family: Microsoft JhengHei;">餐廳</span>
+                <q-icon class="q-px-md" name="las la-landmark" size="20px" color="red" />
+                <span style="font-weight:bold;font-family: Microsoft JhengHei;">景點</span>
+                <q-icon class="q-px-md" name="fas fa-hotel" size="20px" color="blue-grey" />
+                <span style="font-weight:bold;font-family: Microsoft JhengHei;">飯店</span>
               </div>
             </div>
-
             <q-expansion-item
               v-model="expanded1"
               group="somegroup"
@@ -53,11 +55,7 @@
                 <q-card-section>
                   <q-scroll-area style="height: 250px; max-width: auto;">
                     <div v-for="a in pathData.data" :key="a.id" class="q-ml-sm">
-                      <q-icon
-                        v-if="a.type == 'R'"
-                        name="fas fa-utensils"
-                        color="black"
-                      />
+                      <q-icon v-if="a.type == 'R'" name="fas fa-utensils" color="black" />
                       <q-icon
                         v-else-if="a.type == 'S'"
                         name="las la-landmark"
@@ -76,9 +74,7 @@
                         icon-right="arrow_forward_ios"
                       ></q-btn>
                       <!--  -->
-                      <span class="text-black"
-                        >有 {{ a.weight }} 人選擇這裡</span
-                      >
+                      <span class="text-black">有 {{ a.weight }} 人選擇這裡</span>
                     </div>
                   </q-scroll-area>
                 </q-card-section>
@@ -88,16 +84,19 @@
 
           <q-tab-panel name="tab_2">
             <div class="row">
-              <div class="col-1">
-                <q-icon name="fas fa-utensils" size="20px" color="black" />餐廳
-                <q-icon name="las la-landmark" size="20px" color="black" />景點
-                <q-icon name="fas fa-hotel" size="20px" color="black" />飯店
-              </div>
               <div
-                class="q-ml-none text-h6 text-bold col"
+                class="q-ml-none text-h5 text-bold col"
                 style="font-family:NSimSun"
-              >
-                去過 {{ selected_site_2 }} 還會去
+              >去過 {{ selected_site_2 }} 還會去</div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <q-icon class="q-px-md" name="fas fa-utensils" size="20px" color="white" />
+                <span style="font-weight:bold;font-family: Microsoft JhengHei;">餐廳</span>
+                <q-icon class="q-px-md" name="las la-landmark" size="20px" color="red" />
+                <span style="font-weight:bold;font-family: Microsoft JhengHei;">景點</span>
+                <q-icon class="q-px-md" name="fas fa-hotel" size="20px" color="blue-grey" />
+                <span style="font-weight:bold;font-family: Microsoft JhengHei;">飯店</span>
               </div>
             </div>
             <q-expansion-item
@@ -124,12 +123,7 @@
                         size="20px"
                         color="black"
                       />
-                      <q-icon
-                        v-else
-                        name="fas fa-hotel"
-                        size="20px"
-                        color="black"
-                      />
+                      <q-icon v-else name="fas fa-hotel" size="20px" color="black" />
                       <!-- button -->
                       <q-btn
                         flat
@@ -141,9 +135,7 @@
                         icon-right="arrow_forward_ios"
                       ></q-btn>
                       <!--  -->
-                      <span class="text-black"
-                        >有 {{ b.weight }} 人選擇這裡</span
-                      >
+                      <span class="text-black">有 {{ b.weight }} 人選擇這裡</span>
                     </div>
                   </q-scroll-area>
                 </q-card-section>
@@ -151,8 +143,8 @@
             </q-expansion-item>
           </q-tab-panel>
 
-          <q-tab-panel name="tab_3"
-            ><slot name="finishTip"></slot>
+          <q-tab-panel name="tab_3">
+            <slot name="finishTip"></slot>
 
             <slot name="addToSchedule"></slot>
             <!-- <q-btn>景點加入排程</q-btn> -->

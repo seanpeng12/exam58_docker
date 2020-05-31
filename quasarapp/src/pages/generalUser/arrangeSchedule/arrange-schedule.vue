@@ -20,12 +20,7 @@
 
     <q-drawer show-if-above v-model="left" side="left" bordered :width="260">
       <!-- 往上一頁 -->
-      <q-icon
-        class="q-mt-none q-mb-xs q-ml-md"
-        color="#cccccc"
-        name="help"
-        size="26px"
-      >
+      <q-icon class="q-mt-none q-mb-xs q-ml-md" color="#cccccc" name="help" size="26px">
         <q-tooltip
           anchor="top middle"
           content-class="q-pa-md bg-amber-2 text-black shadow-4"
@@ -34,9 +29,7 @@
           transition-hide="fade"
           :offset="[10, 10]"
         >
-          <span style="font-family:Microsoft JhengHei;"
-            >您可以搭配我們的分析步驟，把喜愛的景點飯店加入排程</span
-          >
+          <span style="font-family:Microsoft JhengHei;">您可以搭配我們的分析步驟，把喜愛的景點飯店加入排程</span>
         </q-tooltip>
       </q-icon>
       <q-breadcrumbs-el
@@ -102,11 +95,7 @@
             align="justify"
             narrow-indicator
           >
-            <q-tab
-              name="collections"
-              label="Step1(您的收藏) "
-              icon:label_important
-            />
+            <q-tab name="collections" label="Step1(您的收藏) " icon:label_important />
             <q-icon name="label_important" style="font-size: 32px;" />
             <q-tab name="prosCons" label="Step2(景點、飯店優缺點分析)" />
             <q-icon name="label_important" style="font-size: 32px;" />
@@ -184,143 +173,11 @@
                 </hCard>
               </div>
             </q-tab-panel>
-
-            <q-tab-panel name="searchSite">
-              <div class="text-h6">
-                <!-- Tip: 需求分析 -->
-                <q-toggle
-                  class="q-pa-md"
-                  v-model="prefer"
-                  checked-icon="check"
-                  color="red"
-                  label="依照您曾經收藏類型推薦"
-                  unchecked-icon="clear"
-                />
-              </div>
-              <!-- <p>{{ after_axios }}</p> -->
-              <!-- 偏好分析 -->
-              <div class="q-pa-md" v-if="prefer == false">
-                <DemandPage :id="id">
-                  <!-- <template slot="addToSchedule">
-                    <q-space />
-                    <q-btn
-                      icon-right="add"
-                      label="加進排程"
-                      color="warning"
-                      @click.stop="
-                        promptToAddSite({
-                          id: key,
-                          site: txtdata.name
-                        })
-                      "
-                      dense
-                      size="12px"
-                      style="margin-left:20px"
-                    />
-                  </template> -->
-                </DemandPage>
-              </div>
-              <!-- 需求分析 -->
-              <div class="q-pa-md" v-else>
-                <preferDemandAll :id="id"> </preferDemandAll>
-              </div>
-
-              <!-- END -->
-            </q-tab-panel>
-            <q-tab-panel name="searchHotel">
-              <hDemandPage :id="id"></hDemandPage>
-              <!-- <p>{{ after_axios }}</p> -->
-              <!-- 飯店需求分析 select -->
-              <!-- <div class="q-pa-md">
-                <div class="q-pa-md doc-container text-black bg-grey-3">
-                  <div class="row text-h4">
-                    <b>飯店需求分析</b>
-                    <demandInfo></demandInfo>
-                  </div>
-
-                  <div class="row q-pl-xl">
-                    <demand-select
-                      :citys="citys"
-                      :cats="cats"
-                      :selected_p="selected_p"
-                      :selected_p_detail_item="selected_p_detail_item"
-                      :selected_p_detail_item_2="selected_p_detail_item_2"
-                      @changed_1="selected_1"
-                      @changed_2="selected_2"
-                      @changed_3="selected_3"
-                      @runR="run_R"
-                    ></demand-select>
-                  </div>
-                </div>
-              </div>-->
-
-              <!-- 需求分析 R圖 -->
-
-              <!-- END -->
-            </q-tab-panel>
-            <q-tab-panel name="movies">
-              <div class="q-pa-md">
-                <div class="q-pa-md doc-container text-black bg-grey-3">
-                  <div class="row text-h4">
-                    <b>路徑規畫分析</b>
-
-                    <pathInfo></pathInfo>
-                  </div>
-                  <div class="row q-pl-xl">
-                    <path-select></path-select>
-                  </div>
-                </div>
-              </div>
-
-              <div class="q-pa-none">
-                <div class="row">
-                  <div class="col-6">
-                    <path-data>
-                      <template slot="addToSchedule">
-                        <q-btn
-                          class="q-mt-sm"
-                          icon="add"
-                          label="加進排程"
-                          color="warning"
-                          @click="promptToAddRouteSites()"
-                          dense
-                          size="12px"
-                          style="font-weight:bold"
-                        />
-                      </template>
-                      <template slot="finishTip">
-                        <div
-                          class="text-h6 text-bold"
-                          style="font-family:NSimSun"
-                        >
-                          完成
-                        </div>
-                      </template>
-                    </path-data>
-                  </div>
-                  <!-- 懶人包區域 -->
-                  <div class="col-6">
-                    <path-r></path-r>
-                  </div>
-                </div>
-              </div>
-            </q-tab-panel>
-
             <q-tab-panel name="prosCons">
-              <div
-                class="row q-mx-md q-pa-sm q-mb-none doc-container text-black bg-grey-3"
-              >
+              <div class="row q-mx-md q-pa-sm q-mb-none doc-container text-black bg-grey-3">
                 <q-tabs v-model="step2Tab" class="text-black" dense>
-                  <q-tab
-                    name="site"
-                    icon="fas fa-car-side"
-                    label="景點優缺點分析"
-                  />
-                  <q-tab
-                    name="hotel"
-                    icon="fas fa-hotel"
-                    label="飯店優缺點分析"
-                  />
+                  <q-tab name="site" icon="fas fa-car-side" label="景點優缺點分析" />
+                  <q-tab name="hotel" icon="fas fa-hotel" label="飯店優缺點分析" />
                 </q-tabs>
               </div>
               <div v-if="step2Tab == 'site'">
@@ -414,14 +271,126 @@
                 </q-page>
               </div>
             </q-tab-panel>
+            <q-tab-panel name="searchSite">
+              <div class="text-h6">
+                <!-- Tip: 需求分析 -->
+                <q-toggle
+                  class="q-pa-md"
+                  v-model="prefer"
+                  checked-icon="check"
+                  color="red"
+                  label="依照您曾經收藏類型推薦"
+                  unchecked-icon="clear"
+                />
+              </div>
+              <!-- <p>{{ after_axios }}</p> -->
+              <!-- 偏好分析 -->
+              <div class="q-pa-md" v-if="prefer == false">
+                <DemandPage :id="id">
+                  <!-- <template slot="addToSchedule">
+                    <q-space />
+                    <q-btn
+                      icon-right="add"
+                      label="加進排程"
+                      color="warning"
+                      @click.stop="
+                        promptToAddSite({
+                          id: key,
+                          site: txtdata.name
+                        })
+                      "
+                      dense
+                      size="12px"
+                      style="margin-left:20px"
+                    />
+                  </template>-->
+                </DemandPage>
+              </div>
+              <!-- 需求分析 -->
+              <div class="q-pa-md" v-else>
+                <preferDemandAll :id="id"></preferDemandAll>
+              </div>
 
+              <!-- END -->
+            </q-tab-panel>
+            <q-tab-panel name="searchHotel">
+              <hDemandPage :id="id"></hDemandPage>
+              <!-- <p>{{ after_axios }}</p> -->
+              <!-- 飯店需求分析 select -->
+              <!-- <div class="q-pa-md">
+                <div class="q-pa-md doc-container text-black bg-grey-3">
+                  <div class="row text-h4">
+                    <b>飯店需求分析</b>
+                    <demandInfo></demandInfo>
+                  </div>
+
+                  <div class="row q-pl-xl">
+                    <demand-select
+                      :citys="citys"
+                      :cats="cats"
+                      :selected_p="selected_p"
+                      :selected_p_detail_item="selected_p_detail_item"
+                      :selected_p_detail_item_2="selected_p_detail_item_2"
+                      @changed_1="selected_1"
+                      @changed_2="selected_2"
+                      @changed_3="selected_3"
+                      @runR="run_R"
+                    ></demand-select>
+                  </div>
+                </div>
+              </div>-->
+
+              <!-- 需求分析 R圖 -->
+
+              <!-- END -->
+            </q-tab-panel>
+            <q-tab-panel name="movies">
+              <div class="q-pa-md">
+                <div class="q-pa-md doc-container text-black bg-grey-3">
+                  <div class="row text-h4">
+                    <b>路徑規畫分析</b>
+
+                    <pathInfo></pathInfo>
+                  </div>
+                  <div class="row q-pl-xl">
+                    <path-select></path-select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="q-pa-none">
+                <div class="row">
+                  <div class="col-6">
+                    <path-data>
+                      <template slot="addToSchedule">
+                        <q-btn
+                          class="q-mt-sm"
+                          icon="add"
+                          label="加進排程"
+                          color="warning"
+                          @click="promptToAddRouteSites()"
+                          dense
+                          size="12px"
+                          style="font-weight:bold"
+                        />
+                      </template>
+                      <template slot="finishTip">
+                        <div class="text-h6 text-bold" style="font-family:NSimSun">完成</div>
+                      </template>
+                    </path-data>
+                  </div>
+                  <!-- 懶人包區域 -->
+                  <div class="col-6">
+                    <path-r></path-r>
+                  </div>
+                </div>
+              </div>
+            </q-tab-panel>
             <q-tab-panel name="aa">
               <div class="text-h4">
                 GoogleMap找出最短路線
                 <q-icon color="red" name="report_problem" size="20px" />
-                <span class="text-subtitle2" style="color:red"
-                  >起點與終點為固定順序</span
-                >
+                <span class="text-subtitle2" style="color:red">起點與終點為固定順序</span>
               </div>
 
               <googleMap>
