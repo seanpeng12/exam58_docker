@@ -315,7 +315,7 @@
                       </q-tab-panels>
                     </q-card>
                   </div>
-                  <div v-else key="info2">
+                  <div v-if="pre_direction" key="info2">
                     <q-card
                       class="q-my-sm my-card bg-grey text-white"
                       style="height:100%;max-height:600px;max-width:100%;"
@@ -441,6 +441,8 @@ export default {
     return {
       //轉場觸發
       demand_select: false,
+      //提示
+      pre_direction: false,
       // 觸發顯示右側詳細資訊
       Info_clicked: false,
       // 暫存R_title
@@ -455,7 +457,7 @@ export default {
       fullPage: false,
 
       //顯示下方頁面
-      isShow: true,
+      isShow: false,
 
       // card
       expanded: false,
@@ -546,6 +548,8 @@ export default {
     run_R(value) {
       //是否顯示
       this.isShow = false;
+      // 提示
+      this.pre_direction = false;
       // info
       this.Info_clicked = false;
 
@@ -596,7 +600,8 @@ export default {
             "demand/update_txtinfo",
             "分析完成! 已列出所有符合兩類別景點，可以點選加入最愛："
           );
-
+          // 開啟提示
+          _this.pre_direction = true;
           resolve("result");
         });
 
@@ -614,8 +619,9 @@ export default {
   mounted: function() {
     // 初始化時取第一層城市資料(vuex)
     this.fetchCitys();
-    // transition
+    // select transition
     this.demand_select = true;
+
     // info
     this.Info_clicked = false;
   }

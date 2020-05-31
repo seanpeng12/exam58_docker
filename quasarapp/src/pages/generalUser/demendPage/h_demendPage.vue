@@ -3,16 +3,11 @@
     <!-- select區塊 -->
     <transition name="h-demand-select">
       <div v-if="h_demand_select" class="q-pa-md" style="align-items: center">
-        <div
-          class="q-gt-xs q-pa-lg items-center text-black bg-grey-3"
-          style="height: 300px;"
-        >
+        <div class="q-gt-xs q-pa-lg items-center text-black bg-grey-3" style="height: 300px;">
           <div class="row" style>
             <div class="col"></div>
             <div class="col-12 col-md-auto">
-              <p style="font-size: 28px;font-family: Microsoft JhengHei;">
-                飯店需求分析
-              </p>
+              <p style="font-size: 28px;font-family: Microsoft JhengHei;">飯店需求分析</p>
             </div>
 
             <div class="col q-mt-sm q-ml-sm">
@@ -28,8 +23,7 @@
                 <b
                   class="text"
                   style="font-size: 30px;font-family: Microsoft JhengHei;"
-                  >選擇想分析飯店的城市/類型</b
-                >
+                >選擇想分析飯店的城市/類型</b>
                 <br />
               </div>
             </div>
@@ -60,201 +54,288 @@
     <!-- end web page -->
 
     <!-- 左右區域 -->
+
     <div v-if="isShow">
+      <!-- 第一行 -->
       <div class="row q-pa-sm">
         <div
           class="col-md-6 q-pa-md"
-          style="overflow:hidden;height:100%;margin:0px auto;"
+          style="overflow:hidden;width:auto;height:100%;margin:0px auto;"
         >
           <!-- 懶人包區域 -->
-          <q-card
-            class="my-card bg-secondary text-white"
-            style="height:100%;width:100%;max-height:600px;max-width:100%;"
-          >
-            <transition name="fade" mode="out-in">
-              <q-card-section>
-                <b
-                  class="text"
-                  style="font-size: 25px;font-family: Microsoft JhengHei;"
-                >
-                  <q-circular-progress
-                    v-show="!txtdatas_diff_ok"
-                    indeterminate
-                    size="50px"
-                    color="lime"
-                    class="q-ma-md"
-                  />
-                  {{ txtinfo }}
-                </b>
-              </q-card-section>
-            </transition>
-
-            <q-separator dark />
-          </q-card>
-          <div></div>
-
-          <div class="q-pt-lg" style="height:100%;width:100%;max-width:100%;">
-            <q-list bordered>
-              <q-expansion-item
-                group="somegroup"
-                icon="explore"
-                :label="
-                  selected_p_detail_item + ' / ' + selected_p_detail_item_2
-                "
-                default-opened
-                header-class="text-purple"
-              >
-                <!-- txtdatas有資料 -->
-                <q-card>
-                  <q-card-section>
-                    <q-scroll-area
-                      style="height:200px;width:100%;max-width: auto;"
-                    >
-                      <q-list>
-                        <div v-if="txtdatas_ok">
-                          <demand-data
-                            v-for="(txtdata, key) in txtdatas"
-                            :key="key"
-                            :txtinfo="txtinfo"
-                            :txtdata="txtdata"
-                            @txtdatas_Update="txtdatas_toVuex"
-                          >
-                            <template
-                              slot="addToCollection"
-                              v-if="loggedIn == true"
-                            >
-                              <q-space />
-                              <hAddToCollectionBtn
+          <div class="row">
+            <!-- 左 -->
+            <div class="col-6">
+              <div class="q-pt-lg" style="height:100%;width:800px;max-width:100%;">
+                <q-toolbar class="bg-primary text-white shadow-2">
+                  <q-toolbar-title>分析結果</q-toolbar-title>
+                </q-toolbar>
+                <q-list bordered>
+                  <q-expansion-item
+                    group="somegroup"
+                    icon="explore"
+                    :label="
+                  selected_p_detail_item + ' / ' + selected_p_detail_item_2"
+                    default-opened
+                    header-class="text-purple"
+                  >
+                    <!-- txtdatas有資料 -->
+                    <q-card>
+                      <q-card-section>
+                        <q-scroll-area style="height:200px;width:100%;max-width: auto;">
+                          <q-list>
+                            <div v-if="txtdatas_ok">
+                              <demand-data
+                                v-for="(txtdata, key) in txtdatas"
+                                :key="key"
+                                :txtinfo="txtinfo"
                                 :txtdata="txtdata"
-                                :id="key"
-                                :city_name="txtdata.city_name"
-                                :site_name="txtdata.name"
-                                :address="txtdata.address"
-                                :comment="txtdata.comment"
-                                :rate="txtdata.rate"
-                              ></hAddToCollectionBtn>
-                            </template>
-                          </demand-data>
-                        </div>
-                        <div v-if="!txtdatas_ok">
-                          <q-item clickable v-ripple>
-                            <q-item-section
-                              class="text-center"
-                              style="font-family: Microsoft JhengHei;"
-                              >無交集資料</q-item-section
-                            >
-                          </q-item>
-                        </div>
-                      </q-list>
-                    </q-scroll-area>
-                  </q-card-section>
-                </q-card>
-                <!-- loading 插件 -->
-                <!-- <transition name="fade">
+                                @txtdatas_Update="txtdatas_toVuex"
+                                @site_name="getName"
+                              >
+                                <template slot="addToCollection" v-if="loggedIn == true">
+                                  <q-space />
+                                  <hAddToCollectionBtn
+                                    :txtdata="txtdata"
+                                    :id="key"
+                                    :city_name="txtdata.city_name"
+                                    :site_name="txtdata.name"
+                                    :address="txtdata.address"
+                                    :comment="txtdata.comment"
+                                    :rate="txtdata.rate"
+                                  ></hAddToCollectionBtn>
+                                </template>
+                              </demand-data>
+                            </div>
+                            <div v-if="!txtdatas_ok">
+                              <q-item clickable v-ripple>
+                                <q-item-section
+                                  class="text-center"
+                                  style="font-family: Microsoft JhengHei;"
+                                >無交集資料</q-item-section>
+                              </q-item>
+                            </div>
+                          </q-list>
+                        </q-scroll-area>
+                      </q-card-section>
+                    </q-card>
+                    <!-- loading 插件 -->
+                    <!-- <transition name="fade">
                   <loading v-if="ok" :active.sync="ok" :can-cancel="false" :is-full-page="fullPage"></loading>
-                </transition>-->
-                <!--  -->
-              </q-expansion-item>
+                    </transition>-->
+                    <!--  -->
+                  </q-expansion-item>
 
-              <q-separator />
+                  <q-separator />
 
-              <q-expansion-item
-                group="somegroup"
-                icon="explore"
-                :label="selected_p_detail_item"
-                header-class="text-primary"
-              >
-                <q-card>
-                  <q-card-section>
-                    <!-- test txtdatas_diff -->
-                    <q-scroll-area
-                      style="height:200px;width:100%;max-width: auto;"
+                  <q-expansion-item
+                    group="somegroup"
+                    icon="explore"
+                    :label="selected_p_detail_item"
+                    header-class="text-primary"
+                  >
+                    <q-card>
+                      <q-card-section>
+                        <!-- test txtdatas_diff -->
+                        <q-scroll-area style="height:200px;width:100%;max-width: auto;">
+                          <q-list>
+                            <demandDataDiff
+                              v-for="(txtdata, key) in txtdatas_diff"
+                              :key="key"
+                              :txtinfo_diff="txtinfo"
+                              :txtdata_diff="txtdata"
+                              :selected_p_detail_item="selected_p_detail_item"
+                              @txtdatas_Update="txtdatas_toVuex"
+                              @site_name="getName"
+                            >
+                              <template slot="addToCollection" v-if="loggedIn == true">
+                                <q-space />
+                                <hAddToCollectionBtn
+                                  :txtdata="txtdata"
+                                  :id="key"
+                                  :city_name="txtdata.city_name"
+                                  :site_name="txtdata.name"
+                                  :address="txtdata.address"
+                                  :comment="txtdata.comment"
+                                  :rate="txtdata.rate"
+                                ></hAddToCollectionBtn>
+                              </template>
+                            </demandDataDiff>
+                          </q-list>
+                        </q-scroll-area>
+                      </q-card-section>
+                    </q-card>
+                  </q-expansion-item>
+
+                  <q-separator />
+
+                  <q-expansion-item
+                    group="somegroup"
+                    icon="explore"
+                    :label="selected_p_detail_item_2"
+                    header-class="text-primary"
+                  >
+                    <q-card>
+                      <q-card-section>
+                        <q-scroll-area style="height:200px;width:100%;max-width: auto;">
+                          <q-list>
+                            <demandDataDiff2
+                              v-for="(txtdata, key) in txtdatas_diff"
+                              :key="key"
+                              :txtinfo_diff="txtinfo"
+                              :txtdata_diff="txtdata"
+                              :selected_p_detail_item_2="selected_p_detail_item_2"
+                              @txtdatas_Update="txtdatas_toVuex"
+                              @site_name="getName"
+                            >
+                              <template slot="addToCollection" v-if="loggedIn == true">
+                                <q-space />
+                                <hAddToCollectionBtn
+                                  :txtdata="txtdata"
+                                  :id="key"
+                                  :city_name="txtdata.city_name"
+                                  :site_name="txtdata.name"
+                                  :address="txtdata.address"
+                                  :comment="txtdata.comment"
+                                  :rate="txtdata.rate"
+                                ></hAddToCollectionBtn>
+                              </template>
+                            </demandDataDiff2>
+                          </q-list>
+                        </q-scroll-area>
+                      </q-card-section>
+                    </q-card>
+                  </q-expansion-item>
+
+                  <q-separator />
+                </q-list>
+              </div>
+            </div>
+            <!-- 右 -->
+            <div class="col-6">
+              <div class="q-pa-lg">
+                <div>
+                  <q-card
+                    class="my-card bg-secondary text-white text-center"
+                    style="height:100%;max-height:600px;max-width:100%;"
+                  >
+                    <q-card-section>
+                      <b class="text" style="font-size: 25px;font-family: Microsoft JhengHei;">
+                        <q-circular-progress
+                          v-show="!txtdatas_diff_ok"
+                          indeterminate
+                          size="50px"
+                          color="lime"
+                          class="q-ma-md"
+                        />
+                        {{ txtinfo }}
+                      </b>
+                    </q-card-section>
+
+                    <q-separator dark />
+                  </q-card>
+                </div>
+                <transition name="info" mode="out-in">
+                  <div v-if="Info_clicked" key="info1" class="q-my-sm row items-start q-gutter-md">
+                    <q-card class="my-card" bordered style="width:100%;max-width:100%;">
+                      <q-img style="height:200px;width:100%;" :src="Gdata.photos[0].url"></q-img>
+                      <!-- <q-parallax :src="Gdata.photos[0].url" :height="300" /> -->
+                      <q-card-section>
+                        <div
+                          class="text-overline text-orange-9"
+                        >{{ Gdata.opening_hours.open_now ? '營業中' :"休息中/無營業時間資訊"}}</div>
+                        <div class="text-h5 q-mt-sm q-mb-xs">{{Gdata.name}}</div>
+                        <div class="text-caption text-grey">
+                          <q-chip
+                            class="glossy"
+                            color="orange"
+                            text-color="white"
+                            icon-right="star"
+                          >{{Gdata.rating}}</q-chip>
+                          總評價數:{{Gdata.rating_total}}
+                        </div>
+                      </q-card-section>
+
+                      <q-card-actions>
+                        <q-tabs v-model="tab" class="text-teal">
+                          <q-tab label="詳細資訊" name="one" />
+                          <q-tab label="營業時間" name="two" />
+                        </q-tabs>
+                      </q-card-actions>
+                      <!-- tab -->
+                      <q-separator />
+
+                      <q-tab-panels v-model="tab" animated>
+                        <q-tab-panel name="one">
+                          <div v-if="Gdata.website != '無資料'">
+                            <q-btn
+                              rounded
+                              type="a"
+                              :href="Gdata.website"
+                              target="__blank"
+                              color="blue"
+                              class="text-bold"
+                              label="官方網站"
+                            />
+                          </div>
+                          <div v-else>
+                            <q-btn rounded color="primary" disable label="無官方網站" />
+                          </div>
+                          <div>
+                            <q-chip
+                              color="grey-7"
+                              text-color="white"
+                              icon="directions"
+                            >{{Gdata.address}}</q-chip>
+                          </div>
+                          <div>
+                            <q-chip
+                              outline
+                              color="black"
+                              text-color="white"
+                              icon="phone"
+                            >{{Gdata.phone_number}}</q-chip>
+                          </div>
+                        </q-tab-panel>
+
+                        <q-tab-panel name="two">
+                          <div class="q-pa-xs">
+                            營業時間:
+                            <div v-if="Gdata.opening_hours == '無資料'">
+                              <b>{{Gdata.opening_hours}}</b>
+                            </div>
+                            <div
+                              v-else
+                              v-for="(a,index) in Gdata.opening_hours.weekday_text"
+                              :key="index"
+                            >
+                              <b>{{ a }}</b>
+                            </div>
+                          </div>
+                        </q-tab-panel>
+                      </q-tab-panels>
+                    </q-card>
+                  </div>
+                  <div v-if="pre_direction" key="info2">
+                    <q-card
+                      class="q-my-sm my-card bg-grey text-white"
+                      style="height:100%;max-height:600px;max-width:100%;"
                     >
-                      <q-list>
-                        <demandDataDiff
-                          v-for="(txtdata, key) in txtdatas_diff"
-                          :key="key"
-                          :txtinfo_diff="txtinfo"
-                          :txtdata_diff="txtdata"
-                          :selected_p_detail_item="selected_p_detail_item"
-                          @txtdatas_Update="txtdatas_toVuex"
-                        >
-                          <template
-                            slot="addToCollection"
-                            v-if="loggedIn == true"
-                          >
-                            <q-space />
-                            <hAddToCollectionBtn
-                              :txtdata="txtdata"
-                              :id="key"
-                              :city_name="txtdata.city_name"
-                              :site_name="txtdata.name"
-                              :address="txtdata.address"
-                              :comment="txtdata.comment"
-                              :rate="txtdata.rate"
-                            ></hAddToCollectionBtn>
-                          </template>
-                        </demandDataDiff>
-                      </q-list>
-                    </q-scroll-area>
-                  </q-card-section>
-                </q-card>
-              </q-expansion-item>
-
-              <q-separator />
-
-              <q-expansion-item
-                group="somegroup"
-                icon="explore"
-                :label="selected_p_detail_item_2"
-                header-class="text-primary"
-              >
-                <q-card>
-                  <q-card-section>
-                    <q-scroll-area
-                      style="height:200px;width:100%;max-width: auto;"
-                    >
-                      <q-list>
-                        <demandDataDiff2
-                          v-for="(txtdata, key) in txtdatas_diff"
-                          :key="key"
-                          :txtinfo_diff="txtinfo"
-                          :txtdata_diff="txtdata"
-                          :selected_p_detail_item_2="selected_p_detail_item_2"
-                          @txtdatas_Update="txtdatas_toVuex"
-                        >
-                          <template
-                            slot="addToCollection"
-                            v-if="loggedIn == true"
-                          >
-                            <q-space />
-                            <hAddToCollectionBtn
-                              :txtdata="txtdata"
-                              :id="key"
-                              :city_name="txtdata.city_name"
-                              :site_name="txtdata.name"
-                              :address="txtdata.address"
-                              :comment="txtdata.comment"
-                              :rate="txtdata.rate"
-                            ></hAddToCollectionBtn>
-                          </template>
-                        </demandDataDiff2>
-                      </q-list>
-                    </q-scroll-area>
-                  </q-card-section>
-                </q-card>
-              </q-expansion-item>
-
-              <q-separator />
-            </q-list>
+                      <q-card-section>
+                        <div class="text-h6">點按飯店檢視詳細資訊</div>
+                        <div class="text-subtitle2"></div>
+                      </q-card-section>
+                    </q-card>
+                  </div>
+                </transition>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      <!-- 第二行 -->
       <div class="row q-pa-sm">
-        <div
-          class="col-md-6 q-pa-md"
-          style="overflow:hidden;height:100%;margin:0px auto;"
-        >
+        <div class="col-md-6 q-pa-md" style="overflow:hidden;height:100%;margin:0px auto;">
           <!-- iframe區域 -->
           <q-card
             class="my-card text-center q-pa-sm"
@@ -262,9 +343,7 @@
           >
             <q-card-section>
               <div class="text-h6">社會網絡分析圖</div>
-              <div class="text-subtitle2">
-                {{ r_title_1 }} {{ r_title_2 }} {{ r_title_3 }}
-              </div>
+              <div class="text-subtitle2">{{ r_title_1 }} {{ r_title_2 }} {{ r_title_3 }}</div>
             </q-card-section>
 
             <q-separator />
@@ -337,7 +416,9 @@ export default {
       "txtdatas_diff",
       "src",
       "Rdata",
-      "txtinfo"
+      "txtinfo",
+      "site_name",
+      "Gdata"
     ]),
     ...mapGetters("h_demand", [
       "selected_p",
@@ -358,27 +439,15 @@ export default {
     //     this.$store.commit("h_demand/update_selected_p", value);
     //   }
     // },
-    // selected_p_detail_item_trigger: {
-    //   get: function() {
-    //     return this.$store.state.selected_p_detail_item;
-    //   },
-    //   set: function(value) {
-    //     this.$store.commit("h_demand/update_selected_p_detail_item", value);
-    //   }
-    // },
-    // selected_p_detail_item_2_trigger: {
-    //   get: function() {
-    //     return this.$store.state.selected_p_detail_item_2;
-    //   },
-    //   set: function(value) {
-    //     this.$store.commit("h_demand/update_selected_p_detail_item_2", value);
-    //   }
-    // }
   },
   data() {
     return {
       // 轉場觸發
       h_demand_select: false,
+      //提示
+      pre_direction: false,
+      // 觸發顯示右側詳細資訊
+      Info_clicked: false,
       // 暫存R_title
       r_title_1: "",
       r_title_2: "",
@@ -392,8 +461,12 @@ export default {
 
       //顯示下方頁面
       isShow: false,
-      // ok
-      ok: true
+
+      // card
+      expanded: false,
+      tab: "one",
+      lorem:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
     };
   },
 
@@ -401,7 +474,7 @@ export default {
     // 由此找vuex所需method
     ...mapActions("h_demand", ["fetchCitys"]),
     ...mapActions("h_demand", ["fetchCats"]),
-    ...mapActions("h_demand", ["upload_axios"]),
+    ...mapActions("h_demand", ["upload_axios", "fetchInfo"]),
     ...mapActions("h_demand", ["upload_axios_2", "upload_axios_2_diff"]),
 
     changeSrc() {
@@ -428,6 +501,13 @@ export default {
       this.$store.commit("h_demand/update_txtinfo", "文字載入中...");
     },
 
+    getName(val) {
+      console.log("demandpage:", val);
+      // 同步state
+      this.$store.commit("h_demand/FETCH_site_name", val);
+      this.fetchInfo();
+    },
+
     // from emit local then set vuex
     selected_1(value) {
       console.log("收到emit!");
@@ -435,7 +515,7 @@ export default {
       this.fetchCats();
       // 更改為初始值
       if (value == "") {
-        this.$store.commit("demand/update_txtinfo", "請先選擇城市與需求");
+        this.$store.commit("h_demand/update_txtinfo", "請先選擇城市與需求");
       } else {
         this.$store.commit(
           "demand/update_txtinfo",
@@ -444,8 +524,6 @@ export default {
       }
       // hide
       this.isShow = false;
-      // reset ok(loading關閉)
-      this.ok = false;
     },
     // from emit local then set vuex
     selected_2(value) {
@@ -457,8 +535,6 @@ export default {
       );
       // hide
       this.isShow = false;
-      // reset ok(loading關閉)
-      this.ok = false;
     },
     // from emit local then set vuex
     selected_3(value) {
@@ -470,11 +546,16 @@ export default {
       );
       // hide
       this.isShow = false;
-      // reset ok(loading關閉)
-      this.ok = false;
     },
     // 傳送runR引數至vuex
     run_R(value) {
+      //是否顯示
+      this.isShow = false;
+      // 提示
+      this.pre_direction = false;
+      // info
+      this.Info_clicked = false;
+
       this.r_title_1 = this.selected_p;
       this.r_title_2 = this.selected_p_detail_item;
       this.r_title_3 = this.selected_p_detail_item_2;
@@ -515,19 +596,37 @@ export default {
       this.selected_p_detail_item_local2 = "";
     },
     txtdatas_diff_ok: function(val) {
+      var _this = this;
       if (val == true) {
-        this.$store.commit(
-          "h_demand/update_txtinfo",
-          "分析完成! 已列出所有符合兩類別景點，可以點選加入最愛："
-        );
+        let promise = new Promise(function(resolve, reject) {
+          _this.$store.commit(
+            "h_demand/update_txtinfo",
+            "分析完成! 已列出所有符合兩類別景點，可以點選加入最愛："
+          );
+          // 開啟提示
+          _this.pre_direction = true;
+
+          resolve("result");
+        });
+
+        promise.then(function(result) {
+          console.log("全部完成資料載入");
+        });
+      } else {
+        console.log("error!檢查txtdatas_diff_ok");
       }
-      this.ok = !this.txtdatas_diff_ok;
+    },
+    site_name: function(val) {
+      this.Info_clicked = true;
     }
   },
   mounted: function() {
     // 初始化時取第一層城市資料(vuex)
     this.fetchCitys();
+    // select transition
     this.h_demand_select = true;
+    // info
+    this.Info_clicked = false;
   }
 };
 </script>
@@ -545,6 +644,20 @@ export default {
   transition: opacity 1s ease;
 }
 .h-demand-select-enter {
+  opacity: 0;
+}
+
+/* info */
+.info-enter-active,
+.info-leave-active {
+  transition: all 1s;
+}
+.info-enter {
+  transform: translateX(50px);
+  opacity: 0;
+}
+.info-leave-to {
+  transform: translateX(-50px);
   opacity: 0;
 }
 
