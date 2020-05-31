@@ -3,11 +3,16 @@
     <!-- select區塊 -->
     <transition name="h-demand-select">
       <div v-if="h_demand_select" class="q-pa-md" style="align-items: center">
-        <div class="q-gt-xs q-pa-lg items-center text-black bg-grey-3" style="height: auto;">
+        <div
+          class="q-gt-xs q-pa-lg items-center text-black bg-grey-3"
+          style="height: auto;"
+        >
           <div class="row" style>
             <div class="col"></div>
             <div class="col-12 col-md-auto">
-              <p style="font-size: 28px;font-family: Microsoft JhengHei;">飯店需求分析</p>
+              <p style="font-size: 28px;font-family: Microsoft JhengHei;">
+                飯店需求分析
+              </p>
             </div>
 
             <div class="col q-mt-sm q-ml-sm">
@@ -23,7 +28,8 @@
                 <b
                   class="text"
                   style="font-size: 30px;font-family: Microsoft JhengHei;"
-                >選擇想分析飯店的城市/類型</b>
+                  >選擇想分析飯店的城市/服務</b
+                >
                 <br />
               </div>
             </div>
@@ -62,7 +68,9 @@
             <div
               class="q-px-md q-py-none text-h6 text-bold"
               style="font-family: Microsoft JhengHei;"
-            >優缺點與詳細資訊</div>
+            >
+              優缺點與詳細資訊
+            </div>
             <q-space />
             <q-btn icon="close" flat round dense v-close-popup />
           </q-card-section>
@@ -93,25 +101,35 @@
               <!-- 詳細資訊介紹 -->
               <div class="col-6 q-pa-sm">
                 <div class="row items-start q-gutter-md">
-                  <q-card class="my-card" bordered style="width:100%;max-width:100%;">
-                    <q-img style="height:200px;width:100%;" :src="Gdata.photos[0].url"></q-img>
+                  <q-card
+                    class="my-card"
+                    bordered
+                    style="width:100%;max-width:100%;"
+                  >
+                    <q-img
+                      style="height:200px;width:100%;"
+                      :src="Gdata.photos[0].url"
+                    ></q-img>
                     <!-- <q-parallax :src="Gdata.photos[0].url" :height="300" /> -->
                     <q-card-section>
                       <div class="text-overline text-orange-9">
                         {{
-                        Gdata.opening_hours.open_now
-                        ? "營業中"
-                        : "休息中/無營業時間資訊"
+                          Gdata.opening_hours.open_now
+                            ? "營業中"
+                            : "休息中/無營業時間資訊"
                         }}
                       </div>
-                      <div class="text-h5 q-mt-sm q-mb-xs">{{ Gdata.name }}</div>
+                      <div class="text-h5 q-mt-sm q-mb-xs">
+                        {{ Gdata.name }}
+                      </div>
                       <div class="text-caption text-grey">
                         <q-chip
                           class="glossy"
                           color="orange"
                           text-color="white"
                           icon-right="star"
-                        >{{ Gdata.rating }}</q-chip>
+                          >{{ Gdata.rating }}</q-chip
+                        >
                         總評價數:{{ Gdata.rating_total }}
                       </div>
                     </q-card-section>
@@ -139,14 +157,20 @@
                           />
                         </div>
                         <div v-else>
-                          <q-btn rounded color="primary" disable label="無官方網站" />
+                          <q-btn
+                            rounded
+                            color="primary"
+                            disable
+                            label="無官方網站"
+                          />
                         </div>
                         <div>
                           <q-chip
                             color="grey-7"
                             text-color="white"
                             icon="directions"
-                          >{{ Gdata.address }}</q-chip>
+                            >{{ Gdata.address }}</q-chip
+                          >
                         </div>
                         <div>
                           <q-chip
@@ -154,7 +178,8 @@
                             color="black"
                             text-color="white"
                             icon="phone"
-                          >{{ Gdata.phone_number }}</q-chip>
+                            >{{ Gdata.phone_number }}</q-chip
+                          >
                         </div>
                       </q-tab-panel>
 
@@ -199,7 +224,9 @@
                   <q-expansion-item
                     group="somegroup"
                     icon="donut_small"
-                    :label="selected_p_detail_item + ' / ' + selected_p_detail_item_2"
+                    :label="
+                      selected_p_detail_item + ' / ' + selected_p_detail_item_2
+                    "
                     default-opened
                     header-class="text-purple"
                   >
@@ -224,11 +251,11 @@
                                     label="加進排程"
                                     color="warning"
                                     @click.stop="
-                                  promptToAddSite({
-                                    id: key,
-                                    site: txtdata.name
-                                  })
-                                "
+                                      promptToAddSite({
+                                        id: key,
+                                        site: txtdata.name
+                                      })
+                                    "
                                     dense
                                     size="12px"
                                     style="margin-left:20px"
@@ -241,7 +268,8 @@
                                 <q-item-section
                                   class="text-center"
                                   style="font-family: Microsoft JhengHei;"
-                                >無交集資料</q-item-section>
+                                  >無交集資料</q-item-section
+                                >
                               </q-item>
                             </div>
                           </q-list>
@@ -279,11 +307,11 @@
                                   label="加進排程"
                                   color="warning"
                                   @click.stop="
-                                promptToAddSite({
-                                  id: key,
-                                  site: txtdata.name
-                                })
-                              "
+                                    promptToAddSite({
+                                      id: key,
+                                      site: txtdata.name
+                                    })
+                                  "
                                   dense
                                   size="12px"
                                   style="margin-left:20px"
@@ -313,7 +341,9 @@
                               :key="key"
                               :txtinfo_diff="txtinfo"
                               :txtdata_diff="txtdata"
-                              :selected_p_detail_item_2="selected_p_detail_item_2"
+                              :selected_p_detail_item_2="
+                                selected_p_detail_item_2
+                              "
                               @txtdatas_Update="txtdatas_toVuex"
                               @site_name="getName"
                             >
@@ -324,11 +354,11 @@
                                   label="加進排程"
                                   color="warning"
                                   @click.stop="
-                                promptToAddSite({
-                                  id: key,
-                                  site: txtdata.name
-                                })
-                              "
+                                    promptToAddSite({
+                                      id: key,
+                                      site: txtdata.name
+                                    })
+                                  "
                                   dense
                                   size="12px"
                                   style="margin-left:20px"
@@ -353,7 +383,10 @@
                   <q-card class="my-card bg-secondary text-white cap_info">
                     <transition name="fade" mode="out-in">
                       <q-card-section>
-                        <b class="text" style="font-size: 25px;font-family: Microsoft JhengHei;">
+                        <b
+                          class="text"
+                          style="font-size: 25px;font-family: Microsoft JhengHei;"
+                        >
                           <q-circular-progress
                             v-show="!txtdatas_diff_ok"
                             indeterminate
@@ -373,7 +406,9 @@
                   <q-card class="my-card text-center q-pa-sm iframe">
                     <q-card-section>
                       <div class="text-h6">社會網絡分析圖</div>
-                      <div class="text-subtitle2">{{ r_title_1 }} {{ r_title_2 }} {{ r_title_3 }}</div>
+                      <div class="text-subtitle2">
+                        {{ r_title_1 }} {{ r_title_2 }} {{ r_title_3 }}
+                      </div>
                     </q-card-section>
 
                     <q-separator />

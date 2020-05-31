@@ -28,7 +28,7 @@
                 <b
                   class="text"
                   style="font-size: 30px;font-family: Microsoft JhengHei;"
-                  >選擇想分析飯店的城市/類型</b
+                  >選擇想分析飯店的城市/服務</b
                 >
                 <br />
               </div>
