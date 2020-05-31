@@ -27,8 +27,18 @@
           class="bg-grey-6 text-white text-center"
         >
           <q-tab-panel name="tab_1">
-            <div class="text-h6 text-bold" style="font-family:NSimSun">
-              去過 {{ selected_site }} 還會去
+            <div class="row">
+              <div class="col-1">
+                <q-icon name="fas fa-utensils" size="20px" color="black" />餐廳
+                <q-icon name="las la-landmark" size="20px" color="black" />景點
+                <q-icon name="fas fa-hotel" size="20px" color="black" />飯店
+              </div>
+              <div
+                class="q-ml-none text-h6 text-bold col"
+                style="font-family:NSimSun"
+              >
+                去過 {{ selected_site }} 還會去
+              </div>
             </div>
 
             <q-expansion-item
@@ -77,8 +87,18 @@
           </q-tab-panel>
 
           <q-tab-panel name="tab_2">
-            <div class="text-h6 text-bold" style="font-family:NSimSun">
-              去過 {{ selected_site_2 }} 還會去
+            <div class="row">
+              <div class="col-1">
+                <q-icon name="fas fa-utensils" size="20px" color="black" />餐廳
+                <q-icon name="las la-landmark" size="20px" color="black" />景點
+                <q-icon name="fas fa-hotel" size="20px" color="black" />飯店
+              </div>
+              <div
+                class="q-ml-none text-h6 text-bold col"
+                style="font-family:NSimSun"
+              >
+                去過 {{ selected_site_2 }} 還會去
+              </div>
             </div>
             <q-expansion-item
               group="somegroup"
@@ -96,6 +116,7 @@
                         v-if="b.type == 'R'"
                         name="fas fa-utensils"
                         color="black"
+                        size="20px"
                       />
                       <q-icon
                         v-else-if="b.type == 'S'"
@@ -103,7 +124,12 @@
                         size="20px"
                         color="black"
                       />
-                      <q-icon v-else name="fas fa-hotel" color="black" />
+                      <q-icon
+                        v-else
+                        name="fas fa-hotel"
+                        size="20px"
+                        color="black"
+                      />
                       <!-- button -->
                       <q-btn
                         flat

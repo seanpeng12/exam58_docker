@@ -4,8 +4,7 @@
       <q-toolbar>
         <q-btn
           class="title"
-          to="/"
-          @click="logoutUser()"
+          @click="promptToLogout()"
           flat
           style="font-family:Trebuchet MS,Papyrus,Verdana, Geneva, sans-serif;font-size:22px;font-weight:bold"
           >SightSeeing</q-btn
@@ -240,7 +239,18 @@ export default {
   },
   methods: {
     ...mapActions("auth", ["logoutUser"]),
-    onItemClick() {}
+    promptToLogout() {
+      this.$q
+        .dialog({
+          title: "Confirm",
+          message: "您是否要登出並進入切換角色頁面?",
+          cancel: true,
+          persistent: true
+        })
+        .onOk(() => {
+          this.logoutUser();
+        });
+    }
   }
 };
 </script>

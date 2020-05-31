@@ -66,7 +66,8 @@
               </template>
             </path-data>
           </div>
-          <div class="col-6 q-mt-lg">
+          <div class="col-1"></div>
+          <div class="col q-mt-lg">
             <companyDetail2
               v-for="(item, key) in siteGoogleDetails"
               :key="key"

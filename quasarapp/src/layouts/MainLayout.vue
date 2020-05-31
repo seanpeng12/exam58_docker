@@ -4,14 +4,32 @@
       <q-toolbar>
         <q-btn
           class="title"
-          to="/"
-          @click="logoutUser()"
+          @click="promptToLogout()"
           flat
           style="font-family:Trebuchet MS,Papyrus,Verdana, Geneva, sans-serif;font-size:22px;font-weight:bold"
           >SightSeeing</q-btn
         >
         <q-space />
         <!-- gt-xs view -->
+        <q-item
+          class="q-mt-sm"
+          style="font-family: NSimSun;font-weight:bold"
+          clickable
+          v-close-popup
+          to="/manager_index"
+          v-show="role == 'manager'"
+          >首頁
+        </q-item>
+        <q-item
+          class="q-mt-sm"
+          style="font-family: NSimSun;font-weight:bold"
+          clickable
+          v-close-popup
+          to="/index"
+          v-show="role == 'generalUser'"
+          >首頁
+        </q-item>
+
         <q-chip
           v-if="loggedIn"
           color="blue-grey-7"
@@ -36,7 +54,6 @@
             <q-item
               clickable
               v-close-popup
-              @click="onItemClick"
               to="/site_demend"
               v-show="role == 'generalUser'"
             >
@@ -47,12 +64,7 @@
                 </q-item-label>
               </q-item-section>
             </q-item>
-            <q-item
-              clickable
-              v-close-popup
-              @click="onItemClick"
-              to="/site_ProsCons"
-            >
+            <q-item clickable v-close-popup to="/site_ProsCons">
               <q-item-section>
                 <q-item-label>
                   景點GO-
@@ -60,12 +72,7 @@
                 </q-item-label>
               </q-item-section>
             </q-item>
-            <q-item
-              clickable
-              v-close-popup
-              @click="onItemClick"
-              to="/site_Path"
-            >
+            <q-item clickable v-close-popup to="/site_Path">
               <q-item-section>
                 <q-item-label>
                   景點GO-
@@ -78,7 +85,6 @@
             <q-item
               clickable
               v-close-popup
-              @click="onItemClick"
               to="/hotel_demend"
               v-show="role == 'generalUser'"
             >
@@ -89,12 +95,7 @@
                 </q-item-label>
               </q-item-section>
             </q-item>
-            <q-item
-              clickable
-              v-close-popup
-              @click="onItemClick"
-              to="/hotel_ProsCons"
-            >
+            <q-item clickable v-close-popup to="/hotel_ProsCons">
               <q-item-section>
                 <q-item-label>
                   飯店GO-
@@ -126,23 +127,13 @@
             label="會員功能"
           >
             <q-list>
-              <q-item
-                clickable
-                v-close-popup
-                @click="onItemClick"
-                to="/collection"
-              >
+              <q-item clickable v-close-popup to="/collection">
                 <q-item-section>
                   <q-item-label>我的收藏景點</q-item-label>
                 </q-item-section>
               </q-item>
 
-              <q-item
-                clickable
-                v-close-popup
-                @click="onItemClick"
-                to="/mySchedule"
-              >
+              <q-item clickable v-close-popup to="/mySchedule">
                 <q-item-section>
                   <q-item-label>我的旅程表</q-item-label>
                 </q-item-section>
@@ -279,7 +270,18 @@ export default {
   },
   methods: {
     ...mapActions("auth", ["logoutUser"]),
-    onItemClick() {}
+    promptToLogout() {
+      this.$q
+        .dialog({
+          title: "Confirm",
+          message: "您是否要登出並進入切換角色頁面?",
+          cancel: true,
+          persistent: true
+        })
+        .onOk(() => {
+          this.logoutUser();
+        });
+    }
   }
 };
 </script>

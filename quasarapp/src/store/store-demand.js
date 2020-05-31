@@ -1,13 +1,6 @@
-import axios, {
-  axiosInstance
-} from "boot/axios";
+import axios, { axiosInstance } from "boot/axios";
 import Vue from "vue";
-import {
-  fstore,
-  firebaseAuth,
-  firebaseApp,
-  firestore
-} from "boot/firebase";
+import { fstore, firebaseAuth, firebaseApp, firestore } from "boot/firebase";
 
 const state = {
   namespaced: true,
@@ -30,7 +23,8 @@ const state = {
   // }],
   txtdatas: {},
   // 差集
-  txtdatas_diff: {},
+  txtdatas_diff2: {},
+  txtdatas_diff3: {},
   // 提示：
   txtinfo: "請先選擇城市與需求",
 
@@ -59,11 +53,11 @@ const state = {
     rating_total: 0,
     name: null,
     address: null,
-    photos: [{
-      url: "https://cdn.quasar.dev/img/parallax2.jpg"
-    }]
-
-
+    photos: [
+      {
+        url: "https://cdn.quasar.dev/img/parallax2.jpg"
+      }
+    ]
   }
 };
 const mutations = {
@@ -95,16 +89,27 @@ const mutations = {
     state.txtdatas = {};
     // console.log(state.txtdatas);
   },
-  resetTxtdatas_diff(state) {
+  resetTxtdatas_diff2(state) {
     // console.log("reset");
     // Vue.set(state.txtdatas, null, null);
-    state.txtdatas_diff = {};
+    state.txtdatas_diff2 = {};
     // console.log(state.txtdatas);
   },
-  FETCH_txtdatas_diff(state, res) {
-    Vue.set(state.txtdatas_diff, res.id, res.txtdata_diff);
+  resetTxtdatas_diff3(state) {
+    // console.log("reset");
+    // Vue.set(state.txtdatas, null, null);
+    state.txtdatas_diff3 = {};
+    // console.log(state.txtdatas);
+  },
+  FETCH_txtdatas_diff2(state, res) {
+    Vue.set(state.txtdatas_diff2, res.id, res.txtdata_diff2);
 
-    // console.log("FETCH_txtdatas from mutation:", state.txtdatas_diff);
+    // console.log("FETCH_txtdatas_diff2 from mutation:", state.txtdatas_diff2);
+  },
+  FETCH_txtdatas_diff3(state, res) {
+    Vue.set(state.txtdatas_diff3, res.id, res.txtdata_diff3);
+
+    console.log("FETCH_txtdatas_diff3 from mutation:", state.txtdatas_diff3);
   },
   FETCH_index(state, index) {
     return (state.after_axios += index);
@@ -141,13 +146,10 @@ const mutations = {
   },
   update_txtdatas_diff_ok(state, value) {
     return (state.txtdatas_diff_ok = value);
-  },
-
+  }
 };
 const actions = {
-  fetchCitys({
-    commit
-  }) {
+  fetchCitys({ commit }) {
     axiosInstance
       .get("http://140.136.155.116/api/site_dataCity")
       .then(res => {
@@ -161,9 +163,7 @@ const actions = {
       });
   },
 
-  fetchCats({
-    commit
-  }) {
+  fetchCats({ commit }) {
     axiosInstance
       .post("http://140.136.155.116/api/site_dataCat", {
         name: state.selected_p
@@ -225,9 +225,7 @@ const actions = {
   //   //   });
   // },
   // ajax跑R圖
-  upload_axios({
-    commit
-  }) {
+  upload_axios({ commit }) {
     axiosInstance
       .post("http://140.136.155.116/api/runR_twoC", {
         name: state.selected_p,
@@ -242,14 +240,12 @@ const actions = {
         commit("FETCH_index", 1);
         console.log("after_axios+1");
       })
-      .catch(function (response) {
+      .catch(function(response) {
         console.log(response);
       });
   },
   // ajax取懶人包資料
-  upload_axios_2({
-    commit
-  }) {
+  upload_axios_2({ commit }) {
     axiosInstance
       .post("http://140.136.155.116/api/cat", {
         name: state.selected_p,
@@ -274,11 +270,11 @@ const actions = {
               .collection("sightseeingMember")
               .doc(uid)
               .collection("我的收藏");
-            id.forEach(function (data, index, array) {
+            id.forEach(function(data, index, array) {
               checkCollectionExists
                 .doc(data)
                 .get()
-                .then(function (doc) {
+                .then(function(doc) {
                   if (index === id.length - 1) {
                     commit("update_txtdatas_ok", true);
                     console.log("site:txtdatas最後一筆(登入會員)");
@@ -338,15 +334,14 @@ const actions = {
                       });
                     }
                   }
-
                 })
-                .catch(function (error) {
+                .catch(function(error) {
                   console.log("Error getting document:", error);
                 });
-            })
+            });
           } else {
             // console.log("not login");
-            id.forEach(function (data, index, array) {
+            id.forEach(function(data, index, array) {
               if (index === id.length - 1) {
                 commit("update_txtdatas_ok", true);
                 console.log("site:txtdatas最後一筆(未登入)");
@@ -374,7 +369,6 @@ const actions = {
                   }
                 });
               }
-
             });
           }
         });
@@ -382,31 +376,72 @@ const actions = {
 
         // commit('FETCH_txtdatas', txtdatas);
       })
-      .catch(function (response) {
+      .catch(function(response) {
         console.log(response);
       });
   },
-  // 取差集diff
-  upload_axios_2_diff({
-    commit
-  }) {
+  // test
+  test_axios_2_diff({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/cat_diff", {
+      .post("http://140.136.155.116/api/new_cat_diff", {
+        name: "台北",
+        c1: "建築物",
+        c20: "古蹟"
+      })
+      .then(response => {
+        console.log("test_axios_2_diff建築物", response.data["建築物"]);
+        console.log(
+          "test_axios_2_diff古蹟",
+          response.data["古蹟"].map(item => item.id)
+        );
+        // const id = response.data.map(item => item.id);
+        // const name = response.data.map(item => item.name);
+        // const city_name = response.data.map(item => item.city_name);
+        // const address = response.data.map(item => item.address);
+        // const comment = response.data.map(item => item.comment);
+        // const rate = response.data.map(item => item.rate);
+        // const type = response.data.map(item => item.type);
+        // const tag = response.data.map(item => item.tag);
+      });
+  },
+  // test end
+  // 取差集diff
+  upload_axios_2_diff({ commit }) {
+    axiosInstance
+      .post("http://140.136.155.116/api/new_cat_diff", {
         name: state.selected_p,
         c1: state.selected_p_detail_item,
         c20: state.selected_p_detail_item_2
       })
       .then(response => {
-        const id = response.data.map(item => item.id);
-        const name = response.data.map(item => item.name);
-        const city_name = response.data.map(item => item.city_name);
-        const address = response.data.map(item => item.address);
-        const comment = response.data.map(item => item.comment);
-        const rate = response.data.map(item => item.rate);
+        console.log("response", response);
+        const id = response.data[state.selected_p_detail_item].map(
+          item => item.id
+        );
+        const name = response.data[state.selected_p_detail_item].map(
+          item => item.name
+        );
+        const city_name = response.data[state.selected_p_detail_item].map(
+          item => item.city_name
+        );
+        const address = response.data[state.selected_p_detail_item].map(
+          item => item.address
+        );
+        const comment = response.data[state.selected_p_detail_item].map(
+          item => item.comment
+        );
+        const rate = response.data[state.selected_p_detail_item].map(
+          item => item.rate
+        );
 
-        const type = response.data.map(item => item.type);
-        const tag = response.data.map(item => item.tag);
+        const type = response.data[state.selected_p_detail_item].map(
+          item => item.type
+        );
+        const tag = response.data[state.selected_p_detail_item].map(
+          item => item.tag
+        );
         firebaseAuth.onAuthStateChanged(user => {
+          // console.log("test", id, city_name);
           // 如果登入，判斷是否收入收藏
           if (user) {
             // console.log("site:成功取diff");
@@ -416,18 +451,20 @@ const actions = {
               .collection("sightseeingMember")
               .doc(uid)
               .collection("我的收藏");
-            id.forEach(function (data, index, array) {
+            id.forEach(function(data, index, array) {
+              console.log("foreach name[index]", city_name[index]);
+
               checkCollectionExists
                 .doc(data)
                 .get()
-                .then(function (doc) {
+                .then(function(doc) {
                   if (index === id.length - 1) {
                     commit("update_txtdatas_diff_ok", true);
-                    console.log("site:txtdatas_diff最後一筆(登入會員)");
+                    console.log("site:txtdatas_diff2最後一筆(登入會員)");
                     if (doc.exists) {
-                      commit("FETCH_txtdatas_diff", {
+                      commit("FETCH_txtdatas_diff2", {
                         id: data,
-                        txtdata_diff: {
+                        txtdata_diff2: {
                           name: name[index],
                           city_name: city_name[index],
                           address: address[index],
@@ -439,9 +476,9 @@ const actions = {
                         }
                       });
                     } else {
-                      commit("FETCH_txtdatas_diff", {
+                      commit("FETCH_txtdatas_diff2", {
                         id: data,
-                        txtdata_diff: {
+                        txtdata_diff2: {
                           name: name[index],
                           city_name: city_name[index],
                           address: address[index],
@@ -453,11 +490,12 @@ const actions = {
                         }
                       });
                     }
-                  } else { // 判斷資料是否存在資料庫
+                  } else {
+                    // 判斷資料是否存在資料庫
                     if (doc.exists) {
-                      commit("FETCH_txtdatas_diff", {
+                      commit("FETCH_txtdatas_diff2", {
                         id: data,
-                        txtdata_diff: {
+                        txtdata_diff2: {
                           name: name[index],
                           city_name: city_name[index],
                           address: address[index],
@@ -469,9 +507,9 @@ const actions = {
                         }
                       });
                     } else {
-                      commit("FETCH_txtdatas_diff", {
+                      commit("FETCH_txtdatas_diff2", {
                         id: data,
-                        txtdata_diff: {
+                        txtdata_diff2: {
                           name: name[index],
                           city_name: city_name[index],
                           address: address[index],
@@ -483,23 +521,22 @@ const actions = {
                         }
                       });
                     }
-                  };
-
+                  }
                 })
-                .catch(function (error) {
+                .catch(function(error) {
                   console.log("Error getting document:", error);
                 });
             });
           }
           // 未登入，不判斷資料是否存在資料庫
           else {
-            id.forEach(function (data, index, array) {
+            id.forEach(function(data, index, array) {
               if (index === id.length - 1) {
                 commit("update_txtdatas_diff_ok", true);
-                console.log("site:txtdatas_diff最後一筆(未登入)");
-                commit("FETCH_txtdatas_diff", {
+                console.log("site:txtdatas_diff2最後一筆(未登入)");
+                commit("FETCH_txtdatas_diff2", {
                   id: data,
-                  txtdata_diff: {
+                  txtdata_diff2: {
                     name: name[index],
                     city_name: city_name[index],
                     address: address[index],
@@ -510,9 +547,9 @@ const actions = {
                   }
                 });
               } else {
-                commit("FETCH_txtdatas_diff", {
+                commit("FETCH_txtdatas_diff2", {
                   id: data,
-                  txtdata_diff: {
+                  txtdata_diff2: {
                     name: name[index],
                     city_name: city_name[index],
                     address: address[index],
@@ -523,38 +560,194 @@ const actions = {
                   }
                 });
               }
-
             });
           }
         });
       })
 
-      .catch(function (response) {
+      .catch(function(response) {
         console.log(response);
       });
   },
-  resetTxtdatas({
-    commit
-  }) {
-    commit("resetTxtdatas");
-    commit("resetTxtdatas_diff");
+  // 聯集2
+  upload_axios_3_diff({ commit }) {
+    axiosInstance
+      .post("http://140.136.155.116/api/new_cat_diff", {
+        name: state.selected_p,
+        c1: state.selected_p_detail_item,
+        c20: state.selected_p_detail_item_2
+      })
+      .then(response => {
+        const id = response.data[state.selected_p_detail_item_2].map(
+          item => item.id
+        );
+        const name = response.data[state.selected_p_detail_item_2].map(
+          item => item.name
+        );
+        const city_name = response.data[state.selected_p_detail_item_2].map(
+          item => item.city_name
+        );
+        const address = response.data[state.selected_p_detail_item_2].map(
+          item => item.address
+        );
+        const comment = response.data[state.selected_p_detail_item_2].map(
+          item => item.comment
+        );
+        const rate = response.data[state.selected_p_detail_item_2].map(
+          item => item.rate
+        );
+
+        const type = response.data[state.selected_p_detail_item_2].map(
+          item => item.type
+        );
+        const tag = response.data[state.selected_p_detail_item_2].map(
+          item => item.tag
+        );
+        firebaseAuth.onAuthStateChanged(user => {
+          // 如果登入，判斷是否收入收藏
+          if (user) {
+            // console.log("site:成功取diff");
+            // console.log(response.data);
+            const uid = firebaseAuth.currentUser.uid;
+            const checkCollectionExists = fstore
+              .collection("sightseeingMember")
+              .doc(uid)
+              .collection("我的收藏");
+            id.forEach(function(data, index, array) {
+              checkCollectionExists
+                .doc(data)
+                .get()
+                .then(function(doc) {
+                  if (index === id.length - 1) {
+                    commit("update_txtdatas_diff_ok", true);
+                    console.log("site:txtdatas_diff3最後一筆(登入會員)");
+                    if (doc.exists) {
+                      commit("FETCH_txtdatas_diff3", {
+                        id: data,
+                        txtdata_diff: {
+                          name: name[index],
+                          city_name: city_name[index],
+                          address: address[index],
+                          comment: comment[index],
+                          rate: rate[index],
+                          type: type[index],
+                          tag: tag[index],
+                          exists: true
+                        }
+                      });
+                    } else {
+                      commit("FETCH_txtdatas_diff3", {
+                        id: data,
+                        txtdata_diff3: {
+                          name: name[index],
+                          city_name: city_name[index],
+                          address: address[index],
+                          comment: comment[index],
+                          rate: rate[index],
+                          type: type[index],
+                          tag: tag[index],
+                          exists: false
+                        }
+                      });
+                    }
+                  } else {
+                    // 判斷資料是否存在資料庫
+                    if (doc.exists) {
+                      commit("FETCH_txtdatas_diff3", {
+                        id: data,
+                        txtdata_diff3: {
+                          name: name[index],
+                          city_name: city_name[index],
+                          address: address[index],
+                          comment: comment[index],
+                          rate: rate[index],
+                          type: type[index],
+                          tag: tag[index],
+                          exists: true
+                        }
+                      });
+                    } else {
+                      commit("FETCH_txtdatas_diff3", {
+                        id: data,
+                        txtdata_diff3: {
+                          name: name[index],
+                          city_name: city_name[index],
+                          address: address[index],
+                          comment: comment[index],
+                          rate: rate[index],
+                          type: type[index],
+                          tag: tag[index],
+                          exists: false
+                        }
+                      });
+                    }
+                  }
+                })
+                .catch(function(error) {
+                  console.log("Error getting document:", error);
+                });
+            });
+          }
+          // 未登入，不判斷資料是否存在資料庫
+          else {
+            id.forEach(function(data, index, array) {
+              if (index === id.length - 1) {
+                commit("update_txtdatas_diff_ok", true);
+                console.log("site:txtdatas_diff3最後一筆(未登入)");
+                commit("FETCH_txtdatas_diff3", {
+                  id: data,
+                  txtdata_diff3: {
+                    name: name[index],
+                    city_name: city_name[index],
+                    address: address[index],
+                    comment: comment[index],
+                    rate: rate[index],
+                    type: type[index],
+                    tag: tag[index]
+                  }
+                });
+              } else {
+                commit("FETCH_txtdatas_diff3", {
+                  id: data,
+                  txtdata_diff3: {
+                    name: name[index],
+                    city_name: city_name[index],
+                    address: address[index],
+                    comment: comment[index],
+                    rate: rate[index],
+                    type: type[index],
+                    tag: tag[index]
+                  }
+                });
+              }
+            });
+          }
+        });
+      })
+
+      .catch(function(response) {
+        console.log(response);
+      });
   },
-  fetchInfo({
-    commit
-  }) {
+  resetTxtdatas({ commit }) {
+    commit("resetTxtdatas");
+    commit("resetTxtdatas_diff2");
+    commit("resetTxtdatas_diff3");
+  },
+  fetchInfo({ commit }) {
     axiosInstance
       .post("http://140.136.155.116/api/demand_info", {
-        name: state.site_name,
+        name: state.site_name
       })
       .then(response => {
         console.log("成功取Gdata");
         console.log(response.data);
         commit("FETCH_Gdata", response.data);
       })
-      .catch(function (response) {
+      .catch(function(response) {
         console.log("發生錯誤", response);
       });
-  },
+  }
 };
 const getters = {
   citys: state => {
@@ -563,8 +756,11 @@ const getters = {
   cats: state => {
     return state.cats;
   },
-  txtdatas_diff: state => {
-    return state.txtdatas_diff;
+  txtdatas_diff2: state => {
+    return state.txtdatas_diff2;
+  },
+  txtdatas_diff3: state => {
+    return state.txtdatas_diff3;
   },
   txtdatas: state => {
     return state.txtdatas;
@@ -611,7 +807,7 @@ const getters = {
   },
   Gdata: state => {
     return state.Gdata;
-  },
+  }
 };
 
 export default {

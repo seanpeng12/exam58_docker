@@ -1,6 +1,4 @@
-import axios, {
-  axiosInstance
-} from "boot/axios";
+import axios, { axiosInstance } from "boot/axios";
 import Vue from "vue";
 
 const state = {
@@ -89,9 +87,7 @@ const mutations = {
 };
 const actions = {
   // 取景點/飯店城市
-  fetchCitys({
-    commit
-  }) {
+  fetchCitys({ commit }) {
     axiosInstance
       .get("http://140.136.155.116/api/site_dataCity")
       .then(res => {
@@ -104,9 +100,7 @@ const actions = {
   },
 
   // 取景點/飯店
-  fetchSites({
-    commit
-  }) {
+  fetchSites({ commit }) {
     axiosInstance
       .post("http://140.136.155.116/api/path_sitesByCity", {
         city_name: state.selected_city
@@ -119,9 +113,7 @@ const actions = {
         console.log(err);
       });
   },
-  h_fetchSites({
-    commit
-  }) {
+  h_fetchSites({ commit }) {
     axiosInstance
       .post("http://140.136.155.116/api/h_path_sitesByCity", {
         city_name: state.selected_city
@@ -135,9 +127,7 @@ const actions = {
       });
   },
 
-  fetchPathR({
-    commit
-  }) {
+  fetchPathR({ commit }) {
     axiosInstance
       .post("http://140.136.155.116/api/runPath", {
         city: state.selected_city,
@@ -153,9 +143,7 @@ const actions = {
       });
   },
   //
-  fetchPath({
-    commit
-  }) {
+  fetchPath({ commit }) {
     axiosInstance
       .post("http://140.136.155.116/api/PathData", {
         name: state.selected_site
@@ -166,14 +154,12 @@ const actions = {
 
         commit("Update_PathData", res);
       })
-      .catch(function (response) {
+      .catch(function(response) {
         console.log(response);
       });
   },
   //
-  fetchPath_2({
-    commit
-  }) {
+  fetchPath_2({ commit }) {
     axiosInstance
       .post("http://140.136.155.116/api/PathData", {
         name: state.selected_site_2
@@ -182,13 +168,11 @@ const actions = {
         console.log("取得第二層景點懶人包");
         commit("Update_PathData_2", res);
       })
-      .catch(function (response) {
+      .catch(function(response) {
         console.log(response);
       });
   },
-  getSiteGoogleDetail({
-    commit
-  }, site_name) {
+  getSiteGoogleDetail({ commit }, site_name) {
     commit("resetSiteGoogleDetail");
     axiosInstance
       .post("http://140.136.155.116/api/getGoogleImg", {
@@ -201,6 +185,7 @@ const actions = {
           })
 
           .then(res => {
+            console.log("googleDetail:", res.data);
             commit("getSiteGoogleDetail", {
               id: res.data.place_id,
               detail: {

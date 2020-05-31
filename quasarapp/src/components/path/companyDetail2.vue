@@ -1,6 +1,6 @@
 <template>
-  <q-card class="my-card" style="width:100%">
-    <q-img style="height:180px" :src="siteGoogleDetail.img" />
+  <q-card class="my-card" style="width: 400px; max-width: 80vw;">
+    <q-img style="height:180px;" :src="siteGoogleDetail.img" />
 
     <q-card-section>
       <div class="row no-wrap items-center">
@@ -113,5 +113,4 @@ export default {
 <style lang="sass" scoped>
 .my-card
   width: 100%
-  max-width: 300px
 </style>

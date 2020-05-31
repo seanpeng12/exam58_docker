@@ -75,13 +75,13 @@ const routes = [
   },
   {
     path: "/PageAuth",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/PageAuth.vue")
-      }
-    ]
+    // component: () => import("layouts/MainLayout.vue"),
+    // children: [
+    //   {
+    //     path: "",
+    component: () => import("pages/PageAuth.vue")
+    //   }
+    // ]
   },
   {
     path: "/mySchedule",
@@ -169,12 +169,12 @@ const routes = [
   },
 
   {
-    path: "/waypoints",
+    path: "/drag",
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {
         path: "",
-        component: () => import("pages/WayPoint.vue")
+        component: () => import("pages/drag.vue")
       }
     ]
   },

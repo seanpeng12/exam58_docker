@@ -267,7 +267,7 @@
                         <q-scroll-area style="height:200px;width:100%;max-width: auto;">
                           <q-list>
                             <demandDataDiff
-                              v-for="(txtdata, key) in txtdatas_diff"
+                              v-for="(txtdata, key) in txtdatas_diff2"
                               :key="key"
                               :txtinfo_diff="txtinfo"
                               :txtdata_diff="txtdata"
@@ -312,7 +312,7 @@
                         <q-scroll-area style="height:200px;width:100%;max-width: auto;">
                           <q-list>
                             <demandDataDiff2
-                              v-for="(txtdata, key) in txtdatas_diff"
+                              v-for="(txtdata, key) in txtdatas_diff3"
                               :key="key"
                               :txtinfo_diff="txtinfo"
                               :txtdata_diff="txtdata"
@@ -458,7 +458,8 @@ export default {
       "citys",
       "cats",
       "txtdatas",
-      "txtdatas_diff",
+      "txtdatas_diff2",
+      "txtdatas_diff3",
       "src",
       "Rdata",
       "txtinfo",
@@ -521,7 +522,7 @@ export default {
     ...mapActions("h_demand", ["fetchCitys"]),
     ...mapActions("h_demand", ["fetchCats"]),
     ...mapActions("h_demand", ["upload_axios", "fetchInfo"]),
-    ...mapActions("h_demand", ["upload_axios_2", "upload_axios_2_diff"]),
+    ...mapActions("h_demand", ["upload_axios_2", "upload_axios_2_diff","upload_axios_3_diff"]),
     ...mapActions("h_proscons", ["fetchPros", "fetchCons"]),
     changeSrc() {
       //
@@ -692,6 +693,7 @@ export default {
       // 在呼叫ajax取懶人包(vuex)
       this.upload_axios_2();
       this.upload_axios_2_diff();
+      this.upload_axios_3_diff();
 
       // 清空選取資料
       this.selected_p_local = "";
