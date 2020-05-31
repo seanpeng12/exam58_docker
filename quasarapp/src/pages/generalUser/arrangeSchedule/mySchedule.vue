@@ -1,5 +1,5 @@
 <template>
-  <q-page padding>
+  <q-page class="bg-grey-2" padding>
     <div class="row">
       <schedule
         v-for="(sightseeingMember, key) in sightseeingMembers"
@@ -8,10 +8,7 @@
         :id="key"
       ></schedule>
     </div>
-    <div
-      class="absolute-bottom-right q-ma-lg"
-      style="pading: 20px; font-family: NSimSun;"
-    >
+    <div class="absolute-bottom-right q-ma-lg create_schedule">
       <q-btn
         dense
         color="warning"
@@ -22,8 +19,8 @@
       />
     </div>
     <q-dialog v-model="addSchedule">
-      <addSchedule @close="addSchedule = false"></addSchedule
-    ></q-dialog>
+      <addSchedule @close="addSchedule = false"></addSchedule>
+    </q-dialog>
   </q-page>
 </template>
 <script>
@@ -58,11 +55,17 @@ export default {
   }
 };
 </script>
-<style lang="scss">
+<style scoped>
 .my-card {
   width: 100%;
   max-width: 280px;
   margin: 20px;
   margin-left: 30px;
 }
+/* 建立新的旅程 */
+.create_schedule {
+  padding: 20px;
+  font-family: NSimSun;
+}
 </style>
+

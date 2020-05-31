@@ -191,10 +191,7 @@
           <!-- 懶人包區域 -->
           <div class="row">
             <div class="col-6">
-              <div
-                class="q-pa-lg"
-                style="height:900px;width:800px;max-width:100%;font-family: Microsoft JhengHei;"
-              >
+              <div class="q-pa-lg txtinfo">
                 <q-toolbar class="bg-primary text-white shadow-2">
                   <q-toolbar-title>分析結果</q-toolbar-title>
                 </q-toolbar>
@@ -209,7 +206,7 @@
                     <!-- txtdatas有資料 -->
                     <q-card>
                       <q-card-section>
-                        <q-scroll-area style="height:200px;width:100%;max-width: auto;">
+                        <q-scroll-area class="txtinfo-scroll">
                           <q-list>
                             <div v-if="txtdatas_ok">
                               <demand-data
@@ -264,7 +261,7 @@
                     <q-card>
                       <q-card-section>
                         <!-- test txtdatas_diff -->
-                        <q-scroll-area style="height:200px;width:100%;max-width: auto;">
+                        <q-scroll-area class="txtinfo-scroll">
                           <q-list>
                             <demandDataDiff
                               v-for="(txtdata, key) in txtdatas_diff2"
@@ -309,7 +306,7 @@
                   >
                     <q-card>
                       <q-card-section>
-                        <q-scroll-area style="height:200px;width:100%;max-width: auto;">
+                        <q-scroll-area class="txtinfo-scroll">
                           <q-list>
                             <demandDataDiff2
                               v-for="(txtdata, key) in txtdatas_diff3"
@@ -348,14 +345,12 @@
                 </q-list>
               </div>
             </div>
+            <!-- 右側 -->
             <div class="col-6">
               <div class="q-pa-lg">
                 <div>
                   <!-- 介紹 -->
-                  <q-card
-                    class="my-card bg-secondary text-white"
-                    style="height:100%;width:100%;max-height:600px;max-width:100%;"
-                  >
+                  <q-card class="my-card bg-secondary text-white cap_info">
                     <transition name="fade" mode="out-in">
                       <q-card-section>
                         <b class="text" style="font-size: 25px;font-family: Microsoft JhengHei;">
@@ -375,10 +370,7 @@
                   </q-card>
 
                   <!-- iframe區域 -->
-                  <q-card
-                    class="my-card text-center q-pa-sm"
-                    style="height:100%;width:100%;max-height:800px;max-width:100%;"
-                  >
+                  <q-card class="my-card text-center q-pa-sm iframe">
                     <q-card-section>
                       <div class="text-h6">社會網絡分析圖</div>
                       <div class="text-subtitle2">{{ r_title_1 }} {{ r_title_2 }} {{ r_title_3 }}</div>
@@ -506,7 +498,7 @@ export default {
       fullPage: false,
 
       //顯示下方頁面
-      isShow: true,
+      isShow: false,
       // ok
       ok: true,
       // card
@@ -522,7 +514,11 @@ export default {
     ...mapActions("h_demand", ["fetchCitys"]),
     ...mapActions("h_demand", ["fetchCats"]),
     ...mapActions("h_demand", ["upload_axios", "fetchInfo"]),
-    ...mapActions("h_demand", ["upload_axios_2", "upload_axios_2_diff","upload_axios_3_diff"]),
+    ...mapActions("h_demand", [
+      "upload_axios_2",
+      "upload_axios_2_diff",
+      "upload_axios_3_diff"
+    ]),
     ...mapActions("h_proscons", ["fetchPros", "fetchCons"]),
     changeSrc() {
       //
@@ -718,7 +714,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 2s;
@@ -734,11 +730,36 @@ export default {
   opacity: 0;
 }
 
-.frameStyle {
-  width: 100%;
-  height: 500px;
-}
 .de {
   padding-bottom: 50px;
+}
+
+/* 左側 */
+/* 懶人包 */
+.txtinfo {
+  height: 900px;
+  width: 800px;
+  max-width: 100%;
+  font-family: Microsoft JhengHei;
+}
+/* 懶人包個別scroll-area */
+.txtinfo-scroll {
+  height: 200px;
+  width: 100%;
+  max-width: auto;
+}
+/* 右側提示字 */
+.cap_info {
+  height: 100%;
+  width: 100%;
+  max-height: 600px;
+  max-width: 100%;
+}
+/* 右側iframe */
+.iframe {
+  height: 100%;
+  width: 100%;
+  max-height: 800px;
+  max-width: 100%;
 }
 </style>
