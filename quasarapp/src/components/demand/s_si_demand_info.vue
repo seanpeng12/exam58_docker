@@ -17,7 +17,7 @@
           </div>
         </q-card-section>
 
-        <q-item-label header style="color:#57a5ba">
+        <!-- <q-item-label header style="color:#57a5ba">
           <q-icon
             name="assignment_turned_in"
             style="color:#57a5ba"
@@ -49,7 +49,7 @@
             </p>
             <p>Step6. 喜歡的話，一鍵加入您的景點收藏(登入才能使用)</p>
           </q-item-section>
-        </q-item>
+        </q-item> -->
         <q-item-label header style="color:#57a5ba"
           ><q-icon name="multiline_chart" style="color:#57a5ba" size="20px" /><b
             >分析圖式說明</b

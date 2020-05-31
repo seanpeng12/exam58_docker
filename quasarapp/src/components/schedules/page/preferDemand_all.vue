@@ -16,7 +16,7 @@
             </div>
 
             <div class="col q-mt-sm q-ml-sm">
-              <preferInfo></preferInfo>
+              <!-- <preferInfo></preferInfo> -->
             </div>
           </div>
 
@@ -414,12 +414,21 @@
                   </q-card>
 
                   <!-- iframe區域 -->
+
                   <q-card
-                    class="my-card text-center q-pa-sm"
-                    style="height:800px;width:100%;max-height:800px;max-width:100%;"
+                    class="my-card text-center q-pa-sm iframe"
+                    style="height:100%;width:100%;max-height:800px;max-width:100%;"
                   >
                     <q-card-section>
-                      <div class="text-h6">社會網絡分析圖</div>
+                      <div class="row">
+                        <div class="col-3"></div>
+                        <div class="col text-h6">
+                          社會網絡分析圖
+                        </div>
+                        <div class="col text-h6">
+                          <demandInfo></demandInfo>
+                        </div>
+                      </div>
                       <div class="text-subtitle2">
                         {{ r_title_1 }} {{ r_title_2 }} {{ r_title_3 }}
                       </div>
@@ -492,6 +501,7 @@ export default {
     demandDataDiff2: () => import("components/demand/demand_data_diff2.vue"),
     preferInfo: () => import("components/demand/prefer_info.vue"),
     demandPrefer: () => import("components/demand/prefer_select.vue"),
+    demandInfo: () => import("components/demand/demand_info.vue"),
 
     addToCollectionBtn: () =>
       import("components/demand/addToCollectionBtn.vue"),

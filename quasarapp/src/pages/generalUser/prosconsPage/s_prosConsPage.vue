@@ -12,11 +12,13 @@
             <div class="col"></div>
 
             <div class="col-12 col-md-auto">
-              <p style="font-size: 28px;font-family: Microsoft JhengHei;">景點優缺點分析</p>
+              <p style="font-size: 28px;font-family: Microsoft JhengHei;">
+                景點優缺點分析
+              </p>
             </div>
 
             <div class="col q-mt-sm q-ml-sm">
-              <sSiProsConsInfo></sSiProsConsInfo>
+              <!-- <sSiProsConsInfo></sSiProsConsInfo> -->
             </div>
           </div>
 
@@ -28,7 +30,8 @@
                 <b
                   class="text"
                   style="font-size: 20px;font-family: Microsoft JhengHei;"
-                >為您找出景點綜合評論，讓您不用花大把時間在網路上爬文</b>
+                  >為您找出景點綜合評論，讓您不用花大把時間在網路上爬文</b
+                >
                 <br />
               </div>
             </div>
@@ -87,17 +90,31 @@
               <proscons-data>
                 <template slot="text_ProsExplain">
                   <q-chip>
-                    <q-avatar color="green-8" text-color="white" size="15px"></q-avatar>
+                    <q-avatar
+                      color="green-8"
+                      text-color="white"
+                      size="15px"
+                    ></q-avatar>
                     <span style="font-size: 15px;">
-                      <b>{{prosdata}}顏色越深，好評中提及該關鍵字的人數越多，為此景點的特色</b>
+                      <b
+                        >{{
+                          prosdata
+                        }}顏色越深，好評中提及該關鍵字的人數越多，為此景點的特色</b
+                      >
                     </span>
                   </q-chip>
                 </template>
                 <template slot="text_ConsExplain">
                   <q-chip>
-                    <q-avatar color="red-8" text-color="white" size="15px"></q-avatar>
+                    <q-avatar
+                      color="red-8"
+                      text-color="white"
+                      size="15px"
+                    ></q-avatar>
                     <span style="font-size: 15px;">
-                      <b>顏色越深，負評中提及該關鍵字的人數越多，您可以從中考慮是否要前往</b>
+                      <b
+                        >顏色越深，負評中提及該關鍵字的人數越多，您可以從中考慮是否要前往</b
+                      >
                     </span>
                   </q-chip>
                 </template>

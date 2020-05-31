@@ -199,7 +199,7 @@
                     <div class="row text-h4">
                       <b>自選景點</b>
 
-                      <prosconsInfo></prosconsInfo>
+                      <!-- <prosconsInfo></prosconsInfo> -->
                     </div>
                     <div class="row q-pl-xl">
                       <!-- proscons-select 區域 -->
@@ -231,7 +231,11 @@
                       </div>
                       <!-- 懶人包區域 -->
                       <div class="col-6">
-                        <proscons-r></proscons-r>
+                        <proscons-r>
+                          <template slot="photoExplain">
+                            <sitePhotoInfo></sitePhotoInfo>
+                          </template>
+                        </proscons-r>
                       </div>
                     </div>
                   </div>
@@ -244,7 +248,7 @@
                     <div class="row text-h4">
                       <b>自選飯店</b>
 
-                      <prosconsInfo></prosconsInfo>
+                      <!-- <prosconsInfo></prosconsInfo> -->
                     </div>
                     <div class="row-12 q-pl-xl">
                       <!-- proscons-select 區域 -->
@@ -276,7 +280,11 @@
                       </div>
                       <!-- 懶人包區域 -->
                       <div class="col-6">
-                        <hotelProsconsR></hotelProsconsR>
+                        <hotelProsconsR>
+                          <template slot="photoExplain">
+                            <hotelPhotoInfo></hotelPhotoInfo>
+                          </template>
+                        </hotelProsconsR>
                       </div>
                     </div>
                   </div>
@@ -363,7 +371,7 @@
                   <div class="row text-h4">
                     <b>路徑規畫分析</b>
 
-                    <pathInfo></pathInfo>
+                    <!-- <pathInfo></pathInfo> -->
                   </div>
                   <div class="row q-pl-xl">
                     <path-select></path-select>
@@ -399,7 +407,10 @@
                   </div>
                   <!-- 懶人包區域 -->
                   <div class="col-6">
-                    <path-r></path-r>
+                    <path-r
+                      ><template slot="photoExplain">
+                        <pathPhotoInfo></pathPhotoInfo> </template
+                    ></path-r>
                   </div>
                 </div>
               </div>
@@ -487,19 +498,24 @@ export default {
     prosconsR: () => import("components/proscons/proscons_R.vue"),
     prosconsData: () => import("components/proscons/proscons_data.vue"),
     prosconsInfo: () => import("components/proscons/proscons_info.vue"),
+    sitePhotoInfo: () =>
+      import("components/proscons/generalUser/sitePhotoInfo.vue"),
     // 引用飯店優缺點元件
     hotelProsconsSelect: () =>
       import("components/proscons/h_proscons_select.vue"),
     hotelProsconsR: () => import("components/proscons/h_proscons_R.vue"),
     hotelProsconsData: () => import("components/proscons/h_proscons_data.vue"),
-
+    hotelPhotoInfo: () =>
+      import("components/proscons/generalUser/hotelPhotoInfo.vue"),
     // path
     pathSelect: () => import("components/path/path_select.vue"),
-    pathInfo: () => import("components/path/path_info.vue"),
+    // pathInfo: () => import("components/path/path_info.vue"),
 
     pathR: () => import("components/path/path_R.vue"),
     pathData: () => import("components/path/path_data.vue"),
     pathButtonToggle: () => import("components/path/path_button_toggle.vue"),
+    pathPhotoInfo: () =>
+      import("components/path/generalUser/pathPhotoInfo.vue"),
     //map
     googleMap: () => import("components/map/googleMap.vue")
   },
