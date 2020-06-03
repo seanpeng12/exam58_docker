@@ -16,7 +16,7 @@
           </div>
         </q-card-section>
 
-        <q-item-label header style="color:#57a5ba">
+        <!-- <q-item-label header style="color:#57a5ba">
           <q-icon
             name="assignment_turned_in"
             style="color:#57a5ba"
@@ -45,7 +45,7 @@
             <p>Step5. 右下為符合您需求的飯店</p>
             <p>Step6. 喜歡的話，一鍵加入您的飯店收藏(登入才能使用)</p>
           </q-item-section>
-        </q-item>
+        </q-item> -->
         <q-item-label header style="color:#57a5ba"
           ><q-icon name="multiline_chart" style="color:#57a5ba" size="20px" /><b
             >分析圖式說明</b
@@ -56,17 +56,19 @@
           <q-item-section>
             <div class="row">
               <div class="col">
-                <q-icon name="fad fa-circle" color="orange"
-                  ><span style="color:black; margin-left:10px">
-                    表示飯店</span
-                  ></q-icon
-                >
+                <q-icon
+                  name="fas fa-circle"
+                  color="orange"
+                  class="q-mx-xs"
+                /><span style="color:black; margin-left:10px"> 表示飯店</span>
               </div>
               <div class="col">
-                <q-icon name="fad fa-square" color="red-6" style="margin:5px"
-                  ><span style="color:black;margin-left:10px">
-                    表示飯店擁有的服務</span
-                  ></q-icon
+                <q-icon
+                  name="fas fa-square"
+                  color="red-6"
+                  class="q-mx-xs"
+                /><span style="color:black;margin-left:10px">
+                  表示飯店擁有的服務</span
                 >
               </div>
             </div>
@@ -75,10 +77,10 @@
               <span style=""
                 >1.
                 <q-icon
-                  name="fad fa-circle"
+                  name="fas fa-circle"
                   color="orange"
                   class="q-mx-xs"
-                />(飯店)與<q-icon
+                />飯店)與<q-icon
                   name="fas fa-square"
                   color="red-6"
                   class="q-mx-xs"

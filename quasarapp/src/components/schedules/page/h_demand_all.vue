@@ -15,9 +15,7 @@
               </p>
             </div>
 
-            <div class="col q-mt-sm q-ml-sm">
-              <hSiDemandInfo></hSiDemandInfo>
-            </div>
+            <div class="col q-mt-sm q-ml-sm"></div>
           </div>
 
           <div class="row">
@@ -405,7 +403,15 @@
                   <!-- iframe區域 -->
                   <q-card class="my-card text-center q-pa-sm iframe">
                     <q-card-section>
-                      <div class="text-h6">社會網絡分析圖</div>
+                      <div class="row">
+                        <div class="col-3"></div>
+                        <div class="col text-h6">
+                          社會網絡分析圖
+                        </div>
+                        <div class="col text-h6">
+                          <hSiDemandInfo></hSiDemandInfo>
+                        </div>
+                      </div>
                       <div class="text-subtitle2">
                         {{ r_title_1 }} {{ r_title_2 }} {{ r_title_3 }}
                       </div>

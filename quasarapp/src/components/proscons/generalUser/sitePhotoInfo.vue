@@ -88,7 +88,7 @@
                 name="fas fa-circle"
                 class="q-ml-xs q-mr-xs"
               /> -->
-              圓點間的相連表示缺點有其相關性，因此改善相連中最大的缺點，其餘相連的缺點將被一同被改善
+              圓點間的相連表示缺點有其相關性。
             </div>
           </q-item-section>
         </q-item>

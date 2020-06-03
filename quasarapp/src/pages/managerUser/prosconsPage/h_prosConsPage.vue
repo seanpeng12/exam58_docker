@@ -17,7 +17,7 @@
             </div>
 
             <div class="col q-mt-sm q-ml-sm">
-              <hSiProsConsInfo></hSiProsConsInfo>
+              <!-- <hSiProsConsInfo></hSiProsConsInfo> -->
             </div>
           </div>
 

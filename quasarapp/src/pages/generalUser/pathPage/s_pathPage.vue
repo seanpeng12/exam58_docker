@@ -15,7 +15,7 @@
           </div>
 
           <div class="col q-mt-sm q-ml-sm">
-            <siPathInfo></siPathInfo>
+            <!-- <siPathInfo></siPathInfo> -->
           </div>
         </div>
 
