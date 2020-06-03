@@ -38,7 +38,7 @@ const mutations = {
   },
   company_fbReadData(state, payload) {
     Vue.set(state.company_collections, payload.id, payload.collection);
-    console.log("state.company_collections:", state.company_collections);
+    // console.log("state.company_collections:", state.company_collections);
   },
   setSearch(state, value) {
     state.search = value;
@@ -68,7 +68,7 @@ const actions = {
   // 讀飯店收藏的資料
   h_fbReadData({ commit }) {
     const uid = firebaseAuth.currentUser.uid;
-    console.log("fbReadData", uid);
+    // console.log("fbReadData", uid);
     const userCollection = fstore
       .collection("sightseeingMember")
       .doc(uid)
@@ -88,7 +88,7 @@ const actions = {
   // 企業資訊收藏
   company_fbReadData({ commit }) {
     const uid = firebaseAuth.currentUser.uid;
-    console.log("fbReadData", uid);
+    // console.log("fbReadData", uid);
     const userCollection = fstore
       .collection("sightseeingMember")
       .doc(uid)

@@ -1,54 +1,61 @@
 <template>
   <div class="q-pa-md">
     <div class="row">
-      <div class="col">
-        <q-select
-          filled
-          v-model="selected_p_local"
-          v-on:change="onProductChange"
-          use-input
-          hide-selected
-          fill-input
-          input-debounce="0"
-          :options="schedule_select"
-          @filter="filterFn"
-          label="選擇城市"
-          style="width: 250px;"
-        >
-          <template v-slot:no-option>
-            <q-item>
-              <q-item-section class="text-grey">沒有結果</q-item-section>
-            </q-item>
-          </template>
-        </q-select>
-      </div>
-      <div class="col q-mt-md" style="margin-left:130px">
-        <q-btn
-          :loading="loading4"
-          color="cyan-9"
-          @click="simulateProgress(4)"
-          v-on:click="runR(1)"
-        >
-          開始分析
-          <template v-slot:loading>
-            <q-spinner-hourglass />Loading...
-          </template>
-        </q-btn>
-      </div>
+      <q-form @submit="runR()" class="q-gutter-md">
+        <div class="col">
+          <!-- <q-select
+            filled
+            v-model="selected_site_local"
+            v-on:change="onProductChange"
+            use-input
+            hide-selected
+            fill-input
+            input-debounce="0"
+            :options="schedule_select"
+            @filter="filterFn"
+            label="選擇城市"
+            style="width: 250px;"
+          > -->
+          <q-select
+            filled
+            v-model="selected_site_local"
+            :options="schedule_select"
+            label="選擇城市"
+            style="width: 250px;"
+          >
+            <template v-slot:no-option>
+              <q-item>
+                <q-item-section class="text-grey">沒有結果</q-item-section>
+              </q-item>
+            </template>
+          </q-select>
+        </div>
+        <div class="col q-mt-md" style="margin-left:130px">
+          <q-btn :loading="loading4" color="cyan-9" type="submit">
+            開始分析
+            <template v-slot:loading>
+              <q-spinner-hourglass />Loading...
+            </template>
+          </q-btn>
+        </div>
+      </q-form>
     </div>
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
-      schedule_select: []
+      schedule_select: [],
+      selected_site_local: "",
+      loading4: false
     };
   },
 
   computed: { ...mapGetters("travel", ["everydaySites"]) },
   methods: {
+    ...mapActions("path", ["searchCity"]),
     gatAllSites() {
       const dateList = Object.keys(this.everydaySites);
       const item_1 = [];
@@ -59,16 +66,38 @@ export default {
           this.schedule_select.push(data);
           // console.log("allDaysSites:", data);
         });
-
-        console.log("date:", item);
       });
-      // var everydaySites = this.everydaySites["2020-05-21"];
-      // console.log("everydaySites", everydaySites);
-      // everydaySites.forEach((item, index) => {
-      //   this.originOptions.push(item);
-      //   this.waypointOptions.push(item);
-      //   this.endOptions.push(item);
-      // });
+    },
+    runR() {
+      var _this = this;
+      let promise = new Promise(function(resolve, reject) {
+        _this.$store.commit(
+          "path/Update_Selected_Site",
+          _this.selected_site_local
+        );
+        resolve("result");
+      });
+
+      promise.then(function(result) {
+        _this.searchCity(_this.selected_site_local);
+      });
+      //
+      // this.searchCity(this.selected_site_local);
+      // this.$store.commit("path/Update_Selected_Site", this.selected_site_local);
+    },
+    startComputing(id) {
+      // 開啟loading狀態
+      this[`loading${id}`] = true;
+      this[`percentage${id}`] = 0;
+      // 設定增加速度間距
+      this[`interval${id}`] = setInterval(() => {
+        this[`percentage${id}`] += Math.floor(Math.random() * 8 + 5);
+        if (this[`percentage${id}`] >= 100) {
+          clearInterval(this[`interval${id}`]);
+          // 完成時關閉loading狀態
+          this[`loading${id}`] = false;
+        }
+      }, 2100);
     }
   },
   mounted: function() {

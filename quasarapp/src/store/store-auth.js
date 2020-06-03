@@ -15,7 +15,7 @@ const mutations = {
   },
   getUserDetail(state, value) {
     state.userDetail = value;
-    console.log("state.userDetail", state.userDetail);
+    // console.log("state.userDetail", state.userDetail);
   }
 };
 const actions = {
@@ -23,7 +23,7 @@ const actions = {
     firebaseAuth
       .createUserWithEmailAndPassword(payload.email, payload.password)
       .then(response => {
-        console.log("response : ", response);
+        // console.log("response : ", response);
       })
       .catch(error => {
         showErrorMessage(error.message);
@@ -105,13 +105,13 @@ const actions = {
     });
   },
   chooseRole({ commit }, roleName) {
-    console.log("chooseRole:", roleName);
+    // console.log("chooseRole:", roleName);
     localStorage.setItem("role", roleName);
 
     commit("update_role", roleName);
   },
   readRole({ commit }) {
-    console.log("reaadRole:", localStorage.getItem("role"));
+    // console.log("reaadRole:", localStorage.getItem("role"));
     commit("update_role", localStorage.getItem("role"));
   }
 };

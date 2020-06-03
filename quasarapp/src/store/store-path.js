@@ -79,7 +79,7 @@ const mutations = {
   },
   getSiteGoogleDetail(state, payload) {
     Vue.set(state.siteGoogleDetails, payload.id, payload.detail);
-    console.log("state.SiteGoogleDetail:", state.siteGoogleDetails);
+    // console.log("state.SiteGoogleDetail:", state.siteGoogleDetails);
   },
   resetSiteGoogleDetail(state) {
     state.siteGoogleDetails = {};
@@ -92,7 +92,7 @@ const actions = {
       .get("http://140.136.155.116/api/site_dataCity")
       .then(res => {
         commit("FETCH_Citys", res.data);
-        console.log("vuex-get 城市(site)");
+        // console.log("vuex-get 城市(site)");
       })
       .catch(err => {
         console.log(err);
@@ -107,7 +107,7 @@ const actions = {
       })
       .then(res => {
         commit("FETCH_Sites", res.data);
-        console.log("vuex-post取-景點資料到sites");
+        // console.log("vuex-post取-景點資料到sites");
       })
       .catch(err => {
         console.log(err);
@@ -120,7 +120,7 @@ const actions = {
       })
       .then(res => {
         commit("FETCH_Sites", res.data);
-        console.log("vuex-post取-飯店資料到sites");
+        // console.log("vuex-post取-飯店資料到sites");
       })
       .catch(err => {
         console.log(err);
@@ -149,8 +149,8 @@ const actions = {
         name: state.selected_site
       })
       .then(res => {
-        console.log("取得第一層景點懶人包");
-        console.log("path_data:", res);
+        // console.log("取得第一層景點懶人包");
+        // console.log("path_data:", res);
 
         commit("Update_PathData", res);
       })
@@ -165,7 +165,7 @@ const actions = {
         name: state.selected_site_2
       })
       .then(res => {
-        console.log("取得第二層景點懶人包");
+        // console.log("取得第二層景點懶人包");
         commit("Update_PathData_2", res);
       })
       .catch(function(response) {
@@ -185,7 +185,7 @@ const actions = {
           })
 
           .then(res => {
-            console.log("googleDetail:", res.data);
+            // console.log("googleDetail:", res.data);
             commit("getSiteGoogleDetail", {
               id: res.data.place_id,
               detail: {
@@ -196,8 +196,26 @@ const actions = {
                 img: img.data
               }
             });
-            console.log("res.data--getSiteGoogleDetail", res.data);
+            // console.log("res.data--getSiteGoogleDetail", res.data);
           });
+      });
+  },
+  searchCity({ commit, dispatch }, site_name) {
+    axiosInstance
+      .post("http://140.136.155.116/api/getCity", {
+        name: site_name
+      })
+      .then(city => {
+        commit("Update_Selected_City", city.data[0].city_name);
+        // console.log("city:", city.data[0].city_name);
+      })
+      .then(() => {
+        // 取第一層懶人包
+        dispatch("fetchPath");
+      })
+      .then(() => {
+        // run path.R
+        dispatch("fetchPathR");
       });
   }
 };
