@@ -137,6 +137,8 @@ Route::group(['middleware' => ['CORS']], function () {
     Route::post('/PathData', 'PathController@PathData');
     // 取得商家資訊
 
+    // 景點/飯店查城市(旅程表用)
+    Route::post('/getCity', 'PathController@getCity');
 });
 
 

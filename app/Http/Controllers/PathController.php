@@ -29,6 +29,19 @@ class PathController extends Controller
         return response()->json($sql, 200);
     }
 
+    // 名字找城市(for 排程路徑分析)
+    function getCity(Request $request)
+    {
+        $name = $request->input('name');
+        $sql = Hotel_data::select('city_name')->where("name", "=", "$name")->get();
+
+        if (!count($sql)) {
+            $sql = Site_data::select('city_name')->where("name", "=", "$name")->get();
+            return response()->json($sql, 200);
+        } else {
+            return response()->json($sql, 200);
+        }
+    }
     // google 取照片
     function getGoogleImg(Request $request)
     {
