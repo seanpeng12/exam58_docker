@@ -16,7 +16,7 @@
             <b>使用說明</b>
           </div>
         </q-card-section>
-
+        <!-- 
         <q-item-label header style="color:#57a5ba">
           <q-icon
             name="assignment_turned_in"
@@ -46,7 +46,7 @@
             <p>Step5. 右下為分析圖裡的景點</p>
             <p>Step6. 喜歡的話，一鍵加入排程</p>
           </q-item-section>
-        </q-item>
+        </q-item> -->
         <q-item-label header style="color:#57a5ba"
           ><q-icon name="multiline_chart" style="color:#57a5ba" size="20px" /><b
             >分析圖式說明</b
