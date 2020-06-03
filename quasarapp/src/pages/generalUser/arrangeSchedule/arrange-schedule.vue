@@ -508,8 +508,9 @@ export default {
     hotelPhotoInfo: () =>
       import("components/proscons/generalUser/hotelPhotoInfo.vue"),
     // path
-    pathSelect: () => import("components/path/path_select.vue"),
+    // pathSelect: () => import("components/path/path_select.vue"),
     // pathInfo: () => import("components/path/path_info.vue"),
+    pathSelect: () => import("components/path/schedule_path_select.vue"),
 
     pathR: () => import("components/path/path_R.vue"),
     pathData: () => import("components/path/path_data.vue"),
