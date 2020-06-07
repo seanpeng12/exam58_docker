@@ -17,10 +17,7 @@
         label="Email"
         stack-label
         ref="email"
-        :rules="[
-          val =>
-            isValidEmailAddress(val) || '請輸入Email正確格式'
-        ]"
+        :rules="[val => isValidEmailAddress(val) || '請輸入Email正確格式']"
         lazy-rules
       />
       <q-input
@@ -56,7 +53,7 @@
             size="18px"
             color="white"
             text-color="grey"
-            :label="'使用其他'+tab+'方式'"
+            :label="'使用其他' + tab + '方式'"
             style="font-weight:bold;"
           />
         </div>
@@ -100,7 +97,7 @@ export default {
       this.$refs.email.validate();
       this.$refs.password.validate();
       if (!this.$refs.email.hasError && !this.$refs.password.hasError) {
-        if (this.tab == "Login") {
+        if (this.tab == "登入") {
           this.loginUser(this.formData);
         } else {
           this.registerUser(this.formData);

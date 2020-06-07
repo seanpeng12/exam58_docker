@@ -23,7 +23,15 @@ const actions = {
     firebaseAuth
       .createUserWithEmailAndPassword(payload.email, payload.password)
       .then(response => {
-        // console.log("response : ", response);
+        if (state.role == "generalUser") {
+          this.$router.push("/index").then(() => {
+            this.$router.go(0);
+          });
+        } else if (state.role == "manager") {
+          this.$router.push("/manager_index").then(() => {
+            this.$router.go(0);
+          });
+        }
       })
       .catch(error => {
         showErrorMessage(error.message);
@@ -33,9 +41,15 @@ const actions = {
     firebaseAuth
       .signInWithEmailAndPassword(payload.email, payload.password)
       .then(response => {
-        this.$router.push("/index").then(() => {
-          this.$router.go(0);
-        });
+        if (state.role == "generalUser") {
+          this.$router.push("/index").then(() => {
+            this.$router.go(0);
+          });
+        } else if (state.role == "manager") {
+          this.$router.push("/manager_index").then(() => {
+            this.$router.go(0);
+          });
+        }
       })
       .catch(error => {
         showErrorMessage(error.message);
