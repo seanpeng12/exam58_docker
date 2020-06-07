@@ -12,7 +12,8 @@
                     <div class="col-md-8 col-md-offset-2">
                         <div class="probootstrap-slider-text text-center">
                             <h1 class="probootstrap-heading">旅遊分析系統</h1>
-                            <p class="probootstrap-subheading">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                            <p class="probootstrap-subheading">
+                                <a href="http://sightseeing.nctu.me:8080">點此進入首頁</a>
                             </p>
                         </div>
                     </div>
