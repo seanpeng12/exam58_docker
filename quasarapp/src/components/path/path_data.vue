@@ -11,7 +11,7 @@
         align="justify"
         narrow-indicator
       >
-        <q-tab icon="place" name="tab_1" :label="tab_1" />
+        <q-tab icon="place" name="tab_1" :label="selected_site" />
         <q-icon name="fast_forward" style="font-size: 18px;color:black" />
         <q-tab icon="place" name="tab_2" :label="tab_2" />
         <q-icon name="fast_forward" style="font-size: 18px;color:black" />
@@ -31,16 +31,39 @@
               <div
                 class="q-ml-none text-h5 text-bold col"
                 style="font-family:NSimSun"
-              >去過 {{ selected_site }} 還會去</div>
+              >
+                去過 {{ selected_site }} 還會去
+              </div>
             </div>
             <div class="row">
               <div class="col">
-                <q-icon class="q-px-md" name="fas fa-utensils" size="20px" color="white" />
-                <span style="font-weight:bold;font-family: Microsoft JhengHei;">餐廳</span>
-                <q-icon class="q-px-md" name="las la-landmark" size="20px" color="red" />
-                <span style="font-weight:bold;font-family: Microsoft JhengHei;">景點</span>
-                <q-icon class="q-px-md" name="fas fa-hotel" size="20px" color="blue-grey" />
-                <span style="font-weight:bold;font-family: Microsoft JhengHei;">飯店</span>
+                <q-icon
+                  class="q-px-md"
+                  name="fas fa-utensils"
+                  size="20px"
+                  color="white"
+                />
+                <span style="font-weight:bold;font-family: Microsoft JhengHei;"
+                  >餐廳</span
+                >
+                <q-icon
+                  class="q-px-md"
+                  name="las la-landmark"
+                  size="20px"
+                  color="red"
+                />
+                <span style="font-weight:bold;font-family: Microsoft JhengHei;"
+                  >景點</span
+                >
+                <q-icon
+                  class="q-px-md"
+                  name="fas fa-hotel"
+                  size="20px"
+                  color="blue-grey"
+                />
+                <span style="font-weight:bold;font-family: Microsoft JhengHei;"
+                  >飯店</span
+                >
               </div>
             </div>
             <q-expansion-item
@@ -55,7 +78,11 @@
                 <q-card-section>
                   <q-scroll-area style="height: 250px; max-width: auto;">
                     <div v-for="a in pathData.data" :key="a.id" class="q-ml-sm">
-                      <q-icon v-if="a.type == 'R'" name="fas fa-utensils" color="black" />
+                      <q-icon
+                        v-if="a.type == 'R'"
+                        name="fas fa-utensils"
+                        color="black"
+                      />
                       <q-icon
                         v-else-if="a.type == 'S'"
                         name="las la-landmark"
@@ -74,7 +101,9 @@
                         icon-right="arrow_forward_ios"
                       ></q-btn>
                       <!--  -->
-                      <span class="text-black">有 {{ a.weight }} 人選擇這裡</span>
+                      <span class="text-black"
+                        >有 {{ a.weight }} 人選擇這裡</span
+                      >
                     </div>
                   </q-scroll-area>
                 </q-card-section>
@@ -87,16 +116,39 @@
               <div
                 class="q-ml-none text-h5 text-bold col"
                 style="font-family:NSimSun"
-              >去過 {{ selected_site_2 }} 還會去</div>
+              >
+                去過 {{ selected_site_2 }} 還會去
+              </div>
             </div>
             <div class="row">
               <div class="col">
-                <q-icon class="q-px-md" name="fas fa-utensils" size="20px" color="white" />
-                <span style="font-weight:bold;font-family: Microsoft JhengHei;">餐廳</span>
-                <q-icon class="q-px-md" name="las la-landmark" size="20px" color="red" />
-                <span style="font-weight:bold;font-family: Microsoft JhengHei;">景點</span>
-                <q-icon class="q-px-md" name="fas fa-hotel" size="20px" color="blue-grey" />
-                <span style="font-weight:bold;font-family: Microsoft JhengHei;">飯店</span>
+                <q-icon
+                  class="q-px-md"
+                  name="fas fa-utensils"
+                  size="20px"
+                  color="white"
+                />
+                <span style="font-weight:bold;font-family: Microsoft JhengHei;"
+                  >餐廳</span
+                >
+                <q-icon
+                  class="q-px-md"
+                  name="las la-landmark"
+                  size="20px"
+                  color="red"
+                />
+                <span style="font-weight:bold;font-family: Microsoft JhengHei;"
+                  >景點</span
+                >
+                <q-icon
+                  class="q-px-md"
+                  name="fas fa-hotel"
+                  size="20px"
+                  color="blue-grey"
+                />
+                <span style="font-weight:bold;font-family: Microsoft JhengHei;"
+                  >飯店</span
+                >
               </div>
             </div>
             <q-expansion-item
@@ -123,7 +175,12 @@
                         size="20px"
                         color="black"
                       />
-                      <q-icon v-else name="fas fa-hotel" size="20px" color="black" />
+                      <q-icon
+                        v-else
+                        name="fas fa-hotel"
+                        size="20px"
+                        color="black"
+                      />
                       <!-- button -->
                       <q-btn
                         flat
@@ -135,7 +192,9 @@
                         icon-right="arrow_forward_ios"
                       ></q-btn>
                       <!--  -->
-                      <span class="text-black">有 {{ b.weight }} 人選擇這裡</span>
+                      <span class="text-black"
+                        >有 {{ b.weight }} 人選擇這裡</span
+                      >
                     </div>
                   </q-scroll-area>
                 </q-card-section>
