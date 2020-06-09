@@ -7,8 +7,7 @@
           @click="promptToLogout()"
           flat
           style="font-family:Trebuchet MS,Papyrus,Verdana, Geneva, sans-serif;font-size:22px;font-weight:bold"
-          >SightSeeing</q-btn
-        >
+        >SightSeeing</q-btn>
         <q-space />
         <q-item
           class="q-mt-sm"
@@ -17,8 +16,7 @@
           v-close-popup
           to="/manager_index"
           v-show="role == 'manager'"
-          >首頁</q-item
-        >
+        >首頁</q-item>
         <!-- gt-xs view -->
         <q-chip
           v-if="loggedIn"
@@ -26,8 +24,7 @@
           flat
           text-color="white"
           icon="face"
-          >{{ userDetail }}您好</q-chip
-        >
+        >{{ userDetail }}您好</q-chip>
 
         <!-- <q-item class="gt-xs" exact clickable to="/">
           <q-item-section>
@@ -42,12 +39,7 @@
         </q-item>-->
         <div class="gt-xs" style="font-family: NSimSun;font-weight:bold">
           <q-btn-dropdown flat label="優缺點分析">
-            <q-item
-              clickable
-              v-close-popup
-              @click="onItemClick"
-              to="/manager/site_ProsCons"
-            >
+            <q-item clickable v-close-popup @click="onItemClick" to="/manager/site_ProsCons">
               <q-item-section>
                 <q-item-label>
                   景點GO-
@@ -55,12 +47,7 @@
                 </q-item-label>
               </q-item-section>
             </q-item>
-            <q-item
-              clickable
-              v-close-popup
-              @click="onItemClick"
-              to="/manager/hotel_ProsCons"
-            >
+            <q-item clickable v-close-popup @click="onItemClick" to="/manager/hotel_ProsCons">
               <q-item-section>
                 <q-item-label>
                   飯店GO-
@@ -69,13 +56,8 @@
               </q-item-section>
             </q-item>
           </q-btn-dropdown>
-          <q-btn-dropdown flat label="淺在合作夥伴分析">
-            <q-item
-              clickable
-              v-close-popup
-              @click="onItemClick"
-              to="/manager/site_Path"
-            >
+          <q-btn-dropdown flat label="潛在合作夥伴分析">
+            <q-item clickable v-close-popup @click="onItemClick" to="/manager/site_Path">
               <q-item-section>
                 <q-item-label>
                   景點／飯店GO-
@@ -101,18 +83,9 @@
             label="Google帳號登入"
             style="margin-left: 20px;"
           />-->
-          <q-btn-dropdown
-            v-if="loggedIn && role == 'manager'"
-            flat
-            label="會員功能"
-          >
+          <q-btn-dropdown v-if="loggedIn && role == 'manager'" flat label="會員功能">
             <q-list>
-              <q-item
-                clickable
-                v-close-popup
-                @click="onItemClick"
-                to="/manager/collection"
-              >
+              <q-item clickable v-close-popup @click="onItemClick" to="/manager/collection">
                 <q-item-section>
                   <q-item-label>我的收藏商家</q-item-label>
                 </q-item-section>
