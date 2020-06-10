@@ -1,21 +1,10 @@
 <template>
   <div>
-    <q-carousel
-      v-model="slide"
-      color="white"
-      infinite
-      arrows
-      autoplay
-      height="200px"
-    >
+    <q-carousel v-model="slide" color="white" infinite arrows autoplay height="200px">
       <q-carousel-slide :name="1" img-src="~assets/managerCollection.jpg">
         <div class="absolute-center custom-caption" style="margin-top:25px">
-          <div class="text-h3" style="font-weight: bold;font-family:NSimSun">
-            我的店家資訊收藏
-          </div>
-          <div class="text-h5" style="font-weight: bold; font-family:cursive">
-            My Collection
-          </div>
+          <div class="text-h3" style="font-weight: bold;font-family:NSimSun">我的店家資訊收藏</div>
+          <div class="text-h5" style="font-weight: bold; font-family:cursive">My Collection</div>
 
           <br />
           <!-- <br />
@@ -29,16 +18,16 @@
         <p
           class="q-ma-md text-h5 text-white"
           style="font-weight: bold; font-family:NSimSun;"
-        >
-          您可使用快速搜尋，找到您收藏店家資訊
-        </p>
+        >您可使用快速搜尋，找到您收藏店家資訊</p>
       </div>
-      <div class="col-3 q-ma-xs"><search /></div>
+      <div class="col-3 q-ma-xs">
+        <search />
+      </div>
 
       <!-- <q-tabs v-model="tab" class="text-black">
         <q-tab name="site" icon="fas fa-car-side" label="景點收藏" />
         <q-tab name="hotel" icon="fas fa-hotel" label="飯店收藏" />
-      </q-tabs> -->
+      </q-tabs>-->
     </div>
     <div class="row">
       <companyCard
@@ -93,7 +82,8 @@ export default {
     promptToDelete(value) {
       this.$q
         .dialog({
-          title: "Confirm",
+          class: "title text-bold",
+          title: "confirm",
           message: "確定要刪除嗎?",
           cancel: true,
           persistent: true

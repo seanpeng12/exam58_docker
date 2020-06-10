@@ -2,22 +2,6 @@
   <div class="col">
     <!-- 2個下拉式選單 -->
     <q-form @submit="runR();startComputing(1)" class="q-gutter-md">
-      <!-- <div class="row">
-        <div class="col">
-          <div class="q-pa-md">
-            <q-btn-toggle
-              rounded
-              v-model="choose"
-              toggle-color="blue"
-              :options="[
-                  {label: '景點', value: 'site'},
-                  {label: '飯店', value: 'hotel'},
-                ]"
-            />
-          </div>
-        </div>
-      </div>-->
-
       <div class="row">
         <div class="col" style="width:300px">
           <!-- 下拉式選單 -->

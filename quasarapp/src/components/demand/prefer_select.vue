@@ -1,41 +1,39 @@
 <template>
   <div class="q-pa-md">
-    <div class="row">
-      <div class="col">
-        <q-select
-          filled
-          v-model="selected_p_local"
-          v-on:change="onProductChange"
-          use-input
-          hide-selected
-          fill-input
-          input-debounce="0"
-          :options="options"
-          @filter="filterFn"
-          label="選擇城市"
-          style="width: 250px;"
-        >
-          <template v-slot:no-option>
-            <q-item>
-              <q-item-section class="text-grey">沒有結果</q-item-section>
-            </q-item>
-          </template>
-        </q-select>
+    <q-form @submit="runR(1);simulateProgress(4)" class="q-gutter-md">
+      <div class="row">
+        <div class="col">
+          <q-select
+            filled
+            v-model="selected_p_local"
+            v-on:change="onProductChange"
+            use-input
+            hide-selected
+            fill-input
+            input-debounce="0"
+            :options="options"
+            @filter="filterFn"
+            :rules="[ val => val && val.length > 1 || '請選擇城市']"
+            label="選擇城市"
+            style="width: 250px;"
+          >
+            <template v-slot:no-option>
+              <q-item>
+                <q-item-section class="text-grey">沒有結果</q-item-section>
+              </q-item>
+            </template>
+          </q-select>
+        </div>
+        <div class="col q-mt-md" style="margin-left:130px">
+          <q-btn :loading="loading4" color="cyan-9" type="submit">
+            開始分析
+            <template v-slot:loading>
+              <q-spinner-hourglass />Loading...
+            </template>
+          </q-btn>
+        </div>
       </div>
-      <div class="col q-mt-md" style="margin-left:130px">
-        <q-btn
-          :loading="loading4"
-          color="cyan-9"
-          @click="simulateProgress(4)"
-          v-on:click="runR(1)"
-        >
-          開始分析
-          <template v-slot:loading>
-            <q-spinner-hourglass />Loading...
-          </template>
-        </q-btn>
-      </div>
-    </div>
+    </q-form>
   </div>
 </template>
 <script>

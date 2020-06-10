@@ -90,12 +90,6 @@
             <p style="font-size: 26px;font-weight:bold;font-family: Microsoft JhengHei;">
               {{ prosConsSelected_site }}的缺點
               <slot name="text_ConsExplain"></slot>
-              <!-- <q-chip>
-                <q-avatar color="red-8" text-color="white" size="15px"></q-avatar>
-                <span style="font-size: 15px;">
-                  <b>顏色越深，負評中提及該關鍵字的人數越多</b>
-                </span>
-              </q-chip>-->
             </p>
             <div>
               <q-scroll-area
@@ -103,17 +97,17 @@
               >
                 <q-chip size="md" v-for="(a,index) in consData.data" :key="a.id">
                   <div v-if="index == 0">
-                    <q-avatar icon="fas fa-crown" color="red-8" text-color="yellow-4"></q-avatar>
+                    <q-avatar icon="fas fa-frown" color="red-8" text-color="white"></q-avatar>
                     <b>{{ a.segment }}</b>
                     <q-tooltip anchor="bottom middle" self="center middle">{{a.degree}}人給評</q-tooltip>
                   </div>
                   <div v-else-if="index == 1">
-                    <q-avatar icon="fas fa-crown" color="red-8" text-color="yellow-2"></q-avatar>
+                    <q-avatar icon="fas fa-frown" color="red-8" text-color="white"></q-avatar>
                     <b>{{ a.segment }}</b>
                     <q-tooltip anchor="bottom middle" self="center middle">{{a.degree}}人給評</q-tooltip>
                   </div>
                   <div v-else-if="index == 2">
-                    <q-avatar icon="fas fa-crown" color="red-8" text-color="yellow-1"></q-avatar>
+                    <q-avatar icon="fas fa-frown" color="red-8" text-color="white"></q-avatar>
                     <b>{{ a.segment }}</b>
                     <q-tooltip anchor="bottom middle" self="center middle">{{a.degree}}人給評</q-tooltip>
                   </div>

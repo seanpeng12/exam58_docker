@@ -249,7 +249,7 @@ export default {
     promptToLogout() {
       this.$q
         .dialog({
-          class: "title",
+          class: "title text-bold",
           title: "切換身分",
           message: "您是否要登出並進入選擇身分頁面?",
           cancel: true,

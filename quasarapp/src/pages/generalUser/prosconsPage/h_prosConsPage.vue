@@ -81,20 +81,28 @@
             <div class="col-6">
               <proscons-data>
                 <template slot="text_ProsExplain">
-                  <q-chip>
-                    <q-avatar color="green-8" text-color="white" size="15px"></q-avatar>
-                    <span style="font-size: 15px;">
-                      <b>顏色越深，好評中提及該關鍵字的人數越多，為此飯店較受其他旅客喜愛的特點</b>
-                    </span>
-                  </q-chip>
+                  <div class="row">
+                    <div class="col-1 text-center">
+                      <q-avatar color="green-8" text-color="white" size="15px"></q-avatar>
+                    </div>
+                    <div class="col-11">
+                      <span style="font-size: 15px;">
+                        <b>顏色越深，好評中提及該關鍵字的人數越多，為此飯店較受其他旅客喜愛的特點</b>
+                      </span>
+                    </div>
+                  </div>
                 </template>
                 <template slot="text_ConsExplain">
-                  <q-chip>
-                    <q-avatar color="red-8" text-color="white" size="15px"></q-avatar>
-                    <span style="font-size: 15px;">
-                      <b>顏色越深，負評中提及該關鍵字的人數越多，您可以從中考慮是否要入住</b>
-                    </span>
-                  </q-chip>
+                  <div class="row">
+                    <div class="col-1 text-center">
+                      <q-avatar color="red-8" text-color="white" size="15px"></q-avatar>
+                    </div>
+                    <div class="col-11">
+                      <span style="font-size: 15px;">
+                        <b>顏色越深，負評中提及該關鍵字的人數越多，您可以從中考慮是否要入住</b>
+                      </span>
+                    </div>
+                  </div>
                 </template>
               </proscons-data>
             </div>

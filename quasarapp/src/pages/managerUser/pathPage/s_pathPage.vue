@@ -1,53 +1,48 @@
 <template>
   <q-page>
-    <div class="q-pa-md doc-container">
-      <div
-        class="gt-xs q-pa-lg items-center text-black bg-grey-3"
-        style="height:250px;"
-      >
-        <div class="row">
-          <div class="col"></div>
+    <transition name="fade">
+      <div v-if="path_select" class="q-pa-md doc-container">
+        <div class="gt-xs q-pa-lg items-center text-black bg-grey-3" style="height:250px;">
+          <div class="row">
+            <div class="col"></div>
 
-          <div class="col-12 col-md-auto">
-            <p style="font-size: 28px;font-family: Microsoft JhengHei;">
-              路徑推薦分析
-            </p>
-          </div>
+            <div class="col-12 col-md-auto">
+              <p style="font-size: 28px;font-family: Microsoft JhengHei;">路徑推薦分析</p>
+            </div>
 
-          <div class="col q-mt-sm q-ml-sm">
-            <!-- <siPathInfo></siPathInfo> -->
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col"></div>
-
-          <div class="col-12 col-md-auto">
-            <div>
-              <b
-                class="text"
-                style="font-size: 20px;font-family: Microsoft JhengHei;"
-                >透過了解消費者的旅遊軌跡，找到潛在的合作商家</b
-              >
-              <br />
+            <div class="col q-mt-sm q-ml-sm">
+              <!-- <siPathInfo></siPathInfo> -->
             </div>
           </div>
-          <div class="col"></div>
-        </div>
 
-        <!-- proscons-select 區域 -->
-        <div class="row">
-          <div class="col"></div>
-          <div class="col-12 col-md-auto">
-            <path-select></path-select>
+          <div class="row">
+            <div class="col"></div>
+
+            <div class="col-12 col-md-auto">
+              <div>
+                <b
+                  class="text"
+                  style="font-size: 20px;font-family: Microsoft JhengHei;"
+                >透過了解消費者的旅遊軌跡，找到潛在的合作商家</b>
+                <br />
+              </div>
+            </div>
+            <div class="col"></div>
           </div>
-          <div class="col"></div>
+
+          <!-- proscons-select 區域 -->
+          <div class="row">
+            <div class="col"></div>
+            <div class="col-12 col-md-auto">
+              <path-select></path-select>
+            </div>
+            <div class="col"></div>
+          </div>
+
+          <!-- end proscons select -->
         </div>
-
-        <!-- end proscons select -->
       </div>
-    </div>
-
+    </transition>
     <!--  -->
 
     <!-- </div> -->
@@ -60,9 +55,7 @@
           <div class="col-6">
             <path-data>
               <template slot="finishTip">
-                <div class="text-h6 text-bold" style="font-family:NSimSun">
-                  趕緊聯繫您的潛在合作商家吧！
-                </div>
+                <div class="text-h6 text-bold" style="font-family:NSimSun">趕緊聯繫您的潛在合作商家吧！</div>
               </template>
             </path-data>
           </div>
@@ -77,7 +70,7 @@
           </div>
           <!-- <div class="col q-mt-lg">
             <companyDetail3></companyDetail3>
-          </div> -->
+          </div>-->
         </div>
         <div class="row"></div>
         <!-- 懶人包區域 -->
@@ -101,7 +94,8 @@
           請先選擇
           <b>城市</b>
 
-          <br />選擇 <b>景點作為你的起始點</b>，按開始以進行分析
+          <br />選擇
+          <b>景點作為你的起始點</b>，按開始以進行分析
         </p>
       </div>
     </div>
@@ -128,6 +122,8 @@ export default {
   },
   data() {
     return {
+      // select transition
+      path_select: false,
       //顯示下方頁面
       isShow: false
     };
@@ -155,8 +151,19 @@ export default {
     selected_site(val) {
       this.isShow = false;
     }
+  },
+  mounted: function() {
+    this.path_select = true;
   }
 };
 </script>
 
-<style></style>
+<style scoped>
+.fade-enter-active {
+  transition: all 1s ease;
+}
+.fade-enter {
+  transform: translateY(10px);
+  opacity: 0;
+}
+</style>

@@ -15,11 +15,12 @@
             @filter="filterFn"
             label="選擇城市"
             style="width: 250px;"
-          > -->
+          >-->
           <q-select
             filled
             v-model="selected_site_local"
             :options="schedule_select"
+            :rules="[ val => val && val.length > 1 || '請選擇城市']"
             label="選擇城市"
             style="width: 250px;"
           >

@@ -37,7 +37,7 @@
             <q-item-label class>建立旅程表</q-item-label>
           </q-item-section>
         </q-item>-->
-        <div class="gt-xs" style="font-family: NSimSun;font-weight:bold">
+        <div class="gt-xs title text-bold">
           <q-btn-dropdown flat label="優缺點分析">
             <q-item clickable v-close-popup @click="onItemClick" to="/manager/site_ProsCons">
               <q-item-section>
@@ -225,8 +225,9 @@ export default {
     promptToLogout() {
       this.$q
         .dialog({
-          title: "Confirm",
-          message: "您是否要登出並進入切換角色頁面?",
+          class: "title text-bold",
+          title: "切換身分",
+          message: "您是否要登出並進入選擇身分頁面?",
           cancel: true,
           persistent: true
         })

@@ -1,96 +1,98 @@
 <template>
   <div class="q-pa-md">
-    <div class="col"></div>
-    <div class="col-12 col-md-auto">
-      <div class="row">
-        <div class="q-gt-xs">
-          <q-select
-            filled
-            clearable
-            v-model="selected_p_local"
-            v-on:change="onProductChange"
-            use-input
-            hide-selected
-            fill-input
-            input-debounce="0"
-            :options="options"
-            @filter="filterFn"
-            hint="選擇城市"
-            style="width: 250px; padding-bottom: 32px"
-          >
-            <template v-slot:no-option>
-              <q-item>
-                <q-item-section class="text-grey">沒有結果</q-item-section>
-              </q-item>
-            </template>
-          </q-select>
-        </div>
-        <div class="q-ml-md">
-          <q-select
-            filled
-            clearable
-            v-model="selected_p_detail_item_local"
-            use-input
-            hide-selected
-            fill-input
-            input-debounce="0"
-            :options="options"
-            @filter="filterFn_2"
-            hint="請選擇服務"
-            style="width: 250px; padding-bottom: 32px"
-          >
-            <template v-slot:no-option>
-              <q-item>
-                <q-item-section class="text-grey">沒有結果</q-item-section>
-              </q-item>
-            </template>
-          </q-select>
-        </div>
-        <div class="q-ml-md">
-          <q-select
-            filled
-            clearable
-            v-model="selected_p_detail_item_local2"
-            use-input
-            hide-selected
-            fill-input
-            input-debounce="0"
-            :options="options"
-            @filter="filterFn_3"
-            hint="請選擇服務"
-            style="width: 250px; padding-bottom: 32px"
-          >
-            <template v-slot:no-option>
-              <q-item>
-                <q-item-section class="text-grey">沒有結果</q-item-section>
-              </q-item>
-            </template>
-          </q-select>
-        </div>
-      </div>
-    </div>
-    <div class="col"></div>
-
-    <div class="row q-mt-sm">
-      <div class="col"></div>
+    <q-form @submit="runR(1);startComputing(1)" class="q-gutter-md">
       <div class="col-12 col-md-auto">
-        <q-btn
-          :loading="loading1"
-          :percentage="percentage1"
-          color="cyan-9"
-          @click="startComputing(1)"
-          v-on:click="runR(1)"
-          style="width: 150px"
-        >
-          開始
-          <template v-slot:loading>
-            <q-spinner-gears class="on-left" />分析中...
-          </template>
-        </q-btn>
+        <div class="row">
+          <div class="q-gt-xs">
+            <q-select
+              filled
+              clearable
+              v-model="selected_p_local"
+              v-on:change="onProductChange"
+              use-input
+              hide-selected
+              fill-input
+              input-debounce="0"
+              :options="options"
+              @filter="filterFn"
+              :rules="[ val => val && val.length > 1 || '請選擇城市']"
+              label="選擇城市"
+              style="width: 250px; padding-bottom: 32px"
+            >
+              <template v-slot:no-option>
+                <q-item>
+                  <q-item-section class="text-grey">沒有結果</q-item-section>
+                </q-item>
+              </template>
+            </q-select>
+          </div>
+          <div class="q-ml-md">
+            <q-select
+              filled
+              clearable
+              v-model="selected_p_detail_item_local"
+              use-input
+              hide-selected
+              fill-input
+              input-debounce="0"
+              :options="options"
+              @filter="filterFn_2"
+              :rules="[ val => val && val.length > 1 || '請選擇服務']"
+              label="請選擇服務"
+              style="width: 250px; padding-bottom: 32px"
+            >
+              <template v-slot:no-option>
+                <q-item>
+                  <q-item-section class="text-grey">沒有結果</q-item-section>
+                </q-item>
+              </template>
+            </q-select>
+          </div>
+          <div class="q-ml-md">
+            <q-select
+              filled
+              clearable
+              v-model="selected_p_detail_item_local2"
+              use-input
+              hide-selected
+              fill-input
+              input-debounce="0"
+              :options="options"
+              @filter="filterFn_3"
+              :rules="[ val => val && val.length > 1 || '請選擇服務']"
+              label="請選擇服務"
+              style="width: 250px; padding-bottom: 32px"
+            >
+              <template v-slot:no-option>
+                <q-item>
+                  <q-item-section class="text-grey">沒有結果</q-item-section>
+                </q-item>
+              </template>
+            </q-select>
+          </div>
+        </div>
       </div>
 
-      <div class="col"></div>
-    </div>
+      <div class="row q-mt-sm">
+        <div class="col"></div>
+        <div class="col-12 col-md-auto">
+          <q-btn
+            :loading="loading1"
+            :percentage="percentage1"
+            color="cyan-9"
+            type="submit"
+            style="width: 150px"
+          >
+            開始
+            <template v-slot:loading>
+              <q-spinner-gears class="on-left" />分析中...
+            </template>
+          </q-btn>
+        </div>
+
+        <div class="col"></div>
+      </div>
+    </q-form>
   </div>
   <!--  -->
 

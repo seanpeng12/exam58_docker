@@ -89,7 +89,7 @@
           <q-tabs
             v-model="tab"
             dense
-            class="text-grey"
+            class="text-grey title"
             active-color="warning"
             indicator-color="warning"
             align="justify"
@@ -111,7 +111,7 @@
           </q-tabs>
 
           <q-separator />
-          <q-tab-panels v-model="tab" animated>
+          <q-tab-panels v-model="tab" animated swipeable>
             <q-tab-panel name="collections">
               <!-- <q-banner class="bg-primary text-white">
                 <div class="text-h6 row"></div>
@@ -215,24 +215,28 @@
                             />
                           </template>
                           <template slot="text_ProsExplain">
-                            <q-chip>
-                              <q-avatar color="green-8" text-color="white" size="15px"></q-avatar>
-                              <span style="font-size: 15px;">
-                                <b>
-                                  {{
-                                  prosdata
-                                  }}顏色越深，好評中提及該關鍵字的人數越多，為此景點的特色
-                                </b>
-                              </span>
-                            </q-chip>
+                            <div class="row">
+                              <div class="col-1 text-center">
+                                <q-avatar color="green-8" text-color="white" size="15px"></q-avatar>
+                              </div>
+                              <div class="col">
+                                <span style="font-size: 15px;">
+                                  <b>顏色越深，好評中提及該關鍵字的人數越多，為此景點的特色</b>
+                                </span>
+                              </div>
+                            </div>
                           </template>
                           <template slot="text_ConsExplain">
-                            <q-chip>
-                              <q-avatar color="red-8" text-color="white" size="15px"></q-avatar>
-                              <span style="font-size: 15px;">
-                                <b>顏色越深，負評中提及該關鍵字的人數越多，您可以從中考慮是否要前往</b>
-                              </span>
-                            </q-chip>
+                            <div class="row">
+                              <div class="col-1 text-center">
+                                <q-avatar color="red-8" text-color="white" size="15px"></q-avatar>
+                              </div>
+                              <div class="col-11">
+                                <span style="font-size: 15px;">
+                                  <b>顏色越深，負評中提及該關鍵字的人數越多，您可以從中考慮是否要前往</b>
+                                </span>
+                              </div>
+                            </div>
                           </template>
                         </proscons-data>
                       </div>
@@ -284,20 +288,28 @@
                             />
                           </template>
                           <template slot="text_ProsExplain">
-                            <q-chip>
-                              <q-avatar color="green-8" text-color="white" size="15px"></q-avatar>
-                              <span style="font-size: 15px;">
-                                <b>顏色越深，好評中提及該關鍵字的人數越多，為此飯店較受其他旅客喜愛的特點</b>
-                              </span>
-                            </q-chip>
+                            <div class="row">
+                              <div class="col-1 text-center">
+                                <q-avatar color="green-8" text-color="white" size="15px"></q-avatar>
+                              </div>
+                              <div class="col-11">
+                                <span style="font-size: 15px;">
+                                  <b>顏色越深，好評中提及該關鍵字的人數越多，為此飯店較受其他旅客喜愛的特點</b>
+                                </span>
+                              </div>
+                            </div>
                           </template>
                           <template slot="text_ConsExplain">
-                            <q-chip>
-                              <q-avatar color="red-8" text-color="white" size="15px"></q-avatar>
-                              <span style="font-size: 15px;">
-                                <b>顏色越深，負評中提及該關鍵字的人數越多，您可以從中考慮是否要入住</b>
-                              </span>
-                            </q-chip>
+                            <div class="row">
+                              <div class="col-1 text-center">
+                                <q-avatar color="red-8" text-color="white" size="15px"></q-avatar>
+                              </div>
+                              <div class="col-11">
+                                <span style="font-size: 15px;">
+                                  <b>顏色越深，負評中提及該關鍵字的人數越多，您可以從中考慮是否要入住</b>
+                                </span>
+                              </div>
+                            </div>
                           </template>
                         </hotelProsconsData>
                       </div>
@@ -319,7 +331,7 @@
               <div class="text-h6">
                 <!-- Tip: 需求分析 -->
                 <q-toggle
-                  class="q-pa-md"
+                  class="q-pa-md title"
                   v-model="prefer"
                   checked-icon="check"
                   color="red"
@@ -921,3 +933,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.title {
+  font-family: Microsoft JhengHei;
+}
+</style>
