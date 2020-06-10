@@ -7,29 +7,26 @@
           @click="promptToLogout()"
           flat
           style="font-family:Trebuchet MS,Papyrus,Verdana, Geneva, sans-serif;font-size:22px;font-weight:bold"
-          >SightSeeing</q-btn
-        >
-        <q-space />
-        <!-- gt-xs view -->
-
+        >SightSeeing</q-btn>
         <q-item
-          class="q-mt-sm"
+          class="q-pt-md"
           style="font-family: NSimSun;font-weight:bold"
           clickable
           v-close-popup
           to="/index"
           v-show="role == 'generalUser'"
-          >首頁
-        </q-item>
+        >首頁</q-item>
+        <q-space />
+        <!-- gt-xs view -->
 
         <q-chip
           v-if="loggedIn"
           color="blue-grey-7"
           flat
           text-color="white"
-          icon="face"
-          >{{ userDetail }}您好</q-chip
-        >
+          icon="account_circle"
+          class="title"
+        >{{ userDetail }}您好</q-chip>
         <!-- <q-item class="gt-xs" exact clickable to="/">
           <q-item-section>
             <q-item-label class>首頁</q-item-label>
@@ -41,14 +38,9 @@
             <q-item-label class>建立旅程表</q-item-label>
           </q-item-section>
         </q-item>-->
-        <div class="gt-xs" style="font-family: NSimSun;font-weight:bold">
+        <div class="gt-xs title text-bold">
           <q-btn-dropdown flat label="景點分析">
-            <q-item
-              clickable
-              v-close-popup
-              to="/site_demend"
-              v-show="role == 'generalUser'"
-            >
+            <q-item clickable v-close-popup to="/site_demend" v-show="role == 'generalUser'">
               <q-item-section>
                 <q-item-label>
                   景點GO-
@@ -74,12 +66,7 @@
             </q-item>
           </q-btn-dropdown>
           <q-btn-dropdown flat label="飯店分析">
-            <q-item
-              clickable
-              v-close-popup
-              to="/hotel_demend"
-              v-show="role == 'generalUser'"
-            >
+            <q-item clickable v-close-popup to="/hotel_demend" v-show="role == 'generalUser'">
               <q-item-section>
                 <q-item-label>
                   飯店GO-
@@ -113,11 +100,7 @@
             label="Google帳號登入"
             style="margin-left: 20px;"
           />-->
-          <q-btn-dropdown
-            v-if="loggedIn && role == 'generalUser'"
-            flat
-            label="會員功能"
-          >
+          <q-btn-dropdown v-if="loggedIn && role == 'generalUser'" flat label="會員功能">
             <q-list>
               <q-item clickable v-close-popup to="/collection">
                 <q-item-section>
@@ -146,7 +129,8 @@
             @click="logoutUser"
             color="amber"
             icon-right="account_circle"
-            label="LogOut"
+            label="登出"
+            class="title text-bold"
           />
         </div>
 
@@ -265,8 +249,9 @@ export default {
     promptToLogout() {
       this.$q
         .dialog({
-          title: "Confirm",
-          message: "您是否要登出並進入切換角色頁面?",
+          class: "title",
+          title: "切換身分",
+          message: "您是否要登出並進入選擇身分頁面?",
           cancel: true,
           persistent: true
         })

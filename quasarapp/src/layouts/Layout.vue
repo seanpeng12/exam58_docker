@@ -3,7 +3,7 @@
     <q-header elevated>
       <q-toolbar color="primary" text-color="pink-13" inverted>
         <q-toolbar-title>
-          SIGHTSEEING
+          SIGHTSEEING舊
           <div slot="subtitle">SIGHTSEEING</div>
         </q-toolbar-title>
 
