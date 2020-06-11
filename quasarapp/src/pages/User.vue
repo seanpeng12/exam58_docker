@@ -47,7 +47,7 @@
         <div v-if="card_1" class="row q-mt-none">
           <div class="col"></div>
           <div class="col-6 col-md-auto q-ma-sm">
-            <q-card  class="q-pa-sm my-card aaa" style="background-color:#f6de98;" flat to="/manager_index">
+            <q-card  class="q-pa-sm my-card bigger" style="background-color:#f6de98;" flat to="/manager_index">
               <q-card-section horizontal style="height:270px">
                 <q-card-section class="q-pt-xs layout-font">
                   <div class="text-overline text-bold">您的身分?</div>
@@ -87,7 +87,7 @@
             </q-card>
           </div>
           <div class="col-6 col-md-auto q-ma-sm">
-            <q-card class="q-pa-sm my-card aaa" style="background-color:#eef5db;" flat>
+            <q-card class="q-pa-sm my-card bigger" style="background-color:#eef5db;" flat>
               <q-card-section horizontal style="height:270px">
                 <q-card-section class="q-pt-xs layout-font">
                   <div class="text-overline text-bold">您的身分?</div>
@@ -192,8 +192,14 @@ export default {
   transform: translateY(50px);
   opacity: 0;
 }
-.aaa:hover{
+.bigger{
+  /* hover off */
+  transition: all 0.3s;
+}
+.bigger:hover{
+  /* hover */
   transition: all 0.3s ease;
   transform:scale(1.05,1.05);
 }
+
 </style>
