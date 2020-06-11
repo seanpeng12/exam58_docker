@@ -13,12 +13,12 @@
         <div v-if="card_1" class="row">
           <div class="col"></div>
 
-          <q-item v-ripple class="bg-grey-2 q-ma-lg q-pa-xs capital-item">
+          <q-item v-ripple class="q-ma-lg q-pa-xs capital-item text-white" style="background-color:#7a9e9f;">
             <q-item-section avatar>
               <!-- <q-avatar rounded> -->
               <q-icon
                 size="60px"
-                style="color:#ed74ad"
+                style="color:white"
                 name="fas fa-user-tag"
                 class="q-ma-xl"
               />
@@ -47,10 +47,10 @@
         <div v-if="card_1" class="row q-mt-none">
           <div class="col"></div>
           <div class="col-6 col-md-auto q-ma-sm">
-            <q-card class="q-pa-sm my-card bg-lime-2" flat to="/manager_index">
+            <q-card  class="q-pa-sm my-card aaa" style="background-color:#f6de98;" flat to="/manager_index">
               <q-card-section horizontal style="height:270px">
-                <q-card-section class="q-pt-xs">
-                  <div class="text-overline">您的身分?</div>
+                <q-card-section class="q-pt-xs layout-font">
+                  <div class="text-overline text-bold">您的身分?</div>
                   <div
                     class="text-h5 q-mt-sm q-mb-xs layout-font"
                     style="font-weight:bold;color:#261873"
@@ -58,11 +58,11 @@
                     飯店景點管理者
                   </div>
                   <div class="text-h7 text-grey-10">
-                    不論您是飯店業者或景點的管理者，可透過我們的
-                    <b>
-                      分析洞察自己與競爭者在消費者眼中的主要優劣勢
-                      、也能透過消費者的旅遊軌跡尋找合適的合作對象 </b
-                    >，與其共生共榮。
+                    不論您是飯店業者或景點管理者，我們的分析可以:
+                    <p><b>
+                      洞察自身與競爭者在消費者眼中的主要優劣因素
+                      、並透過消費者的旅遊軌跡發現新的合作對象 </b
+                    >，共創雙贏。</p>
                   </div>
                 </q-card-section>
 
@@ -71,7 +71,7 @@
                 </q-card-section>
               </q-card-section>
 
-              <q-separator />
+
 
               <q-card-actions>
                 <q-space />
@@ -87,10 +87,10 @@
             </q-card>
           </div>
           <div class="col-6 col-md-auto q-ma-sm">
-            <q-card class="q-pa-sm my-card bg-lime-2" flat>
+            <q-card class="q-pa-sm my-card aaa" style="background-color:#eef5db;" flat>
               <q-card-section horizontal style="height:270px">
-                <q-card-section class="q-pt-xs">
-                  <div class="text-overline">您的身分?</div>
+                <q-card-section class="q-pt-xs layout-font">
+                  <div class="text-overline text-bold">您的身分?</div>
                   <div
                     class="text-h5 q-mt-sm q-mb-xs layout-font"
                     style="font-weight:bold;color:#261873"
@@ -98,11 +98,11 @@
                     一般旅客
                   </div>
                   <span class="text-h7 text-grey-10">
-                    如果您喜歡自己規劃旅遊行程，但在一開始又對那個城市的景點、
-                    飯店沒有頭緒或是不想花費大把時間在網上找尋每個景點、飯店的評價，那您一定要試試我們的系統!
+                    喜歡自己規劃旅遊行程的您，苦惱於不熟悉旅遊城市的景點、
+                    飯店、又不想花費大把時間在網上找尋評價，SIGHTSEEING都可以幫你搞定!
                     <br />
                     <b
-                      >我們可以直接提供您符合需求的景點與飯店，並為您整合各個景點飯店的評論優缺點，讓您無須再上網爬文。</b
+                      >我們提供您符合需求的景點/飯店，並整合各個景點與飯店的評論優缺點，讓您無須再上網爬文。</b
                     >
                   </span>
                 </q-card-section>
@@ -112,7 +112,6 @@
                 </q-card-section>
               </q-card-section>
 
-              <q-separator />
 
               <q-card-actions>
                 <q-space />
@@ -131,36 +130,6 @@
         </div>
       </transition>
 
-      <!--  -->
-      <!-- <div class="q-pa-lg" style="text-align: center;">
-      <div></div>
-      <q-btn
-        size="22px"
-        class="q-px-xs q-py-xs"
-        color="teal-4"
-        label="管理人員/旅館業者"
-        @click="chooseRole('manager')"
-      />&nbsp;
-      <q-btn
-        size="22px"
-        class="q-px-lg q-py-xs"
-        color="teal-4"
-        label="一般使用者"
-        @click="chooseRole('generalUser')"
-      />
-    </div>
-
-    <div class="text-center text-h3 q-pa-md">身分：{{ role }}</div>
-    <div class="text-center" v-if="manager">
-      <q-btn class="q-px-lg q-py-xs" to="/manager_index" size="28px">
-        <b>前往管理者頁面</b>
-      </q-btn>
-    </div>
-    <div class="text-center" v-else>
-      <q-btn class="q-px-lg q-py-xs" to="/index" size="28px">
-        <b>前往一般頁面</b>
-      </q-btn>
-      </div>-->
     </q-page-container>
   </q-layout>
   <!--  -->
@@ -179,7 +148,10 @@ export default {
     ...mapGetters("auth", ["loggedIn", "role"])
   },
   methods: {
-    ...mapActions("auth", ["chooseRole", "logoutUser"])
+    ...mapActions("auth", ["chooseRole", "logoutUser"]),
+    // mouseOver: function(){
+    //   alert("你hover的business user");
+    // }
   },
   mounted: function() {
     // 過渡效果
@@ -212,12 +184,16 @@ export default {
   width: 100%;
   max-width: 450px;
 }
-
+/* transition */
 .card-1-enter-active {
   transition: all 1s;
 }
 .card-1-enter {
   transform: translateY(50px);
   opacity: 0;
+}
+.aaa:hover{
+  transition: all 0.3s ease;
+  transform:scale(1.05,1.05);
 }
 </style>
