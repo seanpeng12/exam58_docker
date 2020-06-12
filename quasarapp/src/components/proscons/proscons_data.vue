@@ -93,7 +93,7 @@
             </p>
             <div>
               <q-scroll-area
-                style="height: 210px; max-width: auto;font-family: Microsoft JhengHei;"
+                style="height: 200px; max-width: auto;font-family: Microsoft JhengHei;"
               >
                 <q-chip size="md" v-for="(a,index) in consData.data" :key="a.id">
                   <div v-if="index == 0">

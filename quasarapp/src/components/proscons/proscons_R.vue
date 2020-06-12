@@ -6,9 +6,10 @@
       style="color:white;font-weight: bold;font-size : 25px;font-family: Microsoft JhengHei;"
     >
       <div class="row">
-        <div class="col-4 q-mt-xs">
+        <div class="col q-mt-xs">
           <p>社會網絡分析圖</p>
         </div>
+        <q-space />
         <div class="col-3 q-ml-sm"><slot name="photoExplain"></slot></div>
       </div>
 
@@ -89,20 +90,7 @@
       <!-- end -->
     </div>
 
-    <!-- <q-expansion-item
-      dark
-      class="q-pa-lg q-ma-sm bg-teal-6"
-      style="color:white;font-weight: bold;font-size : 25px;font-family: Microsoft JhengHei;"
-      v-model="expanded"
-      icon="show_chart"
-      label="優缺點分析結果"
-      caption="景點名稱"
-    >
-      <div class="text-h6 q-md-lg text-center">
-        <b>拖曳畫面以檢視，滾輪可放大</b>
-      </div>
 
-    </q-expansion-item>-->
   </div>
 </template>
 <script>

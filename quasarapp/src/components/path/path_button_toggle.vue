@@ -1,9 +1,10 @@
 <template>
   <div class="q-pa-md">
     <div style="max-width:auto"></div>
-    <div class="row">
+    <div class="row" >
       <div class="col-8">
         <q-tabs
+
           v-model="tab"
           inline-label
           indicator-color="transparent"

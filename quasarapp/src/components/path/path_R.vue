@@ -3,12 +3,13 @@
   <div class="q-pa-sm" style="max-width: auto" v-if="isShow_R">
     <div
       class="q-pa-md q-ma-sm bg-teal-3"
-      style="color:white;font-weight: bold;font-size : 25px;font-family: Microsoft JhengHei;"
+      style="color:white;font-weight: bold;font-size : 25px;font-family: Microsoft JhengHei;border-radius: 10px;"
     >
       <div class="row">
-        <div class="col-4 q-mt-sm">
+        <div class="col q-mt-sm">
           <p>社會網絡分析圖</p>
         </div>
+        <q-space />
         <div class="col-3 "><slot name="photoExplain"></slot></div>
       </div>
       <!--  -->

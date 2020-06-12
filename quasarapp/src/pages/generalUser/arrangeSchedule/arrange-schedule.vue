@@ -373,7 +373,7 @@
 
                     <!-- <pathInfo></pathInfo> -->
                   </div>
-                  <div class="row q-pl-xl">
+                  <div class="row">
                     <path-select></path-select>
                   </div>
                 </div>

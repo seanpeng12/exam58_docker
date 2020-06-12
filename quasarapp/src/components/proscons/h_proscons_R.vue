@@ -6,9 +6,10 @@
       style="color:white;font-weight: bold;font-size : 25px;font-family: Microsoft JhengHei;"
     >
       <div class="row">
-        <div class="col-4 q-mt-xs">
+        <div class="col q-mt-xs">
           <p>社會網絡分析圖</p>
         </div>
+        <q-space />
         <div class="col-3 q-ml-sm"><slot name="photoExplain"></slot></div>
       </div>
 

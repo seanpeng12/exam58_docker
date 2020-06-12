@@ -1,6 +1,6 @@
 <template>
   <!-- 懶人包 -->
-  <div class="q-pa-sm q-mt-sm doc-container">
+  <div class="q-pa-sm doc-container">
     <div class="gt-xs q-pa-sm column text-black bg-white" style="width: auto">
       <q-tabs
         class="bg-green-4 text-grey-4 q-mb-lg"
@@ -20,11 +20,13 @@
 
       <div class="q-gutter-y-sm">
         <q-tab-panels
+
           v-model="tab"
           animated
           transition-prev="fade"
           transition-next="fade"
           class="bg-grey-6 text-white text-center"
+          style="border-radius: 5px;"
         >
           <q-tab-panel name="tab_1">
             <div class="row">
