@@ -3,20 +3,20 @@
     <q-header class="bg-blue-grey-7 text-white" elevated>
       <q-toolbar>
         <q-btn
-          class="title"
           @click="promptToLogout()"
           flat
           style="font-family:Trebuchet MS,Papyrus,Verdana, Geneva, sans-serif;font-size:22px;font-weight:bold"
         >SightSeeing</q-btn>
-        <q-space />
         <q-item
-          class="q-mt-sm"
-          style="font-family: NSimSun;font-weight:bold"
+          class="q-mt-md text-bold"
+          style="font-family: NSimSun;"
           clickable
           v-close-popup
           to="/manager_index"
           v-show="role == 'manager'"
         >首頁</q-item>
+        <q-space />
+
         <!-- gt-xs view -->
         <q-chip
           v-if="loggedIn"
@@ -42,7 +42,7 @@
             <q-item clickable v-close-popup @click="onItemClick" to="/manager/site_ProsCons">
               <q-item-section>
                 <q-item-label>
-                  景點GO-
+                  景點-
                   <b>優缺點分析</b>
                 </q-item-label>
               </q-item-section>
@@ -50,7 +50,7 @@
             <q-item clickable v-close-popup @click="onItemClick" to="/manager/hotel_ProsCons">
               <q-item-section>
                 <q-item-label>
-                  飯店GO-
+                  飯店-
                   <b>優缺點分析</b>
                 </q-item-label>
               </q-item-section>
@@ -60,8 +60,8 @@
             <q-item clickable v-close-popup @click="onItemClick" to="/manager/site_Path">
               <q-item-section>
                 <q-item-label>
-                  景點／飯店GO-
-                  <b>路徑分析</b>
+                  景點／飯店-
+                  <b>潛在合作夥伴分析</b>
                 </q-item-label>
               </q-item-section>
             </q-item>

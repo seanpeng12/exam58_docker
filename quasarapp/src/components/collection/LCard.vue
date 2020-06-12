@@ -1,5 +1,5 @@
 <template>
-  <q-card class="my-card" style="width:250px;">
+  <q-card class="my-card" style="width:250px;font-family:Microsoft JhengHei;">
     <q-img style="height:150px" :src="collection.src" />
 
     <q-card-section>
@@ -16,22 +16,11 @@
         <div
           class="col-2"
           style=" color:orange; font-size:14px; margin-left:5px"
-        >
-          {{ collection.rate }}
-        </div>
-        <div class="col-4" style="margin-left:2px">
-          {{ collection.comment }}則評價
-        </div>
+        >{{ collection.rate }}</div>
+        <div class="col-4" style="margin-left:2px">{{ collection.comment }}則評價</div>
         <div class="col-3" style="margin-left:20px">
           <q-space />
-          <q-btn
-            label="詳細地址"
-            color="secondary"
-            @click="dialog = true"
-            dense
-            outlined
-            size="10px"
-          />
+          <q-btn label="詳細地址" color="secondary" @click="dialog = true" dense outlined size="10px" />
         </div>
         <!-- </div> -->
         <!-- dialog -->
@@ -54,9 +43,7 @@
     </q-card-section>
 
     <q-card-section class="q-pt-none">
-      <div
-        class="col-auto text-secondary text-caption q-pt-md row no-wrap items-center"
-      >
+      <div class="col-auto text-secondary text-caption q-pt-md row no-wrap items-center">
         <q-icon name="place" />
         台灣，{{ collection.city }}
         <slot name="addToSchedule"></slot>

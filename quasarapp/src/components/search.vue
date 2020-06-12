@@ -1,5 +1,5 @@
 <template>
-  <q-input v-model="searchField" outlined flat bg-color="white" class="col" label="輸入縣市或景點">
+  <q-input v-model="searchField" outlined flat bg-color="white" class="col" label="輸入想去的縣市或景點">
     <template v-slot:append>
       <q-icon
         v-if="searchField !== ''"

@@ -31,12 +31,12 @@
     </div>
 
     <div class="rounded-borders q-pa-md q-mx-md q-gutter-sm bg-grey-1">
-      <q-splitter v-model="splitterModel" style="height: 420px">
+      <q-splitter v-model="splitterModel" style="height: 420px;font-family: Microsoft JhengHei;">
         <template v-slot:before>
           <q-tabs v-model="tab" vertical class="text-black">
             <!-- <q-tab name="demand" icon="img:statics/images/b_demand.png" label="需求分析" /> -->
-            <q-tab name="proscons" icon="alarm" label="優缺點分析" />
-            <q-tab name="path" icon="movie" label="路徑分析" />
+            <q-tab name="proscons" icon="fas fa-crosshairs" label="優缺點分析" />
+            <q-tab name="path" icon="las la-handshake" label="潛在合作夥伴分析" />
           </q-tabs>
         </template>
 
@@ -91,7 +91,7 @@
             <q-tab-panel name="path">
               <!-- 第一格 -->
               <div class="row text-h4">
-                <q-chip outline size="30px">路徑分析</q-chip>
+                <q-chip outline size="30px">潛在合作夥伴分析</q-chip>
                 <q-space />
                 <q-btn
                   rounded

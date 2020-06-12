@@ -1,7 +1,11 @@
 <template>
   <!-- <div class="col"> -->
   <!-- 三個下拉式選單 -->
-  <q-form @submit="runR();startComputing(1);showAddColletionFilter()" class="q-gutter-md">
+  <q-form
+    @submit="runR();startComputing(1);showAddColletionFilter()"
+    class="q-gutter-md"
+    style="font-family:Microsoft JhengHei;"
+  >
     <div class="row">
       <div class="q-gutter-xs">
         <!-- 下拉式選單 -->

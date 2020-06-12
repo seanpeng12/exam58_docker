@@ -1,15 +1,8 @@
 <template>
   <div class="container mt-4 q-my-md">
     <!-- <h2 class=" text-center text-secondary pb-2">台北市營運餐廳</h2> -->
-    <div class="row border rounded">
-      <div class="col">
-        <ul class="nav justify-content-center border-bottom">
-          <!--營運地區 nav-->
-        </ul>
-        <!--地圖呈現在此-->
-        <div class="google-map" id="map" ref="bmap"></div>
-      </div>
-      <div class="col q-px-lg">
+    <div class="row border rounded" style="font-family:Microsoft JhengHei;">
+      <div class="col-xs-12 col-sm-6 col-md-6 q-px-lg">
         <q-form @submit="prompt()" class="q-gutter-md">
           <div class="row-8 q-py-sm">
             <p>選擇想要安排順序的日期</p>
@@ -36,13 +29,7 @@
                 dense
               />
             </p>
-            <q-select
-              id="start"
-              filled
-              v-model="start"
-              :options="originOptions"
-              label="請選擇您的起點"
-            />
+            <q-select id="start" filled v-model="start" :options="originOptions" label="請選擇您的起點" />
           </div>
           <div class="row-8 q-py-sm">
             <p>中繼點(多選)</p>
@@ -60,13 +47,7 @@
           </div>
           <div class="row-8 q-py-sm">
             <p>終點</p>
-            <q-select
-              id="end"
-              filled
-              v-model="end"
-              :options="endOptions"
-              label="請選擇您的終點"
-            />
+            <q-select id="end" filled v-model="end" :options="endOptions" label="請選擇您的終點" />
           </div>
 
           <div class="row-8 q-py-sm">
@@ -74,14 +55,16 @@
 
             <q-scroll-area
               class="bg-grey-2 rounded-borders"
-              style="height: 200px; max-width: 800px; width:auto"
+              style="height: 200px; max-width: 800px; width:auto;font-family:Microsoft JhengHei;"
             >
               <div v-for="(lst, index) in path_list" :key="index">
                 <q-chip class="text-black" size="md" style="width:auto">
-                  <q-avatar color="red" text-color="white">{{
+                  <q-avatar color="red" text-color="white">
+                    {{
                     lst.cap
-                  }}</q-avatar>
-                  <div class="text-bold">{{ new_list[index] }}</div>
+                    }}
+                  </q-avatar>
+                  <div class="text-bold">{{ new_list[index] }} &nbsp;</div>
                   {{ lst.addr }}
                 </q-chip>
 
@@ -105,6 +88,13 @@
           <!-- <slot name="chooseForArrange"></slot> -->
           <!-- <q-btn label="test" @click="deleteMarkers()"></q-btn> -->
         </q-form>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-6">
+        <ul class="nav justify-content-center border-bottom">
+          <!--營運地區 nav-->
+        </ul>
+        <!--地圖呈現在此-->
+        <div class="google-map" id="map" ref="bmap"></div>
       </div>
     </div>
   </div>
