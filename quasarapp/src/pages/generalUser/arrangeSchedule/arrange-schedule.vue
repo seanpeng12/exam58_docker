@@ -86,7 +86,7 @@
           </q-tabs>
 
           <q-separator />
-          <q-tab-panels v-model="tab" animated swipeable>
+          <q-tab-panels v-model="tab" animated>
             <q-tab-panel name="collections">
               <!-- <q-banner class="bg-primary text-white">
                 <div class="text-h6 row"></div>
