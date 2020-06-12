@@ -48,7 +48,7 @@
           <div class="col"></div>
           <div class="col-6 col-md-auto q-ma-sm">
             <q-card  class="q-pa-sm my-card bigger" style="background-color:#f6de98;" flat to="/manager_index">
-              <q-card-section horizontal style="height:270px">
+              <q-card-section horizontal style="height:300px">
                 <q-card-section class="q-pt-xs layout-font">
                   <div class="text-overline text-bold">您的身分?</div>
                   <div
@@ -88,7 +88,7 @@
           </div>
           <div class="col-6 col-md-auto q-ma-sm">
             <q-card class="q-pa-sm my-card bigger" style="background-color:#eef5db;" flat>
-              <q-card-section horizontal style="height:270px">
+              <q-card-section horizontal style="height:300px">
                 <q-card-section class="q-pt-xs layout-font">
                   <div class="text-overline text-bold">您的身分?</div>
                   <div
@@ -99,10 +99,10 @@
                   </div>
                   <span class="text-h7 text-grey-10">
                     喜歡自己規劃旅遊行程的您，苦惱於不熟悉旅遊城市的景點、
-                    飯店、又不想花費大把時間在網上找尋評價，SIGHTSEEING都可以幫你搞定!
+                    飯店、又不想花費大把時間在網上找尋評價，SIGHTSEEING幫你搞定!
                     <br />
                     <b
-                      >我們提供您符合需求的景點/飯店，並整合各個景點與飯店的評論優缺點，讓您無須再上網爬文。</b
+                      >我們提供符合需求的景點/飯店，並整合各景點/飯店評論優缺點，讓您無須再上網爬文。</b
                     >
                   </span>
                 </q-card-section>

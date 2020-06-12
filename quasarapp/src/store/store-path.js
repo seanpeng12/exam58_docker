@@ -19,6 +19,9 @@ const state = {
   // 選單景點資料(axios用)
   sites: [],
 
+  //schedule呼叫用
+  start_index_2 : 0,
+
   // loading插件用（start R）
   start_index: 0,
   // R執行完呼叫重新整理用
@@ -58,6 +61,9 @@ const mutations = {
   },
   Update_Selected_Site_3(state, value) {
     return (state.selected_site_3 = value);
+  },
+  Update_Start_Index_2(state, value) {
+    return (state.start_index_2 += value);
   },
   Update_Start_Index(state, value) {
     return (state.start_index += value);
@@ -239,6 +245,9 @@ const getters = {
   },
   selected_site_3: state => {
     return state.selected_site_3;
+  },
+  start_index_2: state => {
+    return state.start_index_2;
   },
   start_index: state => {
     return state.start_index;
