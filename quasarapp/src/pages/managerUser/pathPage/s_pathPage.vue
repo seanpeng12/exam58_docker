@@ -7,7 +7,7 @@
             <div class="col"></div>
 
             <div class="col-12 col-md-auto">
-              <p style="font-size: 28px;font-family: Microsoft JhengHei;">路徑推薦分析</p>
+              <p style="font-size: 28px;font-family: Microsoft JhengHei;">潛在合作夥伴分析</p>
             </div>
 
             <div class="col q-mt-sm q-ml-sm">
