@@ -12,6 +12,13 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class PostController extends Controller
 {
+    //line login
+    function line(Request $request)
+    {
+        $ok = "good";
+        return response()->json(['ok' => $ok], 200);
+    }
+
     function index()
     {
         return view('frontend_sna/test');

@@ -69,11 +69,22 @@
           :label="'Google帳號' + tab"
         />
       </div>
+
+      <div class="col text-center">
+        <q-btn
+          class="q-mt-md full-width text-white"
+          @click="loginWithLine"
+          icon="img:https://img.icons8.com/color/48/000000/line-me.png"
+          style="background-color:#00C300;"
+          :label="'line' + tab"
+        />
+      </div>
     </div>
   </form>
 </template>
 
 <script>
+import { openURL } from "quasar";
 import { mapActions } from "vuex";
 export default {
   props: ["tab"],
@@ -81,8 +92,8 @@ export default {
     return {
       formData: {
         email: "",
-        password: ""
-      }
+        password: "",
+      },
     };
   },
 
@@ -103,7 +114,32 @@ export default {
           this.registerUser(this.formData);
         }
       }
-    }
-  }
+    },
+    loginWithLine() {
+      var response_type = "code";
+      var client_id = 1654565142;
+      // var redirect_uri = "http://sightseeing.nctu.me:8080";
+      var redirect_uri = "http://sightseeing.nctu.me/api/lineLogin";
+      var state = "12345abcde";
+      var scope = "openid%20profile";
+      var nonce = "09876xyz";
+
+      openURL(
+        "https://access.line.me/oauth2/v2.1/authorize?response_type=" +
+          response_type +
+          "&client_id=" +
+          client_id +
+          "&redirect_uri=" +
+          redirect_uri +
+          "&state=" +
+          state +
+          "&scope=" +
+          scope +
+          "&nonce=" +
+          nonce +
+          '"'
+      );
+    },
+  },
 };
 </script>
