@@ -53,7 +53,7 @@
             size="18px"
             color="white"
             text-color="grey"
-            :label="'使用其他' + tab + '方式'"
+            :label="'第三方' + tab + '方式'"
             style="font-weight:bold;"
           />
         </div>
@@ -76,7 +76,7 @@
           @click="loginWithLine"
           icon="img:https://img.icons8.com/color/48/000000/line-me.png"
           style="background-color:#00C300;"
-          :label="'line' + tab"
+          :label="'line' + tab + '(測試)'"
         />
       </div>
     </div>
