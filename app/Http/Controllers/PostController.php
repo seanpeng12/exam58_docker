@@ -12,6 +12,32 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class PostController extends Controller
 {
+    //line login
+    function line(Request $request)
+    {
+        // $ok = $request->all();
+        $code = $request->input("code");
+        $state = $request->input("state");
+        $uri = $request->path();
+        // $ok = "good!!!";
+        // insert
+        if(isset($code)){
+            FacadesDB::table('line')->insert(
+                ['code' => $code,'state' => $state]
+            );
+        }else{
+            FacadesDB::table('line')->insert(
+                ['code' => "no data",'state' => "no state"]
+            );
+        }
+        
+
+        // return response()->json(['ok' => 'ok','uri' => $uri], 200);
+
+        // return view('frontend_sna/test');
+        return redirect()->away('http://sightseeing.nctu.me:8080/#/index');
+    }
+    
     function index()
     {
         return view('frontend_sna/test');
