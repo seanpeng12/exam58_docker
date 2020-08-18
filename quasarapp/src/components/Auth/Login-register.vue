@@ -115,6 +115,7 @@ export default {
         }
       }
     },
+    // line login
     loginWithLine() {
       var response_type = "code";
       var client_id = 1654565142;

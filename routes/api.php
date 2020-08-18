@@ -15,13 +15,6 @@ use App\Post;
 |
 */
 
-// for line redirect
-Route::group(['middleware' => ['CORS']], function () {
-
-    // 建立一篇文章(成功回傳ok:true)
-    Route::post('/lineLogin', 'PostController@line');
-});
-
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
