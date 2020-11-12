@@ -70,15 +70,15 @@
         />
       </div>
 
-      <div class="col text-center">
+      <!-- <div class="col text-center">
         <q-btn
           class="q-mt-md full-width text-white"
           @click="loginWithLine"
-          icon="img:https://img.icons8.com/color/48/000000/line-me.png"
+          icon="fab fa-line"
           style="background-color:#00C300;"
           :label="'line' + tab + '(測試)'"
         />
-      </div>
+      </div>-->
     </div>
   </form>
 </template>
@@ -92,13 +92,18 @@ export default {
     return {
       formData: {
         email: "",
-        password: "",
-      },
+        password: ""
+      }
     };
   },
 
   methods: {
-    ...mapActions("auth", ["registerUser", "loginUser", "loginWithGoogle"]),
+    ...mapActions("auth", [
+      "registerUser",
+      "loginUser",
+      "loginWithGoogle",
+      "loginWithLine"
+    ]),
 
     isValidEmailAddress(email) {
       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -114,33 +119,33 @@ export default {
           this.registerUser(this.formData);
         }
       }
-    },
-    // line login
-    loginWithLine() {
-      var response_type = "code";
-      var client_id = 1654565142;
-      // var redirect_uri = "http://sightseeing.nctu.me:8080";
-      var redirect_uri = "http://sightseeing.nctu.me/api/lineLogin";
-      var state = "12345abcde";
-      var scope = "openid%20profile";
-      var nonce = "09876xyz";
+    }
+    // // line login
+    // loginWithLine() {
+    //   var response_type = "code";
+    //   var client_id = 1654565142;
+    //   var redirect_uri = "http://sightseeing.nctu.me:8080";
+    //   // var redirect_uri = "http://sightseeing.nctu.me/api/lineLogin";
+    //   var state = "12345abcde";
+    //   var scope = "openid%20profile%20email";
+    //   var nonce = "09876xyz";
 
-      openURL(
-        "https://access.line.me/oauth2/v2.1/authorize?response_type=" +
-          response_type +
-          "&client_id=" +
-          client_id +
-          "&redirect_uri=" +
-          redirect_uri +
-          "&state=" +
-          state +
-          "&scope=" +
-          scope +
-          "&nonce=" +
-          nonce +
-          '"'
-      );
-    },
-  },
+    //   openURL(
+    //     "https://access.line.me/oauth2/v2.1/authorize?response_type=" +
+    //       response_type +
+    //       "&client_id=" +
+    //       client_id +
+    //       "&redirect_uri=" +
+    //       redirect_uri +
+    //       "&state=" +
+    //       state +
+    //       "&scope=" +
+    //       scope +
+    //       "&nonce=" +
+    //       nonce +
+    //       '"'
+    //   );
+    // }
+  }
 };
 </script>

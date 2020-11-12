@@ -19,6 +19,10 @@ Route::group(['middleware' => ['CORS']], function () {
 
     // 
     Route::get('/lineLogin', 'PostController@line');
+    Route::get('/line_2','PostController@line_2');
+
+    Route::post('/line_3','PostController@line_3');
+    // Route::post('/line_4','PostController@line_4');
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
@@ -73,9 +77,13 @@ Route::group(['middleware' => ['CORS']], function () {
     Route::post('/h_cat_diff', 'DemandController@diffCatagory');
     // 新取(聯集-交集)景點(分開取)
     Route::post('/new_h_cat_diff', 'DemandController@new_diff');
+
+
     // api
     // google照片
-    Route::post('/demand_Img', 'DemandController@getGoogleImg');
+    // Route::post('/demand_Img', 'DemandController@getGoogleImg');
+
+    Route::post('/getGoogleImg', 'PathController@getGoogleImg');
     // google資料
     Route::post('/demand_info', 'DemandController@GooglePlaceInfo');
 
@@ -152,8 +160,6 @@ Route::group(['middleware' => ['CORS']], function () {
 Route::group(['middleware' => ['CORS']], function () {
 
     Route::post('/preferTag', 'PostController@preferTag');
-
-    Route::post('/getGoogleImg', 'PathController@getGoogleImg');
 
     Route::post('/pathSiteGooglePlaceId', 'PathController@pathSiteGooglePlaceId');
 });

@@ -50,6 +50,10 @@ Route::get('/', function () {
     return view('frontend_sna.index');
 })->name('index');
 
+// Route::get('/', function () {
+//     return view('dist/spa.index');
+// })->name('index');
+
 // OAuth驗證
 Route::get('/redirect', 'SocialAuthGoogleController@redirect');
 Route::get('/callback', 'SocialAuthGoogleController@callback')->name('callback');

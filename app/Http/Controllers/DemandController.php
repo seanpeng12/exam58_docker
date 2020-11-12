@@ -151,41 +151,43 @@ class DemandController extends Controller
     }
 
     // google 取照片
-    function getGoogleImg(Request $request)
-    {
-        $city = $request->input("name");
-        $curl = curl_init();
+    // function getGoogleImg(Request $request)
+    // {
+    //     $city = $request->input("name");
+    //     $curl = curl_init();
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" . $city . "&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-        ));
+    //     curl_setopt_array($curl, array(
+    //         CURLOPT_URL => "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" . $city . "&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyD1ACOGJqcyDr14vUOWeZCz-GAwdaz32Vs",
+    //         CURLOPT_RETURNTRANSFER => true,
+    //         CURLOPT_ENCODING => "",
+    //         CURLOPT_MAXREDIRS => 10,
+    //         CURLOPT_TIMEOUT => 0,
+    //         CURLOPT_FOLLOWLOCATION => true,
+    //         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    //         CURLOPT_CUSTOMREQUEST => "GET",
+    //     ));
 
-        $response = curl_exec($curl);
-        curl_close($curl);
+    //     $response = curl_exec($curl);
+    //     curl_close($curl);
 
-        $result = json_decode($response);
+    //     $result = json_decode($response);
 
-        // 取得photo_reference
-        $result_1 = $result->candidates[0]->photos[0]->photo_reference;
+    //     // 取得photo_reference
+    //     $result_1 = $result->candidates[0]->photos[0]->photo_reference;
 
-        $img = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=900&maxheight=600&photoreference=" . $result_1 . "&key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A";
-        return response()->json($img, 200);
-    }
+    //     $img = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=900&maxheight=600&photoreference=" . $result_1 . "&key=AIzaSyD1ACOGJqcyDr14vUOWeZCz-GAwdaz32Vs";
+    //     return response()->json($img, 200);
+    // }
 
+    
+    // google 取data
     function GooglePlaceInfo(Request $request)
     {
         $site_name = $request->input("name");
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" . $site_name . "&inputtype=textquery&fields=place_id,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A",
+            CURLOPT_URL => "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" . $site_name . "&inputtype=textquery&fields=place_id,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyD1ACOGJqcyDr14vUOWeZCz-GAwdaz32Vs",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -207,7 +209,7 @@ class DemandController extends Controller
             $curl_2 = curl_init();
 
             curl_setopt_array($curl_2, array(
-                CURLOPT_URL => "https://maps.googleapis.com/maps/api/place/details/json?place_id=" . $place_id . "&fields=reviews,opening_hours,price_level,name,rating,user_ratings_total,website,formatted_phone_number,address_component,adr_address,business_status,formatted_address,geometry,icon,name,permanently_closed,photo,place_id,plus_code,type,url,utc_offset,vicinity&language=zh-TW&key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A",
+                CURLOPT_URL => "https://maps.googleapis.com/maps/api/place/details/json?place_id=" . $place_id . "&fields=reviews,opening_hours,price_level,name,rating,user_ratings_total,website,formatted_phone_number,address_component,adr_address,business_status,formatted_address,geometry,icon,name,permanently_closed,photo,place_id,plus_code,type,url,utc_offset,vicinity&language=zh-TW&key=AIzaSyD1ACOGJqcyDr14vUOWeZCz-GAwdaz32Vs",
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
@@ -235,7 +237,7 @@ class DemandController extends Controller
                 $temp = $photos_temp[$i]->photo_reference;
 
                 $dataA = [
-                    'url' => "https://maps.googleapis.com/maps/api/place/photo?maxwidth=900&maxheight=600&photoreference=" . $temp . "&key=AIzaSyDkS6nBwtRIUe55-p_oHZh6QocvIyUAG2A"
+                    'url' => "https://maps.googleapis.com/maps/api/place/photo?maxwidth=900&maxheight=600&photoreference=" . $temp . "&key=AIzaSyD1ACOGJqcyDr14vUOWeZCz-GAwdaz32Vs"
                 ];
                 array_push($photos, $dataA);
             };

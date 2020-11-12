@@ -13,7 +13,7 @@
                         <div class="probootstrap-slider-text text-center">
                             <h1 class="probootstrap-heading">旅遊分析系統</h1>
                             <p class="probootstrap-subheading">
-                                <a href="http://sightseeing.nctu.me:8080">點此進入首頁</a>
+                                <a href="http://sightseeing.im.fju.edu.tw:8080">點此進入首頁</a>
                             </p>
                         </div>
                     </div>

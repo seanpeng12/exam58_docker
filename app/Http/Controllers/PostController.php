@@ -10,15 +10,28 @@ use Symfony\Component\Process\Process;
 use Illuminate\Support\Facades\DB as FacadesDB;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
+use Exception;
+use Illuminate\Support\Facades\Log;
+use App\Services\LineService;
+use Kreait\Firebase\Factory;
+
 class PostController extends Controller
 {
+    
     //line login
+    protected $lineService;
+
+    public function __construct(LineService $lineService)
+    {
+        $this->lineService = $lineService;
+    }
+
     function line(Request $request)
     {
         // $ok = $request->all();
         $code = $request->input("code");
         $state = $request->input("state");
-        $uri = $request->path();
+        // $uri = $request->path();
         // $ok = "good!!!";
         // insert
         if(isset($code)){
@@ -33,11 +46,82 @@ class PostController extends Controller
         
 
         // return response()->json(['ok' => 'ok','uri' => $uri], 200);
-
         // return view('frontend_sna/test');
+        
+        // return redirect()->route('PostController@line_2');
+        return redirect()->action('PostController@line_2', ['code' => $code,'state' => $state]);
+        // return view('api.line2');
+    }
+
+    function line_2()
+    {
+        // $curl = curl_init();
+
+        // curl_setopt_array($curl, array(
+        //     CURLOPT_URL => "https://api.line.me/oauth2/v2.1/token",
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_ENCODING => "",
+        //     CURLOPT_MAXREDIRS => 10,
+        //     CURLOPT_TIMEOUT => 0,
+        //     CURLOPT_FOLLOWLOCATION => true,
+        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //     CURLOPT_CUSTOMREQUEST => "POST",
+        //     CURLOPT_POSTFIELDS => "grant_type=authorization_code&code=ecoItkOgL0E4WOuuUJib&redirect_uri=http%3A//sightseeing.nctu.me/api/lineLogin&client_id=1654565142&client_secret=1a9b442ff9b319032d6c31fe490ca67f",
+        //     CURLOPT_HTTPHEADER => array(
+        //         "Content-Type: application/x-www-form-urlencoded"
+        //     ),
+        // ));
+        // $response = curl_exec($curl);
+        // curl_close($curl);
+        
+
         return redirect()->away('http://sightseeing.nctu.me:8080/#/index');
     }
+
+    public function line_3(Request $request)
+      { //callback的內容
+          try {
+              $error = $request->input('error', false);
+              if ($error) {
+                  throw new Exception($request->all());
+              }
+              $code = $request->input('code');
+            
+              $response = $this->lineService->getLineToken($code); 
+
+              // 用id_token取得email內容
+              $user_content = $this->lineService->getUserContent($response['id_token']);
+              //   echo "<pre>"; print_r($user_content); echo "</pre>";              
+
+              if(isset($code)){
+                $factory = (new Factory)->withServiceAccount(__DIR__.'/sna-master-firebase.json');
+                $auth = $factory->createAuth();
+                
+                $email = $user_content['email'];
+                $password = $user_content['sub'];
+                $name = $user_content['name'];
+                $picture = $user_content['picture'];
+                // return response()->json(['name' => $name,'picture' => $picture,'email' => $email, 'password' => $password], 200);
+                
+                // 用createCustomToken登入
+                $response = $this->lineService->linefirebasecreate($auth, $password);
+                // return $response;
+                return response()->json(['name' => $name, 'email' => $email, 'response' => $response, 'password' => $password], 200);
+
+              }else{
+                $email = "email not found";
+                $password = "password not found";
+                $name = "name not found";
+                $picture = "picture not found";
+                return response()->json(['name' => $name,'picture' => $picture,'email' => $email, 'password' => $password], 200);
+              }
+
+          } catch (Exception $ex) {
+            Log::error($ex);
+          }
+      }
     
+
     function index()
     {
         return view('frontend_sna/test');

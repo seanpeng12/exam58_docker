@@ -275,7 +275,10 @@
 
 <script>
 // 824 (it's in pixels always)
+import axios, { axiosInstance } from "boot/axios";
 import { mapGetters, mapActions } from "vuex";
+import { firebaseAuth, google_provider } from "boot/firebase";
+
 export default {
   data() {
     return {
@@ -345,6 +348,32 @@ export default {
         console.log(localStorage.getItem("role"));
       }
     }
+  },
+  mounted: function() {
+    // 過渡效果
+    this.card_1 = true;
+
+    // get data from redirect
+    // let urlParams = new URLSearchParams(window.location.search);
+    // let code = urlParams.get("code");
+    // let state = urlParams.get("state");
+    // alert(code + state);
+
+    // axiosInstance
+    //   .post("http://140.136.155.116/api/line_3", {
+    //     code: code
+    //   })
+    //   .then(res => {
+    //     console.log("line_3 response:", res.data);
+    //     // alert(res.data.name);
+
+    //     firebaseAuth.signInWithCustomToken(res.data.response).catch(error => {
+    //       showErrorMessage(error.message);
+    //     });
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   }
 };
 </script>

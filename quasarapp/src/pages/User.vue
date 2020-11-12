@@ -120,13 +120,25 @@
           </div>
         </div>
       </transition>
+      <div class="text-center">
+        <!-- line -->
+        <!-- <q-btn label="linebot QRcode" color="green" @click="autoClose" /> -->
+        <q-img
+          src="~assets/linebotQRCODE.png"
+          spinner-color="white"
+          style="height: 140px; max-width: 150px"
+        />
+      </div>
     </q-page-container>
   </q-layout>
   <!--  -->
 </template>
 
 <script>
+import axios, { axiosInstance } from "boot/axios";
 import { mapGetters, mapActions } from "vuex";
+import { firebaseAuth, google_provider } from "boot/firebase";
+
 export default {
   data() {
     return {
@@ -138,14 +150,57 @@ export default {
     ...mapGetters("auth", ["loggedIn", "role"])
   },
   methods: {
-    ...mapActions("auth", ["chooseRole", "logoutUser"])
+    ...mapActions("auth", ["chooseRole", "logoutUser", "getLineUserDetail"]),
     // mouseOver: function(){
     //   alert("你hover的business user");
     // }
+
+    // linebot
+    autoClose() {
+      let seconds = 30;
+
+      const dialog = this.$q
+        .dialog({
+          title: "line QRcode",
+          message: `Autoclosing in ${seconds} seconds.`
+        })
+        .onOk(() => {
+          // console.log('OK')
+        })
+        .onCancel(() => {
+          // console.log('Cancel')
+        })
+        .onDismiss(() => {
+          clearTimeout(timer);
+          // console.log('I am triggered on both OK and Cancel')
+        });
+
+      const timer = setInterval(() => {
+        seconds--;
+
+        if (seconds > 0) {
+          dialog.update({
+            message: `Autoclosing in ${seconds} second${
+              seconds > 1 ? "s" : ""
+            }.`
+          });
+        } else {
+          clearInterval(timer);
+          dialog.hide();
+        }
+      }, 1000);
+    }
   },
   mounted: function() {
     // 過渡效果
     this.card_1 = true;
+
+    // get data from redirect
+    let urlParams = new URLSearchParams(window.location.search);
+    let code = urlParams.get("code");
+    let state = urlParams.get("state");
+    // alert(code + state);
+    this.getLineUserDetail(code);
   },
   watch: {}
 };

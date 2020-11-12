@@ -10,7 +10,9 @@
           <p>社會網絡分析圖</p>
         </div>
         <q-space />
-        <div class="col-3 q-ml-sm"><slot name="photoExplain"></slot></div>
+        <div class="col-3 q-ml-sm">
+          <slot name="photoExplain"></slot>
+        </div>
       </div>
 
       <!--  -->
@@ -34,12 +36,7 @@
 
                 <q-separator />
 
-                <q-tab-panels
-                  class="text-dark"
-                  v-model="tab"
-                  style="max-height: 500px;"
-                  animated
-                >
+                <q-tab-panels class="text-dark" v-model="tab" style="max-height: 500px;" animated>
                   <q-tab-panel name="pros">
                     <iframe
                       style="height: 1500px"
@@ -147,14 +144,20 @@ export default {
       //   .getElementById("myFrame_good")
       //   .contentWindow.location.reload(true);
 
-      this.$refs.myFrame_good.contentWindow.location.reload();
+      // this.$refs.myFrame_good.contentWindow.location.reload();
+      document
+        .getElementById("myFrame_good")
+        .contentWindow.location.reload(true);
       console.log("change重整畫面成功!data_index+1");
 
       this.$store.commit(
         "h_proscons/Update_Good_Src",
-        "../statics/h_good.html"
+        "http://140.136.155.116:8080/statics/h_good.html"
       );
-      this.$store.commit("h_proscons/Update_Bad_Src", "../statics/h_bad.html");
+      this.$store.commit(
+        "h_proscons/Update_Bad_Src",
+        "http://140.136.155.116:8080/statics/h_bad.html"
+      );
       //  關閉loading
       this.isLoading = false;
 

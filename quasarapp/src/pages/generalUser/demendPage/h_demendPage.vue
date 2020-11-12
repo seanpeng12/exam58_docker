@@ -568,7 +568,8 @@ export default {
       // document.getElementById("myFrame").contentWindow.location.reload(true);
       // document.getElementById("myFrame").src =
       //   "./statics/h_between_relationship.html";
-      this.isLoading = false;
+      
+      // this.isLoading = false;
       this.$store.commit(
         "h_demand/update_src",
         "http://140.136.155.116:8080/statics/h_between_relationship.html"

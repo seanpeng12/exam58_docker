@@ -15,6 +15,8 @@
         "doctrine/dbal": "^2.10",
         "farhanwazir/laravelgooglemaps": "^2.3",
         "fideloper/proxy": "^4.0",
+        "guzzlehttp/guzzle": "^7.0",
+        "kreait/laravel-firebase": "^2.3",
         "laravel/framework": "5.8.*",
         "laravel/socialite": "^4.3",
         "laravel/tinker": "^1.0",

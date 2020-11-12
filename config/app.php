@@ -167,6 +167,7 @@ return [
          * Package Service Providers...
          */
         FarhanWazir\GoogleMaps\GMapsServiceProvider::class,
+        Kreait\Laravel\Firebase\ServiceProvider::class,
 
         /*
          * Application Service Providers...
