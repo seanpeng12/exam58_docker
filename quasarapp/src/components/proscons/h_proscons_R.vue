@@ -145,22 +145,20 @@ export default {
       //   .contentWindow.location.reload(true);
 
       // this.$refs.myFrame_good.contentWindow.location.reload();
+
+      let cacheID = new Date().getMilliseconds();
+      let good = "../statics/h_good.html?uid=" + cacheID;
+      let bad = "../statics/h_bad.html?uid=" + cacheID;
+      this.$store.commit("h_proscons/Update_Good_Src", good);
+      this.$store.commit("h_proscons/Update_Bad_Src", bad);
+
       document
         .getElementById("myFrame_good")
         .contentWindow.location.reload(true);
       console.log("change重整畫面成功!data_index+1");
 
-      this.$store.commit(
-        "h_proscons/Update_Good_Src",
-        "http://140.136.155.116:8080/statics/h_good.html"
-      );
-      this.$store.commit(
-        "h_proscons/Update_Bad_Src",
-        "http://140.136.155.116:8080/statics/h_bad.html"
-      );
       //  關閉loading
       this.isLoading = false;
-
       this.$store.commit("h_proscons/Update_Data_Index", 1);
     }
   },
@@ -169,7 +167,7 @@ export default {
       this.tab = "pros";
       this.isLoading = true;
       this.$store.commit("h_proscons/Update_Good_Src", "about:blank");
-      this.$store.commit("h_proscons/Update_Bad_Src", "about:blank");
+      // this.$store.commit("h_proscons/Update_Bad_Src", "about:blank");
     },
     run_index(val) {
       this.changeSrc();
