@@ -1,72 +1,43 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# SightSeeing
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+### 服務描述
+近年來大多數的旅客喜歡自由且客製化的行程安排，而在這後疫情時代，也因疫情趨緩及政府的振興方案積極前往國內旅遊。 
+![1](https://user-images.githubusercontent.com/48153269/192665786-708d26d3-00da-4649-865e-9c0e86c7bacf.png)
 
-## About Laravel
+但自由行需要對旅遊資訊做許多的事前功課，過程相當耗時，因此，我們的網站將概括整個旅程安排，讓使用者不必細看每個景點、飯店的評論，只要交給爬蟲程式並結合社會網絡分析(SNA)，直接從分析結果獲得推薦的行程或私房景點;亦或是透過Google API，給予使用者旅遊點的相關介紹及安排出最短行車路線。 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+另外，旅客為旅遊所做的資料蒐集，代表他們會透過他人的經驗分享做為是否前往旅遊點的依據，所以我們也希望能利用SNA分析來幫助景點或飯店管理者改善自身的缺點、將自己的優勢更加優化及分析異業結盟的對象，使企業可以取得競爭優勢。 
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+###功能簡介
+* 需求分析: 此分析包含景點與飯店兩個部分，使用者可透過在系統介面上勾選兩個「需求類別」找到符合需求類別的景點。 
+![step2](https://user-images.githubusercontent.com/48153269/192665673-d0e40df3-168c-41ce-91e9-a0a95b90a10a.png)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+* 路徑推薦分析: 使用者先輸入一個景點後點擊分析，系統會呈現出其他造訪者在造訪此景點後，也會造訪的其他景點、飯店或餐廳，使用者可以藉此了解熱門關聯景點並方便安排旅程。 
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+![路徑](https://user-images.githubusercontent.com/48153269/192665691-b37602a6-8fe9-49a5-8ebf-397a46dca03e.png)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+* 優缺點分析: 此分析包含景點與飯店兩個部分，在使用者在選取某一景點後，透過自建旅遊詞語庫與SNA分析法(點度中心度)，系統將呈現有關此景點的優點、缺點分析，使用者可清楚得知此景點的特色(優點)及在此景點可能遇到的問題(缺點)。 
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+* 偏好分析: 透過使用者曾經排好的行程景點及個別分析功能收藏過的景點中，統計出這些景點中最常出現的兩個屬性(site_attr)。在"自我規劃旅程"中以此兩種屬性為預設值，並做景點需求分析，提供使用者符合偏好的相關景點。 
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
+* Google路線安排: 使用者可透過此功能利用GoogleMap API找出以一天為基準的最短行車路線之景點順序。 
+![googlenap](https://user-images.githubusercontent.com/48153269/192665749-f9547c32-3cf1-45c4-bf4a-f76407a3f556.png)
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+* 排程: 註冊會員的使用者可以利用這個功能以流線型的方式完成上述分析。 
 
-## Security Vulnerabilities
+![step1](https://user-images.githubusercontent.com/48153269/192665763-3154446e-6768-466c-9083-dc756bcea426.png)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+加入收藏的景點、飯店進入排程表 
 
-## License
+做需求分析，使用者也可以在此加入偏好分析直接提供兩個使用者最常使用的需求，使用者可在此加入分析結果進入排程表 
 
-The Laravel framework is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+做路徑規劃分析並可將結果加入排程表 
+
+將先前加入排程表的景點、飯店做做優缺點分析，使用者可將不滿意的景點或飯店做刪除；使用者也可以選擇未加入的景點、飯店做優缺點分析，若使用者滿意這些景點或飯店也可以加入排程表 
+
+最後使用者可以利用google路線安排排出最短距離完成排程 
+
+  
