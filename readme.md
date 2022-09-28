@@ -27,7 +27,15 @@
  
 ![googlenap](https://user-images.githubusercontent.com/48153269/192665749-f9547c32-3cf1-45c4-bf4a-f76407a3f556.png)
 
+# 運用的技術 
 
+* 資料庫:MySQL 5.8(儲存網路爬蟲下來的資料) 、Google Firebase(儲存user端資料) 
+
+* 伺服器: XAMPP-Apache Server、 Node.js 
+
+* 後端軟體： Laravel、R、Python 
+
+* 前端軟體： Vue.js 2(Quasar Cli) 
 
 
   
