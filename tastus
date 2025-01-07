@@ -1,0 +1,1664 @@
+[33mcommit f3493f8a6339760d53a8e5562e6dd2372e74cdca[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed Sep 28 16:04:58 2022 +0800
+
+    Update .gitignore
+
+[33mcommit c00f436192b978533715fe9cf15d8d7be9ca3050[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed Sep 28 16:03:20 2022 +0800
+
+    Update .gitignore
+
+[33mcommit 75c00009f0471fe774fe861badac1dcafffa3603[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed Sep 28 11:08:09 2022 +0800
+
+    Update readme.md
+
+[33mcommit 9b08da9b60beb48c2413a788e5d16bbcdd1d7292[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed Sep 28 10:19:40 2022 +0800
+
+    Update readme.md
+
+[33mcommit 2ae69e00db58e5604ab1e657d50aeac19ef28d2f[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed Sep 28 10:18:39 2022 +0800
+
+    Update readme.md
+
+[33mcommit 3e556f26da4c3343b6312c91f67eddf408be880c[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed Sep 28 09:21:10 2022 +0800
+
+    Update readme.md
+
+[33mcommit 33fa0c28637a8ec69c2fac8fb7aee136005f2d5e[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Thu Jan 7 14:24:17 2021 +0800
+
+    新增隨機數避免cache
+
+[33mcommit 0420596ab26eaf6d9c94a180e82413a570d9a794[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Fri Nov 13 00:00:46 2020 +0800
+
+    line login API(second)
+
+[33mcommit b518d4e9d8c63a0e67504fb637bd2d1d14bd1e57[m
+Merge: 4465690 7bb83ba
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed Aug 19 00:20:53 2020 +0800
+
+    Merge branch 'test_sean' of https://github.com/possess0602/exam58
+
+[33mcommit 446569057760f26d2ef738d27325471a667f84f4[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed Aug 19 00:18:14 2020 +0800
+
+    line login API (first section)
+
+[33mcommit 7bb83ba4a15398bf74a07f13e7d542773cc16857[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Wed Aug 19 00:17:03 2020 +0800
+
+    normal update
+
+[33mcommit f88dbde83329f193bc96483e5292e0c52f8fa7ca[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Wed Aug 19 00:08:48 2020 +0800
+
+    前端文字變更
+
+[33mcommit c84ea43a49b50bbdfa0dbfb97165a0007dc34356[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Tue Aug 18 23:58:47 2020 +0800
+
+    init <Line Login> function
+
+[33mcommit f4e065a8eb5a1cbba9e6f39f233bb04c9f957726[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Thu Jul 2 16:27:00 2020 +0800
+
+    更新權限+User.vue RWD介面
+
+[33mcommit 0467f9cd231646683ea5ecfe6e4111fa1859f05b[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Sat Jun 13 00:17:08 2020 +0800
+
+    細部修改
+
+[33mcommit ad793101d0d502247778ec56896b7e0625dd61c6[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Fri Jun 12 22:39:22 2020 +0800
+
+    版面顯示優化
+
+[33mcommit 81bc30e6b9eecd0a7f24c359ffacbcf84c74c25c[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Fri Jun 12 22:06:24 2020 +0800
+
+    關閉 swipeable(map容易誤觸)
+
+[33mcommit 06a7c408ea9435fa8cb0ce1c5985fbd8b24ae1e2[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Fri Jun 12 22:04:39 2020 +0800
+
+    新增step2/step5遮罩
+
+[33mcommit 88a3da24bb3b631d765b401c0a9822af24f32cab[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Fri Jun 12 20:47:36 2020 +0800
+
+    路徑推薦分析->潛在合作夥伴分析
+
+[33mcommit a73645f986d63beee6d57acf9e15d943735cf255[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Thu Jun 11 11:58:20 2020 +0800
+
+    修改
+
+[33mcommit 414b9b6e0757943fdf5831b620fb3985e0670be0[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Thu Jun 11 11:52:12 2020 +0800
+
+    製作hover效果
+
+[33mcommit f1256fe7e08eb3c6f96dec44cb529025ce75b3a6[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Thu Jun 11 00:55:01 2020 +0800
+
+    選單防呆+q-chip超過邊界問題+負面評價使用哭臉圖示
+
+[33mcommit 0809edce8481a23b1c0c47502d4ff2aef0fd5509[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Wed Jun 10 11:42:42 2020 +0800
+
+    修改layout字體
+
+[33mcommit d4822f6b00d0f08396dc3402d18807d7cad2cef1[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Wed Jun 10 00:27:22 2020 +0800
+
+    修改layout錯誤字元+商業index更新
+
+[33mcommit f26c80c6e08cbd85d7bd54ff634161a2e79d4883[m
+Merge: 9a67330 68f7107
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Tue Jun 9 23:17:18 2020 +0800
+
+    Merge branch 'test_possess' of https://github.com/possess0602/exam58 into test_sean
+
+[33mcommit 68f71071136ff1ba33334408f4633873f25912d7[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon Jun 8 23:12:22 2020 +0800
+
+    路徑景點一debug完成
+
+[33mcommit 7483f4a084d55dae22cfd0e25b458974769388c0[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sun Jun 7 22:02:35 2020 +0800
+
+    手動註冊debug 完成
+
+[33mcommit 9a673308688f1bebae41c7d815c61bf00e7b4ba1[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sun Jun 7 16:16:36 2020 +0800
+
+    (temp) button redirect :80 to :8080
+
+[33mcommit d5fff1a74c93f3282ecabc142ae31004c2998ed4[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Sun Jun 7 16:07:36 2020 +0800
+
+    自選景點/飯店提示問題
+
+[33mcommit 7ffcf3132c77300eeab055f51a13ddef90c25e2e[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed Jun 3 23:24:51 2020 +0800
+
+    管理者navbar修改
+
+[33mcommit 54dee9a5205685abd287816c03ac78d6713461ed[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed Jun 3 23:23:25 2020 +0800
+
+    排程路徑更改OK
+
+[33mcommit c8d0031e4bf8e4f9bc2a119cac86faa52bcddedb[m
+Merge: be94962 68bc409
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed Jun 3 22:07:48 2020 +0800
+
+    Merge branch 'master' of https://github.com/possess0602/exam58 into test_possess
+
+[33mcommit be949622c3a31637bf25120ed414bd7a6f8de2bc[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed Jun 3 22:07:19 2020 +0800
+
+    完成路徑下拉選擇
+
+[33mcommit 68bc409bc627ee58910fc4bfe7f76d0255bc3afa[m
+Merge: 0d725e8 e577d98
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Wed Jun 3 21:44:22 2020 +0800
+
+    Merge branch 'master' of https://github.com/possess0602/exam58
+
+[33mcommit 0d725e84876c76b20ed6f6bc7902e71c47deb3f6[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Wed Jun 3 21:43:48 2020 +0800
+
+    新增getCity API與主頁微調
+
+[33mcommit e577d9875849e505015f02f921a66b825a6af92f[m
+Merge: b8f3f9e 40cb2ab
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed Jun 3 11:39:18 2020 +0800
+
+    Merge branch 'test_possess' of https://github.com/possess0602/exam58
+
+[33mcommit b8f3f9e40d6cb500f2ae2ce7610928b4ec71d725[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed Jun 3 11:38:57 2020 +0800
+
+    管理者navbar更改完成
+
+[33mcommit 40cb2abe5b7cadf91036c19734ec8cf0c3fcd156[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sun May 31 23:39:35 2020 +0800
+
+    優化每項功能的解釋，刪除重複按鈕(排程優缺未改變
+
+[33mcommit c6fceaa7cbbb3e6ac7606ee23a0cc239de438a8e[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sun May 31 18:28:58 2020 +0800
+
+    飯店類型改服務，排成改成自選景點、飯店
+
+[33mcommit 8ffed5fc5b83995134f43577a0b88f056fe91c30[m
+Merge: 643c8f4 4bb9425
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sun May 31 17:48:32 2020 +0800
+
+    Merge branch 'test_sean' of https://github.com/possess0602/exam58 into test_possess
+
+[33mcommit 643c8f405a5edf8fd95bec71f145b4a5052f1b8c[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sun May 31 17:48:06 2020 +0800
+
+    細節調整
+
+[33mcommit 4bb94251f8b87eba8b319dc7f0f71fdb9b07dcfe[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Sun May 31 17:05:04 2020 +0800
+
+    修改版面亂掉問題與path_data提示
+
+[33mcommit 2110bb53fa4a1deb973d304947676910d07355fc[m
+Merge: 3cb816f b8d835f
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sun May 31 15:52:52 2020 +0800
+
+    (v12)Merge 'test_sean'  into test_possess
+
+[33mcommit b8d835f4802945eb8af532a8254d28bae5c76f63[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Sun May 31 15:32:32 2020 +0800
+
+    飯店需求分析info card完成
+
+[33mcommit 3cb816fbe4198affa2e97dceb039a6d3a59eb294[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sun May 31 15:05:33 2020 +0800
+
+    排程、單一頁面完成 diff_OK
+
+[33mcommit b3a5d4e27ce00cefafbaed4002d6ac41fd9b9c99[m
+Merge: 9693daa 740a654
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Fri May 29 21:35:41 2020 +0800
+
+    Merge branch 'test_sean' of https://github.com/possess0602/exam58 into test_possess
+
+[33mcommit 9693daab6fb706ab88851a781118e51bb9230255[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Fri May 29 21:34:18 2020 +0800
+
+    path圖示定案
+
+[33mcommit 740a654ca8f21f99b967fd5fa37ef89284fe7986[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Fri May 29 21:27:33 2020 +0800
+
+    修改需求分析API依照評論排序
+
+[33mcommit 4d262a887555f8e2e6bb45b438b07b94ed837776[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Fri May 29 00:50:17 2020 +0800
+
+    new_diff測試API/新增demand_info API判斷status
+
+[33mcommit 12d0b4dd32f0e59cd325ab4a75aed1acdb501e51[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Thu May 28 15:48:57 2020 +0800
+
+    排程step4完成
+
+[33mcommit c828df441052f0e2d0e8bbecf884da2bd4129cf0[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Thu May 28 00:28:57 2020 +0800
+
+    排程step3 100%/step4 80%，加入排程與優缺點sql問題待修改
+
+[33mcommit a4b2cea927ed8678fbd6412b872b440027934732[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed May 27 16:22:58 2020 +0800
+
+    排程(需求分析)加入收藏完成
+
+[33mcommit ae57ee608c348ee74895267bcfce0b1448c745db[m
+Merge: bbf927a 2efdebd
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Wed May 27 15:08:08 2020 +0800
+
+    Merge branch 'test_possess' of https://github.com/possess0602/exam58 into test_sean
+
+[33mcommit bbf927af38066300e5b283f742b90923b780c996[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Wed May 27 15:07:17 2020 +0800
+
+    修改排程頁數中
+
+[33mcommit 2efdebdbcbd8eabe95521b4959914cbf26ab6202[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed May 27 15:07:09 2020 +0800
+
+    更管理者collection圖片
+
+[33mcommit 6694fac77a123fce1d926be80020c55a6eb4daec[m
+Merge: f04d236 d1ef475
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed May 27 12:02:04 2020 +0800
+
+    Merge branch 'test_sean' of https://github.com/possess0602/exam58 into test_possess
+
+[33mcommit f04d236a5502507ef436abe90f8081e67c87027c[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed May 27 12:01:42 2020 +0800
+
+    排程切板完成
+
+[33mcommit d1ef475b41292cc1c7cf30b1b33a54cb440a34e0[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed May 27 12:00:54 2020 +0800
+
+    API部署完成
+
+[33mcommit aef1eae3c0b1df7a8ac159836366ac723eac8d16[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Wed May 27 11:51:53 2020 +0800
+
+    更新Proscons API(限制回傳9筆)+新增Path 選單(API待主機IP修改)
+
+[33mcommit 8b415fbbcd43f1da6efd400f3368be510671bab6[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Wed May 27 10:27:03 2020 +0800
+
+    Merge完成
+
+[33mcommit b004501421816322c8772838004da551839588be[m
+Merge: a416e18 70790bd
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Wed May 27 10:23:26 2020 +0800
+
+    Merge branch 'test_possess' of https://github.com/possess0602/exam58 into test_sean
+
+[33mcommit a416e18e1ceaada5360944265beb1c13d3db3fed[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Wed May 27 10:22:15 2020 +0800
+
+    優化demandPage詳細資訊頁面
+
+[33mcommit 70790bd134eadf6bcb48e0eb76b07a64dd7b8f41[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed May 27 10:20:47 2020 +0800
+
+    加上分析圖解釋(管理者未更改)
+
+[33mcommit 519da66eb02dd3fa3aca0cee4b80a0ab8598e4fe[m
+Merge: c7c819f fa8a5bc
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon May 25 20:18:59 2020 +0800
+
+    Merge branch 'test_sean'  into test_possess
+
+[33mcommit fa8a5bc6526d27a460956191bbb6be3b5610bb6c[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Mon May 25 10:09:48 2020 +0800
+
+    新增優缺點黃冠/路徑可選飯店選項/需求加入google info/新增API(demand)
+
+[33mcommit c7c819ffc2449d2331e9663b34f77b2ecd8ed064[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon May 25 10:02:27 2020 +0800
+
+    管理業者商家收藏完成、兩角色的優缺點註解寫了文字的部分
+
+[33mcommit a7366c1f224dbfb5b4f6f88332257f5c862a5482[m
+Merge: fde2111 77037f5
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Sun May 24 13:38:36 2020 +0800
+
+    Merge branch 'test_possess' of https://github.com/possess0602/exam58 into test_sean
+
+[33mcommit fde21114f3b797283b126ca43bcc59e9e67a5255[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Sun May 24 13:37:42 2020 +0800
+
+    測試皇冠+login頁面修改
+
+[33mcommit 77037f58ee07c1d17658ce5b95605c3361d3990c[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sun May 24 13:04:58 2020 +0800
+
+    管理者收藏顯示80%
+
+[33mcommit 7f10a1561ade616e35fb7c6b1d58299e20ddc787[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sat May 23 12:32:09 2020 +0800
+
+    切板完成
+
+[33mcommit f20c1baab0452df4ccc0ad8fab8e011302567269[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Thu May 21 13:36:23 2020 +0800
+
+    修改登入問題與transition
+
+[33mcommit cf1ca39de596cb8a513c739f1480f3fca6a5bcff[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Thu May 21 11:36:54 2020 +0800
+
+    更改manager_index按鈕label
+
+[33mcommit 1ae3a48af3f9a1e5a9c8cf0a5650b9e90d1066f9[m
+Merge: 7d40d4a 3d47dd3
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Thu May 21 11:25:22 2020 +0800
+
+    Merge branch 'test_possess' into test_sean
+
+[33mcommit 7d40d4a2fbce6fdfdde398fefd47a4408affc915[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Thu May 21 11:22:03 2020 +0800
+
+    beta 0.9 新增demand、h-demand.page轉場動畫
+
+[33mcommit 3d47dd3e014082a89895fd611184b9a78685d8c7[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Thu May 21 11:13:53 2020 +0800
+
+    state.role bug 修改完成
+
+[33mcommit cfdb4d0e0ccee94abd72cb0447308fcb3a78f52f[m
+Merge: a155253 ffc2d57
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Thu May 21 10:32:18 2020 +0800
+
+    Merge branch 'test_possess' of https://github.com/possess0602/exam58 into test_sean
+
+[33mcommit a155253e0100f2213fb58bf4a794f1bccd37ad99[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Thu May 21 10:30:47 2020 +0800
+
+    更改user頁面style
+
+[33mcommit ffc2d57ac34953fb33dff2787af47608c71b74cd[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Thu May 21 00:32:19 2020 +0800
+
+    解決加入收藏排除管理者
+
+[33mcommit 8f377f6321d3b5086e98c158a67cd08d39cb36f7[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Thu May 21 00:19:31 2020 +0800
+
+    修改需求/路徑分析為上下文排列+btn的to路徑修改
+
+[33mcommit 82b2fcc6a38c46df88b63268e9bfaf6d6fd83202[m
+Merge: 4a69194 58a72fd
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed May 20 20:54:19 2020 +0800
+
+    Merge branch 'test_sean' of https://github.com/possess0602/exam58 into test_possess
+
+[33mcommit 58a72fddae4441123a88bd22abd87863560f734d[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed May 20 20:42:37 2020 +0800
+
+    manager_index新增button
+
+[33mcommit 4a69194ce73e6d4ef9d3b7a74616c7b547692663[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed May 20 20:27:52 2020 +0800
+
+    googlemap 修復完成、加入只能跳出一個info
+
+[33mcommit 8f25ae1c97df306f20fb8cd4db3fb7d4dfb5b9dc[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed May 20 13:02:28 2020 +0800
+
+    修改login介面bug+path選單二順序
+
+[33mcommit fc7ce198ccc36de56d667a8acd3d71a0f4fff813[m
+Merge: f968011 7378f64
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed May 20 11:43:27 2020 +0800
+
+    Merge branch 'test_possess' of https://github.com/possess0602/exam58 into test_sean
+
+[33mcommit f9680116e42a31d0e6c828a00e7bd59ace66041d[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed May 20 11:38:46 2020 +0800
+
+    自適應path_data
+
+[33mcommit 7378f641b7fe642b018ea04b79460af6f2dfbc7f[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed May 20 11:38:07 2020 +0800
+
+    路徑規畫流程完成
+
+[33mcommit f6d79b08738125a954975b2deca057faadf30c0a[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Wed May 20 11:25:56 2020 +0800
+
+    修改路徑規劃style
+
+[33mcommit 50ae40af6a6e26c402f454afacb3f7a00361c1d5[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Wed May 20 11:05:18 2020 +0800
+
+    更改路徑規劃流程 須完成icon類別
+
+[33mcommit 302f10adf5f5821ee947c60b992bf393a9c253be[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Tue May 19 23:54:56 2020 +0800
+
+    修改path_data(selected_site_2無法監測需解決)
+
+[33mcommit 79b165e57fdf1e1657fc853a30ddf596ca4e9cba[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Tue May 19 20:48:03 2020 +0800
+
+    路徑data分類加入icon
+
+[33mcommit 3fd20375611ae22928bed94df6fc218038b61b01[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Tue May 19 16:47:34 2020 +0800
+
+    更改h_demand_select提示字+googleMap路徑結果style
+
+[33mcommit a09803e63f5821bbb5a1c3e4a2b7fe63788927b8[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Tue May 19 00:43:40 2020 +0800
+
+    更改路徑結果style
+
+[33mcommit f4dac043f08f402bb4c43bd399d8c0ac48e0fc37[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon May 18 21:57:57 2020 +0800
+
+    googlemap排除+畫路徑全部完成
+
+[33mcommit 0617efdfa1d9e330c3363cfad7c440386f107e10[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon May 18 21:48:53 2020 +0800
+
+    map畫路徑完成(剩下要和new_revert)重新整合
+
+[33mcommit 7f869564389170feedefb388f7870a12cd114b38[m
+Merge: b673854 67792f4
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon May 18 19:33:54 2020 +0800
+
+    Merge branch 'test_sean' of https://github.com/possess0602/exam58 into test_possess
+
+[33mcommit b673854b15243e9d6666d21d9ca4ed0594e2c8c7[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon May 18 19:33:25 2020 +0800
+
+    不同使用者判斷(顯示navbar)完成
+
+[33mcommit 67792f49f0f6e0c3d2a92696813c4d245dc5f402[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Mon May 18 16:01:45 2020 +0800
+
+    安裝Polyline.encoded以繪製map路線
+
+[33mcommit 07fa8ad5ed638face25001b95bb70b0dbc991123[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon May 18 10:43:42 2020 +0800
+
+    解決登入頁背景resize
+
+[33mcommit e558c7a9849c64c5ca9df3239c941675bf712d58[m
+Merge: 7ffd383 720df0b
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon May 18 10:28:50 2020 +0800
+
+    Merge branch 'test_sean' of https://github.com/possess0602/exam58 into test_possess
+
+[33mcommit 720df0b5e9e971a32fee2a36732b5682ddb36df9[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Mon May 18 10:28:01 2020 +0800
+
+    style更動
+
+[33mcommit 7ffd38326495965e5d7aa9c06435104f3bbd59de[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon May 18 10:25:40 2020 +0800
+
+    分流進入點完成
+
+[33mcommit 560047b08a5e13e1db80f8404a33cad17ddfea24[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Sun May 17 18:11:36 2020 +0800
+
+    完成manager_index+登入頁面樣式修改
+
+[33mcommit 39147d8d39a7a26e1e916eb3429b25986043f799[m
+Merge: 5d679b9 1c3e0f3
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sat May 16 21:35:54 2020 +0800
+
+    Merge branch 'test_sean' of https://github.com/possess0602/exam58 into test_possess
+
+[33mcommit 1c3e0f3d9f38442f60e607d1db6dd7ecb4e1c0b9[m
+Merge: a68b154 cc7d005
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Sat May 16 21:34:37 2020 +0800
+
+    Merge branch 'test_possess' of into test_sean
+
+[33mcommit 5d679b97b84a9138185e545913fb9cb9597fec07[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sat May 16 21:32:18 2020 +0800
+
+    角色功能排版變動
+
+[33mcommit cc7d005455c7517b829676b567548b3a2e78b801[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sat May 16 15:02:34 2020 +0800
+
+    選擇身分前端完成80%
+
+[33mcommit a68b15403b796bb0e66f1fcc087162cae9dfa0cd[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Sat May 16 15:02:24 2020 +0800
+
+    新增manager_index頁面
+
+[33mcommit 56b858be70abec4f4556b332131b12f615be6154[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Sat May 16 13:44:05 2020 +0800
+
+    設計User.vue頁面
+
+[33mcommit 3c5e230f5efc3137e0b668b020c5eb2f56d768d3[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sat May 16 10:17:37 2020 +0800
+
+    localStorage set role 成功
+
+[33mcommit 83edd8099eca845bceefffebc47168e188cb1603[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Fri May 15 00:11:35 2020 +0800
+
+    解決未登入者Demand頁面懶人包Bug+index輪播統一樣式
+
+[33mcommit 380322600a09132146d3d8869ac12047920b670a[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Thu May 14 20:35:11 2020 +0800
+
+    repair BUG for Tzu-Li Chen Demo
+
+[33mcommit 0c7758a036ba706887ec251b531583a81828d732[m
+Merge: 4228c93 33eb266
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Wed May 13 23:04:10 2020 +0800
+
+    (v11)Merge branch 'new_revert' of  into mac
+
+[33mcommit 4228c93e030170986ae3a29da369ed2e35a4991b[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Wed May 13 22:37:08 2020 +0800
+
+    完成所有loading部分
+
+[33mcommit 33eb26683221dbe239eaa3777800af5d680ae5c1[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed May 13 22:23:19 2020 +0800
+
+    googlemap排除選項作一半，刪除下一步按鈕，優缺點做好登入及是否已再收藏列表判斷
+
+[33mcommit e1ed922ad3f1d5ae515c40ce52bf0c6e57928878[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Tue May 12 21:07:42 2020 +0800
+
+    新增src為http形式(筆電也可顯示R圖)
+
+[33mcommit 93a6802685c926c8e510c9e1d97e0f62c34f8402[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Tue May 12 20:47:08 2020 +0800
+
+    新增autoplay
+
+[33mcommit 2a2ee67c4e6e4b7960236e272e5f44f0e8a51cf9[m
+Merge: c5a108c 3724c3d
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Tue May 12 12:44:43 2020 +0800
+
+    Merge branch 'new_revert' of into mac
+
+[33mcommit c5a108c0fc33e5e0021fcfd253fbf7bbd2ed73b2[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Tue May 12 12:42:34 2020 +0800
+
+    完成路徑分析index介紹
+
+[33mcommit 3724c3db75e2d4448bce1253b17dbaee629430f9[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon May 11 23:52:46 2020 +0800
+
+    飯店需求bug解決，首頁進入點完成80%
+
+[33mcommit 9f13346cc3c6f423b5e1fc416302cfe0752f0a50[m
+Merge: e958d44 1ce3010
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon May 11 13:24:19 2020 +0800
+
+    (v10)Merge branch 'new_revert' of into mac
+
+[33mcommit e958d44deeb22238eb24470b1306c2b5d72a8f36[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon May 11 13:20:05 2020 +0800
+
+    增加所有Ｒ的loading頁面 ＆s_demand將要加入data loading畫面
+
+[33mcommit 1ce30109c35110964af3125377b351d95ed69430[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon May 11 13:18:54 2020 +0800
+
+    select加入說明完成
+
+[33mcommit 609ae78a85295f2f7d972f2edf9f1ec68102d16e[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon May 11 10:07:21 2020 +0800
+
+    v9.1修改
+
+[33mcommit e717f652e37fb568cb01e74cbd714c0697b1fd58[m
+Merge: b947b97 746aee3
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon May 11 10:06:26 2020 +0800
+
+    (v9)Merge branch 'new_revert' of  into mac
+
+[33mcommit b947b97604c162fde86b023cff22d6b85852a14c[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon May 11 09:28:04 2020 +0800
+
+    小更新src問題
+
+[33mcommit 746aee3f383449a482985be1f2e4ebed74b7ee6d[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon May 11 09:22:12 2020 +0800
+
+    版面微調
+
+[33mcommit 9acde90cfe8a95389504176ec2755afe5415a5fd[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Mon May 11 00:03:27 2020 +0800
+
+    更新index與優缺點顏色表示
+
+[33mcommit af425e7503747395302ca05105d98448ae52b08f[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Thu May 7 15:37:34 2020 +0800
+
+    修改“路徑分析”的csv權限問題
+
+[33mcommit 096037eb19a961ecfcac975fe1956fc754be0f1e[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Thu May 7 12:30:19 2020 +0800
+
+    更改首頁排版
+
+[33mcommit 6332e840de9c61ab06f800f7562a30cbb5aafc49[m
+Merge: cd9bd7a 83999b4
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed May 6 21:00:55 2020 +0800
+
+    Merge 'new_revert' of into mac(優缺點加入最愛90％)
+
+[33mcommit cd9bd7ab116df2c8b48e107e911be937a81c600d[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed May 6 20:48:21 2020 +0800
+
+    ＭAC飯店景點優缺點加入收藏完成
+
+[33mcommit 83999b4838dad3473394b5a9d3bc220a05220725[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed May 6 20:47:22 2020 +0800
+
+    更新index排版(待完成)
+
+[33mcommit e7bae080f6fd3d3ebeced6cddb8df430362fa8d0[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed May 6 17:20:15 2020 +0800
+
+    MAC網站可更新Ｒ圖完成，圖片API成功，加入景點優缺點（未完成）
+
+[33mcommit 6b16cd9c898c6bfc70e1eb7087ea8cc2af84be4f[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed May 6 09:18:24 2020 +0800
+
+    googlemap測試成功，下一步移到排成(路線未完成)
+
+[33mcommit 7c0cf6dc8da17ed5277d1259600cafdbcd3307ac[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed May 6 00:34:38 2020 +0800
+
+    MAC解決路徑分析無法更改地點BUG+使用loading套件（僅使用於PATH頁面）
+
+[33mcommit a5d4ec1b656e876bd59a44aadb45ccd59c0e9f61[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Tue May 5 01:20:52 2020 +0800
+
+    MAC修改景點需求分析頁面排版
+
+[33mcommit 7b8ed9bc5e8185fd4000af6bc4b5af07b35faa30[m
+Merge: 8071d32 f4b763e
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon May 4 22:55:56 2020 +0800
+
+    Merge  'sean' of into mac(飯店加入最愛)
+
+[33mcommit f4b763e767db65a5e73d10dc4e7afa4bc1bdee6f[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Mon May 4 10:23:44 2020 +0800
+
+    解決飯店優缺點加入排程BUG(possess)
+
+[33mcommit 86ab5a21f743d088b853b7bd3f523c912a2530f6[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon May 4 09:59:44 2020 +0800
+
+    排程表新增飯店優缺點分析
+
+[33mcommit 8071d3235cb630923260e8e7b9acc3f1567ddfaf[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon May 4 01:51:27 2020 +0800
+
+    MAC設定按鈕loading進度條(等待Ｒ執行)、clearable
+
+[33mcommit 63ec3e9cd4eccdcb72248c48664b968904b103d5[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sat May 2 22:48:44 2020 +0800
+
+    修改 proscons getter名稱
+
+[33mcommit a0c0f01590ad96740210efe9c71f80dd25790a8c[m
+Merge: ee4b53e 376d36d
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sat May 2 18:59:47 2020 +0800
+
+    (v8)Merge branch 'sean' of  into new_revert
+
+[33mcommit ee4b53e25d01fd2c875ad52a2e6fc9b29868ab84[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sat May 2 18:48:32 2020 +0800
+
+    googlemap做到一半
+
+[33mcommit a69584e09b76425b38c49774b23832dafc724c36[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sat May 2 18:46:50 2020 +0800
+
+    MAC解決需求、優缺點Ｒ中文亂碼問題，path未完成
+
+[33mcommit 704a6bbae941b6a554a9686ff444896c6a919cf0[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sat May 2 15:57:34 2020 +0800
+
+    圖示說明完成
+
+[33mcommit 376d36de49d0b2adba826a46a79c6c34324bf89a[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Sat May 2 14:11:26 2020 +0800
+
+    飯店優缺點R連動完成(待mac端測試)
+
+[33mcommit 4574200999400928ef8041791643acca2a932f5a[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sat May 2 11:50:48 2020 +0800
+
+    版面微調，剩下分析圖說明
+
+[33mcommit 1289fc0945a2e599d8d2a0762ee13a232bcf927c[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Fri May 1 10:30:40 2020 +0800
+
+    (v7)Merge branch 'new_revert' of into sean
+
+[33mcommit 12a81426076b87ea75c8ba31e8e5c6ea5a06120b[m
+Merge: a6d322d 4fc0958
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Fri May 1 10:29:22 2020 +0800
+
+    Merge branch 'new_revert' of https://github.com/possess0602/exam58 into sean
+
+[33mcommit 4fc095800df15b4382f9a35d568a45e05663d326[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Thu Apr 30 23:09:54 2020 +0800
+
+    版面微調
+
+[33mcommit a6d322d89efecb940151ccf065926d38de2e4069[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Thu Apr 30 15:24:46 2020 +0800
+
+    更新degree.R與bad_degree.R
+    以配合資料庫更新
+
+[33mcommit 902f35b727e0f65c3f74c8bb37da154f9a0c4838[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Thu Apr 30 14:59:43 2020 +0800
+
+    完成proncons(新資料庫)+飯店切版(未完成)
+
+[33mcommit ffd6a3c501e6ab5a0246fb29758c7592bfe39dd0[m
+Merge: dfab743 8a88839
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed Apr 29 20:12:06 2020 +0800
+
+    (v6)Merge branch 'sean' of into new_revert
+
+[33mcommit 8a8883975c792ce3742a0232d39f089bc16061a1[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Wed Apr 29 19:58:44 2020 +0800
+
+    path頁面元件完成
+
+[33mcommit dfab743269e90d28948f5e615f8c1157c342a3f3[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed Apr 29 19:58:30 2020 +0800
+
+    2. 清空select 的資料
+
+[33mcommit d9a8ef039e2900d9feef5f694f7a76e199508c59[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed Apr 29 11:22:51 2020 +0800
+
+    版面微調
+
+[33mcommit 64f055a7daf8201d1a21c35f953a561972007809[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Mon Apr 27 09:48:37 2020 +0800
+
+    v5.1刪除good.html
+
+[33mcommit 956f801b623578abad520a283603d5004502101f[m
+Merge: 5f44e32 18fe71a
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Mon Apr 27 09:38:32 2020 +0800
+
+    (v5)Merge branch 'new_revert' of into sean
+
+[33mcommit 5f44e3226595db62f0b00a009a9378f494bc6def[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Mon Apr 27 09:32:30 2020 +0800
+
+    新增需求偏好分析API(cat_diff)
+
+[33mcommit 18fe71a68c107f50e81bf4a8d153148f902094bd[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon Apr 27 09:31:11 2020 +0800
+
+    schedule card日期已可以更新
+
+[33mcommit 36738beaa75588fe0300b9496345ae1d35f80ee0[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sun Apr 26 22:47:56 2020 +0800
+
+    偏好建立完成，收藏重複已解決
+
+[33mcommit ff320daa3ff1b8896112453a195fd1258f3173de[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Sat Apr 25 00:22:35 2020 +0800
+
+    90%景點優缺點連動完成
+
+[33mcommit 9f167282b959c4f3c429550d26481b129ff12c35[m
+Merge: d6d9eda 76add86
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Fri Apr 24 11:39:38 2020 +0800
+
+    Merge branch 'new_revert' of into new_revert
+
+[33mcommit d6d9eda7b8aef96575b8802087bdd23398b5f41d[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Fri Apr 24 11:34:26 2020 +0800
+
+    收藏功能完成(2)
+
+[33mcommit dd0c19e9461e394badc1078005290914b0165d59[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Fri Apr 24 11:33:54 2020 +0800
+
+    收藏功能完成
+
+[33mcommit 76add8608b7c2d1dbdae7f27eefa2568ff470f77[m
+Merge: 231c4f8 af4e898
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Fri Apr 24 10:09:19 2020 +0800
+
+    (v4)Merge branch 'new_revert' of into sean
+
+[33mcommit 231c4f8451ffd43a3e8c93da861cc777fc29f88d[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Fri Apr 24 09:55:14 2020 +0800
+
+    優缺點頁面分為:select,R,data元件引入s_prosConsPage
+
+[33mcommit af4e898a3d7013c7565a5d55b1ba1486bd88579f[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Fri Apr 24 09:52:39 2020 +0800
+
+    微調更新，嘗試google map失敗
+
+[33mcommit f211b8193ad8fe0e258341d9e1cdd9fa95431646[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Wed Apr 22 15:53:45 2020 +0800
+
+    需求分析元件合併至step2完成
+
+[33mcommit 93a19be5b457867627153656598abc8dce1611cc[m
+Merge: b0ffd33 059d915
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed Apr 22 11:09:27 2020 +0800
+
+    (v3)Merge branch 'sean' of  into new_revert
+
+[33mcommit 059d9159d33494bce02391e9bedcde021b0ea4dc[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Wed Apr 22 11:05:06 2020 +0800
+
+    更改資料為firestore物件包物件形式
+
+[33mcommit 71eefd4c39338d09483416882a05ff0283c6281c[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Wed Apr 22 09:38:01 2020 +0800
+
+    需求頁面分為:select,R,data元件引入s_demandPage
+
+[33mcommit b0ffd33f0d00bebe4fb723095584b591df77608b[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed Apr 22 00:02:35 2020 +0800
+
+    我的收藏加入選定日期完成
+
+[33mcommit 006019c9724c149f466fb293136a3e28c9be25ec[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon Apr 20 18:48:14 2020 +0800
+
+    收藏可以加入排程，下一步增加選擇加入哪天
+
+[33mcommit 1743b95df2821b59a0340a493f89943ef7a19231[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sun Apr 19 17:58:18 2020 +0800
+
+    搜尋完成，下一步嵌入排程
+
+[33mcommit ffc0d90dc8660774a2525dcd540269a8a1b139ae[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sun Apr 19 14:24:50 2020 +0800
+
+    收藏完成，下一步優化
+
+[33mcommit fc94dd788fd248785c4057d254a979f9f9ee3dbb[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sat Apr 18 15:46:37 2020 +0800
+
+    新增排程表完成
+
+[33mcommit 37253ae3979ec54cc703f4df74a93030823c60d3[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sat Apr 18 11:25:05 2020 +0800
+
+    排程表內部(日期、景點)
+    新增修改刪除完成，下一步做新增旅程表
+
+[33mcommit 6db2b28fcd3d549b4862aaca9c2c6f34a50cd71c[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Fri Apr 17 14:35:18 2020 +0800
+
+    需求分析連動vuex完成(含懶人包)，下一步串接優缺點與加入最愛到firebase
+
+[33mcommit 59ba8da1e951cd48ec6958814c5a282208835199[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Thu Apr 16 18:06:02 2020 +0800
+
+    v2.2解決上一版本無法建置問題
+
+[33mcommit 5c07b58d9c3b059858f911ba4aa376478f39719a[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Thu Apr 16 18:05:46 2020 +0800
+
+    v2.2: 加上firebase.js檔
+
+[33mcommit 2a5294cc173b2e12607f01656bf551473bf041d1[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Thu Apr 16 17:54:27 2020 +0800
+
+    v2.1 Index首頁更新
+
+[33mcommit 7354f32dfd680ef8f32f46fc10b6ff1829297329[m
+Merge: 17ba6ec 492104b
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Thu Apr 16 17:53:07 2020 +0800
+
+    (v2)Merge branch 'new_revert'  into sean
+
+[33mcommit 492104b314b18d369f8bf718758d402ed8670981[m
+Merge: 90aea441 b3255ef
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Thu Apr 16 17:30:36 2020 +0800
+
+    Merge branch 'new_revert' of https://github.com/possess0602/exam58 into new_revert
+
+[33mcommit 17ba6ec439c15ce78e608a7be8486bfea416e55c[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Thu Apr 16 17:28:46 2020 +0800
+
+    需求分析連動大致OK(懶人包需解決axios.all issue)
+
+[33mcommit 90aea441bec83404f4962be63b4b512ad8f568f1[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Thu Apr 16 17:27:29 2020 +0800
+
+    資料庫目前可以連動dragggable，下一步要新增日期
+
+[33mcommit ccc9bbc50885eba1c0c3ec806f36a5b31f6a8834[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Tue Apr 14 22:56:59 2020 +0800
+
+    draggable可以連動資料
+
+[33mcommit 9457a1285660d5365448ac13f8a8e93264e7f310[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Tue Apr 14 22:54:18 2020 +0800
+
+    draggable目前資料可以連動
+
+[33mcommit b3255effb90a1347e5c7003be673c346d9e0abab[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon Apr 13 16:03:01 2020 +0800
+
+    delete firebase.js
+
+[33mcommit 454dcd3cd3f4787218e078a0e7d80b85222e6c75[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon Apr 13 10:44:54 2020 +0800
+
+    draggable處理到一半
+
+[33mcommit 6f524385c3585b41aee7ecf328092d49cf92518f[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Sun Apr 12 16:14:29 2020 +0800
+
+    建立vuex store-sitedata.js
+
+[33mcommit 349e79ae7b2df72165fbb8a7df3908490eac3392[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sat Apr 11 21:49:19 2020 +0800
+
+    目前值可以讀入，下一步解決mutation錯誤的問題
+
+[33mcommit 96d9d880d79c3cbb24f5c01d6b459db3233fbaaf[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Sat Apr 11 11:39:25 2020 +0800
+
+    下拉式選單可讀取城市(開始元件化+撰寫vuex)
+
+[33mcommit 1b53b1dd7dcc3543e1b2c40a978512810d18fa00[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sat Apr 11 00:09:48 2020 +0800
+
+    可傳值到arrange_schedule ，下一步是處理drag
+
+[33mcommit 7ad7b8408bb4001bc1b9fadd2f02c0ff8998a1e0[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Fri Apr 10 09:09:17 2020 +0800
+
+    小更新上一版本
+
+[33mcommit 67e53392807e49a883ee6f664257ae0a1dcf70e1[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Thu Apr 9 22:18:01 2020 +0800
+
+    完成需求分析iframe頁面(axios + laravel Post Api傳值)
+
+[33mcommit 040ef0c357fc4995665a7ef0f4e24c8234fec1ab[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Thu Apr 9 15:20:47 2020 +0800
+
+    成功街到firetore值，記得到task-auth觸發fbReadData
+
+[33mcommit db8a9a50187571f2b32a8549e7e96f1a7bf45df9[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon Apr 6 22:58:09 2020 +0800
+
+    首頁更改完成
+
+[33mcommit a672f7f124c0c51add3e818d7dd010bb131527d8[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon Apr 6 11:26:03 2020 +0800
+
+    v.1.1 更新axios.js設定
+
+[33mcommit 5b98b4ef0e0dd4ca0abb6d135188cfa292b3f5ee[m
+Merge: 178e5e3 ce59034
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon Apr 6 11:25:04 2020 +0800
+
+    (v1)Merge branch 'sean' into new_revert
+
+[33mcommit ce59034887a1c63fba6bd605e617633555d6bb4d[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Mon Apr 6 10:50:55 2020 +0800
+
+    例行性更新
+
+[33mcommit 178e5e3437f855d7687c7c22292eda13eab2da85[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon Apr 6 10:49:54 2020 +0800
+
+    整合layout + 收藏頁面
+
+[33mcommit 828193f12d4d4340f291f3a0870e166799da8a55[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon Apr 6 00:05:12 2020 +0800
+
+    接上firestore
+
+[33mcommit ed66b8105bbc9ada291482fb35186855b288477d[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sun Apr 5 19:31:36 2020 +0800
+
+    前端CRUD完成，下一步做連結firebase
+
+[33mcommit 739c8385ce4a02075974624328db102f711f344c[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sun Apr 5 00:28:34 2020 +0800
+
+    修改 刪除做好了 新增前端form有問題
+
+[33mcommit fc3d88e7d8e3f822942a89d2a3c7b04e35c9316e[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Fri Apr 3 18:27:57 2020 +0800
+
+    導覽列調整完成
+
+[33mcommit 8f45b7202065a746c37df069dcbfbb61144ad1bc[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Fri Apr 3 18:06:17 2020 +0800
+
+    頁面刻畫大致完成，剩下優化navbar
+
+[33mcommit df6f34107453347220ab3075cba80943b724e6bc[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Fri Apr 3 14:23:50 2020 +0800
+
+    google登入已完成
+
+[33mcommit 33045eaa2d39fd36d2cd006fdf2ead260d2d5ecb[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Thu Apr 2 22:54:27 2020 +0800
+
+    沒有限制是否登入才能換頁
+
+[33mcommit 8714ef7bffd1abaeefb2aa5fd267ea8d539ac58b[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Thu Apr 2 18:55:07 2020 +0800
+
+    下次要開始讀寫進資料庫
+
+[33mcommit ea931eb45d9776102cdaf89d5859cf8bd3d7727f[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Thu Apr 2 18:22:33 2020 +0800
+
+    正要開始做147功能
+
+[33mcommit b2fd0e6a70cc574108258560157e803de805ca04[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Thu Apr 2 17:04:34 2020 +0800
+
+    解決CORS問題(Middleware:CORS)+前端串接mysql完成(testSQL.vue)
+
+[33mcommit d2a19e79782354278f16e21b9381a86736ea5cdf[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed Apr 1 23:26:02 2020 +0800
+
+    裝好boot正要開始做firebase登入驗證
+
+[33mcommit af170793c5dd0a7757f677fbd9b459b04d00a009[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed Apr 1 20:09:28 2020 +0800
+
+    首頁前端大致完成
+
+[33mcommit e8ba462b5ebb2ee6ed1ce1e2965533351b5a8ac2[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed Apr 1 16:18:14 2020 +0800
+
+    首頁輪播完成(需填入內容)
+
+[33mcommit 551af8bc4094f76ef3cb9837dc3429943fe955b2[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Tue Mar 31 22:01:30 2020 +0800
+
+    開始刻頁面
+
+[33mcommit c60f66e9b3e14df60f53d9ed28ad10863733650f[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Tue Mar 31 11:35:14 2020 +0800
+
+    vuex正要開始
+
+[33mcommit daee7abc60bd30687d0cf14a2724c9463c16297f[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon Mar 30 16:29:53 2020 +0800
+
+    建立好了quasar
+
+[33mcommit c52ef5f05369fde654bcabf2be688337b36b6774[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Sun Mar 29 14:52:24 2020 +0800
+
+    撰寫測試API(post)成功，quasar整合webpack尚未成功(樣式讀不到)
+
+[33mcommit ea4dd59fda3e14225121c48b47415167e77bea8a[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sat Mar 28 21:46:59 2020 +0800
+
+    Revert "優化my_itinerary進入鈕"
+    
+    This reverts commit a83ad25407ecc4b2633a003c3e9d9df560412f9d.
+
+[33mcommit 3c5b2b7fcd2f8c069d5328c3e0448adb8951af2b[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Wed Mar 25 22:42:05 2020 +0800
+
+    搭建Quasar框架成功(可訪問localhost/quasar)
+
+[33mcommit 0b83eec3937d148197a759ad6a2d7d8b9425f020[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Wed Mar 25 16:41:50 2020 +0800
+
+    測試vue.js功能ok
+
+[33mcommit a83ad25407ecc4b2633a003c3e9d9df560412f9d[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Tue Mar 24 00:28:18 2020 +0800
+
+    優化my_itinerary進入鈕
+
+[33mcommit d4368b1ac24165bed14c979f1e0066ffd093f9b9[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sat Mar 21 13:18:34 2020 +0800
+
+    my_itinerary部分完成，繼續create_itinerary接值
+
+[33mcommit 34eba2cfcdd0aa24c6e61f2a8575b56e3f83c973[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Fri Mar 20 23:28:52 2020 +0800
+
+    更新
+
+[33mcommit ed57203218ef6a5221138dffcd495f5bb8e77129[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Mon Mar 9 23:50:33 2020 +0800
+
+    我的收藏可做新增，刪除，讀取(test.blade.php 使用 card-column)
+
+[33mcommit ed0c98baf398abce1e9273559449e91f93d09932[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sun Mar 8 16:21:45 2020 +0800
+
+    前端下拉拖移已完成，開始後端
+
+[33mcommit 62bb315f3cd85cde083970fcca7e45d290ad3290[m
+Merge: 4c3fe15 c33c22b
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon Mar 2 16:54:18 2020 +0800
+
+    Merge branch 'sean' of https://github.com/possess0602/exam58 into new_revert
+
+[33mcommit c33c22b1f03962cf946cd775905bceee3164b52e[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Mon Mar 2 16:49:27 2020 +0800
+
+    test.blade.php進行測試
+
+[33mcommit 4c3fe15d3251935a97b0cf3d466ca3d63ad15525[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon Mar 2 16:48:58 2020 +0800
+
+    做旅遊排程
+
+[33mcommit e9806d6001232581106e780afd91226f186f1409[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon Feb 24 16:27:58 2020 +0800
+
+    改為select2中
+
+[33mcommit 7ef1e7760bddba94de1fa3b31aa2b46c940b3086[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Mon Feb 24 15:58:38 2020 +0800
+
+    完成刪除與顯示資料
+
+[33mcommit 61999b093224d915517d1f662318b45892a5d30c[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sun Feb 23 17:36:20 2020 +0800
+
+    地圖改用地址查詢完成，需更優化頁面及友善
+
+[33mcommit 1a2aaf83773ce9afcfde1760edaf5ff98514b9bc[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sat Feb 22 16:47:13 2020 +0800
+
+    登入問題全部解決，下一步為: 用地址傳入googleAPI
+
+[33mcommit 40164bd29a487e67a681370923ad5f32d961be43[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Thu Feb 20 22:27:23 2020 +0800
+
+    兩次登入\登入不可選帳號\未完成寫入規則\地圖尋(下一步)
+
+[33mcommit abf510011f834a28987ea66528f59130d28329be[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Mon Feb 17 13:35:44 2020 +0800
+
+    套用新版R完成+測試datatable(frontend_sna/test.blade.php)
+
+[33mcommit 687198efb3a07b0f6b178b90e8722ed65d5cf35c[m
+Merge: c30bf25 05e2ee8
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon Feb 10 16:50:22 2020 +0800
+
+    Merge branch 'sean' into new_revert
+
+[33mcommit c30bf25721df1a78bc8c1f33b7e1e689e0b2e16c[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon Feb 10 16:45:57 2020 +0800
+
+    narbar再改漂亮
+
+[33mcommit 05e2ee85f3ff452e1d92fcaab7d03f797c6a660a[m
+Merge: 06d0b12 ed79cc9
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Mon Feb 10 16:35:39 2020 +0800
+
+    Merge branch 'sean' of https://github.com/possess0602/exam58 into sean
+
+[33mcommit 06d0b1201bdfaa453c21ec4cc0d4938c9ad722d1[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Mon Feb 10 16:20:07 2020 +0800
+
+    merge_ok(20200210)
+
+[33mcommit a1567f1b1172e0868f07f3f660651714ec0848ad[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon Feb 10 16:12:17 2020 +0800
+
+    USER寫入db沒問題、下一步:路徑規畫結果寫入
+
+[33mcommit 53d2618e4d9aa348e2ca97e0b2ed02d53e27d79a[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Mon Feb 10 16:11:15 2020 +0800
+
+    20200210_firebase測試完成(R檔案需更新)
+
+[33mcommit 699e9ffb23efa0394ebc5c3fbfa73efa8e867247[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sun Feb 9 16:32:55 2020 +0800
+
+    註冊資料完成，剩下: 判斷__您好，以及找出登入按兩下才可以PopUp
+
+[33mcommit 066476469b2a089ee676a6082f56f67f07b60fb1[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Fri Feb 7 00:03:58 2020 +0800
+
+    google登入成功，登出未確定
+
+[33mcommit ed79cc9be55d6d0020f82e68bcb2c23062d519b1[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Thu Feb 6 18:06:16 2020 +0800
+
+    migration file update(15 table,10 migration file)
+
+[33mcommit 05d8f2a4a6d8bc8e8101b9db1372dbf53911065b[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Wed Feb 5 23:22:43 2020 +0800
+
+    更新新版資料庫migration與資料+匹配新R Graph
+
+[33mcommit ba39e2fe316b0282e84edbf3720d073c6e5882c1[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Tue Feb 4 17:11:41 2020 +0800
+
+    firebase已連動，google可登入，下一步是製作註冊資料表格
+
+[33mcommit 1ff5b5a615aa0275b86c784b7f3f143b8e4bd546[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon Jan 20 23:20:28 2020 +0800
+
+    資料庫(更新，目前relationship資料塞不進去)
+
+[33mcommit 1c593d2603c0b0281429087e5b7d34453e5d1592[m
+Merge: fbb4035 e4228bf
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Sat Jan 18 14:31:01 2020 +0800
+
+    Merge branch 'new_revert' of https://github.com/possess0602/exam58 into sean
+
+[33mcommit e4228bf2bbc36c866ed3fd81de8fc35dab621f67[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sat Jan 18 09:52:21 2020 +0800
+
+    deal可套上模板
+
+[33mcommit 047be557d04d06390ef581c4cd5791c0be107ad4[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Thu Jan 2 11:46:23 2020 +0800
+
+    連接R成功
+
+[33mcommit 24bffe5daecfc55d5b502cbddc852a9e711c87e2[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed Jan 1 22:57:45 2020 +0800
+
+    myform改好模板
+
+[33mcommit 93e0457257448b2a0ecf7767bae262fa59fc47b9[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Tue Dec 31 12:32:55 2019 +0800
+
+    session進行中(ajax成功待修改)
+
+[33mcommit fbb4035f0fa4f3de909662d91a216d9533ff15eb[m
+Merge: 06bcf74 02ea025
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Tue Dec 24 15:21:03 2019 +0800
+
+    Merge branch 'new_revert' into sean
+
+[33mcommit 02ea025969da94dffe809e34834053113a68d46e[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Mon Dec 23 21:02:55 2019 +0800
+
+    Oauth已完成>下一步要做session
+
+[33mcommit 2b8671ea166c035b6a207ffee3825a276cd94929[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon Dec 23 18:56:40 2019 +0800
+
+    新模板 frontend_sna模板完成
+
+[33mcommit 06bcf74651554046e324ed56974674f7074fd0a4[m
+Merge: ec01ffe 2759843
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Tue Dec 17 14:03:16 2019 +0800
+
+    Merge branch 'new_revert'
+
+[33mcommit 27598438771fd8bab85db101fea0fb06f971b8b2[m
+Author: seanpeng12 <seanpeng12@gmail.com>
+Date:   Tue Dec 17 13:52:44 2019 +0800
+
+    完成Oaht2.0
+
+[33mcommit 6b68dbf2c3843cdcff6008d30010bf8c3f5b9d56[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Thu Dec 12 17:45:56 2019 +0800
+
+    OAuth 做一半
+
+[33mcommit 4a05e789b7147801da84e3beb2bef45e30a1f2ca[m
+Merge: 0da49df e4b53b1
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sat Dec 7 12:49:38 2019 +0800
+
+    Merge branch 'new_revert' of https://github.com/possess0602/exam58 into new_revert
+
+[33mcommit 0da49df0079ff96a66391d3b9d7ae9d7797502a6[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Sat Dec 7 12:43:11 2019 +0800
+
+    ORM資料庫已經建立，還有登凱打得可以查詢資料庫的資料(homeController--)
+
+[33mcommit e4b53b1793f1e015cf8251eb8db310c754b083a3[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Mon Nov 25 19:24:00 2019 +0800
+
+    google map 沒錯誤，還沒有連到遠端資料庫，目前進度為點進區可以進入子網頁
+
+[33mcommit ec01ffef0182343b59c40e63235898a222aaaff3[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Tue Nov 19 16:21:25 2019 +0800
+
+    google map 可以顯示兩個(解決前述bug)
+
+[33mcommit c1bc6a645ad9a03ce2788442a29ce8f8f0852f66[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Fri Nov 15 23:44:55 2019 +0800
+
+    修改成簡易的模板(google map無法出現)
+
+[33mcommit 6a02a163856db1af2e87b8716023c632b13fa1ad[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Fri Nov 8 12:08:25 2019 +0800
+
+    建立好可搜尋的地圖
+
+[33mcommit d791366cfc6dd21d82f323d6facd340113a9f9ae[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed Oct 16 22:55:43 2019 +0800
+
+    1. 做到 google map (圖片還顯示不出來)
+    2. 利用初心者完成拆部分
+
+[33mcommit 0028b01dd1bb2c5c919d91cd6c56765311b4a3ff[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Fri Oct 4 11:43:41 2019 +0800
+
+    做完初心者#8(@yield @section nav的學習)
+
+[33mcommit ff4b2aa8acc19169bde3e2be23a3c62f6aec396b[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Thu Oct 3 22:36:25 2019 +0800
+
+    正要開始初心者#7(除了wlecome.blade沒有移動之外)
+
+[33mcommit 6a356f3017db835190199735aca4955865fa87eb[m
+Author: possess0602 <48153269+possess0602@users.noreply.github.com>
+Date:   Wed Sep 18 14:13:34 2019 +0800
+
+    建立專案
+    
+    5.8 到第五步完成(語系未設定)
