@@ -1,66 +1,85 @@
 # SightSeeing
-### Deploy in Docker 
-1. git clone此專案，於專案目錄啟動服務
-      ```bash
-        docker-compose up -d
-      ```
-
-2. 執行php migration以建立資料表
-    * debian ubuntu bash:
-      ```bash
-        bash run.sh
-      ```
-    * windows 10/11 CMD:
-      ```bash
-        docker exec -it exam58-php php artisan config:clear
-        docker exec -it exam58-php php artisan key:generate
-        docker exec -it exam58-php php artisan migrate
-      ```
-        
-3. 啟動後，各服務端口如下:
-  * [Frontend] Vue Quasar: http://localhost:80
-  * [Backend] PHP Laravel API:  http://localhost:8080/api/
-    * Http GET method for testing: http://localhost:8080/api/site_dataCity 
-  * [MySQL] phpmyadmin Panel: http://localhost:8888
-    匯入資料 [GD載點](https://google.com)
-  
-
-### 服務描述
-
-* 近年來大多數的旅客喜歡自由且客製化的行程安排，這是一套提供給自由行旅客旅程安排的整合系統，包含景點、飯店的優缺點特徵分析，google map標記景點找到最佳路徑，提供給用戶迅速且作為旅程安排的依據，不必再到各種不同網站爬文，節省旅程安排的時間。 
 
 ![1](https://user-images.githubusercontent.com/48153269/192665786-708d26d3-00da-4649-865e-9c0e86c7bacf.png)
 
+## Introduction
 
+SightSeeing is a comprehensive system designed for independent travelers to arrange their trips. It provides various features such as points of interest, hotel pros and cons analysis, Google Maps route optimization, and more. The system helps users quickly plan their trips without the need to browse multiple websites, saving time and effort.
 
-### 功能簡介
+It offers integrated functionality that includes attraction and hotel feature analysis, optimized pathfinding, and customized trip scheduling. This makes it a great tool for users looking to plan personalized trips.
 
-* 排程: 註冊會員的使用者可以利用排程功能以流線型的方式完成旅程安排
+## Quick Starts
+
+### Preparation
+
+To deploy SightSeeing in Docker, follow the instructions below.
+
+1. Clone the repository and navigate to the project directory.
+    ```bash
+    git clone <repository-url>
+    cd <project-directory>
+    ```
+
+2. Start the services with Docker Compose.
+    ```bash
+    docker-compose up -d
+    ```
+
+3. Run the PHP migration to set up the database tables:
+    * Debian/Ubuntu bash:
+      ```bash
+      bash run.sh
+      ```
+    * Windows 10/11 CMD:
+      ```bash
+      docker exec -it exam58-php php artisan config:clear
+      docker exec -it exam58-php php artisan key:generate
+      docker exec -it exam58-php php artisan migrate
+      ```
+
+### Service Ports
+
+After starting the services, the following ports will be available:
+- **Frontend** (Vue Quasar): [http://localhost:80](http://localhost:80)
+- **Backend** (PHP Laravel API): [http://localhost:8080/api/](http://localhost:8080/api/)
+  - Example GET request: [http://localhost:8080/api/site_dataCity](http://localhost:8080/api/site_dataCity)
+- **MySQL phpMyAdmin Panel**: [http://localhost:8888](http://localhost:8888)
+
+Import data from the [GD download link](https://google.com).
+
+## Features Overview
+
+### Trip Scheduling
+
+Registered users can utilize the scheduling feature to efficiently plan their trips.
 
 ![2](https://user-images.githubusercontent.com/48153269/192672072-15d27534-eef0-4805-855b-897d097939a6.png)
-![step1](https://user-images.githubusercontent.com/48153269/192665763-3154446e-6768-466c-9083-dc756bcea426.png)
 
-* 優缺點分析: 此分析包含景點與飯店兩個部分，在使用者在選取某一景點後，透過自建旅遊詞語庫與SNA分析法(點度中心度)，系統將呈現有關此景點的優點、缺點分析，使用者可清楚得知此景點的特色(優點)及在此景點可能遇到的問題(缺點)。 
+### Pros and Cons Analysis
+
+The system provides an analysis of the pros and cons of attractions and hotels. This is based on a custom-built tourism vocabulary and SNA (Degree Centrality) analysis method, which helps users understand the key characteristics (pros) and potential issues (cons) of each location.
 
 ![step2](https://user-images.githubusercontent.com/48153269/192665673-d0e40df3-168c-41ce-91e9-a0a95b90a10a.png)
 
-* 路徑推薦分析: 使用者先輸入一個景點後點擊分析，系統會呈現出其他造訪者在造訪此景點後，也會造訪的其他景點、飯店或餐廳，使用者可以藉此了解熱門關聯景點並方便安排旅程。 
+### Path Recommendation Analysis
+
+By inputting a point of interest, users can see other places that are frequently visited by travelers who visit the same location, including hotels and restaurants. This helps users discover related attractions and plan their trips accordingly.
 
 ![路徑](https://user-images.githubusercontent.com/48153269/192665691-b37602a6-8fe9-49a5-8ebf-397a46dca03e.png)
 
- * Google路線安排: 使用者可透過此功能利用GoogleMap API找出以一天為基準的最短行車路線之景點順序。 
- 
+### Google Maps Route Optimization
+
+Using Google Maps API, the system can suggest the most efficient route for a day, optimizing the order of visiting various attractions.
+
 ![googlenap](https://user-images.githubusercontent.com/48153269/192665749-f9547c32-3cf1-45c4-bf4a-f76407a3f556.png)
 
-# 運用的技術 
+## Technologies Used
 
-* 資料庫:MySQL 5.8(儲存網路爬蟲下來的資料) 、Google Firebase(儲存user端資料) 
+- **Database**: MySQL 5.8 (for storing web scraping data) and Google Firebase (for storing user data)
+- **Server**: XAMPP-Apache Server, Node.js
+- **Backend Software**: Laravel, R, Python
+- **Frontend Software**: Vue.js 2 (with Quasar CLI)
 
-* 伺服器: XAMPP-Apache Server、 Node.js 
+## License
 
-* 後端軟體： Laravel、R、Python 
-
-* 前端軟體： Vue.js 2(Quasar Cli) 
-
-
-  
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
