@@ -1,15 +1,11 @@
 services:
   php:
-    image: stephen359595/laravel-php:7.3
+    build:
+      context: .
+      dockerfile: Dockerfile.php
     container_name: exam58-php
-    working_dir: /var/www/html
-    volumes:
-        - ./volume/web:/var/www/html
-        - ./laravel-container/php/php.ini:/usr/local/etc/php/conf.d/laravel.ini
-        - ./laravel-container/php/init.sh:/init.sh # 掛載初始化腳本
     networks:
       - laravel
-    # user: 1000:1000
 
   nginx:
     image: jguyomard/laravel-nginx:1.13
@@ -67,10 +63,12 @@ services:
   quasar-app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.quasar
     container_name: quasar-app
     ports:
       - 80:8080
+    networks:
+      - laravel
 
 volumes:
     my-mysql-volume:
