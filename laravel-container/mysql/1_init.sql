@@ -1,0 +1,1 @@
+CREATE DATABASE IF NOT EXISTS homestead CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci; GRANT ALL PRIVILEGES ON homestead.* TO 'homestead'@'%' IDENTIFIED BY 'secret' WITH GRANT OPTION;
