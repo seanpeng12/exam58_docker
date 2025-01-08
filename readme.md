@@ -1,5 +1,5 @@
-# SightSeeing
-
+# SIGHTSEEING 
+A Tourism Analysis System Based on Social Network Analysis
 ![1](https://user-images.githubusercontent.com/48153269/192665786-708d26d3-00da-4649-865e-9c0e86c7bacf.png)
 
 ## Introduction
@@ -80,6 +80,12 @@ Using Google Maps API, the system can suggest the most efficient route for a day
 - **Backend Software**: Laravel, R, Python
 - **Frontend Software**: Vue.js 2 (with Quasar CLI)
 
-## License
+## Acknowledgments
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Special thanks to the following developers for their great work:
+
+- [@possess0602](https://github.com/possess0602)
+- [@winnieywhsiao](https://github.com/winnieywhsiao)
+- Yen-Wen Hsiao
+- Chang-Geng Wu
+- Dong-Yi Lu
