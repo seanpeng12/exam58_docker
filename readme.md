@@ -14,27 +14,38 @@ It offers integrated functionality that includes attraction and hotel feature an
 To deploy SightSeeing in Docker, follow the instructions below.
 
 1. Clone the repository and navigate to the project directory.
-    ```bash
+    ```git
     git clone <repository-url>
     cd <project-directory>
     ```
 
-2. Start the services with Docker Compose.
+   Navigate to the `volume/web/` directory, copy the `.env.example` file, and rename it to `.env`. Then, modify the following lines in the `.env` file:
+    ```.env
+    # Database Configuration
+    DB_CONNECTION=mysql
+    DB_HOST=mysql      # The hostname of your database service, defined in your docker-compose.yml
+    DB_PORT=3306       
+    DB_DATABASE=homestead
+    DB_USERNAME=homestead
+    DB_PASSWORD=secret
+
+    # Google OAuth Configuration
+    GOOGLE_CLIENT_ID=<your-google-id>
+    GOOGLE_CLIENT_SECRET=<your-google-secret>
+    GOOGLE_REDIRECT=https://sightseeing.nctu.me/callback
+
+    ```
+    Make sure to replace `<your-google-id>` and `<your-google-secret>` with your actual Google OAuth credentials, which are required for [Google API](https://developers.google.com/identity/oauth2/web/guides/get-google-api-clientid?hl=zh-tw) functionality.
+
+3. Start the services with Docker Compose.
     ```bash
     docker-compose up -d
     ```
 
-3. Run the PHP migration to set up the database tables:
-    * Debian/Ubuntu bash:
-      ```bash
-      bash run.sh
-      ```
-    * Windows 10/11 CMD:
-      ```bash
-      docker exec -it exam58-php php artisan config:clear
-      docker exec -it exam58-php php artisan key:generate
-      docker exec -it exam58-php php artisan migrate
-      ```
+4. Run the PHP migration to set up the database tables:
+    ```bash
+    docker exec -it exam58-php php artisan migrate
+     ```
 
 ### Service Ports
 
