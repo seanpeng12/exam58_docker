@@ -481,7 +481,7 @@ export default {
     demandDataDiff2: () => import("components/demand/demand_data_diff2.vue"),
     sSiDemandInfo: () => import("components/demand/s_si_demand_info.vue"),
 
-    addToCollectionBtn: () => import("components/demand/addToCollectionBtn.vue")
+    addToCollectionBtn: () => import("components/demand/addTocollectionBtn.vue")
   },
   computed: {
     // 取得vuex state值

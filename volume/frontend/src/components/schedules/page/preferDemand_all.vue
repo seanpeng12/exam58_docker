@@ -455,7 +455,7 @@ export default {
     demandInfo: () => import("components/demand/demand_info.vue"),
 
     addToCollectionBtn: () =>
-      import("components/demand/addToCollectionBtn.vue"),
+      import("components/demand/addTocollectionBtn.vue"),
 
     // 優缺點(排程使用)
     proscons: () => import("components/proscons/proscons_data.vue")

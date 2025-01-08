@@ -474,7 +474,7 @@ export default {
     demandDataDiff2: () => import("components/demand/demand_data_diff2.vue"),
 
     hAddToCollectionBtn: () =>
-      import("components/demand/h_addToCollectionBtn.vue"),
+      import("components/demand/h_addTocollectionBtn.vue"),
     hSiDemandInfo: () => import("components/demand/h_si_demand_info.vue")
   },
   computed: {

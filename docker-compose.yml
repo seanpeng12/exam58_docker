@@ -1,4 +1,3 @@
-version: '1'
 services:
   php:
     image: stephen359595/laravel-php:7.3

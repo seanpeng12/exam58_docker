@@ -56,7 +56,7 @@ export default {
     }
   },
   components: {
-    addToCollectionBtn: () => import("components/demand/addToCollectionBtn.vue")
+    addToCollectionBtn: () => import("components/demand/addTocollectionBtn.vue")
   }
 };
 </script>

@@ -1,4 +1,22 @@
 # SightSeeing
+### Deploy in Docker 
+* git clone此專案，在exam58_docker目錄啟動服務
+    `docker-compose up -d`
+
+* 執行php migration以建立資料表
+    > debian ubuntu:
+    `bash run.sh`
+    > windows 10/11:
+    `docker exec -it exam58-php php artisan config:clear`
+    `docker exec -it exam58-php php artisan key:generate`
+    `docker exec -it exam58-php php artisan migrate`
+* 啟動後各服務端口:
+  * MySQL phpmyadmin Panel: http://localhost:8888
+    匯入資料 [GD載點](https://google.com)
+  * [Backend] PHP Laravel API:  http://localhost:8080/api/
+    * Http GET method for testing: http://localhost:8080/api/site_dataCity 
+  * [Frontend] Vue Quasar: http://localhost:80
+  
 
 ### 服務描述
 
@@ -37,22 +55,5 @@
 
 * 前端軟體： Vue.js 2(Quasar Cli) 
 
-# Docker
-* 在根目錄執行以pull image並啟動服務
-    `docker-compose up -d`
-
-* php migration建立資料表
-    `bash run.sh`
-* 匯入MySQL資料
-  
-
-
-* MySQL phpmyadmin panel: http://localhost:8888
-* 後端PHP Laravel API:  
-  * 測試用GET  
-  http://localhost:8080/api/site_dataCity
-* 前端Vue Quasar:
-  `cd volume/web/quasarapp/`
-  `quasar dev`
 
   
