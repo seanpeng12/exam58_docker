@@ -1,15 +1,22 @@
 # SightSeeing
 ### Deploy in Docker 
-1. git clone此專案，在exam58_docker目錄啟動服務
-    `docker-compose up -d`
+1. git clone此專案，於專案目錄啟動服務
+      ```bash
+        docker-compose up -d
+      ```
 
 2. 執行php migration以建立資料表
-    > debian ubuntu:
-    `bash run.sh`
-    > windows 10/11:
-    `docker exec -it exam58-php php artisan config:clear`
-    `docker exec -it exam58-php php artisan key:generate`
-    `docker exec -it exam58-php php artisan migrate`
+    * debian ubuntu bash:
+      ```bash
+        bash run.sh
+      ```
+    * windows 10/11 CMD:
+      ```bash
+        docker exec -it exam58-php php artisan config:clear
+        docker exec -it exam58-php php artisan key:generate
+        docker exec -it exam58-php php artisan migrate
+      ```
+        
 3. 啟動後，各服務端口如下:
   * [Frontend] Vue Quasar: http://localhost:80
   * [Backend] PHP Laravel API:  http://localhost:8080/api/
