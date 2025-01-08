@@ -1,6 +1,5 @@
 # SIGHTSEEING 
-A Tourism Analysis System Based on Social Network Analysis
-![1](https://user-images.githubusercontent.com/48153269/192665786-708d26d3-00da-4649-865e-9c0e86c7bacf.png)
+A Tourism Analysis System Based on Social Network Analysis [legacy-version](https://github.com/possess0602/exam58/blob/master/readme.md)
 
 ## Introduction
 
