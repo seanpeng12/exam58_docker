@@ -3,7 +3,7 @@ FROM stephen359595/laravel-php:7.3
 WORKDIR /var/www/html
 
 COPY ./volume/web /var/www/html
-COPY ./laravel-container/php/php.ini /usr/local/etc/php/conf.d/laravel.ini
+COPY ./laravel-container/php/php.ini /usr/local/etc/php/php.ini
 
 # 確保 storage 目錄具有適當的權限
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \

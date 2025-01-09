@@ -46,7 +46,7 @@ To deploy SightSeeing in Docker, follow the instructions below.
     ```bash
     docker exec -it exam58-php php artisan migrate
      ```
-
+    after migration table created successfully, go to **MySQL phpMyAdmin Panel**: [http://localhost:8888](http://localhost:8888), import homestead.sql file [[GDrive]](https://drive.google.com/file/d/1a47WyEq9BpSIl9hXGO_6xh96NPT_2T9T/view?usp=sharing).
 ### Service Ports
 
 After starting the services, the following ports will be available:
@@ -55,7 +55,7 @@ After starting the services, the following ports will be available:
   - Example GET request: [http://localhost:8080/api/site_dataCity](http://localhost:8080/api/site_dataCity)
 - **MySQL phpMyAdmin Panel**: [http://localhost:8888](http://localhost:8888)
 
-Import data from the [GD download link](https://google.com).
+
 
 ## Features Overview
 

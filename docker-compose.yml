@@ -44,6 +44,7 @@ services:
         - 8888:80
     environment:
         PMA_HOST: mysql  # 指向 MySQL 容器的服務名稱
+        UPLOAD_LIMIT: 100000000
         # - PMA_ARBITRARY: 1
     networks:
       - laravel

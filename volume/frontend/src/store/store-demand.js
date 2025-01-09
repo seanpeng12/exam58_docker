@@ -151,7 +151,7 @@ const mutations = {
 const actions = {
   fetchCitys({ commit }) {
     axiosInstance
-      .get("http://140.136.155.116/api/site_dataCity")
+      .get("api/site_dataCity")
       .then(res => {
         commit("FETCH_citys", res.data);
         console.log("vuex-觸發city值");

@@ -6,7 +6,7 @@ Vue.prototype.$axios = axios;
 // ^ ^ ^ 这将允许你使用$.axios
 //       所以你不需要在每个vue文件中导入axios
 const axiosInstance = axios.create({
-  baseURL: "http://127.0.0.1:80",
+  baseURL: "http://127.0.0.1:8080",
 });
 
 export default ({ Vue }) => {
