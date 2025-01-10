@@ -30,7 +30,7 @@ const state = {
 
   //src iframe
   // src: "./statics/h_between_relationship.html",
-  src: "http://140.136.155.116:8080/statics/h_between_relationship.html",
+  src: "http://127.0.0.1:8080/statics/h_between_relationship.html",
   // R
   Rdata: {},
   // 用以偵測是否按下按鈕(累積)
@@ -151,7 +151,7 @@ const mutations = {
 const actions = {
   fetchCitys({ commit }) {
     axiosInstance
-      .get("http://140.136.155.116/api/h_site_dataCity")
+      .get("api/h_site_dataCity")
       .then(res => {
         commit("FETCH_citys", res.data);
         console.log("vuex-觸發city值");
@@ -165,7 +165,7 @@ const actions = {
 
   fetchCats({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/h_site_dataCat", {
+      .post("api/h_site_dataCat", {
         name: state.selected_p
       })
       .then(res => {
@@ -179,7 +179,7 @@ const actions = {
   // ajax跑R圖
   upload_axios({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/h_runR_twoC", {
+      .post("api/h_runR_twoC", {
         name: state.selected_p,
         c1: state.selected_p_detail_item,
         c20: state.selected_p_detail_item_2
@@ -199,7 +199,7 @@ const actions = {
   // ajax取懶人包資料
   upload_axios_2({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/h_cat", {
+      .post("api/h_cat", {
         name: state.selected_p,
         c1: state.selected_p_detail_item,
         c20: state.selected_p_detail_item_2
@@ -331,7 +331,7 @@ const actions = {
   // 取差集diff
   upload_axios_2_diff({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/new_h_cat_diff", {
+      .post("api/new_h_cat_diff", {
         name: state.selected_p,
         c1: state.selected_p_detail_item,
         c20: state.selected_p_detail_item_2
@@ -494,7 +494,7 @@ const actions = {
   // 取差集diff
   upload_axios_3_diff({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/new_h_cat_diff", {
+      .post("api/new_h_cat_diff", {
         name: state.selected_p,
         c1: state.selected_p_detail_item,
         c20: state.selected_p_detail_item_2
@@ -661,7 +661,7 @@ const actions = {
   },
   fetchInfo({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/demand_info", {
+      .post("api/demand_info", {
         name: state.site_name
       })
       .then(response => {

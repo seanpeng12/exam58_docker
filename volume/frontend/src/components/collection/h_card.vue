@@ -74,7 +74,7 @@ export default {
   methods: {}
   // updated() {
   //   axios
-  //     .post("http://140.136.155.116/api/getGoogleImg", {
+  //     .post("api/getGoogleImg", {
   //       name: collection.site_name
   //     })
   //     .then(res => {

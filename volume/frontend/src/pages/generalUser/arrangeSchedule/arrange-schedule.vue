@@ -848,7 +848,7 @@ export default {
     changeSrc() {
       document.getElementById("myFrame").contentWindow.location.reload(true);
       document.getElementById("myFrame").src =
-        "http://140.136.155.116:8080/statics/between_relationship.html";
+        "http://127.0.0.1:8080/statics/between_relationship.html";
       // this.src = "./statics/between_relationship.html";
       this.$store.commit(
         "demand/update_txtinfo",

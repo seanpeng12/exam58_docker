@@ -95,7 +95,7 @@ const actions = {
   // 取景點/飯店城市
   fetchCitys({ commit }) {
     axiosInstance
-      .get("http://140.136.155.116/api/site_dataCity")
+      .get("api/site_dataCity")
       .then(res => {
         commit("FETCH_Citys", res.data);
         // console.log("vuex-get 城市(site)");
@@ -108,7 +108,7 @@ const actions = {
   // 取景點/飯店
   fetchSites({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/path_sitesByCity", {
+      .post("api/path_sitesByCity", {
         city_name: state.selected_city
       })
       .then(res => {
@@ -121,7 +121,7 @@ const actions = {
   },
   h_fetchSites({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/h_path_sitesByCity", {
+      .post("api/h_path_sitesByCity", {
         city_name: state.selected_city
       })
       .then(res => {
@@ -135,7 +135,7 @@ const actions = {
 
   fetchPathR({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/runPath", {
+      .post("api/runPath", {
         city: state.selected_city,
         site: state.selected_site
       })
@@ -151,7 +151,7 @@ const actions = {
   //
   fetchPath({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/PathData", {
+      .post("api/PathData", {
         name: state.selected_site
       })
       .then(res => {
@@ -167,7 +167,7 @@ const actions = {
   //
   fetchPath_2({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/PathData", {
+      .post("api/PathData", {
         name: state.selected_site_2
       })
       .then(res => {
@@ -181,12 +181,12 @@ const actions = {
   getSiteGoogleDetail({ commit }, site_name) {
     commit("resetSiteGoogleDetail");
     axiosInstance
-      .post("http://140.136.155.116/api/getGoogleImg", {
+      .post("api/getGoogleImg", {
         name: site_name
       })
       .then(img => {
         axiosInstance
-          .post("http://140.136.155.116/api/pathSiteGooglePlaceId", {
+          .post("api/pathSiteGooglePlaceId", {
             name: site_name
           })
 
@@ -208,7 +208,7 @@ const actions = {
   },
   searchCity({ commit, dispatch }, site_name) {
     axiosInstance
-      .post("http://140.136.155.116/api/getCity", {
+      .post("api/getCity", {
         name: site_name
       })
       .then(city => {

@@ -568,7 +568,7 @@ export default {
 
       this.$store.commit(
         "demand/update_src",
-        "http://140.136.155.116:8080/statics/between_relationship.html"
+        "http://127.0.0.1:8080/statics/between_relationship.html"
       );
       this.$store.commit("demand/update_txtinfo", "文字載入中...");
     },

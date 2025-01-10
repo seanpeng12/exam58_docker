@@ -30,7 +30,7 @@ const state = {
 
   //src iframe
   // src: "./statics/between_relationship.html",
-  src: "http://140.136.155.116:8080/statics/between_relationship.html",
+  src: "http://127.0.0.1:8080/statics/between_relationship.html",
   // R
   Rdata: {},
   // 用以偵測是否按下按鈕(累積)
@@ -165,7 +165,7 @@ const actions = {
 
   fetchCats({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/site_dataCat", {
+      .post("api/site_dataCat", {
         name: state.selected_p
       })
       .then(res => {
@@ -227,7 +227,7 @@ const actions = {
   // ajax跑R圖
   upload_axios({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/runR_twoC", {
+      .post("api/runR_twoC", {
         name: state.selected_p,
         c1: state.selected_p_detail_item,
         c20: state.selected_p_detail_item_2
@@ -247,7 +247,7 @@ const actions = {
   // ajax取懶人包資料
   upload_axios_2({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/cat", {
+      .post("api/cat", {
         name: state.selected_p,
         c1: state.selected_p_detail_item,
         c20: state.selected_p_detail_item_2
@@ -383,7 +383,7 @@ const actions = {
   // test
   test_axios_2_diff({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/new_cat_diff", {
+      .post("api/new_cat_diff", {
         name: "台北",
         c1: "建築物",
         c20: "古蹟"
@@ -408,7 +408,7 @@ const actions = {
   // 取差集diff
   upload_axios_2_diff({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/new_cat_diff", {
+      .post("api/new_cat_diff", {
         name: state.selected_p,
         c1: state.selected_p_detail_item,
         c20: state.selected_p_detail_item_2
@@ -572,7 +572,7 @@ const actions = {
   // 聯集2
   upload_axios_3_diff({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/new_cat_diff", {
+      .post("api/new_cat_diff", {
         name: state.selected_p,
         c1: state.selected_p_detail_item,
         c20: state.selected_p_detail_item_2
@@ -736,7 +736,7 @@ const actions = {
   },
   fetchInfo({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/demand_info", {
+      .post("api/demand_info", {
         name: state.site_name
       })
       .then(response => {

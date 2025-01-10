@@ -78,7 +78,7 @@ const mutations = {
 const actions = {
   fetchCitys({ commit }) {
     axiosInstance
-      .get("http://140.136.155.116/api/proscons_hotel_data_City")
+      .get("api/proscons_hotel_data_City")
       .then(res => {
         commit("FETCH_Citys", res.data);
         console.log("vuex-get 城市");
@@ -90,7 +90,7 @@ const actions = {
 
   fetchSites({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/h_sitesByCity", {
+      .post("api/h_sitesByCity", {
         city_name: state.selected_city
       })
       .then(res => {
@@ -104,7 +104,7 @@ const actions = {
 
   fetchProsConsR({ commit, dispatch }) {
     axiosInstance
-      .post("http://140.136.155.116/api/h_proscons", {
+      .post("api/h_proscons", {
         name: state.selected_site
       })
       .then(res => {
@@ -119,7 +119,7 @@ const actions = {
 
   fetchPros({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/h_prosData", {
+      .post("api/h_prosData", {
         name: state.selected_site
       })
       .then(res => {
@@ -133,7 +133,7 @@ const actions = {
 
   fetchCons({ commit }) {
     axiosInstance
-      .post("http://140.136.155.116/api/h_consData", {
+      .post("api/h_consData", {
         name: state.selected_site
       })
       .then(res => {
@@ -152,7 +152,7 @@ const actions = {
       .collection("我的飯店收藏");
 
     axiosInstance
-      .post("http://140.136.155.116/api/h_proconsAddToCollection", {
+      .post("api/h_proconsAddToCollection", {
         name: site_name
       })
       .then(datas => {

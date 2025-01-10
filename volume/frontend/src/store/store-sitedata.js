@@ -49,7 +49,7 @@ const actions = {
   },
 
   fetchPosts({ commit }) {
-    axiosInstance.get('http://140.136.155.116/api/site_data')
+    axiosInstance.get('api/site_data')
       .then(res => {
         commit('FETCH_posts', res.data);
         console.log("vuex-觸發site_data值");

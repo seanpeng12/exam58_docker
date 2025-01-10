@@ -360,7 +360,7 @@ export default {
     // alert(code + state);
 
     // axiosInstance
-    //   .post("http://140.136.155.116/api/line_3", {
+    //   .post("api/line_3", {
     //     code: code
     //   })
     //   .then(res => {

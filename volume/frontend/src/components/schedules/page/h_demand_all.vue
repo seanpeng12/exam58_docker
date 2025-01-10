@@ -547,7 +547,7 @@ export default {
       this.isLoading = false;
       this.$store.commit(
         "h_demand/update_src",
-        "http://140.136.155.116:8080/statics/h_between_relationship.html"
+        "http://127.0.0.1:8080/statics/h_between_relationship.html"
       );
       this.$store.commit("h_demand/update_txtinfo", "文字載入中...");
     },
